@@ -57,6 +57,7 @@ class _ProfileListState extends State<ProfileList> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _skypeController = TextEditingController();
   final TextEditingController _whatsAppMobileController =
       TextEditingController();
   final TextEditingController _CompanyNameController = TextEditingController();
@@ -79,6 +80,7 @@ class _ProfileListState extends State<ProfileList> {
   var _focusEmail = FocusNode();
   var _focusMobile = FocusNode();
   var _focusWhatsAppMobile = FocusNode();
+  var _focusSkypeNumber = FocusNode();
   var _focusCompanyName = FocusNode();
   var _focusDesignation = FocusNode();
   var _focusAddressLineOne = FocusNode();
@@ -143,6 +145,7 @@ class _ProfileListState extends State<ProfileList> {
       _designationController.text = resp.data.designation;
       _businessTypeController.text = resp.data.businessType;
       pinCodeController.text = resp.data.zipcode;
+      _skypeController.text = resp.data.skype;
       _companyMobileController.text = resp.data.mobile;
       _faxNumberController.text = resp.data.fax;
       // _natureOfOrgController.text = resp.data.
@@ -384,43 +387,6 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getMobileTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getWhatsAppTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getCompanyNameTextField(),
-//                  SizedBox(
-//                    height: getSize(20),
-//                  ),
-//                  getDesignationDropDown(),
-                  SizedBox(
-                    height: getSize(30),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: getSize(20),
-                    ),
-                    child: Text(
-                      "Business Information",
-                      style: appTheme.black16MediumTextStyle,
-                    ),
-                  ),
-                  getBusinessTypeDropDown(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  // getNatureOfOrgDropDown(),
-                  // SizedBox(
-                  //   height: getSize(20),
-                  // ),
-                  getAddressLineOneTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
                   getCountryDropDown(),
                   SizedBox(
                     height: getSize(20),
@@ -434,6 +400,55 @@ class _ProfileListState extends State<ProfileList> {
                     height: getSize(20),
                   ),
                   getPinCodeTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getWhatsAppTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getMobileTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getSkypeTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  // getCompanyNameTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getDesignationDropDown(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: getSize(20),
+                    ),
+                    child: Text(
+                      "Business Information",
+                      style: appTheme.black16MediumTextStyle,
+                    ),
+                  ),
+                  getCompanyNameTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getDesignationDropDown(),
+                  SizedBox(
+                    height: getSize(30),
+                  ),
+                  getBusinessTypeDropDown(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  // getNatureOfOrgDropDown(),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
+                  getAddressLineOneTextField(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -745,6 +760,66 @@ class _ProfileListState extends State<ProfileList> {
       onNextPress: () {
         _focusWhatsAppMobile.unfocus();
         fieldFocusChange(context, _focusCompanyName);
+      },
+    );
+  }
+
+  getSkypeTextField() {
+    return CommonTextfield(
+      //enable: enable,
+      focusNode: _focusSkypeNumber,
+      readOnly: this.readOnly ? true : false,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.skype + "*",
+        prefixWid: Padding(
+          padding: EdgeInsets.only(left: getSize(0)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              getCommonIconWidget(
+                  imageName: phone,
+                  imageType: IconSizeType.small,
+                  color: Colors.black),
+              CountryPickerWidget(
+                selectedDialogCountry: selectedDialogCountryForMobile,
+                isEnabled: !this.readOnly,
+                onSelectCountry: (Country country) async {
+                  selectedDialogCountryForMobile = country;
+                  // await checkValidation();
+                  setState(() {});
+                },
+              ),
+              SizedBox(
+                width: getSize(5),
+              ),
+            ],
+          ),
+        ),
+        maxLine: 1,
+        keyboardType: TextInputType.number,
+        inputController: _skypeController,
+        formatter: [
+          ValidatorInputFormatter(
+              editingValidator: DecimalNumberEditingRegexValidator(10)),
+        ],
+      ),
+      textCallback: (text) async {
+//          await checkValidation();
+      },
+      validation: (text) {
+        if (text.isEmpty) {
+          return R.string.errorString.enterPhone;
+        } else if (!validateMobile(text)) {
+          return R.string.errorString.enterValidPhone;
+        } else {
+          return null;
+        }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusMobile.unfocus();
+        fieldFocusChange(context, _focusWhatsAppMobile);
       },
     );
   }
