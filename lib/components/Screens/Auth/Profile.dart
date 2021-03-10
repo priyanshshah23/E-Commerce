@@ -45,7 +45,7 @@ class _ProfileState extends State<Profile> {
             ),
             GestureDetector(
               onTap: () {
-                NavigationUtilities.pushRoute(PersonalInformation.route);
+//                NavigationUtilities.pushRoute(PersonalInformation.route);
               },
               child: Text("Personal Information",
                   style: appTheme.commonAlertDialogueTitleStyle),
@@ -55,7 +55,7 @@ class _ProfileState extends State<Profile> {
             ),
             GestureDetector(
               onTap: () {
-                NavigationUtilities.pushRoute(CompanyInformation.route);
+//                NavigationUtilities.pushRoute(CompanyInformation.route);
               },
               child: Text("Company Information",
                   style: appTheme.commonAlertDialogueTitleStyle),

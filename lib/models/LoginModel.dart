@@ -512,8 +512,8 @@ class Address {
   String region;
   String city;
   String postalCode;
-  double latitude;
-  double longitude;
+  String latitude;
+  String longitude;
   String timezone;
 
   Address(
