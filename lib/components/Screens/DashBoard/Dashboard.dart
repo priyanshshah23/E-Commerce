@@ -101,9 +101,9 @@ class _DashboardState extends StatefulScreenWidgetState {
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
     dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
-    if (dashboardModel == null) {
+//    if (dashboardModel == null) {
       callApiForDashboard(false);
-    }
+//    }
     // setState(() {
     //   //
     // });
