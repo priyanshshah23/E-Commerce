@@ -510,10 +510,21 @@ class ErrorString {
   String enterSkype = "Please Enter Skype.";
   String enterRegisterCode = "Please enter registration code";
   String enterEmail = "Please enter the Email address.";
-  String enterPhone = "Please enter Mobile Number.";
+  String enterPhone = "Please enter the Mobile Number.";
+  String enterTelePhone = "Please enter the TelePhone Number.";
+  String enterFax = "Please enter Fax Number.";
+  String enterDesignation = "Please select the designation.";
+  String selectNatureOfOrganization =
+      "Please select the Nature Of The Organization.";
+  String selectCountry = "Please select the country.";
+  String selectState = "Please select the State.";
+  String selectCity = "Please select the City.";
+  String enterBusinessType = "Please select the Business Type.";
   String enterUsername = "Username can't be empty. Please enter Username.";
   String enterValidEmail = "Please enter the valid Email address.";
   String enterValidPhone = "Please enter the valid Mobile Number.";
+  String enterValidTelePhone = "Please enter the valid Telephone Number.";
+  String enterValidFaxNumber = "Please enter the valid fax number.";
   String enterValidWhatsappPhone =
       "Please enter the valid WhatsApp Mobile Number.";
   String enterValidPassword = "Please enter 6 characters or long password.";
@@ -522,9 +533,10 @@ class ErrorString {
   String enterMiddleName = "Please enter the Middle Name.";
   String enterPinCode = "Please enter the Pin Code.";
   String enterName = "Please enter name.";
-  String enterLastName = "Please enter Last Name.";
+  String enterLastName = "Please enter the Last Name.";
   String enterAddress = "Please enter address.";
-  String enterValidPinCode = "Enter Valid PinCode.";
+  String enterValidPinCode = "Please enter the Valid PinCode.";
+  String enterValidZipCode = "Please enter the valid Zip Code.";
   String enterValidAddress = "Please enter 10 characters or long address.";
   String enterPostalCode = "Please enter postal code.";
   String enterValidPostalCode = "Please enter 6 digit numeric postal code.";

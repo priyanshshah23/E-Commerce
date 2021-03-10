@@ -160,11 +160,15 @@ class _VoiceSearchState extends StatefulScreenWidgetState {
       child: Padding(
         padding: EdgeInsets.all(getSize(16)),
         child: AppButton.flat(
+          backgroundColor: appTheme.colorPrimary,
           onTap: () {
             callCountApi();
           },
-          borderRadius: getSize(5),
+          // borderRadius: getSize(5),
           fitWidth: true,
+          textColor: isNullEmptyOrFalse(strText)
+              ? appTheme.colorPrimary
+              : appTheme.whiteColor,
           text: R.string.commonString.search,
           isButtonEnabled: !isNullEmptyOrFalse(strText),
         ),

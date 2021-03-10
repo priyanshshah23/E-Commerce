@@ -4,9 +4,12 @@ import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/network/Uploadmanager.dart';
 import 'package:diamnow/app/theme/app_theme.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/ChangePassword.dart';
 import 'package:diamnow/components/Screens/Auth/CompanyInformation.dart';
@@ -14,6 +17,10 @@ import 'package:diamnow/components/Screens/Auth/Documents.dart';
 import 'package:diamnow/components/Screens/Auth/PersonalInformation.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/widgets/shared/CountryPickerWidget.dart';
+import 'package:diamnow/models/Address/CityListModel.dart';
+import 'package:diamnow/models/Address/CountryListModel.dart';
+import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:diamnow/models/Auth/PersonalInformationModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +53,7 @@ class _ProfileListState extends State<ProfileList> {
   bool readOnly = true;
 
   final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -66,6 +74,7 @@ class _ProfileListState extends State<ProfileList> {
   final TextEditingController _faxNumberController = TextEditingController();
 
   var _focusFirstName = FocusNode();
+  var _focusMiddleName = FocusNode();
   var _focusLastName = FocusNode();
   var _focusEmail = FocusNode();
   var _focusMobile = FocusNode();
@@ -94,6 +103,7 @@ class _ProfileListState extends State<ProfileList> {
   List<SelectionPopupModel> cityList = List<SelectionPopupModel>();
   List<SelectionPopupModel> countryList = List<SelectionPopupModel>();
   List<SelectionPopupModel> stateList = List<SelectionPopupModel>();
+  PersonalInformationViewResp userAccount;
 
   var selectedCityItem = -1;
   var selectedCountryItem = -1;
@@ -106,6 +116,66 @@ class _ProfileListState extends State<ProfileList> {
   String image;
 
   _ProfileListState({this.isFromDrawer});
+
+  @override
+  void initState() {
+    super.initState();
+    // _callApiForCountryList();
+    getPersonalInformation();
+    //  getMasters();
+  }
+
+  getPersonalInformation() async {
+    NetworkCall<PersonalInformationViewResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .personalInformationView(),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      print("----------------profile load -----------------");
+      print(resp.data.designation);
+      //  userAccount = resp;
+      _firstNameController.text = resp.data.firstName;
+      _middleNameController.text = resp.data.middleName;
+      _lastNameController.text = resp.data.lastName;
+      _CompanyNameController.text = resp.data.companyName;
+      _designationController.text = resp.data.designation;
+      _businessTypeController.text = resp.data.businessType;
+      pinCodeController.text = resp.data.zipcode;
+      _companyMobileController.text = resp.data.mobile;
+      _faxNumberController.text = resp.data.fax;
+      // _natureOfOrgController.text = resp.data.
+      //  _middleNameController.text = resp.data.middleName;
+      _addressLineOneController.text = resp.data.address;
+      _mobileController.text = resp.data.mobile;
+      selectedDialogCountryForMobile =
+          CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
+      _whatsAppMobileController.text = resp.data.whatsapp;
+      if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
+        selectedDialogCountryForWhatsapp =
+            CountryPickerUtils.getCountryByPhoneCode(
+                resp.data.whatsappCounCode);
+      }
+
+      _emailController.text = resp.data.email;
+      image = resp.data.profileImage;
+      _countryController.text = resp.data.country;
+      _stateController.text = resp.data.state;
+      _cityController.text = resp.data.city;
+      //  companyInformationState.pinCodeController.text = resp.data.zipcode;
+      //  _skypeController.text = resp.data.skype;
+      setState(() {});
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -301,6 +371,10 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
+                  getMiddleNameTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                   getLastNameTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -338,10 +412,10 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getNatureOfOrgDropDown(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
+                  // getNatureOfOrgDropDown(),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
                   getAddressLineOneTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -417,6 +491,49 @@ class _ProfileListState extends State<ProfileList> {
       validation: (text) {
         if (text.trim().isEmpty) {
           return R.string.errorString.enterFirstName;
+        } else {
+          return null;
+        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusFirstName.unfocus();
+        fieldFocusChange(context, _focusMiddleName);
+      },
+    );
+  }
+
+  getMiddleNameTextField() {
+    return CommonTextfield(
+      autoFocus: false,
+      focusNode: _focusMiddleName,
+      readOnly: this.readOnly ? true : false,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.middleName,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: user,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _middleNameController,
+        formatter: [
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {
+        // _firstNameController.text = _firstNameController.text.trim();
+      },
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          return R.string.errorString.enterMiddleName;
         } else {
           return null;
         }
@@ -558,6 +675,8 @@ class _ProfileListState extends State<ProfileList> {
       validation: (text) {
         if (text.isEmpty) {
           return R.string.errorString.enterPhone;
+        } else if (!validateMobile(text)) {
+          return R.string.errorString.enterValidPhone;
         } else {
           return null;
         }
@@ -612,13 +731,15 @@ class _ProfileListState extends State<ProfileList> {
       textCallback: (text) async {
 //            await checkValidation();
       },
-      // validation: (text) {
-      //   if (text.isEmpty) {
-      //     return R.string.errorString.enterPhone;
-      //   } else {
-      //     return null;
-      //   }
-      // },
+      validation: (text) {
+        if (text.isEmpty) {
+          return R.string.errorString.enterTelePhone;
+        } else if (!validateMobile(text)) {
+          return R.string.errorString.enterValidTelePhone;
+        } else {
+          return null;
+        }
+      },
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusWhatsAppMobile.unfocus();
@@ -725,6 +846,13 @@ class _ProfileListState extends State<ProfileList> {
 //                    checkValidation();
 //                  });
           },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.enterDesignation;
+            } else {
+              return null;
+            }
+          },
           inputAction: TextInputAction.done,
           onNextPress: () {
             FocusScope.of(context).unfocus();
@@ -781,6 +909,13 @@ class _ProfileListState extends State<ProfileList> {
 //                  setState(() {
 //                    checkValidation();
 //                  });
+          },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.enterBusinessType;
+            } else {
+              return null;
+            }
           },
           inputAction: TextInputAction.next,
           onNextPress: () {
@@ -840,6 +975,13 @@ class _ProfileListState extends State<ProfileList> {
 //                    checkValidation();
 //                  });
           },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.selectNatureOfOrganization;
+            } else {
+              return null;
+            }
+          },
           inputAction: TextInputAction.next,
           onNextPress: () {
             FocusScope.of(context).unfocus();
@@ -887,58 +1029,308 @@ class _ProfileListState extends State<ProfileList> {
     );
   }
 
+  void _callApiForCountryList({bool isShowDialogue = false}) {
+    NetworkCall<CountryListResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().countryList(),
+            context,
+            isProgress: true)
+        .then((resp) {
+      countryList.clear();
+      for (var item in resp.data) {
+        if (userAccount != null && userAccount.data.account.country != null) {
+          countryList.add(SelectionPopupModel(item.id, item.name,
+              isSelected: (userAccount.data.account.country.id == item.id)
+                  ? true
+                  : false));
+        } else {
+          countryList
+              .add(SelectionPopupModel(item.id, item.name, isSelected: false));
+        }
+      }
+      ;
+      getPersonalInformation();
+      if (isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                      horizontal: getSize(20), vertical: getSize(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: SelectionDialogue(
+                    title: R.string.commonString.selectCountry,
+                    hintText: R.string.commonString.searchCountry,
+                    selectionOptions: countryList,
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
+                      if (_countryController.text != selectedItem.title) {
+                        _stateController.text = "";
+                        _cityController.text = "";
+                        this.cityList.clear();
+                        this.stateList.clear();
+                      }
+                      countryList.forEach((value) => value.isSelected = false);
+                      countryList
+                          .firstWhere((value) => value == selectedItem)
+                          .isSelected = true;
+                      selectedCountryItem = countryList.indexOf(selectedItem);
+                      _countryController.text = selectedItem.title;
+                      _callApiForStateList(countryId: selectedItem.id);
+                    },
+                  ));
+            });
+      }
+    }).catchError(
+      (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(
+          context,
+          desc: onError.message,
+          positiveBtnTitle: R.string.commonString.btnTryAgain,
+          onClickCallback: (buttonType) {
+            _callApiForCountryList();
+          },
+        )
+      },
+    );
+  }
+
+  void _callApiForStateList({
+    String countryId,
+    bool isShowDialogue = false,
+  }) {
+    StateListReq req = StateListReq();
+    req.country = countryId;
+
+    NetworkCall<StateListResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().stateList(req),
+            context,
+            isProgress: true)
+        .then((resp) {
+      stateList.clear();
+      for (var item in resp.data) {
+        if (userAccount.data.account.state != null) {
+          stateList.add(SelectionPopupModel(item.id, item.name,
+              isSelected: (userAccount.data.account.state.id == item.id)
+                  ? true
+                  : false));
+        } else {
+          stateList
+              .add(SelectionPopupModel(item.id, item.name, isSelected: false));
+        }
+      }
+      ;
+      if (isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                      horizontal: getSize(20), vertical: getSize(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: SelectionDialogue(
+                    title: R.string.commonString.selectState,
+                    hintText: R.string.commonString.searchState,
+                    selectionOptions: stateList,
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
+                      if (_stateController.text != selectedItem.title) {
+                        _cityController.text = "";
+                        this.cityList.clear();
+                      }
+                      stateList.forEach((value) => value.isSelected = false);
+                      stateList
+                          .firstWhere((value) => value == selectedItem)
+                          .isSelected = true;
+                      selectedStateItem = stateList.indexOf(selectedItem);
+                      _stateController.text = selectedItem.title;
+                      _callApiForCityList(
+                          countryId: countryList[selectedCountryItem].id,
+                          stateId: selectedItem.id);
+                    },
+                  ));
+            });
+      }
+    }).catchError(
+      (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+            onClickCallback: (PositveButtonClick) {
+          _callApiForStateList(countryId: countryId);
+        })
+      },
+    );
+  }
+
+  void _callApiForCityList({
+    String stateId,
+    String countryId,
+    bool isShowDialogue = false,
+  }) {
+    CityListReq req = CityListReq();
+    req.state = stateId;
+    req.country = countryId;
+
+    NetworkCall<CityListResp>()
+        .makeCall(
+            () => app.resolve<ServiceModule>().networkService().cityList(req),
+            context,
+            isProgress: true)
+        .then((resp) {
+      cityList.clear();
+      for (var item in resp.data) {
+        if (userAccount.data.account.city != null) {
+          cityList.add(SelectionPopupModel(item.id, item.name,
+              isSelected: (userAccount.data.account.city.id == item.id)
+                  ? true
+                  : false));
+        } else {
+          cityList
+              .add(SelectionPopupModel(item.id, item.name, isSelected: false));
+        }
+      }
+      ;
+      if (isShowDialogue) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                      horizontal: getSize(20), vertical: getSize(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: SelectionDialogue(
+                    title: R.string.commonString.selectCity,
+                    hintText: R.string.commonString.searchCity,
+                    selectionOptions: cityList,
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
+                      cityList.forEach((value) => value.isSelected = false);
+                      cityList
+                          .firstWhere((value) => value == selectedItem)
+                          .isSelected = true;
+                      selectedCityItem = cityList.indexOf(selectedItem);
+                      _cityController.text = selectedItem.title;
+                    },
+                  ));
+            });
+      }
+    }).catchError(
+      (onError) => {
+        app.resolve<CustomDialogs>().confirmDialog(context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+            onClickCallback: (PositveButtonClick) {
+          _callApiForCityList(stateId: stateId, countryId: countryId);
+        })
+      },
+    );
+  }
+
+  // getPersonalInformation() async {
+  //   NetworkCall<PersonalInformationViewResp>()
+  //       .makeCall(
+  //           () => app
+  //               .resolve<ServiceModule>()
+  //               .networkService()
+  //               .personalInformationView(),
+  //           context,
+  //           isProgress: true)
+  //       .then((resp) async {
+  //     userAccount = resp;
+  //     _firstNameController.text = resp.data.firstName;
+  //     _lastNameController.text = resp.data.lastName;
+  //     // _middleNameController.text = resp.data.middleName;
+  //     _addressLineOneController.text = resp.data.address;
+  //     _mobileController.text = resp.data.mobile;
+  //     selectedDialogCountryForMobile =
+  //         CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
+  //     _whatsAppMobileController.text = resp.data.whatsapp;
+  //     if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
+  //       selectedDialogCountryForWhatsapp =
+  //           CountryPickerUtils.getCountryByPhoneCode(
+  //               resp.data.whatsappCounCode);
+  //     }
+
+  //     _emailController.text = resp.data.email;
+  //     image = resp.data.profileImage;
+  //     _countryController.text = resp.data.country;
+  //     _stateController.text = resp.data.state;
+  //     _cityController.text = resp.data.city;
+  //     // companyInformationState.pinCodeController.text = resp.data.zipcode;
+  //     // _skypeController.text = resp.data.skype;
+  //     setState(() {});
+  //   }).catchError((onError) {
+  //     app.resolve<CustomDialogs>().confirmDialog(
+  //           context,
+  //           desc: onError.message,
+  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
+  //         );
+  //   });
+  // }
+
   getCountryDropDown() {
     return InkWell(
       onTap: () {
-//        if (!readOnly) {
-//          if (countryList == null || countryList.length == 0) {
-//            _callApiForCountryList(isShowDialogue: true);
-//          } else {
-//            showDialog(
-//              context: context,
-//              builder: (BuildContext context) {
-//                return Dialog(
-//                  insetPadding: EdgeInsets.symmetric(
-//                      horizontal: getSize(20), vertical: getSize(20)),
-//                  shape: RoundedRectangleBorder(
-//                    borderRadius: BorderRadius.circular(getSize(25)),
-//                  ),
-//                  child: SelectionDialogue(
-//                    title: R.string.commonString.selectCountry,
-//                    hintText: R.string.commonString.searchCountry,
-//                    selectionOptions: countryList,
-//                    applyFilterCallBack: (
-//                        {SelectionPopupModel selectedItem,
-//                          List<SelectionPopupModel> multiSelectedItem}) {
-//                      if (_countryController.text.toLowerCase() !=
-//                          selectedItem.title.toLowerCase()) {
-//                        _stateController.text = "";
-//                        _cityController.text = "";
-//                        this.cityList.clear();
-//                        this.stateList.clear();
-//                        cityList.forEach((element) {
-//                          element.isSelected = false;
-//                        });
-//                        stateList.forEach((element) {
-//                          element.isSelected = false;
-//                        });
-//                        selectedCityItem = -1;
-//                        selectedStateItem = -1;
-//                      }
-//                      countryList.forEach((value) => value.isSelected = false);
-//                      countryList
-//                          .firstWhere((value) => value == selectedItem)
-//                          .isSelected = true;
-//                      selectedCountryItem = countryList.indexOf(selectedItem);
-//                      _countryController.text = selectedItem.title;
-//                      _callApiForStateList(countryId: selectedItem.id);
-//                    },
-//                  ),
-//                );
-//              },
-//            );
-//          }
-//        }
+        if (!readOnly) {
+          if (countryList == null || countryList.length == 0) {
+            _callApiForCountryList(isShowDialogue: true);
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  insetPadding: EdgeInsets.symmetric(
+                      horizontal: getSize(20), vertical: getSize(20)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(getSize(25)),
+                  ),
+                  child: SelectionDialogue(
+                    title: R.string.commonString.selectCountry,
+                    hintText: R.string.commonString.searchCountry,
+                    selectionOptions: countryList,
+                    applyFilterCallBack: (
+                        {SelectionPopupModel selectedItem,
+                        List<SelectionPopupModel> multiSelectedItem}) {
+                      if (_countryController.text.toLowerCase() !=
+                          selectedItem.title.toLowerCase()) {
+                        _stateController.text = "";
+                        _cityController.text = "";
+                        this.cityList.clear();
+                        this.stateList.clear();
+                        cityList.forEach((element) {
+                          element.isSelected = false;
+                        });
+                        stateList.forEach((element) {
+                          element.isSelected = false;
+                        });
+                        selectedCityItem = -1;
+                        selectedStateItem = -1;
+                      }
+                      countryList.forEach((value) => value.isSelected = false);
+                      countryList
+                          .firstWhere((value) => value == selectedItem)
+                          .isSelected = true;
+                      selectedCountryItem = countryList.indexOf(selectedItem);
+                      _countryController.text = selectedItem.title;
+                      _callApiForStateList(countryId: selectedItem.id);
+                    },
+                  ),
+                );
+              },
+            );
+          }
+        }
       },
       child: CommonTextfield(
           focusNode: _focusCountry,
@@ -958,6 +1350,13 @@ class _ProfileListState extends State<ProfileList> {
 //                    checkValidation();
 //                  });
           },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.selectCountry;
+            } else {
+              return null;
+            }
+          },
           inputAction: TextInputAction.next,
           onNextPress: () {
             FocusScope.of(context).unfocus();
@@ -968,55 +1367,55 @@ class _ProfileListState extends State<ProfileList> {
   getStateDropDown() {
     return InkWell(
       onTap: () {
-//        if (!readOnly) {
-//          if (countrySelect()) {
-//            if (stateList == null || stateList.length == 0) {
-//              _callApiForStateList(
-//                  countryId: countryList[selectedCountryItem].id,
-//                  isShowDialogue: true);
-//            } else {
-//              showDialog(
-//                  context: context,
-//                  builder: (BuildContext context) {
-//                    return Dialog(
-//                        insetPadding: EdgeInsets.symmetric(
-//                            horizontal: getSize(20), vertical: getSize(20)),
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.circular(getSize(25)),
-//                        ),
-//                        child: SelectionDialogue(
-//                          title: R.string.commonString.selectState,
-//                          hintText: R.string.commonString.searchState,
-//                          selectionOptions: stateList,
-//                          applyFilterCallBack: (
-//                              {SelectionPopupModel selectedItem,
-//                                List<SelectionPopupModel> multiSelectedItem}) {
-//                            if (_stateController.text != selectedItem.title) {
-//                              _cityController.text = "";
-//                              this.cityList.clear();
-//                              selectedCityItem = -1;
-//                              cityList.forEach((element) {
-//                                element.isSelected = false;
-//                              });
-//                            }
-//                            stateList
-//                                .forEach((value) => value.isSelected = false);
-//                            stateList
-//                                .firstWhere((value) => value == selectedItem)
-//                                .isSelected = true;
-//                            selectedStateItem = stateList.indexOf(selectedItem);
-//                            _stateController.text = selectedItem.title;
-//                            _callApiForCityList(
-//                                countryId: countryList[selectedCountryItem].id,
-//                                stateId: selectedItem.id);
-//                          },
-//                        ));
-//                  });
-//            }
-//          } else {
-//            showToast(R.string.commonString.countryFirst, context: context);
-//          }
-//        }
+        if (!readOnly) {
+          if (countrySelect()) {
+            if (stateList == null || stateList.length == 0) {
+              _callApiForStateList(
+                  countryId: countryList[selectedCountryItem].id,
+                  isShowDialogue: true);
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Dialog(
+                        insetPadding: EdgeInsets.symmetric(
+                            horizontal: getSize(20), vertical: getSize(20)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(getSize(25)),
+                        ),
+                        child: SelectionDialogue(
+                          title: R.string.commonString.selectState,
+                          hintText: R.string.commonString.searchState,
+                          selectionOptions: stateList,
+                          applyFilterCallBack: (
+                              {SelectionPopupModel selectedItem,
+                              List<SelectionPopupModel> multiSelectedItem}) {
+                            if (_stateController.text != selectedItem.title) {
+                              _cityController.text = "";
+                              this.cityList.clear();
+                              selectedCityItem = -1;
+                              cityList.forEach((element) {
+                                element.isSelected = false;
+                              });
+                            }
+                            stateList
+                                .forEach((value) => value.isSelected = false);
+                            stateList
+                                .firstWhere((value) => value == selectedItem)
+                                .isSelected = true;
+                            selectedStateItem = stateList.indexOf(selectedItem);
+                            _stateController.text = selectedItem.title;
+                            _callApiForCityList(
+                                countryId: countryList[selectedCountryItem].id,
+                                stateId: selectedItem.id);
+                          },
+                        ));
+                  });
+            }
+          } else {
+            showToast(R.string.commonString.countryFirst, context: context);
+          }
+        }
       },
       child: CommonTextfield(
           focusNode: _focusState,
@@ -1036,6 +1435,13 @@ class _ProfileListState extends State<ProfileList> {
 //                    checkValidation();
 //                  });
           },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.selectState;
+            } else {
+              return null;
+            }
+          },
           inputAction: TextInputAction.next,
           onNextPress: () {
             FocusScope.of(context).unfocus();
@@ -1046,52 +1452,52 @@ class _ProfileListState extends State<ProfileList> {
   getCityDropDown() {
     return InkWell(
       onTap: () {
-//        if (!readOnly) {
-//          FocusScope.of(context).unfocus();
-//          if (countrySelect()) {
-//            if (stateSelect()) {
-//              if (cityList == null || cityList.length == 0) {
-//                _callApiForCityList(
-//                    countryId: countryList[selectedCountryItem].id,
-//                    stateId: selectedStateItem == -1
-//                        ? userAccount.state.id
-//                        : stateList[selectedStateItem].id,
-//                    isShowDialogue: true);
-//              } else {
-//                showDialog(
-//                    context: context,
-//                    builder: (BuildContext context) {
-//                      return Dialog(
-//                          insetPadding: EdgeInsets.symmetric(
-//                              horizontal: getSize(20), vertical: getSize(20)),
-//                          shape: RoundedRectangleBorder(
-//                            borderRadius: BorderRadius.circular(getSize(25)),
-//                          ),
-//                          child: SelectionDialogue(
-//                            title: R.string.commonString.selectCity,
-//                            hintText: R.string.commonString.searchCity,
-//                            selectionOptions: cityList,
-//                            applyFilterCallBack: (
-//                                {SelectionPopupModel selectedItem,
-//                                  List<SelectionPopupModel> multiSelectedItem}) {
-//                              cityList
-//                                  .forEach((value) => value.isSelected = false);
-//                              cityList
-//                                  .firstWhere((value) => value == selectedItem)
-//                                  .isSelected = true;
-//                              selectedCityItem = cityList.indexOf(selectedItem);
-//                              _cityController.text = selectedItem.title;
-//                            },
-//                          ));
-//                    });
-//              }
-//            } else {
-//              showToast(R.string.commonString.stateFirst, context: context);
-//            }
-//          } else {
-//            showToast(R.string.commonString.countryFirst, context: context);
-//          }
-//        }
+        if (!readOnly) {
+          FocusScope.of(context).unfocus();
+          if (countrySelect()) {
+            if (stateSelect()) {
+              if (cityList == null || cityList.length == 0) {
+                _callApiForCityList(
+                    countryId: countryList[selectedCountryItem].id,
+                    stateId: selectedStateItem == -1
+                        ? userAccount.data.account.state.id
+                        : stateList[selectedStateItem].id,
+                    isShowDialogue: true);
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Dialog(
+                          insetPadding: EdgeInsets.symmetric(
+                              horizontal: getSize(20), vertical: getSize(20)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(getSize(25)),
+                          ),
+                          child: SelectionDialogue(
+                            title: R.string.commonString.selectCity,
+                            hintText: R.string.commonString.searchCity,
+                            selectionOptions: cityList,
+                            applyFilterCallBack: (
+                                {SelectionPopupModel selectedItem,
+                                List<SelectionPopupModel> multiSelectedItem}) {
+                              cityList
+                                  .forEach((value) => value.isSelected = false);
+                              cityList
+                                  .firstWhere((value) => value == selectedItem)
+                                  .isSelected = true;
+                              selectedCityItem = cityList.indexOf(selectedItem);
+                              _cityController.text = selectedItem.title;
+                            },
+                          ));
+                    });
+              }
+            } else {
+              showToast(R.string.commonString.stateFirst, context: context);
+            }
+          } else {
+            showToast(R.string.commonString.countryFirst, context: context);
+          }
+        }
       },
       child: CommonTextfield(
           focusNode: _focusCity,
@@ -1110,6 +1516,13 @@ class _ProfileListState extends State<ProfileList> {
 //                  setState(() {
 //                    checkValidation();
 //                  });
+          },
+          validation: (text) {
+            if (text.trim().isEmpty) {
+              return R.string.errorString.selectCity;
+            } else {
+              return null;
+            }
           },
           inputAction: TextInputAction.next,
           onNextPress: () {
@@ -1150,7 +1563,7 @@ class _ProfileListState extends State<ProfileList> {
           if (text.isEmpty) {
             return R.string.errorString.enterPinCode;
           } else if (!validatePincode(text)) {
-            return R.string.errorString.enterValidPinCode;
+            return R.string.errorString.enterValidZipCode;
           } else {
             return null;
           }
@@ -1205,13 +1618,6 @@ class _ProfileListState extends State<ProfileList> {
       textCallback: (text) async {
 //          await checkValidation();
       },
-      validation: (text) {
-        if (text.isEmpty) {
-          return R.string.errorString.enterPhone;
-        } else {
-          return null;
-        }
-      },
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusCompanyMobile.unfocus();
@@ -1237,13 +1643,6 @@ class _ProfileListState extends State<ProfileList> {
       ),
       textCallback: (text) async {
 //          await checkValidation();
-      },
-      validation: (text) {
-        if (text.isEmpty) {
-          return R.string.errorString.enterPhone;
-        } else {
-          return null;
-        }
       },
       inputAction: TextInputAction.next,
       onNextPress: () {
