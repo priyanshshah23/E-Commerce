@@ -186,6 +186,17 @@ class DiamondModel {
 
   int status;
 
+  getBidStatus(int offerStatus) {
+    switch (offerStatus) {
+      case DiamondBidStatus.Pending:
+        return "Pending";
+      case DiamondBidStatus.Accepted:
+        return "Accepted";
+      case DiamondBidStatus.Rejected:
+        return "Rejected";
+    }
+  }
+
   getSelectedDetail(int type) {
     switch (type) {
       case DropDownItem.BACK_PER:
@@ -291,6 +302,7 @@ class DiamondModel {
     newPricePerCarat = json["newPricePerCarat"] ?? 0;
     cutNm = json['cutNm'];
     depPer = json['depPer'];
+    status = json['status'] ?? 0;
     img = json['img'] ?? false;
     eClnNm = json['eClnNm'];
     isFcCol = json['isFcCol'];
@@ -458,6 +470,9 @@ class DiamondModel {
     data['polVdo'] = this.polVdo;
     data['roughVdo'] = this.roughVdo;
     data['hAFile'] = this.hAFile;
+    if (this.status != null) {
+      data['status'] = this.status;
+    }
     data['mlkNm'] = this.mlkNm;
     data['clrNm'] = this.clrNm;
     data['colNm'] = this.colNm;
@@ -707,7 +722,7 @@ class DiamondModel {
     //     (-app.resolve<PrefUtils>().getUserDetails().accountTerm.extraPer);
     // var extractpr = this.ctPr / 100;
 
-    return this.ctPr??0;
+    return this.ctPr ?? 0;
     // - extractpr;
     // }
   }

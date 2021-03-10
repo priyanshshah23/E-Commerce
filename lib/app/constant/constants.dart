@@ -343,6 +343,12 @@ class BlockType {
   static const MEMO = 2;
 }
 
+class DiamondBidStatus {
+  static const Pending = 1;
+  static const Accepted = 2;
+  static const Rejected = 3;
+}
+
 class HoldListStatus {
   static const HOLD = 2;
   static const MEMO = 2;
