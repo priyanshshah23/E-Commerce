@@ -108,6 +108,7 @@ const String aboutUs = "assets/drawer/aboutUs.png";
 const String drawerSearch = "assets/drawer/search.png";
 const String changePassword = "assets/drawer/changePassword.png";
 const String contactUs = "assets/drawer/contactUs.png";
+const String confirmStones = "assets/drawer/confirmStones.png";
 const String diamondOnAuction = "assets/drawer/diamondOnAuction.png";
 const String exclusiveDiamonds = "assets/drawer/exclusiveDiamonds.png";
 const String dashboard = "assets/drawer/dashboard.png";

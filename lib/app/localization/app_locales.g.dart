@@ -783,6 +783,7 @@ class ScreenTitle {
   String terms = "Terms";
   String comment = "Note";
   String holdTimeTitle = "Enter Hold Time (Hours)*";
+  String appointment = "Appointment";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {};
 }

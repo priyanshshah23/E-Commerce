@@ -679,7 +679,8 @@
       "billType" : "Bill Type",
       "terms" :  "Terms",
       "comment" : "Note",
-      "holdTimeTitle": "Enter Hold Time (Hours)*"
+      "holdTimeTitle": "Enter Hold Time (Hours)*",
+      "appointment" : "Appointment"
     },
     "dynamickeys": {
       "dynamicKeys": [

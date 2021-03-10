@@ -105,7 +105,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
                           ? getSize(25)
                           : getSize(50))),
                   borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(2)),
+                      color: appTheme.dividerColor, width: getSize(0.7)),
                 ),
           enabledBorder: !widget.textOption.isBorder
               ? InputBorder.none
@@ -115,7 +115,7 @@ class _CommonTextfieldState extends State<CommonTextfield> {
                           ? getSize(25)
                           : getSize(50))),
                   borderSide: BorderSide(
-                      color: appTheme.dividerColor, width: getSize(2)),
+                      color: appTheme.dividerColor, width: getSize(0.7)),
                 ),
           focusedBorder: !widget.textOption.isBorder
               ? InputBorder.none
@@ -137,10 +137,30 @@ class _CommonTextfieldState extends State<CommonTextfield> {
                   borderSide: BorderSide(
                       color: appTheme.dividerColor, width: getSize(0.7)),
                 ),
-//         errorBorder: widget.textOption.errorBorder ?? OutlineInputBorder(
-//               borderRadius: BorderRadius.all(Radius.circular(11)),
-//             borderSide: BorderSide.none
-//         ),
+          errorBorder: !widget.textOption.isBorder
+              ? InputBorder.none
+              : OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(
+                      widget.textOption.maxLine != null
+                          ? getSize(25)
+                          : getSize(50))),
+                  borderSide: BorderSide(
+                    color: appTheme.errorColor,
+                    width: getSize(0.7),
+                  ),
+                ),
+          focusedErrorBorder: !widget.textOption.isBorder
+              ? InputBorder.none
+              : OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(
+                widget.textOption.maxLine != null
+                    ? getSize(25)
+                    : getSize(50))),
+            borderSide: BorderSide(
+              color: appTheme.errorColor,
+              width: getSize(0.7),
+            ),
+          ),
           labelText: widget.textOption.labelText,
           hintStyle: appTheme.grey16HintTextStyle,
           hintText: widget.textOption.hintText,
