@@ -53,6 +53,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   var _focusOfferedPricePerCarat = FocusNode();
   final TextEditingController _noteController = TextEditingController();
   var _focusNote = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -425,7 +426,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               SizedBox(
                 height: getSize(20),
               ),
-            // getWatchListDetail(),
+            getWatchListDetail(),
             getNotesDetail(),
             getOfferValues(),
             // ),
@@ -637,6 +638,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   // }
 
   getDiamondList3() {}
+
   getIdShapeDetail() {
     return Padding(
       padding: EdgeInsets.only(bottom: getSize(4)),
@@ -744,6 +746,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
             ]));
   }
+
   /*getSecondRow() {
     return Padding(
       padding: EdgeInsets.only(top: getSize(10), right: getSize(10)),

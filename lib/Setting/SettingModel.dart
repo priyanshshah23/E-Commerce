@@ -901,7 +901,7 @@ class BottomMenuSetting {
         title: R.string.commonString.confirmStone,
         isCenter: false,
         image: confirmStone,
-        type: ActionMenuConstant.ACTION_TYPE_CONFIRM_STONE,
+        type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
       ));
     }
   }
@@ -915,7 +915,7 @@ class BottomMenuSetting {
         title: R.string.commonString.confirmStone,
         isCenter: false,
         image: confirmStone,
-        type: ActionMenuConstant.ACTION_TYPE_CONFIRM_STONE,
+        type: ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
       ));
     }
   }

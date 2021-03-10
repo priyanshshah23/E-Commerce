@@ -360,7 +360,7 @@ class CommonString {
   String applicationUpdate = "Application Update";
   String newVersionMessage = "A new version of application is available";
   String paymentCollected = "Payment Collected";
-  String addComment = "Add a comment";
+  String addComment = "Add a note";
   String more = "More";
   String carat = "Carat";
   String pcs = "Pcs";
@@ -421,7 +421,7 @@ class CommonString {
   String download = "Download";
   String share = "Share";
   String placeOrder = "Place order";
-  String enterComment = "Please Enter Comment";
+  String enterComment = "Please Enter Note";
   String deleteItem = "Are you sure you want to delete?";
   String shippingPolicy = "Shipping Policy";
   String offerSundayRestriction =
@@ -684,7 +684,7 @@ class ScreenTitle {
   String quickSearch = "Quick Search";
   String newArrival = "New Arrival";
   String exclusiveDiamonds = "Arjiv Diamonds";
-  String diamondOnAuction = "Diamond On Auction";
+  String diamondOnAuction = "Bid It";
   String stoneOfTheDays = "Best Buy";
   String myWatchlist = "My Watchlist";
   String myBid = "My Bid";
@@ -722,7 +722,7 @@ class ScreenTitle {
   String enquiry = "Enquiry";
   String download = "Download";
   String addToCart = "Cart";
-  String addToWatchList = "Watch";
+  String addToWatchList = "Add To Watchlist";
   String memo = "Memo";
   String memoStone = "Memo Stone";
   String finalCalculation = "Final Calculation";

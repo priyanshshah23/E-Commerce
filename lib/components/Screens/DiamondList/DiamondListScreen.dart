@@ -285,11 +285,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["viewType"] = 2;
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-        dict["filters"] = [
+        /* dict["filters"] = [
           {"wSts": DiamondStatus.DIAMOND_STATUS_BID}
-        ];
+        ];*/
+        //"[{isFm: {nin: ["CERT", "ELIG"]}}]"
+        /*  dict["filters"] = {};
+        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;*/
         dict["filters"] = {};
-        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_BID;
+        dict["filters"]["isFm"] = {
+          "nin": ["CERT", "ELIG"]
+        };
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         var date = DateTime.now();
@@ -1210,10 +1215,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case BottomCodeConstant.TBSelectAll:
         model.isSelected = !model.isSelected;
-        if(model.isSelected)
-        print("--image------------${model.image}");
+        if (model.isSelected)
+          print("--image------------${model.image}");
         else
-        print("--image------------${model.image}");
+          print("--image------------${model.image}");
         setSelectAllDiamond(model);
         break;
       case BottomCodeConstant.TBGrideView:
@@ -1358,7 +1363,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 Expanded(
                   child: diamondList,
                 ),
-                this.moduleType ==
+                /*this.moduleType ==
                         DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION
                     ? AnimatedOpacity(
                         // If the widget is visible, animate to 0.0 (invisible).
@@ -1367,7 +1372,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                         duration: Duration(milliseconds: 500),
                         child: FinalCalculationWidget(
                             arraDiamond, this.diamondFinalCalculation))
-                    : SizedBox(),
+                    : SizedBox(),*/
               ],
             ),
           ),

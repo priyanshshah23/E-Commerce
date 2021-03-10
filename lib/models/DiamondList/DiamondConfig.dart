@@ -467,8 +467,6 @@ class DiamondConfig {
 
         break;
 
-      case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        break;
       case ActionMenuConstant.ACTION_TYPE_COMPARE:
         if (list.length < 2) {
           app.resolve<CustomDialogs>().confirmDialog(
@@ -483,7 +481,8 @@ class DiamondConfig {
         print("-----------list-------${list.length}");
         print("-----------moduleType-------${moduleType}");
         dict[ArgumentConstant.DiamondList] = list;
-        dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_SEARCH;
+        dict[ArgumentConstant.ModuleType] =
+            DiamondModuleConstant.MODULE_TYPE_SEARCH;
         // NavigationUtilities.pushRoute(DiamondCompareScreen.route, args: dict);
         bool isBack = await Navigator.of(context).push(MaterialPageRoute(
           settings: RouteSettings(name: DiamondCompareScreen.route),
@@ -567,19 +566,19 @@ class DiamondConfig {
   }
 
   actionAddToWishList(BuildContext context, List<DiamondModel> list) {
-    // List<DiamondModel> selectedList = [];
-    // DiamondModel model;
-    // list.forEach((element) {
-    //   model = DiamondModel.fromJson(element.toJson());
-    //   model.isAddToWatchList = true;
-    //   selectedList.add(model);
-    // });
-    // openDiamondActionAcreen(
-    //     context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
+    List<DiamondModel> selectedList = [];
+    DiamondModel model;
+    list.forEach((element) {
+      model = DiamondModel.fromJson(element.toJson());
+      model.isAddToWatchList = true;
+      selectedList.add(model);
+    });
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
     // if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
-    callApiFoCreateTrack(
+    /* callApiFoCreateTrack(
         context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
-        isPop: false, title: "Added in Watchlist");
+        isPop: false, title: "Added in Watchlist");*/
     // }
     /*showWatchListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
