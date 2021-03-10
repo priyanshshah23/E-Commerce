@@ -248,23 +248,23 @@ class DashboardModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "seller": seller.toJson(),
-        "savedSearch": List<dynamic>.from(
+    if (seller != null) "seller": seller.toJson(),
+    if (savedSearch != null) "savedSearch": List<dynamic>.from(
           savedSearch.map((x) => x.toJson()),
         ),
-        "banners": List<dynamic>.from(banners.map((x) => x.toJson())),
-        "featuredStone":
+    if (banners != null)    "banners": List<dynamic>.from(banners.map((x) => x.toJson())),
+    if (featuredStone != null)   "featuredStone":
             List<dynamic>.from(featuredStone.map((x) => x.toJson())),
-        "newArrival": List<dynamic>.from(
+    if (newArrival != null)   "newArrival": List<dynamic>.from(
           newArrival.map(
             (x) => x.toJson(),
           ),
         ),
-        "tracks": Map.from(tracks)
+    if (tracks != null)    "tracks": Map.from(tracks)
             .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-        "dashboardCount":
+    if (dashboardCount != null)    "dashboardCount":
             List<dynamic>.from(dashboardCount.map((x) => x.toJson())),
-        "recentSearch": List<dynamic>.from(recentSearch.map((x) => x.toJson())),
+    if (recentSearch != null)   "recentSearch": List<dynamic>.from(recentSearch.map((x) => x.toJson())),
       };
 }
 

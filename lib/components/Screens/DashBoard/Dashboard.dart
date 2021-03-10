@@ -101,8 +101,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
     dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
-    print("=============================${dashboardModel != null}");
-    if (dashboardModel != null) {
+    if (dashboardModel == null) {
       callApiForDashboard(false);
     }
     // setState(() {
@@ -140,7 +139,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         setTopCountData();
          app
             .resolve<PrefUtils>()
-            .saveDashboardDetails(resp.data);
+            .saveDashboardDetails(dashboardModel);
         print("-----------------------------------${app.resolve<PrefUtils>().getDashboardDetails().seller.lastName}");
 
       });
