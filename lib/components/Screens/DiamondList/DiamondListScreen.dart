@@ -402,6 +402,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             diamondListResp.data.list.length > 0;
         openTerms();
       }
+      // diamondListResp.data.list.forEach((element) {
+      //   if (element.status != 1) print(element.status);
+      // });
       switch (moduleType) {
         case DiamondModuleConstant.MODULE_TYPE_MY_CART:
         case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
@@ -431,6 +434,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               });
             } else {
               diamondModel = element.diamond;
+              //diamondModel.status = element.status;
               trackDiamonds = TrackDiamonds(
                   id: diamondModel.id,
                   trackId: element.id,
@@ -458,6 +462,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   diamondModel.newDiscount = element.newDiscount;
                   diamondModel.newPricePerCarat = element.newPricePerCarat;
                   diamondModel.remarks = element.remarks;
+                  break;
+                case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
                   diamondModel.trackItemReminder = trackDiamonds;

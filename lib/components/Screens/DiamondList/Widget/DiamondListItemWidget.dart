@@ -259,6 +259,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                               ),
                           child: Column(
                             children: [
+                              getofferdetails(),
                               Padding(
                                 padding: EdgeInsets.only(top: getSize(10)),
                                 child: Row(
@@ -1214,6 +1215,106 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         ],
       ),
     ));
+  }
+
+  getofferdetails() {
+    return widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER
+        ? Padding(
+            padding: EdgeInsets.only(top: getSize(0)),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(getSize(0)),
+                border: Border.all(color: appTheme.dividerColor.withOpacity(1)),
+                // color: appTheme.dividerColor.withOpacity(0.5),
+              ),
+              height: getSize(30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: getSize(10)),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Dhruv")
+                        //Text(getBidStatus(widget?.item?.offerValidDate ?? 0))
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          color:
+                              getBidStatusColor(widget?.item?.offerStatus ?? 0)
+                                  .withOpacity(0.2),
+                          child: Text(
+                            getBidStatus(widget?.item?.offerStatus ?? 0),
+                            style: appTheme.black12TextStyleMedium.copyWith(
+                                color: getBidStatusColor(
+                                    widget?.item?.offerStatus ?? 0)),
+                          ))
+                    ],
+                  ),
+                  Spacer(),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(right: getSize(16)),
+                        child: Image.asset(
+                          editPen1,
+                          height: getSize(16),
+                          width: getSize(16),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          // top: getSize(12),
+                          right: getSize(1),
+                        ),
+                        child: Image.asset(
+                          delete_icon_medium,
+                          height: getSize(16),
+                          width: getSize(16),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Container();
+  }
+
+  getBidStatus(int offerStatus) {
+    switch (offerStatus) {
+      case DiamondBidStatus.Pending:
+        return "Pending";
+      case DiamondBidStatus.Accepted:
+        return "Accepted";
+      case DiamondBidStatus.Rejected:
+        return "Rejected";
+      default:
+        return '';
+    }
+  }
+
+  getBidStatusColor(int offerStatus) {
+    switch (offerStatus) {
+      case DiamondBidStatus.Pending:
+        return appTheme.greenColor;
+      case DiamondBidStatus.Accepted:
+        return appTheme.greenColor;
+      case DiamondBidStatus.Rejected:
+        return appTheme.errorColor;
+      default:
+        return Colors.transparent;
+    }
   }
 
   getWatchlistData() {
