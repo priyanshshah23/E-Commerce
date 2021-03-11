@@ -146,6 +146,9 @@ class _ProfileListState extends State<ProfileList> {
       _businessTypeController.text = resp.data.businessType;
       pinCodeController.text = resp.data.zipcode;
       _skypeController.text = resp.data.skype;
+      _countryController.text = resp.data.country;
+      _stateController.text = resp.data.state;
+      _cityController.text = resp.data.city;
       _companyMobileController.text = resp.data.mobile;
       _faxNumberController.text = resp.data.fax;
       // _natureOfOrgController.text = resp.data.

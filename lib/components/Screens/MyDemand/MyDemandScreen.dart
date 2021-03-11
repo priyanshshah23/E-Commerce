@@ -159,254 +159,214 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
                   top: getSize(10),
                   // right: getSize(16),
                 ),
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                    Padding(
+                      padding: EdgeInsets.only(bottom: getSize(2.0)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        // crossAxisAlignment: CrossAxisAlignment.,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(bottom: getSize(2.0)),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding:
-                                            EdgeInsets.only(left: getSize(16)),
-                                        child: Text(
-                                          model.name ?? "-",
-                                          style: appTheme
-                                              .blackBold16TitleColorblack,
-                                        ),
-                                      ),
-                                    ),
-                                    arr.length > 3
-                                        ? SizedBox(width: getSize(8))
-                                        : SizedBox(),
-                                    // arr.length > 3
-                                    //     ? GestureDetector(
-                                    //         onTap: () {
-                                    //           model.isExpand ^= true;
-                                    //           myDemandBaseList.state
-                                    //               .setApiCalling(false);
-                                    //           fillArrayList();
-                                    //         },
-                                    //         child: Container(
-                                    //           // width: getSize(102),
-                                    //           decoration: BoxDecoration(
-                                    //             border: Border(
-                                    //               bottom: BorderSide(
-                                    //                 color:
-                                    //                     appTheme.colorPrimary,
-                                    //                 width: 1.0,
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //           child: Row(
-                                    //             children: [
-                                    //               Padding(
-                                    //                 padding: EdgeInsets.only(
-                                    //                     right: getSize(3)),
-                                    //                 child: Text(
-                                    //                   R.string.screenTitle
-                                    //                       .viewAll,
-                                    //                   textAlign:
-                                    //                       TextAlign.center,
-                                    //                   style: appTheme
-                                    //                       .primaryColor14TextStyle,
-                                    //                 ),
-                                    //               ),
-                                    //               model.isExpand
-                                    //                   ? Image.asset(
-                                    //                       showLess,
-                                    //                       height: getSize(10),
-                                    //                       width: getSize(14),
-                                    //                     )
-                                    //                   : Image.asset(
-                                    //                       showMore,
-                                    //                       height: getSize(10),
-                                    //                       width: getSize(14),
-                                    //                     ),
-                                    //             ],
-                                    //           ),
-                                    //         ),
-                                    //       )
-                                    //     : SizedBox(),
-                                    getPreviewItem(delete_icon_medium,
-                                        appTheme.redPrimaryNormal14TitleColor,
-                                        () {
-                                      app
-                                          .resolve<CustomDialogs>()
-                                          .confirmDialog(
-                                        context,
-                                        barrierDismissible: true,
-                                        title: "",
-                                        desc:
-                                            "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
-                                        positiveBtnTitle:
-                                            R.string.commonString.ok,
-                                        negativeBtnTitle:
-                                            R.string.commonString.cancel,
-                                        onClickCallback: (buttonType) {
-                                          if (buttonType ==
-                                              ButtonType.PositveButtonClick) {
-                                            SyncManager.instance
-                                                .callApiForDeleteSavedSearch(
-                                                    context, model.id ?? "",
-                                                    success: (resp) {
-                                              callApi(true);
-                                            });
-                                          }
-                                        },
-                                      );
-                                    }),
-                                    getPreviewItem(
-                                      search,
-                                      appTheme.primaryColor14TextStyle,
-                                      () {
-                                        Map<String, dynamic> dict =
-                                            new HashMap();
-                                        dict["filterId"] = model.id;
-                                        dict[ArgumentConstant.ModuleType] =
-                                            DiamondModuleConstant
-                                                .MODULE_TYPE_MY_SAVED_SEARCH;
-                                        NavigationUtilities.pushRoute(
-                                            DiamondListScreen.route,
-                                            args: dict);
-                                      },
-                                    ),
-                                  ],
-                                ),
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: getSize(16)),
+                              child: Text(
+                                model.name ?? "-",
+                                style: appTheme.blackBold16TitleColorblack,
                               ),
-                              // Expiry date code
-                              // Row(
-                              //   mainAxisSize: MainAxisSize.min,
-                              //   children: [
-                              //     Text(
-                              //       R.string.commonString.expirydate,
-                              //       style: appTheme.grey14HintTextStyle,
-                              //     ),
-                              //     SizedBox(width: getSize(5)),
-                              //     Text(
-                              //       DateUtilities()
-                              //           .convertServerDateToFormatterString(
-                              //               model.expiryDate ?? "-",
-                              //               formatter: DateUtilities
-                              //                   .dd_mm_yyyy_hh_mm_a),
-                              //       style:
-                              //           appTheme.blackNormal14TitleColorblack,
-                              //     )
-                              //   ],
-                              // )
-                            ],
+                            ),
                           ),
-                          // SizedBox(
-                          //   height: getSize(16),
-                          // ),
-                          Divider(
-                            color: appTheme.dividerColor,
-                          ),
-                          // SizedBox(
-                          //   height: getSize(6),
-                          // ),
-                          // if (arr.length <= 3)
-                          listOfSelectedFilter(arr, model, arr.length),
-                          // if (arr.length > 3 && model.isExpand)
-                          //   listOfSelectedFilter(arr, model, arr.length),
-                          // if (arr.length > 3 && !model.isExpand)
-                          //   listOfSelectedFilter(arr, model, 4),
-                          // Padding(
-                          //   padding: EdgeInsets.only(
-                          //     // left: getSize(16),
-                          //     // right: getSize(16),
-                          //     top: getSize(11),
-                          //     bottom: getSize(11),
-                          //   ),
-                          //   child: Container(
-                          //     padding: EdgeInsets.only(
-                          //         top: getSize(8), bottom: getSize(8)),
-                          //     decoration: BoxDecoration(
-                          //         border: Border(
-                          //             top: BorderSide(
-                          //                 color: appTheme.dividerColor))),
-                          //     child: Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceAround,
-                          //       children: [
-                          //         if (widget.moduleType !=
-                          //             DiamondModuleConstant
-                          //                 .MODULE_TYPE_MY_DEMAND)
-                          //           getPreviewItem(
-                          //             edit_icon,
-                          //             appTheme.greenPrimaryNormal14TitleColor,
-                          //             () {
-                          //               Map<String, dynamic> dict = {};
-                          //               dict["searchData"] = model.searchData;
-                          //               dict[ArgumentConstant.IsFromDrawer] =
-                          //                   false;
-                          //               NavigationUtilities.pushRoute(
-                          //                   FilterScreen.route,
-                          //                   args: dict);
-                          //             },
-                          //             txt: R.string.commonString.modify,
+
+                          // arr.length > 3
+                          //     ? SizedBox(width: getSize(8))
+                          //     : SizedBox(),
+                          // arr.length > 3
+                          //     ? GestureDetector(
+                          //         onTap: () {
+                          //           model.isExpand ^= true;
+                          //           myDemandBaseList.state
+                          //               .setApiCalling(false);
+                          //           fillArrayList();
+                          //         },
+                          //         child: Container(
+                          //           // width: getSize(102),
+                          //           decoration: BoxDecoration(
+                          //             border: Border(
+                          //               bottom: BorderSide(
+                          //                 color:
+                          //                     appTheme.colorPrimary,
+                          //                 width: 1.0,
+                          //               ),
+                          //             ),
                           //           ),
-                          //         // getPreviewItem(
-                          //         //   delete_icon_medium,
-                          //         //   appTheme.redPrimaryNormal14TitleColor,
-                          //         //   () {
-                          //         //     app
-                          //         //         .resolve<CustomDialogs>()
-                          //         //         .confirmDialog(
-                          //         //       context,
-                          //         //       barrierDismissible: true,
-                          //         //       title: "",
-                          //         //       desc:
-                          //         //           "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
-                          //         //       positiveBtnTitle:
-                          //         //           R.string.commonString.ok,
-                          //         //       negativeBtnTitle:
-                          //         //           R.string.commonString.cancel,
-                          //         //       onClickCallback: (buttonType) {
-                          //         //         if (buttonType ==
-                          //         //             ButtonType.PositveButtonClick) {
-                          //         //           SyncManager.instance
-                          //         //               .callApiForDeleteSavedSearch(
-                          //         //                   context, model.id ?? "",
-                          //         //                   success: (resp) {
-                          //         //             callApi(true);
-                          //         //           });
-                          //         //         }
-                          //         //       },
-                          //         //     );
-                          //         //   },
-                          //         //   txt: R.string.commonString.delete,
-                          //         // ),
-                          //         // getPreviewItem(saved_medium,
-                          //         //     appTheme.primaryColor14TextStyle, () {
-                          //         //   Map<String, dynamic> dict = new HashMap();
-                          //         //   dict["filterId"] = model.id;
-                          //         //   dict[ArgumentConstant.ModuleType] =
-                          //         //       DiamondModuleConstant
-                          //         //           .MODULE_TYPE_MY_SAVED_SEARCH;
-                          //         //   NavigationUtilities.pushRoute(
-                          //         //       DiamondListScreen.route,
-                          //         //       args: dict);
-                          //         // }, txt: R.string.commonString.search),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
+                          //           child: Row(
+                          //             children: [
+                          //               Padding(
+                          //                 padding: EdgeInsets.only(
+                          //                     right: getSize(3)),
+                          //                 child: Text(
+                          //                   R.string.screenTitle
+                          //                       .viewAll,
+                          //                   textAlign:
+                          //                       TextAlign.center,
+                          //                   style: appTheme
+                          //                       .primaryColor14TextStyle,
+                          //                 ),
+                          //               ),
+                          //               model.isExpand
+                          //                   ? Image.asset(
+                          //                       showLess,
+                          //                       height: getSize(10),
+                          //                       width: getSize(14),
+                          //                     )
+                          //                   : Image.asset(
+                          //                       showMore,
+                          //                       height: getSize(10),
+                          //                       width: getSize(14),
+                          //                     ),
+                          //             ],
+                          //           ),
+                          //         ),
+                          //       )
+                          //     : SizedBox(),
+                          getPreviewItem(delete_icon_medium,
+                              appTheme.redPrimaryNormal14TitleColor, () {
+                            app.resolve<CustomDialogs>().confirmDialog(
+                              context,
+                              barrierDismissible: true,
+                              title: "",
+                              desc:
+                                  "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
+                              positiveBtnTitle: R.string.commonString.ok,
+                              negativeBtnTitle: R.string.commonString.cancel,
+                              onClickCallback: (buttonType) {
+                                if (buttonType ==
+                                    ButtonType.PositveButtonClick) {
+                                  SyncManager.instance
+                                      .callApiForDeleteSavedSearch(
+                                          context, model.id ?? "",
+                                          success: (resp) {
+                                    callApi(true);
+                                  });
+                                }
+                              },
+                            );
+                          }),
+                          getPreviewItem(
+                            search,
+                            appTheme.primaryColor14TextStyle,
+                            () {
+                              Map<String, dynamic> dict = new HashMap();
+                              dict["filterId"] = model.id;
+                              dict[ArgumentConstant.ModuleType] =
+                                  DiamondModuleConstant
+                                      .MODULE_TYPE_MY_SAVED_SEARCH;
+                              NavigationUtilities.pushRoute(
+                                  DiamondListScreen.route,
+                                  args: dict);
+                            },
+                          ),
                         ],
                       ),
                     ),
+                    // SizedBox(
+                    //   height: getSize(16),
+                    // ),
+                    Divider(
+                      color: appTheme.dividerColor,
+                    ),
+                    // SizedBox(
+                    //   height: getSize(6),
+                    // ),
+                    // if (arr.length <= 3)
+                    listOfSelectedFilter(arr, model, arr.length),
+                    // if (arr.length > 3 && model.isExpand)
+                    //   listOfSelectedFilter(arr, model, arr.length),
+                    // if (arr.length > 3 && !model.isExpand)
+                    //   listOfSelectedFilter(arr, model, 4),
+                    // Padding(
+                    //   padding: EdgeInsets.only(
+                    //     // left: getSize(16),
+                    //     // right: getSize(16),
+                    //     top: getSize(11),
+                    //     bottom: getSize(11),
+                    //   ),
+                    //   child: Container(
+                    //     padding: EdgeInsets.only(
+                    //         top: getSize(8), bottom: getSize(8)),
+                    //     decoration: BoxDecoration(
+                    //         border: Border(
+                    //             top: BorderSide(
+                    //                 color: appTheme.dividerColor))),
+                    //     child: Row(
+                    //       mainAxisAlignment:
+                    //           MainAxisAlignment.spaceAround,
+                    //       children: [
+                    //         if (widget.moduleType !=
+                    //             DiamondModuleConstant
+                    //                 .MODULE_TYPE_MY_DEMAND)
+                    //           getPreviewItem(
+                    //             edit_icon,
+                    //             appTheme.greenPrimaryNormal14TitleColor,
+                    //             () {
+                    //               Map<String, dynamic> dict = {};
+                    //               dict["searchData"] = model.searchData;
+                    //               dict[ArgumentConstant.IsFromDrawer] =
+                    //                   false;
+                    //               NavigationUtilities.pushRoute(
+                    //                   FilterScreen.route,
+                    //                   args: dict);
+                    //             },
+                    //             txt: R.string.commonString.modify,
+                    //           ),
+                    //         // getPreviewItem(
+                    //         //   delete_icon_medium,
+                    //         //   appTheme.redPrimaryNormal14TitleColor,
+                    //         //   () {
+                    //         //     app
+                    //         //         .resolve<CustomDialogs>()
+                    //         //         .confirmDialog(
+                    //         //       context,
+                    //         //       barrierDismissible: true,
+                    //         //       title: "",
+                    //         //       desc:
+                    //         //           "${R.string.commonString.youreallywanttodelete} ${model.name}?.",
+                    //         //       positiveBtnTitle:
+                    //         //           R.string.commonString.ok,
+                    //         //       negativeBtnTitle:
+                    //         //           R.string.commonString.cancel,
+                    //         //       onClickCallback: (buttonType) {
+                    //         //         if (buttonType ==
+                    //         //             ButtonType.PositveButtonClick) {
+                    //         //           SyncManager.instance
+                    //         //               .callApiForDeleteSavedSearch(
+                    //         //                   context, model.id ?? "",
+                    //         //                   success: (resp) {
+                    //         //             callApi(true);
+                    //         //           });
+                    //         //         }
+                    //         //       },
+                    //         //     );
+                    //         //   },
+                    //         //   txt: R.string.commonString.delete,
+                    //         // ),
+                    //         // getPreviewItem(saved_medium,
+                    //         //     appTheme.primaryColor14TextStyle, () {
+                    //         //   Map<String, dynamic> dict = new HashMap();
+                    //         //   dict["filterId"] = model.id;
+                    //         //   dict[ArgumentConstant.ModuleType] =
+                    //         //       DiamondModuleConstant
+                    //         //           .MODULE_TYPE_MY_SAVED_SEARCH;
+                    //         //   NavigationUtilities.pushRoute(
+                    //         //       DiamondListScreen.route,
+                    //         //       args: dict);
+                    //         // }, txt: R.string.commonString.search),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
@@ -466,27 +426,25 @@ class _MyDemandScreenState extends State<MyDemandScreen> {
         child: Wrap(
           children: [
             for (int i = 0; i < length; i++)
-              Expanded(
-                child: Container(
-                  // color: Colors.blue,
-                  width: (MathUtilities.screenWidth(context) / 2) - getSize(37),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: getSize(7)),
-                      Text(
-                        "${arr[i]["key"] ?? ""}",
+              Container(
+                // color: Colors.blue,
+                width: (MathUtilities.screenWidth(context) / 2) - getSize(37),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: getSize(7)),
+                    Text(
+                      "${arr[i]["key"] ?? ""}",
+                      textAlign: TextAlign.left,
+                      style: appTheme.grey14HintTextStyle,
+                    ),
+                    SizedBox(height: getSize(4)),
+                    Text(arr[i]["value"] ?? "",
                         textAlign: TextAlign.left,
-                        style: appTheme.grey14HintTextStyle,
-                      ),
-                      SizedBox(height: getSize(4)),
-                      Text(arr[i]["value"] ?? "",
-                          textAlign: TextAlign.left,
-                          style: appTheme.blackMedium14TitleColorblack),
-                      SizedBox(height: getSize(7)),
-                    ],
-                  ),
+                        style: appTheme.blackMedium14TitleColorblack),
+                    SizedBox(height: getSize(7)),
+                  ],
                 ),
               )
           ],
