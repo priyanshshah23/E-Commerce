@@ -71,7 +71,7 @@ class AuthStrings {
   String addressLineThree = "Address 3";
   String oldPassword = "Old Password";
   String skype = "Skype";
-  String whatsApp = "Telephone Number";
+  String whatsApp = "Whatsapp Number";
   String pinCode = "PinCode*";
   String verifyMobileDesc =
       "Please verify mobile number to update the profile.";
@@ -704,7 +704,7 @@ class ScreenTitle {
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
   String confirmStone = "Confirm Stone";
-  String myOffice = "My Appointment";
+  String myOffice = "My Office";
   String myOffer = "My Quote";
   String myPurchased = "My Purchased History";
   String mySavedSearch = "Saved Search";

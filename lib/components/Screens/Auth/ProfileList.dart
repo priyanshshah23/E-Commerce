@@ -53,9 +53,11 @@ class _ProfileListState extends State<ProfileList> {
   bool readOnly = true;
 
   final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _middleNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
+  final TextEditingController _skypeController = TextEditingController();
   final TextEditingController _whatsAppMobileController =
       TextEditingController();
   final TextEditingController _CompanyNameController = TextEditingController();
@@ -77,10 +79,12 @@ class _ProfileListState extends State<ProfileList> {
       TextEditingController();
 
   var _focusFirstName = FocusNode();
+  var _focusMiddleName = FocusNode();
   var _focusLastName = FocusNode();
   var _focusEmail = FocusNode();
   var _focusMobile = FocusNode();
   var _focusWhatsAppMobile = FocusNode();
+  var _focusSkypeNumber = FocusNode();
   var _focusCompanyName = FocusNode();
   var _focusDesignation = FocusNode();
   var _focusAddressLineOne = FocusNode();
@@ -149,6 +153,60 @@ class _ProfileListState extends State<ProfileList> {
           isSelected: master.isDefault));
     }
     setState(() {});
+    // _callApiForCountryList();
+    getPersonalInformation();
+    //  getMasters();
+  }
+
+  getPersonalInformation() async {
+    NetworkCall<PersonalInformationViewResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .personalInformationView(),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      _firstNameController.text = resp.data.firstName;
+      _middleNameController.text = resp.data.middleName;
+      _lastNameController.text = resp.data.lastName;
+      _emailController.text = resp.data.email;
+      _CompanyNameController.text = resp.data.companyName;
+      _designationController.text = resp.data.designation;
+      _businessTypeController.text = resp.data.businessType;
+      pinCodeController.text = resp.data.zipcode;
+      _skypeController.text = resp.data.skype;
+      _companyMobileController.text = resp.data.mobile;
+      _faxNumberController.text = resp.data.fax;
+      // _natureOfOrgController.text = resp.data.
+      //  _middleNameController.text = resp.data.middleName;
+      _addressLineOneController.text = resp.data.address;
+      _mobileController.text = resp.data.mobile;
+      selectedDialogCountryForMobile =
+          CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
+      _whatsAppMobileController.text = resp.data.whatsapp;
+      if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
+        selectedDialogCountryForWhatsapp =
+            CountryPickerUtils.getCountryByPhoneCode(
+                resp.data.whatsappCounCode);
+      }
+
+      _emailController.text = resp.data.email;
+      image = resp.data.profileImage;
+      _countryController.text = resp.data.country;
+      _stateController.text = resp.data.state;
+      _cityController.text = resp.data.city;
+      //  companyInformationState.pinCodeController.text = resp.data.zipcode;
+      //  _skypeController.text = resp.data.skype;
+      setState(() {});
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
+    });
   }
 
   @override
@@ -202,15 +260,18 @@ class _ProfileListState extends State<ProfileList> {
                       FocusScope.of(context).unfocus();
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-//                          if (_mobileController.text.isNotEmpty) {
-//                            if (await checkValidation()) {
-//                              if (isProfileImageUpload) {
-//                                await uploadDocument();
-//                              } else {
-//                                callPersonalInformationApi();
-//                              }
-//                            }
-//                          }
+                        if (_mobileController.text.isNotEmpty) {
+                          if (await checkValidation()) {
+                            if (isProfileImageUpload) {
+                              await uploadDocument();
+                            } else {
+                              callPersonalInformationApi();
+                            }
+                          } else {
+                            showToast("Please add valid phone number.",
+                                context: context);
+                          }
+                        }
                       } else {
                         setState(() {
                           _autoValidate = true;
@@ -345,6 +406,10 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
+                  getMiddleNameTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                   getLastNameTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -365,43 +430,6 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getMobileTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getWhatsAppTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getCompanyNameTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getDesignationDropDown(),
-                  SizedBox(
-                    height: getSize(30),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: getSize(20),
-                    ),
-                    child: Text(
-                      "Business Information",
-                      style: appTheme.black16MediumTextStyle,
-                    ),
-                  ),
-                  getBusinessTypeDropDown(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getNatureOfOrgDropDown(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
-                  getAddressLineOneTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
                   getCountryDropDown(),
                   SizedBox(
                     height: getSize(20),
@@ -418,6 +446,55 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
+                  getWhatsAppTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getMobileTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getSkypeTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  // getCompanyNameTextField(),
+//                  SizedBox(
+//                    height: getSize(20),
+//                  ),
+//                  getDesignationDropDown(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      bottom: getSize(20),
+                    ),
+                    child: Text(
+                      "Business Information",
+                      style: appTheme.black16MediumTextStyle,
+                    ),
+                  ),
+                  getCompanyNameTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getDesignationDropDown(),
+                  SizedBox(
+                    height: getSize(30),
+                  ),
+                  getBusinessTypeDropDown(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  // getNatureOfOrgDropDown(),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
+                  getAddressLineOneTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                   getCompanyMobileTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -426,14 +503,14 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(30),
                   ),
-//                getPhotoIdentityProofView(),
-//                SizedBox(
-//                  height: getSize(20),
-//                ),
-//                getBusinessIdentityProofView(),
-//                SizedBox(
-//                  height: getSize(20),
-//                ),
+                  getPhotoIdentityProofView(),
+                  SizedBox(
+                    height: getSize(30),
+                  ),
+                  getBusinessIdentityProofView(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                 ],
               ),
             ),
@@ -595,7 +672,50 @@ class _ProfileListState extends State<ProfileList> {
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusFirstName.unfocus();
-        fieldFocusChange(context, _focusLastName);
+        fieldFocusChange(context, _focusMiddleName);
+      },
+    );
+  }
+
+  getMiddleNameTextField() {
+    return CommonTextfield(
+      autoFocus: false,
+      focusNode: _focusMiddleName,
+      readOnly: this.readOnly ? true : false,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.middleName,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: user,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _middleNameController,
+        formatter: [
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {
+        // _firstNameController.text = _firstNameController.text.trim();
+      },
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          return R.string.errorString.enterMiddleName;
+        } else {
+          return null;
+        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusFirstName.unfocus();
+        fieldFocusChange(context, _focusMiddleName);
       },
     );
   }
@@ -801,6 +921,66 @@ class _ProfileListState extends State<ProfileList> {
     );
   }
 
+  getSkypeTextField() {
+    return CommonTextfield(
+      //enable: enable,
+      focusNode: _focusSkypeNumber,
+      readOnly: this.readOnly ? true : false,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.skype + "*",
+        prefixWid: Padding(
+          padding: EdgeInsets.only(left: getSize(0)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              getCommonIconWidget(
+                  imageName: phone,
+                  imageType: IconSizeType.small,
+                  color: Colors.black),
+              CountryPickerWidget(
+                selectedDialogCountry: selectedDialogCountryForMobile,
+                isEnabled: !this.readOnly,
+                onSelectCountry: (Country country) async {
+                  selectedDialogCountryForMobile = country;
+                  // await checkValidation();
+                  setState(() {});
+                },
+              ),
+              SizedBox(
+                width: getSize(5),
+              ),
+            ],
+          ),
+        ),
+        maxLine: 1,
+        keyboardType: TextInputType.number,
+        inputController: _skypeController,
+        formatter: [
+          ValidatorInputFormatter(
+              editingValidator: DecimalNumberEditingRegexValidator(10)),
+        ],
+      ),
+      textCallback: (text) async {
+//          await checkValidation();
+      },
+      validation: (text) {
+        if (text.isEmpty) {
+          return R.string.errorString.enterPhone;
+        } else if (!validateMobile(text)) {
+          return R.string.errorString.enterValidPhone;
+        } else {
+          return null;
+        }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusMobile.unfocus();
+        fieldFocusChange(context, _focusWhatsAppMobile);
+      },
+    );
+  }
+
   getCompanyNameTextField() {
     return CommonTextfield(
       autoFocus: false,
@@ -900,11 +1080,11 @@ class _ProfileListState extends State<ProfileList> {
 //                  });
           },
           validation: (text) {
-            if (text.trim().isEmpty) {
-              return R.string.errorString.enterDesignation;
-            } else {
-              return null;
-            }
+//            if (text.trim().isEmpty) {
+//              return R.string.errorString.enterDesignation;
+//            } else {
+//              return null;
+//            }
           },
           inputAction: TextInputAction.done,
           onNextPress: () {
@@ -1290,47 +1470,47 @@ class _ProfileListState extends State<ProfileList> {
     );
   }
 
-  getPersonalInformation() async {
-    NetworkCall<PersonalInformationViewResp>()
-        .makeCall(
-            () => app
-                .resolve<ServiceModule>()
-                .networkService()
-                .personalInformationView(),
-            context,
-            isProgress: true)
-        .then((resp) async {
-      userAccount = resp;
-      _firstNameController.text = resp.data.firstName;
-      _lastNameController.text = resp.data.lastName;
-      // _middleNameController.text = resp.data.middleName;
-      _addressLineOneController.text = resp.data.address;
-      _mobileController.text = resp.data.mobile;
-      selectedDialogCountryForMobile =
-          CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
-      _whatsAppMobileController.text = resp.data.whatsapp;
-      if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
-        selectedDialogCountryForWhatsapp =
-            CountryPickerUtils.getCountryByPhoneCode(
-                resp.data.whatsappCounCode);
-      }
+  // getPersonalInformation() async {
+  //   NetworkCall<PersonalInformationViewResp>()
+  //       .makeCall(
+  //           () => app
+  //               .resolve<ServiceModule>()
+  //               .networkService()
+  //               .personalInformationView(),
+  //           context,
+  //           isProgress: true)
+  //       .then((resp) async {
+  //     userAccount = resp;
+  //     _firstNameController.text = resp.data.firstName;
+  //     _lastNameController.text = resp.data.lastName;
+  //     // _middleNameController.text = resp.data.middleName;
+  //     _addressLineOneController.text = resp.data.address;
+  //     _mobileController.text = resp.data.mobile;
+  //     selectedDialogCountryForMobile =
+  //         CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
+  //     _whatsAppMobileController.text = resp.data.whatsapp;
+  //     if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
+  //       selectedDialogCountryForWhatsapp =
+  //           CountryPickerUtils.getCountryByPhoneCode(
+  //               resp.data.whatsappCounCode);
+  //     }
 
-      _emailController.text = resp.data.email;
-      image = resp.data.profileImage;
-      _countryController.text = resp.data.country;
-      _stateController.text = resp.data.state;
-      _cityController.text = resp.data.city;
-      // companyInformationState.pinCodeController.text = resp.data.zipcode;
-      // _skypeController.text = resp.data.skype;
-      setState(() {});
-    }).catchError((onError) {
-      app.resolve<CustomDialogs>().confirmDialog(
-            context,
-            desc: onError.message,
-            positiveBtnTitle: R.string.commonString.btnTryAgain,
-          );
-    });
-  }
+  //     _emailController.text = resp.data.email;
+  //     image = resp.data.profileImage;
+  //     _countryController.text = resp.data.country;
+  //     _stateController.text = resp.data.state;
+  //     _cityController.text = resp.data.city;
+  //     // companyInformationState.pinCodeController.text = resp.data.zipcode;
+  //     // _skypeController.text = resp.data.skype;
+  //     setState(() {});
+  //   }).catchError((onError) {
+  //     app.resolve<CustomDialogs>().confirmDialog(
+  //           context,
+  //           desc: onError.message,
+  //           positiveBtnTitle: R.string.commonString.btnTryAgain,
+  //         );
+  //   });
+  // }
 
   getCountryDropDown() {
     return InkWell(
@@ -1764,6 +1944,241 @@ class _ProfileListState extends State<ProfileList> {
         }
       }
       return;
+    });
+  }
+
+  getPhotoIdentityProofView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            left: getSize(8),
+            right: getSize(8),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "Photo Identity Proof",
+                  style: appTheme.black16MediumTextStyle,
+                ),
+              ),
+              !readOnly
+                  ? Container(
+                      height: getSize(11),
+                      width: getSize(9),
+                      child: Image.asset(
+                        home_delete,
+                      ),
+                    )
+                  : SizedBox(),
+              SizedBox(
+                width: !readOnly ? getSize(4) : getSize(0),
+              ),
+              !readOnly
+                  ? Text(
+                      "Remove",
+                      style: appTheme.error12MediumTextStyle,
+                    )
+                  : SizedBox(),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: getSize(16),
+        ),
+        InkWell(
+          onTap: () {
+//        if (!readOnly) {
+//          pickPDFfile(context, pickeFile, (pickedFile, isUploaded) {
+//            pickeFile = pickedFile;
+//            setState(() {
+//              imageUpload = isUploaded;
+//            });
+//            print("-----file------$pickedFile");
+//            print("-----imageUpload------$imageUpload");
+//          });
+//        }
+          },
+          child: Container(
+            height: getSize(150),
+            width: MediaQuery.of(context).size.width - getSize(32),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                getSize(30),
+              ),
+              border: Border.all(
+                color: appTheme.dividerColor,
+              ),
+            ),
+            child: readOnly
+                ? SizedBox()
+                : Icon(
+                    Icons.add,
+                    size: getSize(40),
+                    color: appTheme.textGreyColor.withOpacity(0.3),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  getBusinessIdentityProofView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            left: getSize(8),
+            right: getSize(8),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  "Business Identity Proof",
+                  style: appTheme.black16MediumTextStyle,
+                ),
+              ),
+              !readOnly
+                  ? Container(
+                      height: getSize(11),
+                      width: getSize(9),
+                      child: Image.asset(
+                        home_delete,
+                      ),
+                    )
+                  : SizedBox(),
+              SizedBox(
+                width: !readOnly ? getSize(4) : getSize(0),
+              ),
+              !readOnly
+                  ? Text(
+                      "Remove",
+                      style: appTheme.error12MediumTextStyle,
+                    )
+                  : SizedBox(),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: getSize(16),
+        ),
+        InkWell(
+          onTap: () {
+//        if (!readOnly) {
+//          pickPDFfile(context, pickeFile, (pickedFile, isUploaded) {
+//            pickeFile = pickedFile;
+//            setState(() {
+//              imageUpload = isUploaded;
+//            });
+//            print("-----file------$pickedFile");
+//            print("-----imageUpload------$imageUpload");
+//          });
+//        }
+          },
+          child: Container(
+            height: getSize(150),
+            width: MediaQuery.of(context).size.width - getSize(32),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                getSize(30),
+              ),
+              border: Border.all(
+                color: appTheme.dividerColor,
+              ),
+            ),
+            child: readOnly
+                ? SizedBox()
+                : Icon(
+                    Icons.add,
+                    size: getSize(40),
+                    color: appTheme.textGreyColor.withOpacity(0.3),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  checkValidation() async {
+    if (await isValidMobile(_mobileController.text.trim(),
+            selectedDialogCountryForMobile.isoCode) ==
+        false) {
+      showToast(R.string.errorString.enterValidPhone, context: context);
+      return false;
+    }
+    return true;
+  }
+
+  callPersonalInformationApi({String imagePath}) async {
+    PersonalInformationReq req = PersonalInformationReq();
+    req.id = app.resolve<PrefUtils>().getUserDetails().id;
+    req.address = _addressLineOneController.text.trim();
+    req.firstName = _firstNameController.text.trim();
+    req.middleName = _middleNameController.text.trim();
+    req.lastName = _lastNameController.text.trim();
+    req.mobile = _mobileController.text;
+    req.countryCode = selectedDialogCountryForMobile.phoneCode;
+    req.whatsapp = _whatsAppMobileController.text;
+    req.whatsappCounCode = selectedDialogCountryForWhatsapp.phoneCode;
+    req.email = _emailController.text.trim();
+//    req.skype = _skypeController.text.trim();
+    req.pincode = pinCodeController.text.trim();
+    countryList.forEach((element) {
+      if (element.title == _countryController.text.trim()) {
+        req.country = element.id;
+      }
+    });
+    stateList.forEach((element) {
+      if (element.title == _stateController.text.trim()) {
+        req.state = element.id;
+      }
+    });
+    cityList.forEach((element) {
+      if (element.title == _cityController.text.trim()) {
+        req.city = element.id;
+      }
+    });
+    if (imagePath != null) {
+      req.profileImage = imagePath;
+    }
+
+    NetworkCall<PersonalInformationViewResp>()
+        .makeCall(
+            () => app
+                .resolve<ServiceModule>()
+                .networkService()
+                .personalInformation(req),
+            context,
+            isProgress: true)
+        .then((resp) async {
+      setState(() {});
+      if (resp.data.accountTerm == null) {
+        var oldAccTerm = app.resolve<PrefUtils>().getUserDetails().accountTerm;
+        resp.data.accountTerm = oldAccTerm;
+      }
+      String oldEmail = app.resolve<PrefUtils>().getUserDetails().email;
+
+      app.resolve<PrefUtils>().saveUser(resp.data);
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            title: R.string.commonString.successfully,
+            desc: resp.message,
+            positiveBtnTitle: R.string.commonString.ok,
+          );
+
+      if (oldEmail != _emailController.text) {
+        callLogout(context);
+      }
+    }).catchError((onError) {
+      app.resolve<CustomDialogs>().confirmDialog(
+            context,
+            desc: onError.message,
+            positiveBtnTitle: R.string.commonString.btnTryAgain,
+          );
     });
   }
 }

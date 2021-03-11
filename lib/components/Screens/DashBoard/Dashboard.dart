@@ -101,13 +101,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
     dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
-    print("=============================${dashboardModel != null}");
-    if (dashboardModel != null) {
       callApiForDashboard(false);
-    }
-    // setState(() {
-    //   //
-    // });
   }
 
   callApiForDashboard(bool isRefress, {bool isLoading = false}) {
@@ -140,7 +134,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         setTopCountData();
          app
             .resolve<PrefUtils>()
-            .saveDashboardDetails(resp.data);
+            .saveDashboardDetails(dashboardModel);
         print("-----------------------------------${app.resolve<PrefUtils>().getDashboardDetails().seller.lastName}");
 
       });
@@ -481,6 +475,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                       onTap: () {
                         Map<String, dynamic> dict = new HashMap();
                         dict["isFromSearch"] = false;
+                        dict["isFromManual"] = false;
                         NavigationUtilities.pushRoute(SearchScreen.route,
                             args: dict);
                       },

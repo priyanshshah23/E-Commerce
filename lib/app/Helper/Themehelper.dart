@@ -340,6 +340,13 @@ class BaseTheme {
         fontWeight: FontWeight.normal);
   }
 
+  TextStyle get error12MediumTextStyle {
+    return TextStyle(
+        fontSize: getFontSize(12),
+        color: errorColor,
+        fontWeight: FontWeight.w500);
+  }
+
   TextStyle get error14TextStyle {
     return TextStyle(
         fontSize: getFontSize(14),
