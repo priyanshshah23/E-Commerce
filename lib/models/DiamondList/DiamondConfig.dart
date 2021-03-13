@@ -789,7 +789,7 @@ class DiamondConfig {
     });
     var dict = Map<String, dynamic>();
     dict[ArgumentConstant.DiamondList] = selectedList;
-    NavigationUtilities.pushRoute(OfferViewScreen.route,args: dict);
+    NavigationUtilities.pushRoute(OfferViewScreen.route, args: dict);
     // openDiamondActionAcreen(
     //     context, DiamondTrackConstant.TRACK_TYPE_OFFICE, selectedList);
     /* showOfferListDialog(context, selectedList, (manageClick) {
@@ -1990,8 +1990,63 @@ class DiamondConfig {
     return caratRequest;
   }
 
-  void setMatchPairItem(List<DiamondModel> arraDiamond) {
-    if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+  void setMatchPairItem(List<DiamondModel> arraDiamond,
+      {bool isLayoutSearch = false}) {
+    if (isLayoutSearch) {
+      DiamondModel diamondItem;
+      if (arraDiamond.length == 1) {
+        diamondItem = arraDiamond[0];
+        if (diamondItem.layoutNo == null) {
+          diamondItem.layoutNo = "";
+        }
+        diamondItem.isMatchPair = true;
+        diamondItem.borderType = BorderConstant.BORDER_NONE;
+        diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+        diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+      } else {
+        for (int i = 0; i < arraDiamond.length; i++) {
+          diamondItem = arraDiamond[i];
+          if (diamondItem.layoutNo == null) {
+            diamondItem.layoutNo = "";
+          }
+          diamondItem.isMatchPair = true;
+          if (i == 0) {
+            if (arraDiamond[i + 1].layoutNo != diamondItem.layoutNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_TOP;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+            }
+          } else if (i == arraDiamond.length - 1) {
+            if (arraDiamond[i - 1].layoutNo != diamondItem.layoutNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_BOTTOM;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            }
+          } else {
+            if (arraDiamond[i - 1].layoutNo != diamondItem.layoutNo &&
+                arraDiamond[i + 1].layoutNo != diamondItem.layoutNo) {
+              diamondItem.borderType = BorderConstant.BORDER_NONE;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else if (arraDiamond[i - 1].layoutNo != diamondItem.layoutNo) {
+              diamondItem.borderType = BorderConstant.BORDER_TOP;
+              diamondItem.marginTop = BorderConstant.BORDER_MARGIN;
+            } else if (arraDiamond[i + 1].layoutNo != diamondItem.layoutNo) {
+              diamondItem.borderType = BorderConstant.BORDER_BOTTOM;
+              diamondItem.marginBottom = BorderConstant.BORDER_MARGIN;
+            } else {
+              diamondItem.borderType = BorderConstant.BORDER_LEFT_RIGHT;
+            }
+          }
+        }
+      }
+    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].memoNo != arraDiamond[i - 1].memoNo)) {
           arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
@@ -2033,29 +2088,8 @@ class DiamondConfig {
         }
         arraDiamond[i].isGrouping = true;
       }
-    } else if (moduleType == DiamondModuleConstant.MODULE_TYPE_LAYOUT) {
-      for (int i = 0; i < arraDiamond.length; i++) {
-        if (i == 0 ||
-            (arraDiamond[i].layoutNo != arraDiamond[i - 1].layoutNo)) {
-          arraDiamond[i].displayTitle = "#${arraDiamond[i].layoutNo}";
-          arraDiamond[i].displayDesc = DateUtilities()
-              .convertServerDateToFormatterString(arraDiamond[i].createdAt,
-                  formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
-          arraDiamond[i].showCheckBox = true;
-        }
-
-        if (arraDiamond.length == 1) {
-          arraDiamond[i].isSectionOfferDisplay = true;
-        } else if (i > 0 &&
-            (arraDiamond[i].layoutNo != arraDiamond[i - 1].layoutNo)) {
-          arraDiamond[i - 1].isSectionOfferDisplay = true;
-        }
-        if (i == arraDiamond.length - 1) {
-          arraDiamond[i].isSectionOfferDisplay = true;
-        }
-        arraDiamond[i].isGrouping = true;
-      }
-    } /*else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
+    }
+    /*else if (moduleType == DiamondModuleConstant.MODULE_TYPE_UPCOMING) {
       for (int i = 0; i < arraDiamond.length; i++) {
         if (i == 0 || (arraDiamond[i].inDt != arraDiamond[i - 1].inDt)) {
           arraDiamond[i].displayTitle = DateUtilities()
