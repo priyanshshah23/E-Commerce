@@ -209,12 +209,12 @@ Route<dynamic> onGenerateRoute(RouteSettings settings) {
     case ChangePassword.route:
       screen = ChangePassword();
       break;
-//    case PersonalInformation.route:
-//      screen = PersonalInformation();
-//      break;
-//    case CompanyInformation.route:
-//      screen = CompanyInformation();
-//      break;
+    case PersonalInformation.route:
+      screen = PersonalInformation();
+      break;
+    case CompanyInformation.route:
+      screen = CompanyInformation();
+      break;
     case StaticPageScreen.route:
       screen = StaticPageScreen(arguments);
       break;
