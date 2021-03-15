@@ -50,6 +50,7 @@ class DiamondListScreen extends StatefulScreenWidget {
   bool isFromDrawer = false;
   List<FormBaseModel> filterModel;
   bool isCompanySelected = false;
+  bool isLayoutSearch = false;
   String downloadDate = "";
 
   DiamondListScreen(
@@ -73,6 +74,9 @@ class DiamondListScreen extends StatefulScreenWidget {
       if (arguments["isCompanySelected"] != null) {
         isCompanySelected = arguments["isCompanySelected"];
       }
+      if (arguments["isLayoutSearch"] != null) {
+        isLayoutSearch = arguments["isLayoutSearch"];
+      }
     }
   }
 
@@ -84,6 +88,7 @@ class DiamondListScreen extends StatefulScreenWidget {
         filterModel: filterModel,
         downloadDate: downloadDate,
         isCompanySelected: isCompanySelected,
+        isLayoutSearch: isLayoutSearch,
       );
 }
 
@@ -97,6 +102,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   List<FormBaseModel> filterModel;
   String downloadDate = "";
   bool isCompanySelected = false;
+  bool isLayoutSearch = false;
 
   _DiamondListScreenState(
       {this.filterId,
@@ -104,7 +110,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       this.isFromDrawer,
       this.filterModel,
       this.downloadDate,
-      this.isCompanySelected});
+      this.isCompanySelected,
+      this.isLayoutSearch});
 
   DiamondConfig diamondConfig;
   BaseList diamondList;
@@ -489,7 +496,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           arraDiamond.addAll(diamondListResp.data.diamonds);
           break;
       }
-      diamondConfig.setMatchPairItem(arraDiamond);
+      diamondConfig.setMatchPairItem(arraDiamond,
+          isLayoutSearch: isLayoutSearch ?? false);
       diamondList.state.listCount = arraDiamond.length;
       diamondList.state.totalCount = diamondListResp.data.count;
       manageDiamondSelection();
@@ -553,7 +561,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }
 
     arraDiamond.addAll(diamondListResp.data.diamonds);
-    diamondConfig.setMatchPairItem(arraDiamond);
+    diamondConfig.setMatchPairItem(arraDiamond,
+        isLayoutSearch: isLayoutSearch ?? false);
     diamondList.state.listCount = arraDiamond.length;
     diamondList.state.totalCount = diamondListResp.data.count;
     manageDiamondSelection();

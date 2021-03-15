@@ -73,6 +73,10 @@ class _ProfileListState extends State<ProfileList> {
   final TextEditingController _companyMobileController =
       TextEditingController();
   final TextEditingController _faxNumberController = TextEditingController();
+  final TextEditingController _personalAddressLineOne = TextEditingController();
+  final TextEditingController _personalAddressLineTwo = TextEditingController();
+  final TextEditingController _personalAddressLineThree =
+      TextEditingController();
 
   var _focusFirstName = FocusNode();
   var _focusMiddleName = FocusNode();
@@ -84,6 +88,10 @@ class _ProfileListState extends State<ProfileList> {
   var _focusCompanyName = FocusNode();
   var _focusDesignation = FocusNode();
   var _focusAddressLineOne = FocusNode();
+  var _focusPersonalAddressLineOne = FocusNode();
+  var _focusPersonalAddressLineTwo = FocusNode();
+  var _focusPersonalAddressLineThree = FocusNode();
+
   var _focusBusinessType = FocusNode();
   var _focusNatureOfOrg = FocusNode();
   var _focusCountry = FocusNode();
@@ -122,6 +130,29 @@ class _ProfileListState extends State<ProfileList> {
   @override
   void initState() {
     super.initState();
+    _callApiForCountryList();
+    getBusinessType();
+    getNatureOfOrg();
+  }
+
+  getBusinessType() async {
+    var arrMaster = await AppDatabase.instance.masterDao
+        .getSubMasterFromCode(BUSINESS_TYPE);
+    for (var master in arrMaster) {
+      businessTypeList.add(SelectionPopupModel(master.sId, master.getName(),
+          isSelected: master.isDefault));
+    }
+    setState(() {});
+  }
+
+  getNatureOfOrg() async {
+    var arrMaster = await AppDatabase.instance.masterDao
+        .getSubMasterFromCode(NATURE_OF_ORG);
+    for (var master in arrMaster) {
+      natureOfOrgList.add(SelectionPopupModel(master.sId, master.getName(),
+          isSelected: master.isDefault));
+    }
+    setState(() {});
     // _callApiForCountryList();
     getPersonalInformation();
     //  getMasters();
@@ -146,6 +177,9 @@ class _ProfileListState extends State<ProfileList> {
       _businessTypeController.text = resp.data.businessType;
       pinCodeController.text = resp.data.zipcode;
       _skypeController.text = resp.data.skype;
+      _countryController.text = resp.data.country;
+      _stateController.text = resp.data.state;
+      _cityController.text = resp.data.city;
       _companyMobileController.text = resp.data.mobile;
       _faxNumberController.text = resp.data.fax;
       // _natureOfOrgController.text = resp.data.
@@ -383,6 +417,18 @@ class _ProfileListState extends State<ProfileList> {
                   SizedBox(
                     height: getSize(20),
                   ),
+                  getPresonalAddressLineOneTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getPresonalAddressLineTwoTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getPresonalAddressLineThreeTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                   getEmailTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -474,6 +520,120 @@ class _ProfileListState extends State<ProfileList> {
           ),
         ),
       ),
+    );
+  }
+
+  getPresonalAddressLineOneTextField() {
+    return CommonTextfield(
+      focusNode: _focusPersonalAddressLineOne,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.addressLineOne,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: company,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _personalAddressLineOne,
+        formatter: [
+          // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          return R.string.errorString.enterAddress;
+        } else {
+          return null;
+        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusPersonalAddressLineOne.unfocus();
+      },
+    );
+  }
+
+  getPresonalAddressLineTwoTextField() {
+    return CommonTextfield(
+      focusNode: _focusPersonalAddressLineTwo,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.addressLineTwo,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: company,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _personalAddressLineTwo,
+        formatter: [
+          // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          return R.string.errorString.enterAddress;
+        } else {
+          return null;
+        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusPersonalAddressLineTwo.unfocus();
+      },
+    );
+  }
+
+  getPresonalAddressLineThreeTextField() {
+    return CommonTextfield(
+      focusNode: _focusPersonalAddressLineThree,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.addressLineThree,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: company,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _personalAddressLineThree,
+        formatter: [
+          // WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          return R.string.errorString.enterAddress;
+        } else {
+          return null;
+        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusPersonalAddressLineThree.unfocus();
+      },
     );
   }
 

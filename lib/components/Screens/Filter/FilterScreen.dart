@@ -898,7 +898,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 //                      btntitle: R.string.commonString.ok,
 //                    );
 //              } else
-                getAddDemand();
+              getAddDemand();
             } else {
               showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
@@ -957,16 +957,16 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 //                        btntitle: R.string.commonString.ok,
 //                      );
 //                } else {
-                  SyncManager.instance.callApiForMatchPair(context, map,
-                      (diamondListResp) {
-                    Map<String, dynamic> dict = new HashMap();
-                    dict["filterId"] = diamondListResp.data.filter.id;
-                    dict["filter"] = FilterRequest().createRequest(arrList);
-                    dict[ArgumentConstant.ModuleType] =
-                        DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
-                    NavigationUtilities.pushRoute(DiamondListScreen.route,
-                        args: dict);
-                  }, (onError) {});
+                SyncManager.instance.callApiForMatchPair(context, map,
+                    (diamondListResp) {
+                  Map<String, dynamic> dict = new HashMap();
+                  dict["filterId"] = diamondListResp.data.filter.id;
+                  dict["filter"] = FilterRequest().createRequest(arrList);
+                  dict[ArgumentConstant.ModuleType] =
+                      DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+                  NavigationUtilities.pushRoute(DiamondListScreen.route,
+                      args: dict);
+                }, (onError) {});
 //                }
               }
               // place code
@@ -1106,6 +1106,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               dict["filterId"] = diamondListResp.data.filter.id;
               dict["filters"] = FilterRequest().createRequest(arrList);
               dict['isCompanySelected'] = isCompanySelected ?? false;
+              dict['isLayoutSearch'] = segmentedControlValue == 3 ? true : false;
               dict[ArgumentConstant.ModuleType] = moduleType;
               NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
@@ -1115,6 +1116,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             dict["filterId"] = diamondListResp.data.filter.id;
             dict["filters"] = FilterRequest().createRequest(arrList);
             dict['isCompanySelected'] = isCompanySelected ?? false;
+            dict['isLayoutSearch'] = segmentedControlValue == 3 ? true : false;
             dict[ArgumentConstant.ModuleType] = moduleType;
             NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
           }
