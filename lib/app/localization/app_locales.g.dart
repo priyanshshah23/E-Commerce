@@ -415,6 +415,10 @@ class CommonString {
   String noDocument = "No Documents Found";
   String searchBusinessType = "Search Business Type";
   String hours = "Hours";
+  String hrs = "hrs";
+  String min = "min";
+  String sec = "sec";
+  String offerExpired = "Offer Expired";
   String minutes = "Minutes";
   String seconds = "Seconds";
   String bidEndsIn = "Bid ends in:";

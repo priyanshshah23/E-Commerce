@@ -86,7 +86,6 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
             Future.delayed(Duration(seconds: 65), () {
               calcualteDifference();
             });
-
             RxBus.post(true, tag: eventDiamondRefresh);
           } else {
             totalSeconds = totalSeconds - 1;

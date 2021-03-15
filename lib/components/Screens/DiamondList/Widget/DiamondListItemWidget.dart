@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -53,11 +55,16 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   var _focusOfferedPricePerCarat = FocusNode();
   final TextEditingController _noteController = TextEditingController();
   var _focusNote = FocusNode();
+  Duration difference;
+  Timer _timer;
+  bool isTimerCompleted = false;
+  var totalSeconds = 0;
 
   @override
   void initState() {
     super.initState();
     widget.item.setBidAmount();
+    calcualteDifference();
     RxBus.register<bool>(tag: eventBusRefreshItem).listen((event) {
 //        Future.delayed(Duration(seconds: 1));
 
@@ -259,7 +266,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                               ),
                           child: Column(
                             children: [
-                              getofferdetails(),
+                              getOfferedBottomSection(),
+                              //getofferdetails(),
                               Padding(
                                 padding: EdgeInsets.only(top: getSize(10)),
                                 child: Row(
@@ -1236,7 +1244,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: getTimingDetails() ,
+                      children: getTimingDetails(),
                     ),
                   ),
                   Spacer(),
@@ -1451,10 +1459,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   }
 
   getTimingDetails() {
-    return <Widget>[
-      
-
-    ];
+    return <Widget>[];
   }
 
   getOfferDetail() {
@@ -1627,31 +1632,89 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           child: Row(
             children: [
               Container(
-                width: getPercentageWidth(40),
-                padding: EdgeInsets.only(
-                  right: getSize(20),
-                ),
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "Exp. Date.:\t",
-                    style: appTheme.grey12TextStyle,
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: isNullEmptyOrFalse(widget.item.offerValidDate)
-                            ? "-"
-                            : DateUtilities()
-                                .convertServerDateToFormatterString(
-                                    widget.item.offerValidDate,
-                                    formatter: DateUtilities.dd_mm_yyyy),
-                        style: appTheme.black12TextStyleMedium,
-                      )
-                    ],
+                  //width: getPercentageWidth(80),
+                  padding: EdgeInsets.only(
+                    right: getSize(20),
                   ),
-                ),
-              ),
+                  // child: RichText(
+                  //   textAlign: TextAlign.center,
+                  //   text: TextSpan(
+                  //     text: "Exp. Date.:\t",
+                  //     style: appTheme.grey12TextStyle,
+                  //     children: <TextSpan>[
+                  //       TextSpan(
+                  //         text: isNullEmptyOrFalse(widget.item.offerValidDate)
+                  //             ? "-"
+                  //             : DateUtilities()
+                  //                 .convertServerDateToFormatterString(
+                  //                     widget.item.offerValidDate,
+                  //                     formatter: DateUtilities.hh_mm_ss),
+                  //         style: appTheme.black12TextStyleMedium,
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  child: totalSeconds == 0
+                      ? Padding(
+                          padding: EdgeInsets.only(
+                              left: getSize(12.0), right: getSize(75)),
+                          child: Text(
+                            R.string.commonString.offerExpired,
+                            style: appTheme.blackBold12TextStyle,
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.only(
+                              left: getSize(12.0), right: getSize(30)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                Duration(seconds: totalSeconds)
+                                    .inHours
+                                    .remainder(60 * 60)
+                                    .toString()
+                                    .padLeft(2, "0"),
+                                style: appTheme.blackBold12TextStyle,
+                              ),
+                              Text(
+                                " " + R.string.commonString.hrs,
+                                style: appTheme.black12TextStyle,
+                              ),
+                              SizedBox(width: getSize(5)),
+                              Text(
+                                Duration(seconds: totalSeconds)
+                                    .inMinutes
+                                    .remainder(60)
+                                    .toString()
+                                    .padLeft(2, "0"),
+                                style: appTheme.blackBold12TextStyle,
+                              ),
+                              Text(
+                                " " + R.string.commonString.min,
+                                style: appTheme.black12TextStyle,
+                              ),
+                              SizedBox(width: getSize(5)),
+                              Text(
+                                Duration(seconds: totalSeconds)
+                                    .inSeconds
+                                    .remainder(60)
+                                    .toString()
+                                    .padLeft(2, "0"),
+                                style: appTheme.blackBold12TextStyle,
+                              ),
+                              Text(
+                                " " + R.string.commonString.sec,
+                                style: appTheme.black12TextStyle,
+                              ),
+                            ],
+                          ),
+                        )),
               Container(
-                width: getPercentageWidth(20),
+                //width: getPercentageWidth(20),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(getSize(3)),
+                    color: widget.item.getOfferStatusColor().withOpacity(0.1)),
                 child: Text(
                   widget.item.getOfferStatus(),
                   style: appTheme.blackNormal14TitleColorPrimary.copyWith(
@@ -1660,33 +1723,35 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Container(
-                width: getPercentageWidth(30),
+              // Row(),
+              Spacer(),
+              Padding(
+                padding: EdgeInsets.only(right: getSize(10)),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: R.string.screenTitle.remarks,
-                              desc: widget.item.remarks ?? "-",
-                              positiveBtnTitle: R.string.commonString.ok,
-                            );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(getSize(2.0)),
-                        child: Image.asset(
-                          exclamation,
-                          width: getSize(16),
-                          height: getSize(16),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: getSize(10),
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     app.resolve<CustomDialogs>().confirmDialog(
+                    //           context,
+                    //           title: R.string.screenTitle.remarks,
+                    //           desc: widget.item.remarks ?? "-",
+                    //           positiveBtnTitle: R.string.commonString.ok,
+                    //         );
+                    //   },
+                    //   child: Padding(
+                    //     padding: EdgeInsets.all(getSize(2.0)),
+                    //     child: Image.asset(
+                    //       exclamation,
+                    //       width: getSize(16),
+                    //       height: getSize(16),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   width: getSize(10),
+                    // ),
                     widget.item.offerStatus != OfferStatus.rejected
                         ? InkWell(
                             onTap: () {
@@ -1730,6 +1795,52 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
           ),
         ),
       ],
+    );
+  }
+
+  calcualteDifference() {
+    isTimerCompleted = false;
+    var currentTime = DateTime.now();
+    var temp = DateUtilities()
+        .convertServerStringToFormatterDate(widget.item.offerValidDate);
+    print(temp);
+    // var offerValidDate = DateTime.parse(temp);
+    if (currentTime.isBefore(temp)) {
+      difference = temp.difference(currentTime);
+      totalSeconds = difference.inSeconds;
+      startTimer();
+    } else {
+      //offer expire;
+    }
+  }
+
+  void dispose() {
+    // Cancels the timer when the page is disposed.
+    if (_timer != null) {
+      _timer.cancel();
+    }
+
+    super.dispose();
+  }
+
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+          if (totalSeconds < 1) {
+            timer.cancel();
+            isTimerCompleted = true;
+            Future.delayed(Duration(seconds: 65), () {
+              calcualteDifference();
+            });
+            RxBus.post(true, tag: eventDiamondRefresh);
+          } else {
+            totalSeconds = totalSeconds - 1;
+          }
+        },
+      ),
     );
   }
 

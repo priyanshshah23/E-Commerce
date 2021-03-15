@@ -436,9 +436,9 @@ class DiamondModel {
     if (offerStatus == OfferStatus.rejected) {
       return appTheme.redColor;
     } else if (offerStatus == OfferStatus.pending) {
-      return appTheme.colorPrimary;
+      return appTheme.greenColor;
     } else if (offerStatus == OfferStatus.accepted) {
-      return appTheme.colorPrimary;
+      return appTheme.greenColor;
     }
 
     return appTheme.colorPrimary;
