@@ -1236,10 +1236,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Dhruv")
-                        //Text(getBidStatus(widget?.item?.offerValidDate ?? 0))
-                      ],
+                      children: getTimingDetails() ,
                     ),
                   ),
                   Spacer(),
@@ -1451,6 +1448,13 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             ),
           )
         : Container();
+  }
+
+  getTimingDetails() {
+    return <Widget>[
+      
+
+    ];
   }
 
   getOfferDetail() {

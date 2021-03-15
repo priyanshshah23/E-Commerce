@@ -17,7 +17,7 @@ class ApiConstants {
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
-  static const String webPageUrl = "https://beta.arjivexports.com/";
+  static const String webPageUrl = "http://arjivlocalapi.democ.in/";
   static const String shareUrl =
       "https://beta.arjivexports.com/diamond-details/";
   static const String googleDocUrl =
