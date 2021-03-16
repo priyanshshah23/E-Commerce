@@ -378,6 +378,7 @@ class CompanyInformationState extends State<CompanyInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusCompanyName.unfocus();
+        fieldFocusChange(context, _focusAddressLineOne);
       },
     );
   }
@@ -417,7 +418,7 @@ class CompanyInformationState extends State<CompanyInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusAddressLineOne.unfocus();
-//        fieldFocusChange(context, _focusAddressLineTwo);
+        fieldFocusChange(context, _focusAddressLineTwo);
       },
     );
   }
@@ -456,6 +457,7 @@ class CompanyInformationState extends State<CompanyInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusAddressLineTwo.unfocus();
+        fieldFocusChange(context, _focusPinCode);
       },
     );
   }
@@ -1096,17 +1098,11 @@ class CompanyInformationState extends State<CompanyInformation>
     // req.country = countryList[selectedCountryItem].id;//_countryController.text; //countryList[selectedCountryItem].id;
     // req.state = stateList[selectedStateItem].id;//_stateController.text; //stateList[selectedStateItem].id;
     // req.city =  cityList[selectedCityItem].id;//_cityController.text; //cityList[selectedCityItem].id;
-    req.address =
-        _addressLineOneController.text;
+    req.address = _addressLineOneController.text;
     req.vendorCode = _companyCodeController.text;
     businessTypeList.forEach((element) {
       if (element.title == _businessTypeController.text.trim()) {
         req.businessType = element.id;
-      }
-    });
-    natureOfOrgList.forEach((element) {
-      if (element.title == _natureOfOrgController.text.trim()) {
-        req.natureOfOrg = element.id;
       }
     });
     req.zipCode = pinCodeController.text;
@@ -1151,47 +1147,66 @@ class CompanyInformationState extends State<CompanyInformation>
         .then((resp) async {
       if (resp.data != null) {
         userAccount = resp.data;
-        _CompanyNameController.text = resp.data.companyName;
-        _addressLineOneController.text = resp.data.address;
-        _addressLineTwoController.text = resp.data.landMark;
-        _companyCodeController.text = resp.data.vendorCode;
-        businessTypeList.forEach((element) {
-          if (element.id == resp.data.businessType) {
-            _businessTypeController.text = element.title;
-            selectedBusinessItem = businessTypeList.indexOf(element);
-            element.isSelected = true;
+        if(resp.data.companyName != null) {
+          _CompanyNameController.text = resp.data.companyName;
+        }
+        if(resp.data.address != null) {
+          _addressLineOneController.text = resp.data.address;
+        }
+        if(resp.data.landMark != null) {
+          _addressLineTwoController.text = resp.data.landMark;
+        }
+        if(resp.data.vendorCode != null) {
+          _companyCodeController.text = resp.data.vendorCode;
+        }
+        if(resp.data.zipCode != null) {
+          pinCodeController.text = resp.data.zipCode;
+        }
+        if(resp.data.businessType != null) {
+          if(businessTypeList != null) {
+            businessTypeList.forEach((element) {
+              if (element.id == resp.data.businessType) {
+                _businessTypeController.text = element.title;
+                selectedBusinessItem = businessTypeList.indexOf(element);
+                element.isSelected = true;
+              }
+            });
           }
-        });
-        natureOfOrgList.forEach((element) {
-          if (element.id == resp.data.natureOfOrg) {
-            _natureOfOrgController.text = element.title;
-            selectedBusinessItem = natureOfOrgList.indexOf(element);
-            element.isSelected = true;
+        }
+        if(resp.data.country != null) {
+          if(countryList != null) {
+            countryList.forEach((element) {
+              if (element.id == resp.data.country.id) {
+                selectedCountryItem = countryList.indexOf(element);
+                element.isSelected = true;
+              }
+            });
           }
-        });
-        pinCodeController.text = resp.data.zipCode;
-        _countryController.text = resp.data.country.name;
-        _cityController.text = resp.data.city.name;
-        _stateController.text = resp.data.state.name;
-        countryList.forEach((element) {
-          if (element.id == resp.data.country.id) {
-            selectedCountryItem = countryList.indexOf(element);
-            element.isSelected = true;
+          _countryController.text = resp.data.country.name;
+        }
+        if(resp.data.state != null) {
+          if(stateList != null) {
+            stateList.forEach((element) {
+              if (element.id == resp.data.state.id) {
+                selectedStateItem = stateList.indexOf(element);
+                element.isSelected = true;
+              }
+            });
           }
-        });
-        cityList.forEach((element) {
-          if (element.id == resp.data.city.id) {
-            selectedCityItem = cityList.indexOf(element);
-            element.isSelected = true;
+          _stateController.text = resp.data.state.name;
+        }
+        if(resp.data.city != null) {
+          if(cityList != null) {
+            cityList.forEach((element) {
+              if (element.id == resp.data.city.id) {
+                selectedCityItem = cityList.indexOf(element);
+                element.isSelected = true;
+              }
+            });
           }
-        });
-        stateList.forEach((element) {
-          if (element.id == resp.data.state.id) {
-            selectedStateItem = stateList.indexOf(element);
-            element.isSelected = true;
-          }
-        });
-        setState(() {});
+          _cityController.text = resp.data.city.name;
+        }
+       setState(() {});
       }
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
