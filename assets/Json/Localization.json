@@ -80,6 +80,8 @@
       "logout": "Log Out",
       "logoutConfirmationMsg": "Are you sure you want to log out?",
       "address": "Address*",
+      "addressTwo": "Address2*",
+      "addressThree": "Address3",
       "accountNumber": "Account Number",
       "bankerName": "Bankers Name",
       "nameLable": "Name",

@@ -138,6 +138,8 @@ class AuthStrings {
   String logout = "Log Out";
   String logoutConfirmationMsg = "Are you sure you want to log out?";
   String address = "Address*";
+  String addressTwo = "Address2*";
+  String addressThree = "Address3";
   String accountNumber = "Account Number";
   String bankerName = "Bankers Name";
   String nameLable = "Name";

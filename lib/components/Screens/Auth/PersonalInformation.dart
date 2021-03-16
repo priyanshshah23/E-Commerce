@@ -275,6 +275,14 @@ class _PersonalInformationState extends State<PersonalInformation>
                   SizedBox(
                     height: getSize(20),
                   ),
+                  getAddressLineTwoTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
+                  getAddressLineThreeTextField(),
+                  SizedBox(
+                    height: getSize(20),
+                  ),
                   getEmailTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -292,7 +300,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                   SizedBox(
                     height: getSize(20),
                   ),
-                  companyInformationState.getPinCodeTextField(
+                  getPinCodeTextField(
                       zipCodeTitle: "ZipCode *", rd: this.readOnly),
                   SizedBox(
                     height: getSize(20),
@@ -313,6 +321,50 @@ class _PersonalInformationState extends State<PersonalInformation>
         ),
       ),
     );
+  }
+
+  getPinCodeTextField({String zipCodeTitle = "", bool rd}) {
+    return CommonTextfield(
+        focusNode: _focusPinCode,
+        readOnly: rd == null
+            ? this.readOnly
+                ? true
+                : false
+            : rd,
+        textOption: TextFieldOption(
+            hintText: isNullEmptyOrFalse(zipCodeTitle)
+                ? R.string.commonString.lblPinCode + "*"
+                : zipCodeTitle,
+            maxLine: 1,
+            prefixWid: getCommonIconWidget(
+                imageName: pincode,
+                imageType: IconSizeType.small,
+                color: Colors.black),
+            formatter: [
+              BlacklistingTextInputFormatter(new RegExp(RegexForTextField))
+            ],
+            keyboardType: TextInputType.number,
+            inputController: _pinCodeController,
+            isSecureTextField: false),
+        textCallback: (text) {
+//          setState(() {
+//            checkValidation();
+//          });
+        },
+        validation: (text) {
+          if (text.isEmpty) {
+            return R.string.errorString.enterPinCode;
+          } else if (!validatePincode(text)) {
+            return R.string.errorString.enterValidPinCode;
+          } else {
+            return null;
+          }
+        },
+        inputAction: TextInputAction.next,
+        onNextPress: () {
+          _focusPinCode.unfocus();
+          fieldFocusChange(context, _focusMobile);
+        });
   }
 
   getCountryDropDown() {
@@ -821,7 +873,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusMobile.unfocus();
-        fieldFocusChange(context, _focusSkype);
+        fieldFocusChange(context, _focusWhatsAppMobile);
       },
     );
   }
@@ -907,7 +959,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusWhatsAppMobile.unfocus();
-        fieldFocusChange(context, _focusMobile);
+        fieldFocusChange(context, _focusSkype);
       },
     );
   }
@@ -949,6 +1001,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusEmail.unfocus();
+        fieldFocusChange(context, _focusPinCode);
       },
     );
   }
@@ -988,9 +1041,9 @@ class _PersonalInformationState extends State<PersonalInformation>
         }
         // }
       },
-      inputAction: TextInputAction.next,
+      inputAction: TextInputAction.done,
       onNextPress: () {
-        _focusFirstName.unfocus();
+        _focusSkype.unfocus();
         // fieldFocusChange(context, _focusMiddleName);
       },
     );
@@ -1034,7 +1087,7 @@ class _PersonalInformationState extends State<PersonalInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusFirstName.unfocus();
-        fieldFocusChange(context, _focusMiddleName);
+        fieldFocusChange(context, _focusLastName);
       },
     );
   }
@@ -1115,6 +1168,86 @@ class _PersonalInformationState extends State<PersonalInformation>
       onNextPress: () {
         _focusAddressLineOne.unfocus();
         fieldFocusChange(context, _focusAddressLineTwo);
+      },
+    );
+  }
+
+  getAddressLineTwoTextField() {
+    return CommonTextfield(
+      focusNode: _focusAddressLineTwo,
+      readOnly: this.readOnly ? true : false,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.addressTwo,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: company,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _addressLineTwoController,
+        formatter: [
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+        if (text.trim().isEmpty) {
+          return R.string.errorString.enterAddress;
+        } else {
+          return null;
+        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusAddressLineTwo.unfocus();
+        fieldFocusChange(context, _focusAddressLineThree);
+      },
+    );
+  }
+
+  getAddressLineThreeTextField() {
+    return CommonTextfield(
+      focusNode: _focusAddressLineThree,
+      readOnly: this.readOnly ? true : false,
+      textOption: TextFieldOption(
+        hintText: R.string.authStrings.addressThree,
+        maxLine: 1,
+        prefixWid: getCommonIconWidget(
+            imageName: company,
+            imageType: IconSizeType.small,
+            color: Colors.black),
+        fillColor: fromHex("#FFEFEF"),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(11)),
+          borderSide: BorderSide(width: 1, color: Colors.red),
+        ),
+        inputController: _addressLineThreeController,
+        formatter: [
+          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+        ],
+        //isSecureTextField: false
+      ),
+      textCallback: (text) {},
+      validation: (text) {
+//        if (text.trim().isEmpty) {
+//          return R.string.errorString.enterAddress;
+//        } else {
+//          return null;
+//        }
+        // }
+      },
+      inputAction: TextInputAction.next,
+      onNextPress: () {
+        _focusAddressLineThree.unfocus();
+        fieldFocusChange(context, _focusEmail);
       },
     );
   }
@@ -1220,28 +1353,57 @@ class _PersonalInformationState extends State<PersonalInformation>
             context,
             isProgress: true)
         .then((resp) async {
-      userAccount = resp;
-      _firstNameController.text = resp.data.firstName;
-      _lastNameController.text = resp.data.lastName;
-      _addressLineOneController.text = resp.data.address;
-      _mobileController.text = resp.data.mobile;
-      selectedDialogCountryForMobile =
-          CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
-      _whatsAppMobileController.text = resp.data.whatsapp;
-      if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
-        selectedDialogCountryForWhatsapp =
-            CountryPickerUtils.getCountryByPhoneCode(
-                resp.data.whatsappCounCode);
+      if (resp != null) {
+        userAccount = resp;
+        if (resp.data != null) {
+          if (resp.data.firstName != null) {
+            _firstNameController.text = resp.data.firstName;
+          }
+          if (resp.data.lastName != null) {
+            _lastNameController.text = resp.data.lastName;
+          }
+          if (resp.data.address != null) {
+            _addressLineOneController.text = resp.data.address;
+          }
+          if (resp.data.mobile != null) {
+            _mobileController.text = resp.data.mobile;
+          }
+          if (resp.data.whatsapp != null) {
+            _whatsAppMobileController.text = resp.data.whatsapp;
+          }
+          if (resp.data.countryCode != null) {
+            selectedDialogCountryForMobile =
+                CountryPickerUtils.getCountryByPhoneCode(resp.data.countryCode);
+          }
+          if (!isNullEmptyOrFalse(resp.data.whatsappCounCode)) {
+            selectedDialogCountryForWhatsapp =
+                CountryPickerUtils.getCountryByPhoneCode(
+                    resp.data.whatsappCounCode);
+          }
+          if (resp.data.profileImage != null) {
+            image = resp.data.profileImage;
+          }
+          if (resp.data.email != null) {
+            _emailController.text = resp.data.email;
+          }
+          if (resp.data.country != null) {
+            _countryController.text = resp.data.country;
+          }
+          if (resp.data.state != null) {
+            _stateController.text = resp.data.state;
+          }
+          if (resp.data.city != null) {
+            _cityController.text = resp.data.city;
+          }
+          if (resp.data.zipcode != null) {
+            companyInformationState.pinCodeController.text = resp.data.zipcode;
+          }
+          if (resp.data.skype != null) {
+            _skypeController.text = resp.data.skype;
+          }
+          setState(() {});
+        }
       }
-
-      _emailController.text = resp.data.email;
-      image = resp.data.profileImage;
-      _countryController.text = resp.data.country;
-      _stateController.text = resp.data.state;
-      _cityController.text = resp.data.city;
-      companyInformationState.pinCodeController.text = resp.data.zipcode;
-      _skypeController.text = resp.data.skype;
-      setState(() {});
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,

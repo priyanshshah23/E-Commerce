@@ -7,6 +7,8 @@ class PersonalInformationReq {
   String middleName;
   String lastName;
   String email;
+  String address2;
+  String address3;
 
 //  String username;
 //  String country;
@@ -77,6 +79,8 @@ class PersonalInformationReq {
     this.country,
     this.state,
     this.pincode,
+    this.address2,
+    this.address3,
 //        this.skype,skype
 //        this.wechat,
   });
@@ -92,6 +96,9 @@ class PersonalInformationReq {
     country = json['country'];
     state = json['state'];
     city = json['city'];
+    address2 = json['address2'];
+    address3 = json['address3'];
+
 //    pinCode = json['pinCode'];
 //    fax = json['fax'];
 //    seller = json['seller'];
@@ -133,6 +140,8 @@ class PersonalInformationReq {
     if (this.email != null) {
       data["email"] = this.email;
     }
+    data['address2'] = this.address2;
+    data['address3'] = this.address3;
 //    data['username'] = this.username;
     data['country'] = this.country;
     data['state'] = this.state;

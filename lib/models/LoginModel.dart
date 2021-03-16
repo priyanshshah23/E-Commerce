@@ -204,7 +204,8 @@ class User {
   String country;
   String city;
   String state;
-
+  String address2;
+  String address3;
   //mpin
   bool isMpinAdded;
 
@@ -232,6 +233,9 @@ class User {
     toAuthenticate = json['toAuthenticate'];
     isEmailVerified = json['isEmailVerified'];
     emailHash = json['emailHash'];
+    address2 = json['address2'];
+    address3 = json['address3'];
+
     isDeleted = json['isDeleted'];
     dateOfJoin = json['dateOfJoin'];
     isActive = json['isActive'];
@@ -415,6 +419,8 @@ class User {
 
     //mpin
     data['isMpinAdded'] = this.isMpinAdded;
+    data['address2'] = this.address2;
+    data['address3'] = this.address3;
     return data;
   }
 
