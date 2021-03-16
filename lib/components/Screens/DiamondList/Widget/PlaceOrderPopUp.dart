@@ -61,14 +61,11 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
   @override
   void initState() {
     super.initState();
-    @override
-    void initState() {
-      super.initState();
+
       SyncManager.instance.callAnalytics(context,
           page: PageAnalytics.MY_ORDER,
           section: SectionAnalytics.VIEW,
           action: ActionAnalytics.OPEN);
-    }
   }
 
   @override
@@ -319,6 +316,7 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: getSize(20)),
       child: CommonTextfield(
+        enable: false,
         autoFocus: false,
         textOption: TextFieldOption(
           prefixWid: getCommonIconWidget(

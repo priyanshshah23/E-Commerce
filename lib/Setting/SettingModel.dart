@@ -515,9 +515,9 @@ class BottomMenuSetting {
         addPlaceOrderInBottomMenu(moreMenuList, placeOrder);
       }
     }
-    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
-            KYCStatus.pending) ==
-        KYCStatus.approved) {
+//    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
+//            KYCStatus.pending) ==
+//        KYCStatus.approved) {
       if (!isDetail && !isCompare) {
         if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
             moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
@@ -526,7 +526,7 @@ class BottomMenuSetting {
           addCompareInBottomMenu(moreMenuList, compare);
         }
       }
-    }
+//    }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
       addEnquiryInBottomMenu(moreMenuList);
     }
@@ -568,14 +568,14 @@ class BottomMenuSetting {
 //        }
 //      }
 //    }
-//    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
-//      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
-//          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
-//          moduleType !=
-//              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-//        addAppointmentInBottomMenu(moreMenuList);
-//      }
-//    }
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+          moduleType !=
+              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+        addAppointmentInBottomMenu(moreMenuList);
+      }
+    }
 
     addExcelBottomMenu(moreMenuList);
 
@@ -744,7 +744,7 @@ class BottomMenuSetting {
           }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
             addOfferInBottomMenu(moreMenuList, offer,
-                isCenter: false, title: "Quote");
+                isCenter: false, title: R.string.screenTitle.offer);
           }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
             addWatchlistInBottomMenu(moreMenuList, addToWatchlist,

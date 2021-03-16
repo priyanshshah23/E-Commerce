@@ -60,6 +60,9 @@ class _OfferPopupState extends State<OfferPopup> {
           selectedDate,
           formatter: DateUtilities.dd_mm_yyyy_);
     }
+    print("------${app.resolve<PrefUtils>().getUserDetails()?.account?.companyName ?? ""}");
+    _nameController.text = app.resolve<PrefUtils>().getUserDetails()?.account?.companyName ?? "";
+
     super.initState();
   }
 
@@ -228,6 +231,7 @@ class _OfferPopupState extends State<OfferPopup> {
       ),
       child: CommonTextfield(
           // readOnly: true,
+        enable: false,
           tapCallback: () {},
           textOption: TextFieldOption(
             prefixWid: getCommonIconWidget(
@@ -238,7 +242,7 @@ class _OfferPopupState extends State<OfferPopup> {
             //     : R.string.commonString.offerVelidTill,
             maxLine: 1,
             keyboardType: TextInputType.text,
-            inputController: _dateController,
+            inputController: _nameController,
             // isSecureTextField: false,
           ),
 //           textCallback: (text) {

@@ -64,7 +64,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   void initState() {
     super.initState();
     widget.item.setBidAmount();
-    calcualteDifference();
+    if(widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+      calcualteDifference();
+    }
     RxBus.register<bool>(tag: eventBusRefreshItem).listen((event) {
 //        Future.delayed(Duration(seconds: 1));
 
@@ -1812,7 +1814,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     if (currentTime.isBefore(temp)) {
       difference = temp.difference(currentTime);
       totalSeconds = difference.inSeconds;
-//      startTimer();
+      startTimer();
     } else {
       //offer expire;
     }
