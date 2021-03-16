@@ -644,6 +644,7 @@ class Account {
   CityList city;
   List<Kyc> kyc;
   bool isKycUploaded;
+  String businessId;
 
   Account.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -666,6 +667,7 @@ class Account {
     ledgerType = json['ledgerType'];
     normalizeName = json['normalizeName'];
     accountType = json['accountType'];
+    businessId = json['businessId'];
     hasBroker = json['hasBroker'];
     brokerInfo = json['brokerInfo'] != null
         ? new BrokerInfo.fromJson(json['brokerInfo'])
@@ -753,6 +755,9 @@ class Account {
     data['prefix'] = this.prefix;
     data['gender'] = this.gender;
     data['name'] = this.name;
+    if (this.businessId != null) {
+      data['businessId'] = this.businessId;
+    }
     data['profileImage'] = this.profileImage;
     data['code'] = this.code;
     data['displayName'] = this.displayName;
