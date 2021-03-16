@@ -19,6 +19,7 @@ class CompanyInformationReq {
   String landMark;
   String zipCode;
   String vendorCode;
+  String businessId;
 
   CompanyInformationReq(
       {this.sId,
@@ -33,6 +34,7 @@ class CompanyInformationReq {
       this.address,
       this.landMark,
       this.zipCode,
+      this.businessId,
       this.vendorCode});
 
   CompanyInformationReq.fromJson(Map<String, dynamic> json) {
@@ -47,6 +49,7 @@ class CompanyInformationReq {
     city = json['city'];
     address = json['address'];
     landMark = json['landMark'];
+    businessId = json['businessId'];
     zipCode = json['zipCode'];
     vendorCode = json['vendorCode'];
   }
@@ -60,6 +63,7 @@ class CompanyInformationReq {
     data['businessType'] = this.businessType;
     data['natureOfOrg'] = this.natureOfOrg;
     data['country'] = this.country;
+    data['businessId'] = this.businessId;
     data['state'] = this.state;
     data['city'] = this.city;
     data['address'] = this.address;
