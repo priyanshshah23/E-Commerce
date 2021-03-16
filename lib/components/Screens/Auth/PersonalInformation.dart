@@ -62,8 +62,10 @@ class _PersonalInformationState extends State<PersonalInformation>
   // final TextEditingController _skypeController = TextEditingController();
 
   bool isProfileImageUpload = false;
-  File profileImage;
-  String image;
+  bool isPhotoIdUpload = false;
+  File profileImageFile, photoIdFile;
+  String profileImage, photoIdImage;
+
   Country selectedDialogCountryForMobile =
       CountryPickerUtils.getCountryByIsoCode("US");
   Country selectedDialogCountryForWhatsapp =
@@ -142,7 +144,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                     _formKey.currentState.save();
                     if (_mobileController.text.isNotEmpty) {
                       if (await checkValidation()) {
-                        if (isProfileImageUpload) {
+                        if (isProfileImageUpload || isPhotoIdUpload) {
                           await uploadDocument();
                         } else {
                           callPersonalInformationApi();
@@ -190,7 +192,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                             openImagePickerDocuments((img) {
                               setState(() {
                                 isProfileImageUpload = true;
-                                profileImage = img;
+                                profileImageFile = img;
                               });
                             });
                           }
@@ -214,13 +216,13 @@ class _PersonalInformationState extends State<PersonalInformation>
                                     ),
                                     child: isProfileImageUpload
                                         ? Image.file(
-                                            profileImage,
+                                            profileImageFile,
                                             width: getSize(120),
                                             height: getSize(120),
                                             fit: BoxFit.cover,
                                           )
                                         : getImageView(
-                                            image ?? "",
+                                            profileImage ?? "",
                                             width: getSize(120),
                                             height: getSize(120),
                                             placeHolderImage: placeHolder,
@@ -228,7 +230,8 @@ class _PersonalInformationState extends State<PersonalInformation>
                                           ),
                                   ),
                                   Container(
-                                    color: isProfileImageUpload || image != ""
+                                    color: isProfileImageUpload ||
+                                            profileImage != ""
                                         ? Colors.transparent
                                         : appTheme.colorPrimary
                                             .withOpacity(0.5),
@@ -314,6 +317,44 @@ class _PersonalInformationState extends State<PersonalInformation>
                     height: getSize(20),
                   ),
                   getSkypeTextField(),
+                  SizedBox(height: getSize(20)),
+                  InkWell(
+                    onTap: () {
+                      if (!readOnly) {
+                        FocusScope.of(context).unfocus();
+                        openImagePickerDocuments((img) {
+                          setState(() {
+                            isPhotoIdUpload = true;
+                            photoIdFile = img;
+                          });
+                        });
+                      }
+                    },
+                    child: Container(
+                      height: getSize(110),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(getSize(50)),
+                        ),
+                        border: Border.all(color: appTheme.dividerColor),
+                      ),
+                      child: Center(
+                        child: isPhotoIdUpload
+                            ? Image.file(
+                                photoIdFile,
+                                height: getSize(80),
+                                width: getSize(80),
+                              )
+                            : getImageView(
+                                photoIdImage ?? "",
+                                height: getSize(80),
+                                width: getSize(130),
+                                isFitApply: true,
+                                fit: BoxFit.contain,
+                              ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -879,20 +920,43 @@ class _PersonalInformationState extends State<PersonalInformation>
   }
 
   uploadDocument() async {
-    var imgProfile = profileImage.path;
+    var imgProfile = profileImageFile;
     if (isProfileImageUpload) {
-      await uploadProfileImage(profileImage, (imagePath) {
-        imgProfile = imagePath;
+      await uploadProfileImage(imgProfile, (imagePath) {
+        profileImage = imagePath;
+        callUploadImage();
       });
+    } else {
+      callUploadImage();
     }
   }
 
-  uploadProfileImage(File imgFile, Function imagePath) async {
-    uploadFile(
-      context,
-      "",
-      file: imgFile,
-    ).then((result) {
+  callUploadImage() async {
+    if (isPhotoIdUpload) {
+      var photoIdProof = photoIdFile;
+      await uploadProfileImage(photoIdProof, (photoIdPath) {
+        photoIdImage = photoIdPath;
+        callEditProfile();
+      });
+    } else {
+      callEditProfile();
+    }
+  }
+
+  callEditProfile() {
+    if (profileImage != null && photoIdImage != null) {
+      callPersonalInformationApi(
+          imagePath: profileImage, documentPath: photoIdImage);
+    } else if (profileImage != null) {
+      callPersonalInformationApi(imagePath: profileImage);
+    } else if (photoIdImage != null) {
+      callPersonalInformationApi(documentPath: photoIdImage);
+    }
+  }
+
+  uploadProfileImage(File imgFile, Function imagePath,
+      {List<File> files}) async {
+    uploadFile(context, "", file: imgFile).then((result) {
       if (result.code == CODE_OK) {
         String imgPath =
             result.detail.files != null && result.detail.files.length > 0
@@ -900,7 +964,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                 : "";
         if (isNullEmptyOrFalse(imgPath) == false) {
           imagePath(imgPath);
-          callPersonalInformationApi(imagePath: imgPath);
+//          callPersonalInformationApi(imagePath: imgPath);
         }
       }
       return;
@@ -1274,7 +1338,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     return true;
   }
 
-  callPersonalInformationApi({String imagePath}) async {
+  callPersonalInformationApi({String imagePath, String documentPath}) async {
     PersonalInformationReq req = PersonalInformationReq();
     req.id = app.resolve<PrefUtils>().getUserDetails().id;
     req.address = _addressLineOneController.text.trim();
@@ -1287,6 +1351,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     req.email = _emailController.text.trim();
     req.skype = _skypeController.text.trim();
     req.pincode = companyInformationState.pinCodeController.text.trim();
+
     countryList.forEach((element) {
       if (element.title == _countryController.text.trim()) {
         req.country = element.id;
@@ -1304,6 +1369,9 @@ class _PersonalInformationState extends State<PersonalInformation>
     });
     if (imagePath != null) {
       req.profileImage = imagePath;
+    }
+    if (documentPath != null) {
+      req.photoId = documentPath;
     }
 
     NetworkCall<PersonalInformationViewResp>()
@@ -1331,9 +1399,9 @@ class _PersonalInformationState extends State<PersonalInformation>
             positiveBtnTitle: R.string.commonString.ok,
           );
 
-      if (oldEmail != _emailController.text) {
-        callLogout(context);
-      }
+//      if (oldEmail != _emailController.text) {
+//        callLogout(context);
+//      }
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
@@ -1381,7 +1449,10 @@ class _PersonalInformationState extends State<PersonalInformation>
                     resp.data.whatsappCounCode);
           }
           if (resp.data.profileImage != null) {
-            image = resp.data.profileImage;
+            profileImage = resp.data.profileImage;
+          }
+          if (resp.data.photoId != null) {
+            photoIdImage = resp.data.photoId;
           }
           if (resp.data.email != null) {
             _emailController.text = resp.data.email;
