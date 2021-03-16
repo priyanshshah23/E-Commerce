@@ -140,6 +140,7 @@ class CompanyInformationState extends State<CompanyInformation>
 //          leadingButton: getBackButton(context),
 //          centerTitle: false,
 //        ),
+        backgroundColor: appTheme.whiteColor,
         bottomNavigationBar: Padding(
           padding: EdgeInsets.only(
             top: getSize(10),

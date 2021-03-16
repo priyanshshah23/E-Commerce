@@ -75,6 +75,7 @@ class _DocumentsState extends State<Documents>
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: appTheme.whiteColor,
 //        appBar: getAppBar(
 //          context,
 //          "Personal Information",
@@ -228,7 +229,6 @@ class _DocumentsState extends State<Documents>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );
