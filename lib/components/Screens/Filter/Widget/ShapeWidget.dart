@@ -99,7 +99,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                   GridView.count(
                     shrinkWrap: true,
                     primary: false,
-                    childAspectRatio: 1,
+                    childAspectRatio: 0.9,
                     padding: EdgeInsets.all(getSize(2)),
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
@@ -387,9 +387,9 @@ class ShapeItemWidget extends StatelessWidget {
   }
 
   showWebDisplay() {
-    return selectionModel.valueKeyisCode
+    return /*selectionModel.valueKeyisCode
         ? (obj.code ?? "-").toLowerCase().capitalize()
-        : (obj.webDisplay ?? "-").toLowerCase().capitalize();
+        : */(obj.webDisplay ?? "-").toLowerCase().capitalize();
   }
 }
 

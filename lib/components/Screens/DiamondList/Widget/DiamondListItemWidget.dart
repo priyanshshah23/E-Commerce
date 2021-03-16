@@ -1808,7 +1808,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     if (currentTime.isBefore(temp)) {
       difference = temp.difference(currentTime);
       totalSeconds = difference.inSeconds;
-      startTimer();
+//      startTimer();
     } else {
       //offer expire;
     }
@@ -1827,7 +1827,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
-      (Timer timer) => setState(
+      (Timer timer) {
+        if(mounted)
+        setState(
         () {
           if (totalSeconds < 1) {
             timer.cancel();
@@ -1840,7 +1842,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             totalSeconds = totalSeconds - 1;
           }
         },
-      ),
+      );}
     );
   }
 

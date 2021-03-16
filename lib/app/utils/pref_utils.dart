@@ -266,7 +266,7 @@ class PrefUtils {
   // Store Dashboard Data
   Future<void> saveDashboardDetails(DashboardModel dashboardModel) async {
     await _preferences.setString(
-        keyDashboard, json.encode(dashboardModel));
+        keyDashboard, json.encode(dashboardModel.toJson()));
   }
 
   DashboardModel getDashboardDetails() {
