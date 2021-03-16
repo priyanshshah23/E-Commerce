@@ -220,15 +220,15 @@ class CompanyInformationState extends State<CompanyInformation>
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getNatureOfOrgDropDown(),
+                  // getNatureOfOrgDropDown(),
+                  // SizedBox(
+                  //   height: getSize(20),
+                  // ),
+                  getAddressLineOneTextField(),
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getAddressLineOneTextField(),
-//                  SizedBox(
-//                    height: getSize(20),
-//                  ),
-//                  getAddressLineTwoTextField(),
+                  getAddressLineTwoTextField(),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -446,11 +446,11 @@ class CompanyInformationState extends State<CompanyInformation>
       ),
       textCallback: (text) {},
       validation: (text) {
-        if (text.trim().isEmpty) {
-          return R.string.errorString.enterAddress;
-        } else {
-          return null;
-        }
+        // if (text.trim().isEmpty) {
+        //   return R.string.errorString.enterAddress;
+        // } else {
+        //   return null;
+        // }
         // }
       },
       inputAction: TextInputAction.next,
@@ -1080,6 +1080,9 @@ class CompanyInformationState extends State<CompanyInformation>
         req.country = element.id;
       }
     });
+    if (_addressLineTwoController.text.trim() != "") {
+      req.landMark = _addressLineTwoController.text.trim();
+    }
     stateList.forEach((element) {
       if (element.title == _stateController.text.trim()) {
         req.state = element.id;
@@ -1094,7 +1097,7 @@ class CompanyInformationState extends State<CompanyInformation>
     // req.state = stateList[selectedStateItem].id;//_stateController.text; //stateList[selectedStateItem].id;
     // req.city =  cityList[selectedCityItem].id;//_cityController.text; //cityList[selectedCityItem].id;
     req.address =
-        _addressLineOneController.text + " " + _addressLineTwoController.text;
+        _addressLineOneController.text;
     req.vendorCode = _companyCodeController.text;
     businessTypeList.forEach((element) {
       if (element.title == _businessTypeController.text.trim()) {
@@ -1150,6 +1153,7 @@ class CompanyInformationState extends State<CompanyInformation>
         userAccount = resp.data;
         _CompanyNameController.text = resp.data.companyName;
         _addressLineOneController.text = resp.data.address;
+        _addressLineTwoController.text = resp.data.landMark;
         _companyCodeController.text = resp.data.vendorCode;
         businessTypeList.forEach((element) {
           if (element.id == resp.data.businessType) {
