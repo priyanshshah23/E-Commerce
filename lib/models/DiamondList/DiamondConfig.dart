@@ -2052,7 +2052,7 @@ class DiamondConfig {
           arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
           arraDiamond[i].displayDesc = DateUtilities()
               .convertServerDateToFormatterString(arraDiamond[i].createdAt,
-                  formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
+                  formatter: DateUtilities.dd_mm_yyyy_);
           arraDiamond[i].showCheckBox = true;
         }
 

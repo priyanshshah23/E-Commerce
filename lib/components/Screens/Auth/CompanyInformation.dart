@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:country_pickers/country.dart';
 import 'package:country_pickers/country_pickers.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -5,8 +7,10 @@ import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/network/Uploadmanager.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/components/Screens/Auth/Widget/DialogueList.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
@@ -76,6 +80,9 @@ class CompanyInformationState extends State<CompanyInformation>
   var _focusNatureOfOrg = FocusNode();
 
   bool isPasswordSame = true;
+  bool isPhotoIdUpload = false;
+  File photoIdFile;
+  String photoIdImage;
 
 //  List<CityList> cityList = List<CityList>();
 //  CityList selectedCityItem = CityList();
@@ -153,7 +160,7 @@ class CompanyInformationState extends State<CompanyInformation>
 //          margin: EdgeInsets.only(top: getSize(15), left: getSize(0)),
 //          decoration: BoxDecoration(boxShadow: getBoxShadow(context)),
             child: AppButton.flat(
-              onTap: () {
+              onTap: () async {
                 readOnly = !readOnly;
 
                 if (readOnly) {
@@ -163,7 +170,11 @@ class CompanyInformationState extends State<CompanyInformation>
                     if (countrySelect()) {
                       if (stateSelect()) {
                         if (citySelect()) {
-                          callCompanyInformationApi();
+                          if (isPhotoIdUpload) {
+                            await uploadDocument();
+                          } else {
+                            callCompanyInformationApi();
+                          }
                         } else {
                           showToast(R.string.commonString.cityFirst,
                               context: context);
@@ -250,6 +261,44 @@ class CompanyInformationState extends State<CompanyInformation>
                     height: getSize(20),
                   ),
                   getCompanyCodeTextField(),
+                  SizedBox(height: getSize(20)),
+                  InkWell(
+                    onTap: () {
+                      if (!readOnly) {
+                        FocusScope.of(context).unfocus();
+                        openImagePickerDocuments((img) {
+                          setState(() {
+                            isPhotoIdUpload = true;
+                            photoIdFile = img;
+                          });
+                        });
+                      }
+                    },
+                    child: Container(
+                      height: getSize(110),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(getSize(50)),
+                        ),
+                        border: Border.all(color: appTheme.dividerColor),
+                      ),
+                      child: Center(
+                        child: isPhotoIdUpload
+                            ? Image.file(
+                                photoIdFile,
+                                height: getSize(80),
+                                width: getSize(80),
+                              )
+                            : getImageView(
+                                photoIdImage ?? "",
+                                height: getSize(80),
+                                width: getSize(130),
+                                isFitApply: true,
+                                fit: BoxFit.contain,
+                              ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -257,6 +306,55 @@ class CompanyInformationState extends State<CompanyInformation>
         ),
       ),
     );
+  }
+
+  uploadDocument() async {
+    var imgKyc = photoIdFile.path;
+    if (isPhotoIdUpload) {
+      await uploadkycImage(photoIdFile, (imagePath) {
+        imgKyc = imagePath;
+      });
+    }
+  }
+
+  uploadkycImage(File imgFile, Function imagePath) async {
+    uploadFile(
+      context,
+      "",
+      file: imgFile,
+    ).then((result) {
+      if (result != null) {
+        if (result.code == CODE_OK) {
+          String imgPath =
+              result.detail.files != null && result.detail.files.length > 0
+                  ? result.detail.files.first.absolutePath
+                  : "";
+          if (isNullEmptyOrFalse(imgPath) == false) {
+            imagePath(imgPath);
+            callCompanyInformationApi(imagePath: imgPath);
+          }
+        }
+      } else {
+        showToast("Please try again", context: context);
+        setState(() {
+          _autoValidate = true;
+          readOnly = false;
+        });
+      }
+      return;
+    });
+  }
+
+  openImagePickerDocuments(Function imgFile) {
+//    getImage();
+    openImagePicker(context, (image) {
+      if (image == null) {
+        return;
+      }
+      imgFile(image);
+      setState(() {});
+      return;
+    });
   }
 
   getCompanyCodeTextField() {
@@ -1075,7 +1173,7 @@ class CompanyInformationState extends State<CompanyInformation>
     );
   }
 
-  callCompanyInformationApi() async {
+  callCompanyInformationApi({String imagePath}) async {
     CompanyInformationReq req = CompanyInformationReq();
     req.companyName = _CompanyNameController.text;
     countryList.forEach((element) {
@@ -1083,6 +1181,9 @@ class CompanyInformationState extends State<CompanyInformation>
         req.country = element.id;
       }
     });
+    if (isPhotoIdUpload) {
+      req.businessId = imagePath;
+    }
     if (_addressLineTwoController.text.trim() != "") {
       req.landMark = _addressLineTwoController.text.trim();
     }
@@ -1162,6 +1263,9 @@ class CompanyInformationState extends State<CompanyInformation>
         }
         if (resp.data.zipCode != null) {
           pinCodeController.text = resp.data.zipCode;
+        }
+        if (resp.data.businessId != null) {
+          photoIdImage = resp.data.businessId;
         }
         if (resp.data.businessType != null) {
           if (businessTypeList != null) {

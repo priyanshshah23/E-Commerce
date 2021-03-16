@@ -63,11 +63,15 @@ class CompanyInformationReq {
     data['businessType'] = this.businessType;
     data['natureOfOrg'] = this.natureOfOrg;
     data['country'] = this.country;
-    data['businessId'] = this.businessId;
+    if (this.businessId != null) {
+      data['businessId'] = this.businessId;
+    }
     data['state'] = this.state;
     data['city'] = this.city;
     data['address'] = this.address;
-    data['landMark'] = this.landMark;
+    if (this.landMark != null) {
+      data['landMark'] = this.landMark;
+    }
     data['zipCode'] = this.zipCode;
     data['vendorCode'] = this.vendorCode;
     return data;
