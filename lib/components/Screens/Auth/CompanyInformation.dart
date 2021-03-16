@@ -1147,23 +1147,23 @@ class CompanyInformationState extends State<CompanyInformation>
         .then((resp) async {
       if (resp.data != null) {
         userAccount = resp.data;
-        if(resp.data.companyName != null) {
+        if (resp.data.companyName != null) {
           _CompanyNameController.text = resp.data.companyName;
         }
-        if(resp.data.address != null) {
+        if (resp.data.address != null) {
           _addressLineOneController.text = resp.data.address;
         }
-        if(resp.data.landMark != null) {
+        if (resp.data.landMark != null) {
           _addressLineTwoController.text = resp.data.landMark;
         }
-        if(resp.data.vendorCode != null) {
+        if (resp.data.vendorCode != null) {
           _companyCodeController.text = resp.data.vendorCode;
         }
-        if(resp.data.zipCode != null) {
+        if (resp.data.zipCode != null) {
           pinCodeController.text = resp.data.zipCode;
         }
-        if(resp.data.businessType != null) {
-          if(businessTypeList != null) {
+        if (resp.data.businessType != null) {
+          if (businessTypeList != null) {
             businessTypeList.forEach((element) {
               if (element.id == resp.data.businessType) {
                 _businessTypeController.text = element.title;
@@ -1173,8 +1173,8 @@ class CompanyInformationState extends State<CompanyInformation>
             });
           }
         }
-        if(resp.data.country != null) {
-          if(countryList != null) {
+        if (resp.data.country != null) {
+          if (countryList != null) {
             countryList.forEach((element) {
               if (element.id == resp.data.country.id) {
                 selectedCountryItem = countryList.indexOf(element);
@@ -1184,8 +1184,8 @@ class CompanyInformationState extends State<CompanyInformation>
           }
           _countryController.text = resp.data.country.name;
         }
-        if(resp.data.state != null) {
-          if(stateList != null) {
+        if (resp.data.state != null) {
+          if (stateList != null) {
             stateList.forEach((element) {
               if (element.id == resp.data.state.id) {
                 selectedStateItem = stateList.indexOf(element);
@@ -1195,8 +1195,8 @@ class CompanyInformationState extends State<CompanyInformation>
           }
           _stateController.text = resp.data.state.name;
         }
-        if(resp.data.city != null) {
-          if(cityList != null) {
+        if (resp.data.city != null) {
+          if (cityList != null) {
             cityList.forEach((element) {
               if (element.id == resp.data.city.id) {
                 selectedCityItem = cityList.indexOf(element);
@@ -1206,7 +1206,7 @@ class CompanyInformationState extends State<CompanyInformation>
           }
           _cityController.text = resp.data.city.name;
         }
-       setState(() {});
+        setState(() {});
       }
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
