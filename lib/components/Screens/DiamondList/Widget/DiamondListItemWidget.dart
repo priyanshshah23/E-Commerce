@@ -146,20 +146,23 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       child: Row(children: [
                         widget.moduleType !=
                                 DiamondModuleConstant.MODULE_TYPE_MY_OFFICE
+
+                            // ? Text(
+                            //     widget.item.displayTitle,
+                            //     style: appTheme.black16MediumTextStyle.copyWith(
+                            //       fontSize: getFontSize(14),
+                            //     ),
+                            // )
+                            // : SizedBox(),
+
                             ? Text(
-                                widget.item.displayTitle,
+                                (widget.item?.displayDesc ?? ""),
                                 style: appTheme.black16MediumTextStyle.copyWith(
                                   fontSize: getFontSize(14),
                                 ),
                               )
                             : SizedBox(),
                         Spacer(),
-                        Text(
-                          "Date : " + (widget.item?.displayDesc ?? ""),
-                          style: appTheme.black16MediumTextStyle.copyWith(
-                            fontSize: getFontSize(14),
-                          ),
-                        ),
                         SizedBox(width: getSize(8.0)),
                         // Text(
                         //   "Select All",
@@ -168,6 +171,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                         //   ),
                         // ),
                         // SizedBox(width: getSize(8.0)),
+
                         Image.asset(
                           widget.item.isGroupSelected
                               ? selectedCheckbox
@@ -1808,7 +1812,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     if (currentTime.isBefore(temp)) {
       difference = temp.difference(currentTime);
       totalSeconds = difference.inSeconds;
-      startTimer();
+//      startTimer();
     } else {
       //offer expire;
     }
@@ -1827,7 +1831,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
-      (Timer timer) => setState(
+      (Timer timer) {
+        if(mounted)
+        setState(
         () {
           if (totalSeconds < 1) {
             timer.cancel();
@@ -1840,7 +1846,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             totalSeconds = totalSeconds - 1;
           }
         },
-      ),
+      );}
     );
   }
 
