@@ -67,9 +67,9 @@ class _DocumentsState extends State<Documents>
 
   @override
   Widget build(BuildContext context) {
-    if (kycList.length <= 0) {
-      getDocuments(false);
-    }
+    // if (kycList.length <= 0) {
+    //   getDocuments(false);
+    // }
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
