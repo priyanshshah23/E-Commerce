@@ -153,6 +153,14 @@ class _TagWidgetState extends State<TagWidget> {
             (index) {
               return InkWell(
                 onTap: () {
+                  int firstIndex = widget.model.masters.indexOf(widget
+                      .model.masters
+                      .firstWhere((element) => element.isSelected));
+                  int lastIndex = widget.model.masters.indexOf(widget
+                      .model.masters
+                      .firstWhere((element) => element.isSelected));
+                  if (index < firstIndex || index > lastIndex) {
+                  } else {}
                   setState(() {
                     if (widget.model.viewType == ViewTypes.caratRange) {
                       RxBus.post(true, tag: eventForShareCaratRangeSelected);
