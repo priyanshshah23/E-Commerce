@@ -2171,7 +2171,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     borderRadius: BorderRadius.circular(
                       getSize(10),
                     ),
-                    child: getImageView(item.substring(1),
+                    child: getImageView(item/*.substring(1)*/,
                         placeHolderImage: diamond,
                         fit: BoxFit.cover,
                         height: getSize(
