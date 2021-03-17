@@ -32,6 +32,8 @@ class DiamondDetailUIAPIKeys {
   static const String hANm = "hANm";
   static const String comments = "comments";
   static const String kToSStr = "kToSStr";
+  static const String clr = "clr";
+  static const String col = "col";
 }
 
 class DiamondDetailUIModel {
