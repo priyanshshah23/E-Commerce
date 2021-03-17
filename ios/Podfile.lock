@@ -103,9 +103,6 @@ PODS:
   - nanopb/decode (1.30906.0)
   - nanopb/encode (1.30906.0)
   - OneSignal (2.16.3)
-  - onesignal_flutter (2.6.3):
-    - Flutter
-    - OneSignal (= 2.16.3)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -160,7 +157,6 @@ DEPENDENCIES:
   - libphonenumber (from `.symlinks/plugins/libphonenumber/ios`)
   - local_auth (from `.symlinks/plugins/local_auth/ios`)
   - OneSignal (< 3.0, >= 2.7.1)
-  - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
@@ -228,8 +224,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/libphonenumber/ios"
   local_auth:
     :path: ".symlinks/plugins/local_auth/ios"
-  onesignal_flutter:
-    :path: ".symlinks/plugins/onesignal_flutter/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider:
@@ -290,7 +284,6 @@ SPEC CHECKSUMS:
   local_auth: 17f985934bb4ab2637431e5b3fe1b2d6698d2051
   nanopb: 59317e09cf1f1a0af72f12af412d54edf52603fc
   OneSignal: fd223b247d46e0aa97c7712f3e031c29798d018a
-  onesignal_flutter: 605e4ed3c95a9705db9f5073a66ac6d0045b3fee
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b

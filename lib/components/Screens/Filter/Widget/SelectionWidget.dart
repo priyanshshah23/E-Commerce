@@ -1,20 +1,22 @@
+import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/ShapeWidget.dart';
+import 'package:diamnow/models/DiamondDetail/DiamondDetailUIModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/modules/Filter/gridviewlist/selectable_tags.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:diamnow/app/app.export.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:rxbus/rxbus.dart';
 
 class SelectionWidget extends StatefulWidget {
   SelectionModel selectionModel;
+
   SelectionWidget(this.selectionModel);
 
   @override
@@ -33,6 +35,7 @@ class _SelectionWidgetState extends State<SelectionWidget> {
 
 class TagWidget extends StatefulWidget {
   SelectionModel model;
+
   TagWidget(this.model);
 
   @override
@@ -153,6 +156,14 @@ class _TagWidgetState extends State<TagWidget> {
             (index) {
               return InkWell(
                 onTap: () {
+                  int firstIndex = widget.model.masters.indexOf(widget
+                      .model.masters
+                      .firstWhere((element) => element.isSelected));
+                  int lastIndex = widget.model.masters.indexOf(widget
+                      .model.masters
+                      .firstWhere((element) => element.isSelected));
+                  if (index < firstIndex || index > lastIndex) {
+                  } else {}
                   setState(() {
                     if (widget.model.viewType == ViewTypes.caratRange) {
                       RxBus.post(true, tag: eventForShareCaratRangeSelected);
@@ -316,8 +327,71 @@ class _TagWidgetState extends State<TagWidget> {
                     if (widget.model.viewType == ViewTypes.caratRange) {
                       RxBus.post(true, tag: eventForShareCaratRangeSelected);
                     }
-                    widget.model.masters[index].isSelected =
-                        !widget.model.masters[index].isSelected;
+
+                    if (widget.model.apiKey == DiamondDetailUIAPIKeys.crt ||
+                        widget.model.apiKey == DiamondDetailUIAPIKeys.fluNm ||
+                        widget.model.apiKey == DiamondDetailUIAPIKeys.clr ||
+                        widget.model.apiKey == DiamondDetailUIAPIKeys.col) {
+                      List<Master> selectItemList = widget.model.masters
+                          .where((element) => element.isSelected == true)
+                          .toList();
+                      if (selectItemList == null ||
+                          selectItemList.length == 0) {
+                        if (index == 0 ||
+                            widget.model.masters.length - 1 == index) {
+                          widget.model.masters[index].isSelected =
+                              !widget.model.masters[index].isSelected;
+                        } else {
+                          if (!widget.model.masters[index - 1].isSelected &&
+                              !widget.model.masters[index + 1].isSelected) {
+                            widget.model.masters[index].isSelected =
+                                !widget.model.masters[index].isSelected;
+                          }
+                        }
+                      } else if (selectItemList != null &&
+                          selectItemList.length > 1) {
+                        int firstIndex =
+                            widget.model.masters.indexOf(selectItemList[0]);
+                        int lastIndex = widget.model.masters
+                            .indexOf(selectItemList[selectItemList.length - 1]);
+
+                        if (index == firstIndex || index == lastIndex) {
+                          widget.model.masters[index].isSelected ^= true;
+                        } else if (index < firstIndex) {
+                          for (var j = index; j < firstIndex; j++) {
+                            widget.model.masters[j].isSelected = true;
+                          }
+                        } else if (index > lastIndex) {
+                          for (var j = lastIndex + 1; j <= index; j++) {
+                            widget.model.masters[j].isSelected = true;
+                          }
+                        }
+                      } else {
+                        int selectedIndex;
+                        for (var i = 0; i < widget.model.masters.length; i++) {
+                          if (widget.model.masters[i].isSelected) {
+                            selectedIndex = i;
+                            break;
+                          }
+                        }
+                        if (index == selectedIndex) {
+                          widget.model.masters[index].isSelected ^= true;
+                        } else {
+                          for (var j =
+                                  index < selectedIndex ? index : selectedIndex;
+                              j <=
+                                  ((index < selectedIndex)
+                                      ? (selectedIndex - 1)
+                                      : index);
+                              j++) {
+                            widget.model.masters[j].isSelected = true;
+                          }
+                        }
+                      }
+                    } else {
+                      widget.model.masters[index].isSelected =
+                          !widget.model.masters[index].isSelected;
+                    }
 
                     widget.model.onSelectionClick(index);
                     getMultipleMasterSelections(index);
@@ -363,7 +437,6 @@ class _TagWidgetState extends State<TagWidget> {
                         setState(() {
                           widget.model.masters[index].isSelected =
                               !widget.model.masters[index].isSelected;
-
                           getMultipleMasterSelections(index);
                         });
                       },
@@ -709,7 +782,7 @@ class _TagWidgetState extends State<TagWidget> {
       RxBus.post(m, tag: eventMasterSelection);
     }
     //When Local data has added and multilple master has to select
-    if (widget.model.isSingleSelection) {
+    if (widget.model?.isSingleSelection ?? false) {
       for (var item in widget.model.masters) {
         if (item.code != MasterCode.noBgm) {
           if (item != widget.model.masters[index]) {

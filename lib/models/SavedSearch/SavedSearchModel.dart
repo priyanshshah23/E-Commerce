@@ -543,7 +543,7 @@ class Banners {
 
   String getDisplayImage() {
     if (images != null && images.length > 0) {
-      return images[0];
+      return images[0]/*.substring(1)*/;
     }
     return "";
   }

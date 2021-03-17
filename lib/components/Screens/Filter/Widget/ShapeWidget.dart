@@ -84,11 +84,55 @@ class _ShapeWidgetState extends State<ShapeWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(
-          // R.string.commonString.byKey(widget.selectionModel.title) ?? "-",
-          widget.selectionModel.title ?? "-",
-          style: appTheme.blackMedium16TitleColorblack,
-          textAlign: TextAlign.left,
+        Row(
+          children: [
+            InkWell(
+              onTap: () {
+                widget.selectionModel.masters.forEach((element) {
+                  if (element.code == "ROUND") {
+                    element.isSelected = true;
+                  } else {
+                    element.isSelected = false;
+                  }
+                  setState(() {});
+                });
+              },
+              child: Text(
+                // R.string.commonString.byKey(widget.selectionModel.title) ?? "-",
+                "Round",
+                style: appTheme.blackMedium16TitleColorblack,
+                textAlign: TextAlign.left,
+              ),
+            ),
+            SizedBox(
+              width: getSize(3),
+            ),
+            VerticalDivider(
+              width: getSize(3),
+              color: appTheme.colorPrimary,
+            ),
+            SizedBox(
+              width: getSize(3),
+            ),
+            InkWell(
+              onTap: () {
+                widget.selectionModel.masters.forEach((element) {
+                  if (element.code != "ROUND") {
+                    element.isSelected = true;
+                  } else {
+                    element.isSelected = false;
+                  }
+                  setState(() {});
+                });
+              },
+              child: Text(
+                // R.string.commonString.byKey(widget.selectionModel.title) ?? "-",
+                "Fancy",
+                style: appTheme.blackMedium16TitleColorblack,
+                textAlign: TextAlign.left,
+              ),
+            ),
+          ],
         ),
         SizedBox(
           height: getSize(20),
@@ -389,7 +433,8 @@ class ShapeItemWidget extends StatelessWidget {
   showWebDisplay() {
     return /*selectionModel.valueKeyisCode
         ? (obj.code ?? "-").toLowerCase().capitalize()
-        : */(obj.webDisplay ?? "-").toLowerCase().capitalize();
+        : */
+        (obj.webDisplay ?? "-").toLowerCase().capitalize();
   }
 }
 

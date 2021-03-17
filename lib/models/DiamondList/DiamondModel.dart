@@ -132,6 +132,7 @@ class DiamondModel {
   String offeredValiddate;
   String offeredPricePerCarat;
   String createdAt;
+  String pairStkNo;
 
   //Id's
   String shp;
@@ -285,6 +286,7 @@ class DiamondModel {
     rptNo = json['rptNo'];
     certFile = json['certFile'] ?? false;
     videoFile = json['videoFile'] ?? false;
+    pairStkNo = json['pairStkNo'];
     // polVdo = json['polVdo'] ?? false;
     // roughVdo = json['roughVdo'] ?? false;
     hAFile = json['hAFile'] ?? false;
@@ -487,6 +489,7 @@ class DiamondModel {
     data['eClnNm'] = this.eClnNm;
     data['isFcCol'] = this.isFcCol;
     data['fluNm'] = this.fluNm;
+    data['pairStkNo'] = this.pairStkNo;
     data['grdlPer'] = this.grdlPer;
     data['grdlThnNm'] = this.grdlThnNm;
     data['grdlThkNm'] = this.grdlThkNm;
