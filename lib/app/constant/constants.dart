@@ -3,8 +3,8 @@ import 'package:diamnow/app/utils/math_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 
-const String baseURL = "http://arjivlocalapi.democ.in/";
 //const String baseURL = "https://betaapi.arjivexports.com/";
+const String baseURL = "http://arjivlocalapi.democ.in/";
 //const String baseURL = "192.168.0.212:8094/";
 const apiV1 = "api/v1/";
 

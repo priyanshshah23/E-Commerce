@@ -11,8 +11,11 @@ import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 
 class FilterRequest {
-  Map<String, dynamic> createRequest(List<FormBaseModel> list,
-      {List selectedStatus, bool isFromLayout = false}) {
+  Map<String, dynamic> createRequest(
+    List<FormBaseModel> list, {
+    List selectedStatus,
+    bool isFromLayout = false,
+  }) {
     Map<String, dynamic> map = {};
     map["isFcCol"] = false;
     List<String> arrWsts = [];

@@ -518,14 +518,14 @@ class BottomMenuSetting {
 //    if ((app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
 //            KYCStatus.pending) ==
 //        KYCStatus.approved) {
-      if (!isDetail && !isCompare) {
-        if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
-            moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
-            moduleType !=
-                DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
-          addCompareInBottomMenu(moreMenuList, compare);
-        }
+    if (!isDetail && !isCompare) {
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+          moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+          moduleType !=
+              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+        addCompareInBottomMenu(moreMenuList, compare);
       }
+    }
 //    }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
       addEnquiryInBottomMenu(moreMenuList);
@@ -622,11 +622,14 @@ class BottomMenuSetting {
         ));
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-        addConfirmStone(moreMenuList,title: "Update Stone",image: updateStones,type: ActionMenuConstant.ACTION_TYPE_UPDATE_NOTE);
+        addConfirmStone(moreMenuList,
+            title: "Update Stone",
+            image: updateStones,
+            type: ActionMenuConstant.ACTION_TYPE_UPDATE_NOTE);
         addEnquiryInBottomMenu(moreMenuList);
-        addCompareInBottomMenu(moreMenuList, compare,isCenter: false);
-        addShareInBottomMenu(moreMenuList, shareWhite,isCenter: false);
-        addDownloadInBottomMenu(moreMenuList, downloadWhite,isCenter: false);
+        addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
+        addShareInBottomMenu(moreMenuList, shareWhite, isCenter: false);
+        addDownloadInBottomMenu(moreMenuList, downloadWhite, isCenter: false);
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         if (!isDetail && !isCompare) {
@@ -750,9 +753,9 @@ class BottomMenuSetting {
             addWatchlistInBottomMenu(moreMenuList, addToWatchlist,
                 isCenter: false);
           }
-          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
-            addEnquiryInBottomMenu(moreMenuList);
-          }
+//          if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
+//            addEnquiryInBottomMenu(moreMenuList);
+//          }
           if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
             addCartInBottomMenu(moreMenuList);
           }
@@ -909,17 +912,17 @@ class BottomMenuSetting {
     String image,
     int type,
   }) {
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_confirm_stone)
-        .insert) {
-      moreMenuList.add(BottomTabModel(
-        title: title ?? R.string.commonString.confirmStone,
-        isCenter: false,
-        image: image ?? confirmStone,
-        type: type ?? ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
-      ));
-    }
+//    if (app
+//        .resolve<PrefUtils>()
+//        .getModulePermission(ModulePermissionConstant.permission_confirm_stone)
+//        .insert) {
+    moreMenuList.add(BottomTabModel(
+      title: title ?? R.string.commonString.confirmStone,
+      isCenter: false,
+      image: image ?? confirmStone,
+      type: type ?? ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
+    ));
+//    }
   }
 
   addQuoteStone(List<BottomTabModel> moreMenuList) {

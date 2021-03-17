@@ -2668,7 +2668,7 @@
   {
     "title": "Total Amount",
     "viewType": "fromto",
-    "apiKey": "ctPr",
+    "apiKey": "amt",
     "sequence": 28,
     "isActive": true,
     "labelFrom": "From",
