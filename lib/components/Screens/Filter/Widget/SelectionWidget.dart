@@ -362,8 +362,13 @@ class _TagWidgetState extends State<TagWidget> {
                       onTap: () {
                         setState(() {
                           widget.model.masters[index].isSelected =
-                              !widget.model.masters[index].isSelected;
-
+                          !widget.model.masters[index].isSelected;
+//                          if(!widget.model.masters[index-1].isSelected &&!widget.model.masters[index+1].isSelected){
+//                            widget.model.masters[index].isSelected =
+//                            !widget.model.masters[index].isSelected;
+//                          }else if(){
+//
+//                          }
                           getMultipleMasterSelections(index);
                         });
                       },

@@ -11,8 +11,10 @@ import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 
 class FilterRequest {
-  Map<String, dynamic> createRequest(List<FormBaseModel> list,{List selectedStatus,bool isFromLayout = false}) {
+  Map<String, dynamic> createRequest(List<FormBaseModel> list,
+      {List selectedStatus, bool isFromLayout = false}) {
     Map<String, dynamic> map = {};
+    map["isFcCol"] = false;
     List<String> arrWsts = [];
     List<String> arrStage = [];
     for (var element in list) {
@@ -177,7 +179,6 @@ class FilterRequest {
               if (!isNullEmptyOrFalse(arrOvertone))
                 map[colorModel.overtoneSelection.apiKey] = arrOvertone;
             } else {
-              map["isFcCol"] = false;
               List<String> arrStr = Master.getSelectedId(colorModel.masters);
               if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
             }
@@ -194,12 +195,12 @@ class FilterRequest {
     if (!isNullEmptyOrFalse(arrWsts)) {
       map["wSts"] = arrWsts;
     }
-    if(selectedStatus != null && selectedStatus.length>0){
+    if (selectedStatus != null && selectedStatus.length > 0) {
       map['sSts'] = selectedStatus;
     }
-    if(isFromLayout){
+    if (isFromLayout) {
       map['layoutNo'] = {
-        "nin" : ["", "0"]
+        "nin": ["", "0"]
       };
     }
     return map;
