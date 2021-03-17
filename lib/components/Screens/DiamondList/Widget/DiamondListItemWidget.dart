@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:collection';
 
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
@@ -7,10 +9,12 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondOfferInfoWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
+import 'package:diamnow/modules/Filter/gridviewlist/FilterRequest.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -64,7 +68,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   void initState() {
     super.initState();
     widget.item.setBidAmount();
-    if(widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
+    if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       calcualteDifference();
     }
     RxBus.register<bool>(tag: eventBusRefreshItem).listen((event) {
@@ -668,13 +672,21 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         children: <Widget>[
           Expanded(
             // flex: 4,
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: getText(
-                (widget.item?.vStnId ?? "").replaceAll('null', '--'),
-                appTheme.blackNormal14TitleColorblack,
-              ),
+            child: Row(
+              children: [
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: getText(
+                    (widget.item?.vStnId ?? "").replaceAll('null', '--'),
+                    appTheme.blackNormal14TitleColorblack,
+                  ),
+                ),
+                SizedBox(
+                  width: getSize(10),
+                ),
+                getImageOfMatchPairOrLayout(widget.item.pairStkNo),
+              ],
             ),
           ),
           // Expanded(
@@ -1831,25 +1843,23 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   void startTimer() {
     const oneSec = const Duration(seconds: 1);
-    _timer = new Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if(mounted)
+    _timer = new Timer.periodic(oneSec, (Timer timer) {
+      if (mounted)
         setState(
-        () {
-          if (totalSeconds < 1) {
-            timer.cancel();
-            isTimerCompleted = true;
-            Future.delayed(Duration(seconds: 65), () {
-              calcualteDifference();
-            });
-            RxBus.post(true, tag: eventDiamondRefresh);
-          } else {
-            totalSeconds = totalSeconds - 1;
-          }
-        },
-      );}
-    );
+          () {
+            if (totalSeconds < 1) {
+              timer.cancel();
+              isTimerCompleted = true;
+              Future.delayed(Duration(seconds: 65), () {
+                calcualteDifference();
+              });
+              RxBus.post(true, tag: eventDiamondRefresh);
+            } else {
+              totalSeconds = totalSeconds - 1;
+            }
+          },
+        );
+    });
   }
 
   getOfferedDiscountTextField() {
@@ -2200,6 +2210,46 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       textAlign: align ?? TextAlign.left,
       style: appTheme.blue14TextStyle.copyWith(fontSize: getFontSize(14)),
     );
+  }
+
+  getImageOfMatchPairOrLayout(String pairStkNo) {
+    if (widget.item?.vStnId != null &&
+        widget.item?.pairStkNo != null &&
+        widget.item?.pairStkNo != "") {
+      return InkWell(
+        onTap: () {
+          Map<String, dynamic> map = {
+            "or": [
+              {
+                "pairStkNo": [pairStkNo]
+              }
+            ]
+          };
+          SyncManager.instance.callApiForMatchPair(context, map,
+              (diamondListResp) {
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterId"] = diamondListResp.data.filter.id;
+            dict[ArgumentConstant.ModuleType] =
+                DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+          }, (onError) {});
+        },
+        child: Container(
+            height: getSize(20),
+            width: getSize(20),
+            child: Image.asset(matchpairlist)),
+      );
+    } else if (widget.item?.vStnId != null &&
+        widget.item?.layoutNo != null &&
+        widget.item?.pairStkNo != "" &&
+        widget.item?.layoutNo != "0") {
+      return Container(
+          height: getSize(20),
+          width: getSize(20),
+          child: Image.asset(layoutlist));
+    } else {
+      return SizedBox();
+    }
   }
 }
 
