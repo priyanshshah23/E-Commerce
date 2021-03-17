@@ -101,10 +101,10 @@ class _DashboardState extends StatefulScreenWidgetState {
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
     dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
-      callApiForDashboard(false);
-      if(dashboardModel!=null){
-            print(this.dashboardModel.toJson().toString());
-      }
+    callApiForDashboard(false);
+    if (dashboardModel != null) {
+      print(this.dashboardModel.toJson().toString());
+    }
   }
 
   callApiForDashboard(bool isRefress, {bool isLoading = false}) {
@@ -127,7 +127,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             context,
             isProgress: false)
         // !isRefress && !isLoading
-        .then((resp)  {
+        .then((resp) {
       setState(() {
         this.dashboardModel = resp.data;
 
@@ -135,13 +135,10 @@ class _DashboardState extends StatefulScreenWidgetState {
           emailURL = this.dashboardModel.seller.email;
         }
         setTopCountData();
-         app
-            .resolve<PrefUtils>()
-            .saveDashboardDetails(dashboardModel);
-        print("-----------------------------------${app.resolve<PrefUtils>().getDashboardDetails().seller.lastName}");
-
+        app.resolve<PrefUtils>().saveDashboardDetails(dashboardModel);
+        print(
+            "-----------------------------------${app.resolve<PrefUtils>().getDashboardDetails().seller.lastName}");
       });
-
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -283,9 +280,9 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    if(dashboardModel!=null){
-            print(this.dashboardModel.toJson().toString());
-      }
+    if (dashboardModel != null) {
+      print(this.dashboardModel.toJson().toString());
+    }
     //getHomeSliderImage(HOME_CENTRE);
     return GestureDetector(
       onTap: () {
@@ -1143,7 +1140,7 @@ class _DashboardState extends StatefulScreenWidgetState {
           ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: this.dashboardModel.savedSearch.length,
+              itemCount: this.dashboardModel.savedSearch.list.length,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
@@ -1151,12 +1148,13 @@ class _DashboardState extends StatefulScreenWidgetState {
                     dict[ArgumentConstant.ModuleType] =
                         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                     dict[ArgumentConstant.IsFromDrawer] = false;
-                    dict["filterId"] = dashboardModel.savedSearch[index].id;
+                    dict["filterId"] =
+                        dashboardModel.savedSearch.list[index].id;
                     NavigationUtilities.pushRoute(DiamondListScreen.route,
                         args: dict);
                   },
                   child: getSavedSearchItem(
-                      this.dashboardModel.savedSearch[index]),
+                      this.dashboardModel.savedSearch.list[index]),
                 );
               }),
         ],
@@ -1255,6 +1253,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     this
                         .dashboardModel
                         .savedSearch
+                        .list
                         .removeWhere((element) => element.id == model.id);
                     setState(() {});
                   });
@@ -1310,7 +1309,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       return SizedBox();
     }
     return RecentSearchWidget(
-      recentSearch: this.dashboardModel.recentSearch,
+      recentSearch: this.dashboardModel.recentSearch.list,
     );
     return Padding(
       padding: EdgeInsets.only(
@@ -2171,7 +2170,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     borderRadius: BorderRadius.circular(
                       getSize(10),
                     ),
-                    child: getImageView(item/*.substring(1)*/,
+                    child: getImageView(item /*.substring(1)*/,
                         placeHolderImage: diamond,
                         fit: BoxFit.cover,
                         height: getSize(
