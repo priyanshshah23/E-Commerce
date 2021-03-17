@@ -187,8 +187,8 @@ class DashboardModel {
   Seller seller;
   List<DiamondModel> featuredStone;
   List<DiamondModel> newArrival;
-  List<SavedSearchModel> savedSearch;
-  List<SavedSearchModel> recentSearch;
+  SavedSearch savedSearch;
+  SavedSearch recentSearch;
   Map<String, Track> tracks;
   List<Banners> banners;
   List<DashboardCount> dashboardCount;
@@ -233,10 +233,10 @@ class DashboardModel {
       featuredStone: arrFeaturestone,
       banners:
           List<Banners>.from(json["banners"].map((x) => Banners.fromJson(x))),
-      recentSearch: List<SavedSearchModel>.from(
-          json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
-      savedSearch: List<SavedSearchModel>.from(
-          json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
+
+      //recentSearch: SavedSearch.fromJson(json["recentSearch"]),
+
+      //savedSearch: SavedSearch.fromJson(json["savedSearch"]),
       newArrival: arrNewArrivals,
       // // recentSearch: List<SavedSearchModel>.from(
       // //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
@@ -248,23 +248,26 @@ class DashboardModel {
   }
 
   Map<String, dynamic> toJson() => {
-    if (seller != null) "seller": seller.toJson(),
-    if (savedSearch != null) "savedSearch": List<dynamic>.from(
-          savedSearch.map((x) => x.toJson()),
-        ),
-    if (banners != null)    "banners": List<dynamic>.from(banners.map((x) => x.toJson())),
-    if (featuredStone != null)   "featuredStone":
-            List<dynamic>.from(featuredStone.map((x) => x.toJson())),
-    if (newArrival != null)   "newArrival": List<dynamic>.from(
-          newArrival.map(
-            (x) => x.toJson(),
+        if (seller != null) "seller": seller.toJson(),
+        if (savedSearch != null) "savedSearch": SavedSearch().toJson(),
+        if (banners != null)
+          "banners": List<dynamic>.from(banners.map((x) => x.toJson())),
+        if (featuredStone != null)
+          "featuredStone":
+              List<dynamic>.from(featuredStone.map((x) => x.toJson())),
+        if (newArrival != null)
+          "newArrival": List<dynamic>.from(
+            newArrival.map(
+              (x) => x.toJson(),
+            ),
           ),
-        ),
-    if (tracks != null)    "tracks": Map.from(tracks)
-            .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
-    if (dashboardCount != null)    "dashboardCount":
-            List<dynamic>.from(dashboardCount.map((x) => x.toJson())),
-    if (recentSearch != null)   "recentSearch": List<dynamic>.from(recentSearch.map((x) => x.toJson())),
+        if (tracks != null)
+          "tracks": Map.from(tracks)
+              .map((k, v) => MapEntry<String, dynamic>(k, v.toJson())),
+        if (dashboardCount != null)
+          "dashboardCount":
+              List<dynamic>.from(dashboardCount.map((x) => x.toJson())),
+        if (recentSearch != null) "recentSearch": SavedSearch().toJson(),
       };
 }
 
@@ -302,6 +305,26 @@ class FeaturedStone {
         list: List<DiamondModel>.from(
             json["list"].map((x) => DiamondModel.fromJson(x))),
         count: json["count"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "list": List<dynamic>.from(list.map((x) => x.toJson())),
+        "count": count,
+      };
+}
+
+class SavedSearch {
+  SavedSearch({
+    this.list,
+    this.count,
+  });
+
+  List<SavedSearchModel> list;
+  int count;
+
+  factory SavedSearch.fromJson(Map<String, dynamic> json) => SavedSearch(
+        list: List<SavedSearchModel>.from(
+            json["list"].map((x) => SavedSearchModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -456,10 +479,7 @@ class DashboardBannerModel {
   Banners banners;
   List<DashboardBannerDetail> itemList;
 
-  DashboardBannerModel(
-    this.type,
-    this.banners,
-    this.itemList  );
+  DashboardBannerModel(this.type, this.banners, this.itemList);
 }
 
 class DashboardBannerDetail {
@@ -484,4 +504,3 @@ List<DashboardBannerModel> dBannerModel() {
     return null;
   }
 }
-
