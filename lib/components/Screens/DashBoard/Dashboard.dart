@@ -1140,7 +1140,7 @@ class _DashboardState extends StatefulScreenWidgetState {
           ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: this.dashboardModel.savedSearch.list.length,
+              itemCount: (this.dashboardModel.savedSearch?.list?.length)??0,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
