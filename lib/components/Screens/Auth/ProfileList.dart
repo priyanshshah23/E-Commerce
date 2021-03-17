@@ -39,7 +39,6 @@ class _ProfileListState extends State<ProfileList> {
     pages = {
       0: getSegment(R.string.commonString.personal, 0),
       1: getSegment(R.string.commonString.business, 1),
-      2: getSegment(R.string.commonString.documents, 2),
     };
   }
 
@@ -114,10 +113,8 @@ class _ProfileListState extends State<ProfileList> {
               itemBuilder: (context, position) {
                 if (position == 0) {
                   return PersonalInformation();
-                } else if (position == 1) {
-                  return CompanyInformation();
                 } else {
-                  return Documents();
+                  return CompanyInformation();
                 }
               },
             ),
