@@ -4,9 +4,9 @@ import '../app.export.dart';
 
 class ApiConstants {
 //  static const String PROXY_URL = "PROXY 192.168.0.114:8888";
-  // static String PROXY_URL = "PROXY 192.168.2.124:8888"; //HONEY
-  static String PROXY_URL = "PROXY 192.168.0.170:8888"; //HIMANSHI
-// static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
+  //static String PROXY_URL = "PROXY 192.168.2.124:8888"; //HONEY
+  //static String PROXY_URL = "PROXY 192.168.0.170:8888"; //HIMANSHI
+static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
 //static String PROXY_URL = "PROXY 192.168.2.153:8888"; //SNEHAL
 
 //  static String PROXY_URL = "PROXY 192.168.0.118:8888"; //SNEHAL
@@ -16,9 +16,11 @@ class ApiConstants {
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
+//  static const String dashboardImageBaseURL = "https://betaapi.arjivexports.com";
+  static const String dashboardImageBaseURL = "https://api.arjivexports.com";
   static const String webPageUrl = "https://betaapi.arjivexports.com/";
   static const String shareUrl =
-      "https://beta.arjivexports.com/diamond-details/";
+      "https://customer.arjivexports.com//diamond-details/";
   static const String googleDocUrl =
       "https://docs.google.com/viewer?embedded=true&url=";
 
