@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:diamnow/app/utils/NotificationRedirection.dart';
 import 'package:flutter/material.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
+//import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import '../app.export.dart';
 
 notificationInit() async {
-  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+ /* OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
   OneSignal.shared.setRequiresUserPrivacyConsent(true);
 
@@ -82,5 +82,5 @@ notificationInit() async {
         }
       },
     );
-  }
+  }*/
 }

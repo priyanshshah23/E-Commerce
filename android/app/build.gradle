@@ -5,11 +5,11 @@ buildscript {
     }
     dependencies {
         // ...
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.1, 0.99.99]'
+    //    classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.1, 0.99.99]'
     }
 }
 
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+//apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
@@ -48,7 +48,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 //keystoreProperies.load(new FileInputStream(keystoreProperiesFile))
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -61,7 +61,7 @@ android {
     defaultConfig {
         applicationId "com.arjiv.app"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 30
         versionCode 6
         versionName "1.05"
     }
@@ -112,9 +112,9 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.google.firebase:firebase-analytics:17.2.2'
-    implementation("com.onesignal:OneSignal:3.12.3") {
+   /* implementation("com.onesignal:OneSignal:3.12.3") {
         exclude group: 'com.google.firebase', module: 'firebase-messaging'
-    }
+    }*/
     // Add the Firebase SDK for Crashlytics.
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta04'
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
 }
