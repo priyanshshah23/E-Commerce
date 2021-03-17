@@ -561,7 +561,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             (diamondModel.vStnId) +
             "/" +
             (diamondModel.vStnId) +
-            "-Hearts-01.jpg"),
+            "-ASET%20white-01.jpg"),
         type: "Image_hA",
         isSelected: false,
         isImage: true,
