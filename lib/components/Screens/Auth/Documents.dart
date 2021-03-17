@@ -67,14 +67,15 @@ class _DocumentsState extends State<Documents>
 
   @override
   Widget build(BuildContext context) {
-    if (kycList.length <= 0) {
-      getDocuments(false);
-    }
+    // if (kycList.length <= 0) {
+    //   getDocuments(false);
+    // }
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        backgroundColor: appTheme.whiteColor,
 //        appBar: getAppBar(
 //          context,
 //          "Personal Information",
@@ -228,7 +229,6 @@ class _DocumentsState extends State<Documents>
     }).catchError((onError) {
       app.resolve<CustomDialogs>().confirmDialog(
             context,
-           
             desc: onError.message,
             positiveBtnTitle: R.string.commonString.btnTryAgain,
           );

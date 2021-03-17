@@ -65,8 +65,8 @@ class LoginScreenState extends StatefulScreenWidgetState {
     // TODO: implement initState
     super.initState();
     if (kDebugMode) {
-      userNameController.text = "abcd";
-      _passwordController.text = "1234";
+//      userNameController.text = "abcd";
+//      _passwordController.text = "1234";
     }
     getUserNameAndPassword();
     // }
@@ -254,44 +254,44 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        // /*InkWell(
-                                        //   onTap: () {
-                                        //     isCheckBoxSelected =
-                                        //         !isCheckBoxSelected;
-                                        //     setState(() {});
-                                        //   },
-                                        //   child: Row(
-                                        //     mainAxisSize: MainAxisSize.min,
-                                        //     children: [
-                                        //       Container(
-                                        //         decoration: BoxDecoration(
-                                        //             borderRadius:
-                                        //                 BorderRadius.circular(
-                                        //                     getSize(3))),
-                                        //         width: getSize(21),
-                                        //         height: getSize(21),
-                                        //         child: Image.asset(
-                                        //           isCheckBoxSelected
-                                        //               ? selectedCheckbox
-                                        //               : unSelectedCheckbox,
-                                        //           height: getSize(20),
-                                        //           width: getSize(20),
-                                        //         ),
-                                        //       ),
-                                        //       SizedBox(
-                                        //         width: getSize(6),
-                                        //       ),
-                                        //       Text(
-                                        //           R.string.commonString
-                                        //               .rememberme,
-                                        //           style: appTheme
-                                        //               .blackMedium16TitleColorblack
-                                        //               .copyWith(
-                                        //                   fontWeight:
-                                        //                       FontWeight.bold))
-                                        //     ],
-                                        //   ),
-                                        // ),*/
+                                         InkWell(
+                                           onTap: () {
+                                             isCheckBoxSelected =
+                                                 !isCheckBoxSelected;
+                                             setState(() {});
+                                           },
+                                           child: Row(
+                                             mainAxisSize: MainAxisSize.min,
+                                             children: [
+                                               Container(
+                                                 decoration: BoxDecoration(
+                                                     borderRadius:
+                                                         BorderRadius.circular(
+                                                             getSize(3))),
+                                                 width: getSize(21),
+                                                 height: getSize(21),
+                                                 child: Image.asset(
+                                                   isCheckBoxSelected
+                                                       ? selectedCheckbox
+                                                       : unSelectedCheckbox,
+                                                   height: getSize(20),
+                                                   width: getSize(20),
+                                                 ),
+                                               ),
+                                               SizedBox(
+                                                 width: getSize(6),
+                                               ),
+                                               Text(
+                                                   R.string.commonString
+                                                       .rememberme,
+                                                   style: appTheme
+                                                       .blackMedium16TitleColorblack
+                                                       .copyWith(
+                                                           fontWeight:
+                                                               FontWeight.bold))
+                                             ],
+                                           ),
+                                         ),
                                         Expanded(
                                           child: Container(
                                             // alignment: Alignment.centerRight,

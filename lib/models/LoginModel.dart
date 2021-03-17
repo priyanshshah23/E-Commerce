@@ -204,7 +204,8 @@ class User {
   String country;
   String city;
   String state;
-
+  String address2;
+  String address3;
   //mpin
   bool isMpinAdded;
 
@@ -232,6 +233,9 @@ class User {
     toAuthenticate = json['toAuthenticate'];
     isEmailVerified = json['isEmailVerified'];
     emailHash = json['emailHash'];
+    address2 = json['address2'];
+    address3 = json['address3'];
+
     isDeleted = json['isDeleted'];
     dateOfJoin = json['dateOfJoin'];
     isActive = json['isActive'];
@@ -415,6 +419,8 @@ class User {
 
     //mpin
     data['isMpinAdded'] = this.isMpinAdded;
+    data['address2'] = this.address2;
+    data['address3'] = this.address3;
     return data;
   }
 
@@ -638,6 +644,7 @@ class Account {
   CityList city;
   List<Kyc> kyc;
   bool isKycUploaded;
+  String businessId;
 
   Account.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -660,6 +667,7 @@ class Account {
     ledgerType = json['ledgerType'];
     normalizeName = json['normalizeName'];
     accountType = json['accountType'];
+    businessId = json['businessId'];
     hasBroker = json['hasBroker'];
     brokerInfo = json['brokerInfo'] != null
         ? new BrokerInfo.fromJson(json['brokerInfo'])
@@ -747,6 +755,9 @@ class Account {
     data['prefix'] = this.prefix;
     data['gender'] = this.gender;
     data['name'] = this.name;
+    if (this.businessId != null) {
+      data['businessId'] = this.businessId;
+    }
     data['profileImage'] = this.profileImage;
     data['code'] = this.code;
     data['displayName'] = this.displayName;

@@ -7,6 +7,9 @@ class PersonalInformationReq {
   String middleName;
   String lastName;
   String email;
+  String address2;
+  String address3;
+  String photoId;
 
 //  String username;
 //  String country;
@@ -76,7 +79,10 @@ class PersonalInformationReq {
     this.city,
     this.country,
     this.state,
+    this.photoId,
     this.pincode,
+    this.address2,
+    this.address3,
 //        this.skype,skype
 //        this.wechat,
   });
@@ -92,6 +98,10 @@ class PersonalInformationReq {
     country = json['country'];
     state = json['state'];
     city = json['city'];
+    photoId = json['photoId'];
+    address2 = json['address2'];
+    address3 = json['address3'];
+
 //    pinCode = json['pinCode'];
 //    fax = json['fax'];
 //    seller = json['seller'];
@@ -133,10 +143,26 @@ class PersonalInformationReq {
     if (this.email != null) {
       data["email"] = this.email;
     }
+    if (this.photoId != null) {
+      data['photoId'] = this.photoId;
+    }
+    if (this.address2 != null) {
+      data['address2'] = this.address2;
+    }
+    if (this.address3 != null) {
+      data['address3'] = this.address3;
+    }
+    if (this.country != null) {
+      data['country'] = this.country;
+    }
+    if (this.state != null) {
+      data['state'] = this.state;
+    }
+    if (this.city != null) {
+      data['city'] = this.city;
+    }
+
 //    data['username'] = this.username;
-    data['country'] = this.country;
-    data['state'] = this.state;
-    data['city'] = this.city;
 //    data['pinCode'] = this.pinCode;
 //    data['fax'] = this.fax;
 //    data['seller'] = this.seller;

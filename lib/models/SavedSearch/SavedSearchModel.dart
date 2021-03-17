@@ -46,7 +46,17 @@ class SavedSearchResp extends BaseApiResp {
   Data data;
 
   SavedSearchResp.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    try{
+      data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+
+    }catch( e){
+      if (json['data'] != null) {
+        json['data'].forEach((v) {
+          data = new Data.fromJson(v);
+        });
+      }
+    }
+    // data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {

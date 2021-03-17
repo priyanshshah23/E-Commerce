@@ -48,7 +48,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 //keystoreProperies.load(new FileInputStream(keystoreProperiesFile))
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 28
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -61,7 +61,7 @@ android {
     defaultConfig {
         applicationId "com.arjiv.app"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode 6
         versionName "1.05"
     }

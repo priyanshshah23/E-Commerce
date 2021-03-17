@@ -113,7 +113,6 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     } else {
       diamondConfig = DiamondConfig(moduleType);
     }
-
     manageDiamondCalculation();
     diamondConfig.initItems();
 
