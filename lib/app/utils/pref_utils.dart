@@ -378,7 +378,7 @@ class PrefUtils {
         (app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
                 KYCStatus.pending) !=
             KYCStatus.approved) {*/
-    if (module == ModulePermissionConstant.permission_searchDiamond ||
+   /* if (module == ModulePermissionConstant.permission_searchDiamond ||
         module == ModulePermissionConstant.permission_searchResult ||
         module == ModulePermissionConstant.permission_dashboard ||
         module == ModulePermissionConstant.permission_quickSearch ||
@@ -410,7 +410,7 @@ class PrefUtils {
       data.update = false;
       data.delete = false;
       data.downloadExcel = false;
-    }
+    }*/
 //Admin permission
 
     return data;

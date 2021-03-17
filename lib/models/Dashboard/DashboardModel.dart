@@ -234,9 +234,9 @@ class DashboardModel {
       banners:
           List<Banners>.from(json["banners"].map((x) => Banners.fromJson(x))),
       recentSearch: List<SavedSearchModel>.from(
-          json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
+          (json["recentSearch"]).map((x) => SavedSearchModel.fromJson(x))),
       savedSearch: List<SavedSearchModel>.from(
-          json["savedSearch"].map((x) => SavedSearchModel.fromJson(x))),
+          (json["savedSearch"]).map((x) => SavedSearchModel.fromJson(x))),
       newArrival: arrNewArrivals,
       // // recentSearch: List<SavedSearchModel>.from(
       // //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),

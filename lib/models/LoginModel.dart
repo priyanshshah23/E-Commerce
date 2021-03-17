@@ -427,14 +427,14 @@ class User {
   String getFullName() {
     var fn = "";
     if (!isNullEmptyOrFalse(firstName)) {
-      fn = firstName
+      fn = firstName.trim()
           .split(' ')
           .map((word) => word[0].toUpperCase() + word.substring(1))
           .join(' ');
     }
     var ln = "";
     if (!isNullEmptyOrFalse(lastName)) {
-      ln = lastName
+      ln = lastName.trim()
           .split(' ')
           .map((word) => word[0].toUpperCase() + word.substring(1))
           .join(' ');

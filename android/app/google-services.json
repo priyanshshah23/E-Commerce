@@ -1,77 +1,34 @@
 {
   "project_info": {
-    "project_number": "1009456816397",
-    "project_id": "pn-shah",
-    "storage_bucket": "pn-shah.appspot.com"
+    "project_number": "548829458965",
+    "project_id": "arjiv-1f5ca",
+    "storage_bucket": "arjiv-1f5ca.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1009456816397:android:287cee2cacf75a0cdfd044",
+        "mobilesdk_app_id": "1:548829458965:android:cbecbbaf62aca520cc941c",
         "android_client_info": {
           "package_name": "com.arjiv.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1009456816397-no6qjnt2nki60ur9qhi3ou613c6a73jn.apps.googleusercontent.com",
+          "client_id": "548829458965-f9mvmjdsshcq4qc25pak2skv1bt78638.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDZry-WGfkTwbl7mDn9ZR0rHzOr04RWDEI"
+          "current_key": "AIzaSyBuePHPxggsjMN3Ihh1DA8nXjLeXWSCHdc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1009456816397-no6qjnt2nki60ur9qhi3ou613c6a73jn.apps.googleusercontent.com",
+              "client_id": "548829458965-f9mvmjdsshcq4qc25pak2skv1bt78638.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1009456816397-o60omifrrgaplo4s2d0facqel0sc1u5k.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.arjiv.app"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1009456816397:android:82d01dc9ff86ff41dfd044",
-        "android_client_info": {
-          "package_name": "com.arjiv.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1009456816397-no6qjnt2nki60ur9qhi3ou613c6a73jn.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDZry-WGfkTwbl7mDn9ZR0rHzOr04RWDEI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1009456816397-no6qjnt2nki60ur9qhi3ou613c6a73jn.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "1009456816397-o60omifrrgaplo4s2d0facqel0sc1u5k.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.arjiv.app"
-              }
             }
           ]
         }

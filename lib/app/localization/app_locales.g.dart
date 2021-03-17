@@ -824,7 +824,7 @@ class Dynamickeys {
   String cutTitle = "Cut";
   String polishTitle = "Polish";
   String symmentryTitle = "Symmentry";
-  String fluorescenceTitle = "Fluorescence:";
+  String fluorescenceTitle = "Fluorescence";
   String rapTitle = "Rap (%)";
   String discountTitle = "Discount (%)";
   String priceAndCt = "Price/Ct";
@@ -832,14 +832,14 @@ class Dynamickeys {
   String eyeCleanTitle = "Eye Clean";
   String brownTitle = "Brown";
   String milkyTitle = "Milky";
-  String mixTingeTitle = "MixTinge";
+  String mixTingeTitle = "Mix Tinge";
   String dimensionTitle = "Dimensions  (MM)";
   String girdleTitle = "Girdle (%)";
   String tableTitle = "Table %";
-  String crownAngleTitle = "CrownAngle";
+  String crownAngleTitle = "Crown Angle";
   String depthTitle = "Depth %";
-  String pavAngleTitle = "PavAngle";
-  String crownHeightTitle = "CrownHeight(%)";
+  String pavAngleTitle = "Pav Angle";
+  String crownHeightTitle = "Crown Height(%)";
   String pavDepthTitle = "Pavilion Depth (%)";
   String starLengthTitle = "Star Length";
   String lowerHalfTitle = "Lower Half";
@@ -884,21 +884,21 @@ class Dynamickeys {
   String matchPairTitle = "Match Pair";
   String layoutTitle = "Layout";
   String heartArrow = "Heart and Arrow";
-  String tableBlack = "TableBlack";
-  String tableOpen = "TableOpen";
-  String sideBlack = "SideBlack";
-  String crownOpen = "CrownOpen";
-  String tableInclusion = "TableInclusion";
-  String sideInclusion = "SideInclusion";
-  String pavillionOpen = "PavillionOpen";
-  String girdleOpen = "GirdleOpen";
-  String pavHeight = "PavHeight";
+  String tableBlack = "Table Black";
+  String tableOpen = "Table Open";
+  String sideBlack = "Side Black";
+  String crownOpen = "Crown Open";
+  String tableInclusion = "Table Inclusion";
+  String sideInclusion = "Side Inclusion";
+  String pavillionOpen = "Pavillion Open";
+  String girdleOpen = "Girdle Open";
+  String pavHeight = "Pav Height";
   String eTK = "ETK";
-  String bGMDetails = "BGMDetails";
-  String brownTinge = "BrownTinge";
-  String otherTinge = "OtherTinge";
-  String reportNo = "ReportNo";
-  String packetNo = "PacketNo";
+  String bGMDetails = "BGM Details";
+  String brownTinge = "Brown Tinge";
+  String otherTinge = "Other Tinge";
+  String reportNo = "Report No";
+  String packetNo = "Packet No";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
     "shape": "Shape",
@@ -917,7 +917,7 @@ class Dynamickeys {
     "cutTitle": "Cut",
     "polishTitle": "Polish",
     "symmentryTitle": "Symmentry",
-    "fluorescenceTitle": "Fluorescence:",
+    "fluorescenceTitle": "Fluorescence",
     "rapTitle": "Rap (%)",
     "discountTitle": "Discount (%)",
     "priceAndCt": "Price/Ct",
@@ -925,14 +925,14 @@ class Dynamickeys {
     "eyeCleanTitle": "Eye Clean",
     "brownTitle": "Brown",
     "milkyTitle": "Milky",
-    "mixTingeTitle": "MixTinge",
+    "mixTingeTitle": "Mix Tinge",
     "dimensionTitle": "Dimensions  (MM)",
     "girdleTitle": "Girdle (%)",
     "tableTitle": "Table %",
-    "crownAngleTitle": "CrownAngle",
+    "crownAngleTitle": "Crown Angle",
     "depthTitle": "Depth %",
-    "pavAngleTitle": "PavAngle",
-    "crownHeightTitle": "CrownHeight(%)",
+    "pavAngleTitle": "Pav Angle",
+    "crownHeightTitle": "Crown Height(%)",
     "pavDepthTitle": "Pavilion Depth (%)",
     "starLengthTitle": "Star Length",
     "lowerHalfTitle": "Lower Half",
@@ -977,21 +977,21 @@ class Dynamickeys {
     "matchPairTitle": "Match Pair",
     "layoutTitle": "Layout",
     "heartArrow": "Heart and Arrow",
-    "tableBlack": "TableBlack",
-    "tableOpen": "TableOpen",
-    "sideBlack": "SideBlack",
-    "crownOpen": "CrownOpen",
-    "tableInclusion": "TableInclusion",
-    "sideInclusion": "SideInclusion",
-    "pavillionOpen": "PavillionOpen",
-    "girdleOpen": "GirdleOpen",
-    "pavHeight": "PavHeight",
+    "tableBlack": "Table Black",
+    "tableOpen": "Table Open",
+    "sideBlack": "Side Black",
+    "crownOpen": "Crown Open",
+    "tableInclusion": "Table Inclusion",
+    "sideInclusion": "Side Inclusion",
+    "pavillionOpen": "Pavillion Open",
+    "girdleOpen": "Girdle Open",
+    "pavHeight": "Pav Height",
     "eTK": "ETK",
-    "bGMDetails": "BGMDetails",
-    "brownTinge": "BrownTinge",
-    "otherTinge": "OtherTinge",
-    "reportNo": "ReportNo",
-    "packetNo": "PacketNo",
+    "bGMDetails": "BGM Details",
+    "brownTinge": "Brown Tinge",
+    "otherTinge": "Other Tinge",
+    "reportNo": "Report No",
+    "packetNo": "Packet No",
   };
 }
 
