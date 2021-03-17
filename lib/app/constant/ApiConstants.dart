@@ -17,10 +17,10 @@ static String PROXY_URL = "PROXY 192.168.0.118:8888"; //JECKY
 
   static const String imageBaseURL = baseURL;
 //  static const String dashboardImageBaseURL = "https://betaapi.arjivexports.com";
-  static const String dashboardImageBaseURL = "http://arjivlocalapi.democ.in";
+  static const String dashboardImageBaseURL = "https://api.arjivexports.com";
   static const String webPageUrl = "https://betaapi.arjivexports.com/";
   static const String shareUrl =
-      "https://beta.arjivexports.com/diamond-details/";
+      "https://customer.arjivexports.com//diamond-details/";
   static const String googleDocUrl =
       "https://docs.google.com/viewer?embedded=true&url=";
 

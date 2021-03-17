@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 
 //const String baseURL = "https://betaapi.arjivexports.com/";
-const String baseURL = "http://arjivlocalapi.democ.in/";
+//const String baseURL = "http://arjivlocalapi.democ.in/";
+const String baseURL = "https://api.arjivexports.com/";
 //const String baseURL = "192.168.0.212:8094/";
 const apiV1 = "api/v1/";
 
@@ -43,7 +44,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
-const signupURl = "https://beta.arjivexports.com/signup";
+const signupURl = "https://customer.arjivexports.com/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";
