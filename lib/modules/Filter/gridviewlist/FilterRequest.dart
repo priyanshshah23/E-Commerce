@@ -17,6 +17,7 @@ class FilterRequest {
     bool isFromLayout = false,
   }) {
     Map<String, dynamic> map = {};
+    map["isFcCol"] = false;
     List<String> arrWsts = [];
     List<String> arrStage = [];
     for (var element in list) {
@@ -181,7 +182,6 @@ class FilterRequest {
               if (!isNullEmptyOrFalse(arrOvertone))
                 map[colorModel.overtoneSelection.apiKey] = arrOvertone;
             } else {
-              map["isFcCol"] = false;
               List<String> arrStr = Master.getSelectedId(colorModel.masters);
               if (!isNullEmptyOrFalse(arrStr)) map[element.apiKey] = arrStr;
             }
