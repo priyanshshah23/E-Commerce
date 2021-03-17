@@ -462,6 +462,44 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         List<DiamondDetailImagePagerModel>();
 
     // if (diamondModel.hAFile) {
+
+    if (!widget.diamondModel.isFcCol) {
+      arrOfHA.add(
+        DiamondDetailImagePagerModel(
+          title: "Heart&Arrow",
+          url: (DiamondUrls.heartImage +
+              (diamondModel.vStnId) +
+              "/" +
+              (diamondModel.vStnId) +
+              "-IdealScope-01.jpg"),
+          // url: DiamondUrls.heartImage +
+          //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+          //     "/" +
+          //     "Arrow_Black_BG.jpg",
+          type: "Image_hA",
+          isSelected: true,
+          isImage: true,
+        ),
+      );
+      arrOfHA.add(
+        DiamondDetailImagePagerModel(
+          title: "Heart&Arrow",
+          url: (DiamondUrls.heartImage +
+              (diamondModel.vStnId) +
+              "/" +
+              (diamondModel.vStnId) +
+              "-Hearts-01.jpg"),
+          // url: (DiamondUrls.heartImage +
+          //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+          //     "/" +
+          //     "Heart_Black_BG.jpg"),
+//        url: "",
+          type: "Image_hA",
+          isSelected: true,
+          isImage: true,
+        ),
+      );
+    }
     arrOfHA.add(
       DiamondDetailImagePagerModel(
         title: "Heart&Arrow",
@@ -479,6 +517,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         isImage: true,
       ),
     );
+
     arrOfHA.add(
       DiamondDetailImagePagerModel(
         title: "Heart&Arrow",
@@ -496,42 +535,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         isImage: true,
       ),
     );
-    arrOfHA.add(
-      DiamondDetailImagePagerModel(
-        title: "Heart&Arrow",
-        url: (DiamondUrls.heartImage +
-            (diamondModel.vStnId) +
-            "/" +
-            (diamondModel.vStnId) +
-            "-IdealScope-01.jpg"),
-        // url: DiamondUrls.heartImage +
-        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-        //     "/" +
-        //     "Arrow_Black_BG.jpg",
-        type: "Image_hA",
-        isSelected: true,
-        isImage: true,
-      ),
-    );
-    arrOfHA.add(
-      DiamondDetailImagePagerModel(
-        title: "Heart&Arrow",
-        url: (DiamondUrls.heartImage +
-            (diamondModel.vStnId) +
-            "/" +
-            (diamondModel.vStnId) +
-            "-Hearts-01.jpg"),
-        // url: (DiamondUrls.heartImage +
-        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-        //     "/" +
-        //     "Heart_Black_BG.jpg"),
-//        url: "",
-        type: "Image_hA",
-        isSelected: true,
-        isImage: true,
-      ),
-    );
-    // }
 
     // arrOfHA.add(
     //   DiamondDetailImagePagerModel(
