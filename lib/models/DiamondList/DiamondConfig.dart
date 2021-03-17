@@ -28,6 +28,7 @@ import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/OfflineDownloadPopup.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareDialogue.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareScreen.dart';
+import 'package:diamnow/components/Screens/Filter/Widget/DownLoadAndShareScreen.dart';
 import 'package:diamnow/components/Screens/More/OfferViewScreen.dart';
 import 'package:diamnow/components/Screens/MyBid/MyBidScreen.dart';
 import 'package:diamnow/components/Screens/SalesPerson/BuyNowScreen.dart';
@@ -2052,7 +2053,7 @@ class DiamondConfig {
           arraDiamond[i].displayTitle = "#${arraDiamond[i].memoNo}";
           arraDiamond[i].displayDesc = DateUtilities()
               .convertServerDateToFormatterString(arraDiamond[i].createdAt,
-                  formatter: DateUtilities.dd_mm_yyyy_hh_mm_ss);
+                  formatter: DateUtilities.dd_mm_yyyy_);
           arraDiamond[i].showCheckBox = true;
         }
 

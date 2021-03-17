@@ -16,22 +16,26 @@ class CompanyInformationReq {
   String state;
   String city;
   String address;
+  String landMark;
   String zipCode;
   String vendorCode;
+  String businessId;
 
   CompanyInformationReq(
       {this.sId,
-        this.companyName,
+      this.companyName,
 //        this.dateOfJoin,
 //        this.companyType,
-        this.businessType,
-        this.natureOfOrg,
-        this.country,
-        this.state,
-        this.city,
-        this.address,
-        this.zipCode,
-        this.vendorCode});
+      this.businessType,
+      this.natureOfOrg,
+      this.country,
+      this.state,
+      this.city,
+      this.address,
+      this.landMark,
+      this.zipCode,
+      this.businessId,
+      this.vendorCode});
 
   CompanyInformationReq.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -44,6 +48,8 @@ class CompanyInformationReq {
     state = json['state'];
     city = json['city'];
     address = json['address'];
+    landMark = json['landMark'];
+    businessId = json['businessId'];
     zipCode = json['zipCode'];
     vendorCode = json['vendorCode'];
   }
@@ -57,22 +63,28 @@ class CompanyInformationReq {
     data['businessType'] = this.businessType;
     data['natureOfOrg'] = this.natureOfOrg;
     data['country'] = this.country;
+    if (this.businessId != null) {
+      data['businessId'] = this.businessId;
+    }
     data['state'] = this.state;
     data['city'] = this.city;
     data['address'] = this.address;
+    if (this.landMark != null) {
+      data['landMark'] = this.landMark;
+    }
     data['zipCode'] = this.zipCode;
     data['vendorCode'] = this.vendorCode;
     return data;
   }
-
 }
 
-class CompanyInformationViewResp extends BaseApiResp{
+class CompanyInformationViewResp extends BaseApiResp {
   Account data;
 
-  CompanyInformationViewResp({ this.data});
+  CompanyInformationViewResp({this.data});
 
-  CompanyInformationViewResp.fromJson(Map<String, dynamic> json)  : super.fromJson(json){
+  CompanyInformationViewResp.fromJson(Map<String, dynamic> json)
+      : super.fromJson(json) {
     data = json['data'] != null ? new Account.fromJson(json['data']) : null;
   }
 

@@ -37,8 +37,7 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
   calcualteDifference() {
     if (widget.moduleType ==
             DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION ||
-        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_BID ||
-        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER ) {
+        widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_BID) {
       isTimerCompleted = false;
       var currentTime = DateTime.now();
       var strBlindBid = DateTime.now();
@@ -87,7 +86,6 @@ class _DiamondListHeaderState extends State<DiamondListHeader> {
             Future.delayed(Duration(seconds: 65), () {
               calcualteDifference();
             });
-
             RxBus.post(true, tag: eventDiamondRefresh);
           } else {
             totalSeconds = totalSeconds - 1;

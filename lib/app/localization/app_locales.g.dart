@@ -138,6 +138,8 @@ class AuthStrings {
   String logout = "Log Out";
   String logoutConfirmationMsg = "Are you sure you want to log out?";
   String address = "Address*";
+  String addressTwo = "Address2*";
+  String addressThree = "Address3";
   String accountNumber = "Account Number";
   String bankerName = "Bankers Name";
   String nameLable = "Name";
@@ -415,6 +417,10 @@ class CommonString {
   String noDocument = "No Documents Found";
   String searchBusinessType = "Search Business Type";
   String hours = "Hours";
+  String hrs = "hrs";
+  String min = "min";
+  String sec = "sec";
+  String offerExpired = "Offer Expired";
   String minutes = "Minutes";
   String seconds = "Seconds";
   String bidEndsIn = "Bid ends in:";

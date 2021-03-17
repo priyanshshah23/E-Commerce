@@ -266,12 +266,32 @@ class Master {
   Widget getShapeImage(bool isSelected) {
     String strCode = webDisplay.split(" ").join("");
     if (isSelected) {
+      try {
+        return Image.asset(
+          "assets/shape/${strCode.toLowerCase()}.png",
+          color: appTheme.whiteColor,
+          width: getSize(32),
+          height: getSize(32),
+        );
+      } catch (e) {
+       return Text("N/A");
+      }
+//      return Image.asset(
+//        "assets/shape/${strCode.toLowerCase()}.png",
+//        color: appTheme.whiteColor,
+//        width: getSize(32),
+//        height: getSize(32),
+//      );
+    }
+    try {
       return Image.asset(
         "assets/shape/${strCode.toLowerCase()}.png",
-        color: appTheme.whiteColor,
+        color:Colors.black,
         width: getSize(32),
         height: getSize(32),
       );
+    } catch (e) {
+      return Text("N/A");
     }
     return Image.asset(
       "assets/shape/${strCode.toLowerCase()}.png",

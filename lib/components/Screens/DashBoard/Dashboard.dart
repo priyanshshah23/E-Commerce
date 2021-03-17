@@ -102,6 +102,9 @@ class _DashboardState extends StatefulScreenWidgetState {
     dashboardConfig.initItems();
     dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
       callApiForDashboard(false);
+      if(dashboardModel!=null){
+            print(this.dashboardModel.toJson().toString());
+      }
   }
 
   callApiForDashboard(bool isRefress, {bool isLoading = false}) {
@@ -280,7 +283,9 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   @override
   Widget build(BuildContext context) {
-    //print(this.dashboardModel.banners.length);
+    if(dashboardModel!=null){
+            print(this.dashboardModel.toJson().toString());
+      }
     //getHomeSliderImage(HOME_CENTRE);
     return GestureDetector(
       onTap: () {

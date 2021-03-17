@@ -71,7 +71,7 @@
         "apiKey": "fluNm",
         "sequence": 11,
         "isActive": true,
-        "isPercentage": true
+        "isPercentage": false
       },
       {
         "title": "labTitle",
@@ -133,81 +133,64 @@
         "sequence": 1,
         "isActive": true
       },
-      {
-        "title": "lengthTitle",
-        "apiKey": "length",
-        "sequence": 2,
-        "isActive": true
-      },
-      {
-        "title": "widthTitle",
-        "apiKey": "width",
-        "sequence": 3,
-        "isActive": true
-      },
-      {
-        "title": "depthTitleWithoutPerc",
-        "apiKey": "height",
-        "sequence": 4,
-        "isActive": true
-      },
+
       {
         "title": "tableTitle",
         "apiKey": "ratio",
-        "sequence": 5,
+        "sequence": 2,
         "isActive": true,
         "isPercentage": true
       },
       {
         "title": "depthTitle",
         "apiKey": "depPer",
-        "sequence": 6,
+        "sequence": 3,
         "isActive": true,
         "isPercentage": true
       },
       {
         "title": "pavAngleTitle",
         "apiKey": "pAng",
-        "sequence": 7,
+        "sequence": 4,
         "isActive": true,
         "isPercentage": true
       },
       {
         "title": "pavHeight",
         "apiKey": "pHgt",
-        "sequence": 8,
+        "sequence": 5,
         "isActive": true,
         "isPercentage": true
       },
       {
         "title": "crownAngleTitle",
         "apiKey": "cAng",
-        "sequence": 9,
+        "sequence": 6,
         "isActive": true
       },
       {
         "title": "crownHeightTitle",
         "apiKey": "cHgt",
-        "sequence": 10,
+        "sequence": 7,
         "isActive": true
       },
       {
         "title": "culetTitle",
         "apiKey": "cultNm",
-        "sequence": 11,
+        "sequence": 8,
         "isActive": true
       },
       {
         "title": "girdleTitle",
         "apiKey": "girdleStr",
-        "sequence": 12,
+        "sequence": 9,
         "isActive": true,
         "isPercentage": true
       },
       {
         "title": "eTK",
         "apiKey": "-",
-        "sequence": 13,
+        "sequence": 10,
         "isActive": true
       }
     ]

@@ -1331,13 +1331,13 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                 child: Row(
                   children: [
                     Expanded(
-                      flex: 3,
+                      flex: 4,
                       child: Text(diamondDetailUIModel.parameters[j].title,
                           style: appTheme.grey14HintTextStyle),
                     ),
                     // Spacer(),
                     Expanded(
-                      flex: 7,
+                      flex: 6,
                       child: Text(diamondDetailUIModel.parameters[j].value,
                           textAlign: TextAlign.right,
                           maxLines: 1,
