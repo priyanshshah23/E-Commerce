@@ -378,7 +378,7 @@ class PrefUtils {
         (app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
                 KYCStatus.pending) !=
             KYCStatus.approved) {*/
-    /* if (module == ModulePermissionConstant.permission_searchDiamond ||
+     if (module == ModulePermissionConstant.permission_searchDiamond ||
         module == ModulePermissionConstant.permission_searchResult ||
         module == ModulePermissionConstant.permission_dashboard ||
         module == ModulePermissionConstant.permission_quickSearch ||
@@ -396,6 +396,7 @@ class PrefUtils {
         module == ModulePermissionConstant.permission_offer ||
         module == ModulePermissionConstant.permission_order ||
         module == ModulePermissionConstant.permission_comment ||
+        module == ModulePermissionConstant.permission_notification ||
         module == ModulePermissionConstant.permission_purchase) {
       data = UserPermissionsData(module: module);
       data.view = true;
@@ -410,14 +411,14 @@ class PrefUtils {
       data.update = false;
       data.delete = false;
       data.downloadExcel = false;
-    }*/
+    }
 //Admin permission
-    data = UserPermissionsData(module: module);
+ /*   data = UserPermissionsData(module: module);
     data.view = true;
     data.insert = true;
     data.update = true;
     data.delete = true;
-    data.downloadExcel = true;
+    data.downloadExcel = true;*/
     return data;
   }
 
