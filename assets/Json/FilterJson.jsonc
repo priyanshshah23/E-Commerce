@@ -354,7 +354,37 @@
     "tab": "basic",
     "sequence": 70,
     "isActive": true,
-    "valueKeyisCode": false
+    "valueKeyisCode": false,
+    "masterSelection": [
+      {
+        "code": "NOBLACK",
+        "masterToSelect": [
+          {
+            "code": "BLACK_INCLUSION_TABLE",
+            "subMasters": [
+              "CN0"
+            ]
+          },
+          {
+            "code": "BLACK_INCLUSION_CROWN",
+            "subMasters": [
+              "BC0"
+            ]
+          }
+        ]
+      },
+      {
+        "code": "NOOPEN",
+        "masterToSelect": [
+          {
+            "code": "OPEN_INCLUSION_GIRDLE",
+            "subMasters": [
+              "NONE"
+            ]
+          }
+        ]
+      }
+    ]
   },
   {
     "viewType": "seperator",
