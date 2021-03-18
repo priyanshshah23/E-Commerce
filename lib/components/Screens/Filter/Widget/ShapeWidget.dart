@@ -94,6 +94,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                   } else {
                     element.isSelected = false;
                   }
+                  widget.selectionModel.isShowAllSelected = false;
                   setState(() {});
                 });
               },
@@ -107,9 +108,13 @@ class _ShapeWidgetState extends State<ShapeWidget> {
             SizedBox(
               width: getSize(3),
             ),
-            VerticalDivider(
-              width: getSize(3),
-              color: appTheme.colorPrimary,
+            Text(
+              // R.string.commonString.byKey(widget.selectionModel.title) ?? "-",
+              "|",
+              style: appTheme.blackMedium16TitleColorblack.copyWith(
+                color: appTheme.textGray,
+              ),
+              textAlign: TextAlign.left,
             ),
             SizedBox(
               width: getSize(3),
@@ -122,6 +127,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                   } else {
                     element.isSelected = false;
                   }
+                  widget.selectionModel.isShowAllSelected = false;
                   setState(() {});
                 });
               },
@@ -385,6 +391,7 @@ class ShapeItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       width: selectionModel.orientation == DisplayTypes.horizontal
           ? getSize(80)
@@ -412,9 +419,10 @@ class ShapeItemWidget extends StatelessWidget {
               children: <Widget>[
                 obj.sId != selectionModel.allLableTitle ||
                         (obj.sId != showMoreId)
-                    ? Container(
+                    ?
+                Container(
                         width: getSize(90),
-                        child: obj.getShapeImage(obj.isSelected))
+                        child: obj.getShapeImage(context,obj.isSelected))
                     : SizedBox(),
                 Padding(
                   padding: EdgeInsets.only(top: getSize(12.0)),
@@ -429,6 +437,8 @@ class ShapeItemWidget extends StatelessWidget {
           : SizedBox(),
     );
   }
+
+
 
   showWebDisplay() {
     return /*selectionModel.valueKeyisCode

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:core';
 
 import 'package:diamnow/app/app.export.dart';
@@ -263,8 +264,14 @@ class Master {
     return requestCarats.length > 0 ? requestCarats : null;
   }
 
-  Widget getShapeImage(bool isSelected) {
+  List<String> list = [];
+  String imageCode;
+  Widget getShapeImage(BuildContext context, bool isSelected) {
+//    await checkImageValid(context);
+//    print(imageCode);
+//    _initImages(context).f
     String strCode = webDisplay.split(" ").join("");
+
     if (isSelected) {
       try {
         return Image.asset(
@@ -274,7 +281,7 @@ class Master {
           height: getSize(32),
         );
       } catch (e) {
-       return Text("N/A");
+        return Text("N/A");
       }
 //      return Image.asset(
 //        "assets/shape/${strCode.toLowerCase()}.png",
@@ -286,7 +293,7 @@ class Master {
     try {
       return Image.asset(
         "assets/shape/${strCode.toLowerCase()}.png",
-        color:Colors.black,
+        color: Colors.black,
         width: getSize(32),
         height: getSize(32),
       );
@@ -299,6 +306,31 @@ class Master {
       width: getSize(32),
       height: getSize(32),
     );
+  }
+
+  checkImageValid(BuildContext context) async {
+    String code;
+    await _initImages(context);
+    for(var i =0;i<list.length;i++){
+      code=list[i].split("/").last;
+    }
+    imageCode = code;
+  }
+
+  Future _initImages(BuildContext context) async {
+    // >> To get paths you need these 2 lines
+    final manifestContent =
+        await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
+
+    final Map<String, dynamic> manifestMap = json.decode(manifestContent);
+    // >> To get paths you need these 2 lines
+
+    final imagePaths = manifestMap.keys
+        .where((String key) => key.contains('assets/shape/'))
+        .where((String key) => key.contains('.png'))
+        .toList();
+    list = imagePaths;
+    return imagePaths;
   }
 }
 
