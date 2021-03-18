@@ -204,12 +204,16 @@ class SyncManager {
     Function failure, {
     bool isProgress = true,
     String searchText,
+    bool isFromList = false,
   }) async {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
+    if (isFromList) {
+      dict["isSkipSave"] = false;
+      dict["isPredefinedPair"] = true;
+    }
     dict["filter"] = req;
-
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
     }

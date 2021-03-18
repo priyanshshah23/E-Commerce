@@ -683,7 +683,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   ),
                 ),
                 SizedBox(
-                  width: getSize(10),
+                  width: getSize(8),
                 ),
                 getImageOfMatchPairOrLayout(widget.item.pairStkNo),
               ],
@@ -2214,43 +2214,65 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   getImageOfMatchPairOrLayout(String pairStkNo) {
     if (widget.item?.vStnId != null &&
-        widget.item?.pairStkNo != null &&
-        widget.item?.pairStkNo != "") {
+        widget.item?.layoutNo != null &&
+        widget.item?.layoutNo != "" &&
+        widget.item?.layoutNo != "0") {
       return InkWell(
         onTap: () {
-          Map<String, dynamic> map = {
-            "or": [
-              {
-                "pairStkNo": [pairStkNo]
-              }
-            ]
-          };
-          SyncManager.instance.callApiForMatchPair(context, map,
-              (diamondListResp) {
-            Map<String, dynamic> dict = new HashMap();
-            dict["filterId"] = diamondListResp.data.filter.id;
-            dict[ArgumentConstant.ModuleType] =
-                DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
-            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
-          }, (onError) {});
+          getLayoutAndMAtchPairClick(true, pairStkNo, context);
         },
         child: Container(
             height: getSize(20),
             width: getSize(20),
-            child: Image.asset(matchpairlist)),
+            child: Image.asset(
+              layoutlist,
+              fit: BoxFit.fill,
+            )),
       );
     } else if (widget.item?.vStnId != null &&
-        widget.item?.layoutNo != null &&
-        widget.item?.pairStkNo != "" &&
-        widget.item?.layoutNo != "0") {
-      return Container(
-          height: getSize(20),
-          width: getSize(20),
-          child: Image.asset(layoutlist));
+        widget.item?.pairStkNo != null &&
+        widget.item?.pairStkNo != "") {
+      return InkWell(
+        onTap: () {
+          getLayoutAndMAtchPairClick(false, pairStkNo, context);
+        },
+        child: Container(
+            height: getSize(20),
+            width: getSize(20),
+            child: Image.asset(
+              matchpairlist,
+              fit: BoxFit.fill,
+            )),
+      );
     } else {
       return SizedBox();
     }
   }
+}
+
+getLayoutAndMAtchPairClick(
+    bool isLayoutSearch, String pairStkNo, BuildContext context) {
+  Map<String, dynamic> map = {
+    "or": [
+      {
+        "pairStkNo": [pairStkNo]
+      }
+    ]
+  };
+
+  SyncManager.instance.callApiForMatchPair(context, map, (diamondListResp) {
+    Map<String, dynamic> dict = new HashMap();
+    dict["filterId"] = diamondListResp.data.filter.id;
+    if (isLayoutSearch) {
+      dict[ArgumentConstant.ModuleType] =
+          DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT;
+      dict["isLayoutSearch"] = isLayoutSearch;
+    } else {
+      dict[ArgumentConstant.ModuleType] =
+          DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+    }
+    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+  }, (onError) {}, isFromList: true);
 }
 
 class DropDownItem extends StatefulWidget {

@@ -412,14 +412,12 @@ class PrefUtils {
       data.downloadExcel = false;
     }*/
 //Admin permission
-
     data = UserPermissionsData(module: module);
-    data.insert = true;
     data.view = true;
+    data.insert = true;
     data.update = true;
     data.delete = true;
     data.downloadExcel = true;
-
     return data;
   }
 
