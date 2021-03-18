@@ -173,6 +173,8 @@ class MasterCode {
   static const String billType = "BILL_TYPE";
   static const String dayTerm = "DAY_TERM";
   static const String localBill = "LOCAL_BILL";
+  static const String noBlack = "NOBLACK";
+  static const String noOpen = "NOOPEN";
 // static const String mixTint = "MIX_TINT";
 }
 

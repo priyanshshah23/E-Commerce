@@ -41,6 +41,10 @@ class FilterRequest {
                 arrWsts.add("B");
               } else if (item.code == MasterCode.brownStatic) {
                 map["excludeFilter"] = {"brown": true};
+              } else if (item.code == MasterCode.noBlack) {
+                map["excludeFilter"] = {"noBlack": true};
+              } else if (item.code == MasterCode.noOpen) {
+                map["excludeFilter"] = {"noOpen": true};
               } else if (item.code == MasterCode.eyecleanStatic) {
                 if (!isNullEmptyOrFalse(item.map))
                   map.addAll(item.map as Map<String, dynamic>);
