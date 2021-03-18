@@ -94,6 +94,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                   } else {
                     element.isSelected = false;
                   }
+                  widget.selectionModel.isShowAllSelected = false;
                   setState(() {});
                 });
               },
@@ -107,9 +108,13 @@ class _ShapeWidgetState extends State<ShapeWidget> {
             SizedBox(
               width: getSize(3),
             ),
-            VerticalDivider(
-              width: getSize(3),
-              color: appTheme.colorPrimary,
+            Text(
+              // R.string.commonString.byKey(widget.selectionModel.title) ?? "-",
+              "|",
+              style: appTheme.blackMedium16TitleColorblack.copyWith(
+                color: appTheme.textGray,
+              ),
+              textAlign: TextAlign.left,
             ),
             SizedBox(
               width: getSize(3),
@@ -122,6 +127,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
                   } else {
                     element.isSelected = false;
                   }
+                  widget.selectionModel.isShowAllSelected = false;
                   setState(() {});
                 });
               },
