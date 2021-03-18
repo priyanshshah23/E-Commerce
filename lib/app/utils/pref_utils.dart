@@ -270,14 +270,15 @@ class PrefUtils {
   }
 
   DashboardModel getDashboardDetails() {
-    var data = _preferences.getString(keyDashboard);
-    if (data != null) {
-      var dashboardJson = json.decode(data);
-      return dashboardJson != null
-          ? new DashboardModel.fromJson(dashboardJson)
-          : null;
+    if (_preferences.getString(keyCompany) != null){
+      var data = _preferences.getString(keyDashboard);
+      if (data != null) {
+        var dashboardJson = json.decode(data);
+        return dashboardJson != null
+            ? new DashboardModel.fromJson(dashboardJson)
+            : null;
+      }
     }
-
     return null;
   }
 

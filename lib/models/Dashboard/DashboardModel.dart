@@ -234,9 +234,9 @@ class DashboardModel {
       banners:
           List<Banners>.from(json["banners"].map((x) => Banners.fromJson(x))),
 
-      //recentSearch: SavedSearch.fromJson(json["recentSearch"]),
+      recentSearch: SavedSearch.fromJson(json["recentSearch"]),
 
-      //savedSearch: SavedSearch.fromJson(json["savedSearch"]),
+      savedSearch: SavedSearch.fromJson(json["savedSearch"]),
       newArrival: arrNewArrivals,
       // // recentSearch: List<SavedSearchModel>.from(
       // //     json["recentSearch"].map((x) => SavedSearchModel.fromJson(x))),
@@ -314,23 +314,32 @@ class FeaturedStone {
 }
 
 class SavedSearch {
+  List<SavedSearchModel> list;
+  int count;
+
   SavedSearch({
     this.list,
     this.count,
   });
 
-  List<SavedSearchModel> list;
-  int count;
+  SavedSearch.fromJson(Map<String, dynamic> json) {
+    count = json['count'];
+    if (json['list'] != null) {
+      list = new List<SavedSearchModel>();
+      json['list'].forEach((v) {
+        list.add(new SavedSearchModel.fromJson(v));
+      });
+    }
+  }
 
-  factory SavedSearch.fromJson(Map<String, dynamic> json) => SavedSearch(
-        list: List<SavedSearchModel>.from(
-            json["list"].map((x) => SavedSearchModel.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "list": List<dynamic>.from(list.map((x) => x.toJson())),
-        "count": count,
-      };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['count'] = this.count;
+    if (this.list != null) {
+      data['list'] = this.list.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Seller {

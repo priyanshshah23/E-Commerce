@@ -100,7 +100,9 @@ class _DashboardState extends StatefulScreenWidgetState {
 
     dashboardConfig = DashboardConfig();
     dashboardConfig.initItems();
-    dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
+    if (app.resolve<PrefUtils>().getDashboardDetails() != null) {
+      dashboardModel = app.resolve<PrefUtils>().getDashboardDetails();
+    }
     callApiForDashboard(false);
     if (dashboardModel != null) {
       print(this.dashboardModel.toJson().toString());
@@ -128,17 +130,18 @@ class _DashboardState extends StatefulScreenWidgetState {
             isProgress: false)
         // !isRefress && !isLoading
         .then((resp) {
-      setState(() {
-        this.dashboardModel = resp.data;
-
-        if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
-          emailURL = this.dashboardModel.seller.email;
-        }
-        setTopCountData();
-        app.resolve<PrefUtils>().saveDashboardDetails(dashboardModel);
-        print(
-            "-----------------------------------${app.resolve<PrefUtils>().getDashboardDetails().seller.lastName}");
-      });
+      this.dashboardModel = resp.data;
+      app.resolve<PrefUtils>().saveDashboardDetails(dashboardModel).then((value) => setState((){}));
+//      setState(() {
+////
+////        if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
+////          emailURL = this.dashboardModel.seller.email;
+////        }
+////        setTopCountData();
+//     //
+//        print(
+//            "-----------------------------------${app.resolve<PrefUtils>().getDashboardDetails().seller.lastName}");
+//      });
     }).catchError((onError) {
       if (onError is ErrorResp) {
         app.resolve<CustomDialogs>().confirmDialog(
@@ -1140,7 +1143,7 @@ class _DashboardState extends StatefulScreenWidgetState {
           ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: (this.dashboardModel.savedSearch?.list?.length)??0,
+              itemCount: (this.dashboardModel.savedSearch?.list?.length) ?? 0,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
