@@ -744,14 +744,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
         url: DiamondUrls.image,
       ),
     );
-    firstImageList.add(
-      SelectionPopupModel(
-        "2",
-        "Plot Image",
-        fileType: DownloadAndShareDialogueConstant.plottingImg,
-        url: DiamondUrls.plotting,
-      ),
-    );
+    
     // firstImageList.add(
     //   SelectionPopupModel(
     //     "3",
@@ -770,20 +763,37 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     // );
     firstImageList.add(
       SelectionPopupModel(
-        "3",
+        "2",
         "Heart & Arrow Image",
         fileType: DownloadAndShareDialogueConstant.heartAndArrowImg,
         url: DiamondUrls.heartImage,
       ),
     );
+
+    firstImageList.add(
+      SelectionPopupModel(
+        "3",
+        "Plot Image",
+        fileType: DownloadAndShareDialogueConstant.plottingImg,
+        url: DiamondUrls.plotting,
+      ),
+    );
     firstImageList.add(
       SelectionPopupModel(
         "4",
-        "Ideal Scope Image",
-        fileType: DownloadAndShareDialogueConstant.idealScopeImg,
+        "Propotion Image",
+        fileType: DownloadAndShareDialogueConstant.propimage,
         url: DiamondUrls.proportion,
       ),
     );
+    // firstImageList.add(
+    //   SelectionPopupModel(
+    //     "4",
+    //     "Ideal Scope Image",
+    //     fileType: DownloadAndShareDialogueConstant.idealScopeImg,
+    //     url: DiamondUrls.proportion,
+    //   ),
+    // );
     // secondImageList.add(
     //   SelectionPopupModel(
     //     "6",

@@ -58,6 +58,8 @@ class DownloadAndShareDialogueConstant {
   static const int roughScope = 16;
   static const int roughVideo = 17;
   static const int img3D = 18;
+
+  static const int propimage = 19;
 }
 
 //Documents Type
