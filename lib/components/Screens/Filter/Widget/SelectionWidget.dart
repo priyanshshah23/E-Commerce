@@ -16,8 +16,9 @@ import 'package:rxbus/rxbus.dart';
 
 class SelectionWidget extends StatefulWidget {
   SelectionModel selectionModel;
+  ColorModel colorModel;
 
-  SelectionWidget(this.selectionModel);
+  SelectionWidget(this.selectionModel, {this.colorModel});
 
   @override
   _SelectionWidgetState createState() => _SelectionWidgetState();
@@ -29,14 +30,18 @@ class _SelectionWidgetState extends State<SelectionWidget> {
     return widget.selectionModel.verticalScroll &&
             widget.selectionModel.viewType == ViewTypes.shapeWidget
         ? ShapeWidget(widget.selectionModel)
-        : TagWidget(widget.selectionModel);
+        : TagWidget(
+            widget.selectionModel,
+            colorModel: widget.colorModel,
+          );
   }
 }
 
 class TagWidget extends StatefulWidget {
   SelectionModel model;
+  ColorModel colorModel;
 
-  TagWidget(this.model);
+  TagWidget(this.model, {this.colorModel});
 
   @override
   _TagWidgetState createState() => _TagWidgetState();
@@ -156,14 +161,15 @@ class _TagWidgetState extends State<TagWidget> {
             (index) {
               return InkWell(
                 onTap: () {
-                  if(widget.model.apiKey=="shp") {
+                  if (widget.model.apiKey == "shp") {
                     int firstIndex = widget.model.masters.indexOf(widget
                         .model.masters
                         .firstWhere((element) => element.isSelected));
                     int lastIndex = widget.model.masters.indexOf(widget
                         .model.masters
                         .firstWhere((element) => element.isSelected));
-                    if (index < firstIndex || index > lastIndex) {} else {}
+                    if (index < firstIndex || index > lastIndex) {
+                    } else {}
                   }
                   setState(() {
                     if (widget.model.viewType == ViewTypes.caratRange) {
@@ -328,11 +334,15 @@ class _TagWidgetState extends State<TagWidget> {
                     if (widget.model.viewType == ViewTypes.caratRange) {
                       RxBus.post(true, tag: eventForShareCaratRangeSelected);
                     }
+                    print("_________567________________${widget.model.apiKey}");
 
                     if (widget.model.apiKey == DiamondDetailUIAPIKeys.crt ||
                         widget.model.apiKey == DiamondDetailUIAPIKeys.fluNm ||
                         widget.model.apiKey == DiamondDetailUIAPIKeys.clr ||
-                        widget.model.apiKey == DiamondDetailUIAPIKeys.col) {
+//                        widget.model.apiKey == DiamondDetailUIAPIKeys.col ||
+                        (widget.model.apiKey == DiamondDetailUIAPIKeys.col &&
+                            widget.colorModel.gridViewItemCount == 5)) {
+                      print("_________________________${widget.model.apiKey}");
                       List<Master> selectItemList = widget.model.masters
                           .where((element) => element.isSelected == true)
                           .toList();
