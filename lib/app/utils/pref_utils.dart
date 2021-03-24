@@ -397,6 +397,7 @@ class PrefUtils {
         module == ModulePermissionConstant.permission_offer ||
         module == ModulePermissionConstant.permission_order ||
         module == ModulePermissionConstant.permission_comment ||
+        module == ModulePermissionConstant.permission_compare ||
         module == ModulePermissionConstant.permission_notification ||
         module == ModulePermissionConstant.permission_purchase) {
       data = UserPermissionsData(module: module);

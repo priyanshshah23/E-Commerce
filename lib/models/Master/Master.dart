@@ -273,38 +273,24 @@ class Master {
     String strCode = webDisplay.split(" ").join("");
 
     if (isSelected) {
-      try {
-        return Image.asset(
-          "assets/shape/${strCode.toLowerCase()}.png",
-          color: appTheme.whiteColor,
-          width: getSize(32),
-          height: getSize(32),
-        );
-      } catch (e) {
-        return Text("N/A");
-      }
-//      return Image.asset(
-//        "assets/shape/${strCode.toLowerCase()}.png",
-//        color: appTheme.whiteColor,
-//        width: getSize(32),
-//        height: getSize(32),
-//      );
-    }
-    try {
       return Image.asset(
         "assets/shape/${strCode.toLowerCase()}.png",
-        color: Colors.black,
+        color: appTheme.whiteColor,
         width: getSize(32),
         height: getSize(32),
+        errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+          return Center(child: Text('N/A',style: TextStyle(color: appTheme.whiteColor),));
+        },
       );
-    } catch (e) {
-      return Text("N/A");
     }
     return Image.asset(
       "assets/shape/${strCode.toLowerCase()}.png",
       color: Colors.black,
       width: getSize(32),
       height: getSize(32),
+      errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+        return Center(child: Text('N/A'));
+      },
     );
   }
 

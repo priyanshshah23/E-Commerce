@@ -577,7 +577,7 @@ class BottomMenuSetting {
       }
     }
 
-    addExcelBottomMenu(moreMenuList);
+//    addExcelBottomMenu(moreMenuList);
 
     /* moreMenuList.add(BottomTabModel(
         image: hold,

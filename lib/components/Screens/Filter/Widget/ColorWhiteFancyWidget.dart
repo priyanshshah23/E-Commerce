@@ -169,7 +169,7 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
           ],
         ),
         SizedBox(height: getSize(16)),
-        SelectionWidget(widget.colorModel),
+        SelectionWidget(widget.colorModel,colorModel: widget.colorModel,),
         widget.colorModel.isGroupSelected
             ? getOverToneIntensityViews()
             : SizedBox(height: getSize(8)),
@@ -180,9 +180,9 @@ class _ColorWhiteFancyWidgetState extends State<ColorWhiteFancyWidget> {
   getOverToneIntensityViews() {
     return Column(children: [
       SizedBox(height: getSize(32)),
-      SelectionWidget(widget.colorModel.intensitySelection),
+      SelectionWidget(widget.colorModel.intensitySelection,colorModel: widget.colorModel,),
       SizedBox(height: getSize(32)),
-      SelectionWidget(widget.colorModel.overtoneSelection),
+      SelectionWidget(widget.colorModel.overtoneSelection,colorModel: widget.colorModel),
       SizedBox(height: getSize(8)),
     ]);
   }

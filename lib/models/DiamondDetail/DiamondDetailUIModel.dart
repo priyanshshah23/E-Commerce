@@ -10,7 +10,7 @@ class DiamondDetailUIAPIKeys {
   static const String cutNm = "cutNm";
   static const String polNm = "polNm";
   static const String symNm = "symNm";
-  static const String fluNm = "fluNm";
+  static const String fluNm = "flu";
   static const String lbNm = "lbNm";
   static const String rptNo = "rptNo";
   static const String back = "back";

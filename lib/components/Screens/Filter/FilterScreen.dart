@@ -940,6 +940,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 args: dict,
               );
             } else if (segmentedControlValue == 2) {
+//              print("-------------------------");
               if (app
                   .resolve<PrefUtils>()
                   .getModulePermission(
@@ -968,6 +969,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                       args: dict);
                 }, (onError) {});
 //                }
+              }else {
+                app.resolve<CustomDialogs>().accessDenideDialog(context);
               }
               // place code
             } else if (app
