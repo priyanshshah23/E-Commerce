@@ -185,13 +185,13 @@ class DownloadState extends State<Download> {
 
         // }
 
-        else if (element.fileType ==
-            DownloadAndShareDialogueConstant.arrowImg) {
-          element.url = DiamondUrls.heartImage +
-              model.mfgStnId +
-              "/" +
-              "Arrow_Black_BG.jpg";
-        }
+        // else if (element.fileType ==
+        //     DownloadAndShareDialogueConstant.arrowImg) {
+        //   element.url = DiamondUrls.heartImage +
+        //       model.mfgStnId +
+        //       "/" +
+        //       "Arrow_Black_BG.jpg";
+        // }
         //  else if (element.fileType ==
         //     DownloadAndShareDialogueConstant.assetScopeImg) {
         //   print("-----type----assetScopeImg");
@@ -207,12 +207,38 @@ class DownloadState extends State<Download> {
         // }
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.heartAndArrowImg) {
-          element.url = (DiamondUrls.heartImage +
+          element.url = 
+            (DiamondUrls.heartImage +
               (model.vStnId) +
               "/" +
               (model.vStnId) +
               "-Hearts-01.jpg");
+          element.url = (DiamondUrls.heartImage +
+              (model.vStnId) +
+              "/" +
+              (model.vStnId) +
+              "-ASET%20white-01.jpg");
+          element.url = (DiamondUrls.heartImage +
+              (model.vStnId) +
+              "/" +
+              (model.vStnId) +
+              "-Arrows-01.jpg");
+          element.url = (DiamondUrls.heartImage +
+              (model.vStnId) +
+              "/" +
+              (model.vStnId) +
+              "-IdealScope-01.jpg");
         }
+        // } else if (element.fileType ==
+        //     DownloadAndShareDialogueConstant.heartAndArrowImg) {
+
+        // } else if (element.fileType ==
+        //     DownloadAndShareDialogueConstant.heartAndArrowImg) {
+
+        // } else if (element.fileType ==
+        //     DownloadAndShareDialogueConstant.heartAndArrowImg) {
+
+        // }
         // else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.flouresenceImg &&
         //     model.img) {
