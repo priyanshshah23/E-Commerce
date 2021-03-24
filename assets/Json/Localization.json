@@ -195,7 +195,7 @@
       "home": "Home",
       "goToMyWatchList": "Go to My Watchlist",
       "goToMyOrder": "Go to My Order",
-      "gotToMyOffer": "Go to My Quote",
+      "gotToMyOffer": "Go to My Offer",
       "gotToMyHold": "Go to My Hold",
       "gotToMyEnquiry": "Go to My Enquiry",
       "gotToMyBid": "Go to My Bid",
@@ -499,7 +499,7 @@
       "noDataFound": "No record found"
     },
     "screen_title": {
-      "placeAnOffer": "Apply Quote",
+      "placeAnOffer": "Apply Offer",
       "addedInWatchList": "Added in Watchlist",
       "addedInOffer": "Offer Submitted",
       "addedInCart": "Added in Cart",
@@ -608,7 +608,7 @@
       "myOrder": "My Ordered List",
       "confirmStone": "Confirm Stone",
       "myOffice": "My Office",
-      "myOffer": "My Quote",
+      "myOffer": "My Offer",
       "myPurchased": "My Purchased History",
       "mySavedSearch": "Saved Search",
       "savedSearch": "Saved Search",

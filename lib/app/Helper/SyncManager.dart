@@ -229,6 +229,7 @@ class SyncManager {
     )
         .then((diamondListResp) async {
       success(diamondListResp);
+      // print("-->------------------------->------------->_" +{DiamondListResp}.toString());
     }).catchError((onError) {
       print(onError);
     });

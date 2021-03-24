@@ -1070,7 +1070,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
         );
       }*/
-      else {
+      else {  
         list.add(GestureDetector(
           onTap: !isNullEmptyOrFalse(arraDiamond)
               ? () {
