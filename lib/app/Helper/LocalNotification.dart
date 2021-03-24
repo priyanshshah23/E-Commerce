@@ -49,7 +49,7 @@ class LocalNotificationManager {
         android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
-    getNotification();
+    //getNotification();
     platform.setMethodCallHandler((call) {
       if (call.method == "onNotificationReceived") {
         Map<String, dynamic> req = {};

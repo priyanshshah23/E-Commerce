@@ -264,7 +264,7 @@ class CommonString {
   String home = "Home";
   String goToMyWatchList = "Go to My Watchlist";
   String goToMyOrder = "Go to My Order";
-  String gotToMyOffer = "Go to My Quote";
+  String gotToMyOffer = "Go to My Offer";
   String gotToMyHold = "Go to My Hold";
   String gotToMyEnquiry = "Go to My Enquiry";
   String gotToMyBid = "Go to My Bid";
@@ -595,7 +595,7 @@ class NoDataStrings {
 }
 
 class ScreenTitle {
-  String placeAnOffer = "Apply Quote";
+  String placeAnOffer = "Apply Offer";
   String addedInWatchList = "Added in Watchlist";
   String addedInOffer = "Offer Submitted";
   String addedInCart = "Added in Cart";
@@ -711,7 +711,7 @@ class ScreenTitle {
   String myOrder = "My Ordered List";
   String confirmStone = "Confirm Stone";
   String myOffice = "My Office";
-  String myOffer = "My Quote";
+  String myOffer = "My Offer";
   String myPurchased = "My Purchased History";
   String mySavedSearch = "Saved Search";
   String savedSearch = "Saved Search";

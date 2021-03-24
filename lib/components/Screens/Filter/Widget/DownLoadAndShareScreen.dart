@@ -12,7 +12,9 @@ class DownLoadAndShareScreen extends StatefulWidget {
   String title = "";
   List<DiamondModel> diamondList;
   bool isFromDetailScreen = false;
+  
   Function(List<SelectionPopupModel>) onDownload;
+  
 
   DownLoadAndShareScreen({
     this.title,
@@ -30,6 +32,7 @@ class DownLoadAndShareScreen extends StatefulWidget {
 }
 
 class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
+  
   List<DiamondModel> diamondList;
   Function onDownload;
 
@@ -87,7 +90,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
       (element) async {
         await totalList.forEach(
           (v) {
-            data.add(v.url + element.id);
+            data.add(v.url + element.vStnId);
           },
         );
       },
@@ -731,6 +734,8 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
   }
 
   void setDataInList() {
+    
+
     firstImageList.add(
       SelectionPopupModel(
         "1",

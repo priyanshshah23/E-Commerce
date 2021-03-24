@@ -889,7 +889,7 @@
     "isActive": true,
     "isExpand": true,
     "childrenViewType": "fromto",
-    "filterName": "Perameter",
+    "filterName": "Parameter",
     "childrenApiKeys": [
       "depPer",
       "tblPer",
