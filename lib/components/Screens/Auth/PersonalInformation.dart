@@ -282,10 +282,6 @@ class _PersonalInformationState extends State<PersonalInformation>
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getAddressLineThreeTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
                   getEmailTextField(),
                   SizedBox(
                     height: getSize(20),
