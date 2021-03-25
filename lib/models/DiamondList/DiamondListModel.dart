@@ -120,10 +120,9 @@ class DiamondListResp extends BaseApiResp {
   DiamondListResp({this.data});
 
   DiamondListResp.fromJson(Map<String, dynamic> json) : super.fromJson(json) {
-    try{
+    try {
       data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-
-    }catch( e){
+    } catch (e) {
       if (json['data'] != null) {
         json['data'].forEach((v) {
           data = new Data.fromJson(v);
@@ -175,6 +174,7 @@ class Data {
           list.add(new TrackItem.fromJson(v));
         } else {
           diamonds.add(new DiamondModel.fromJson(v));
+          print("-------------${diamonds.length}");
         }
       });
     }
@@ -442,7 +442,7 @@ class TrackItem {
   bool isSentReminder;
   String addedBy;
   num bidPricePerCarat;
-  
+
   //User user;
   DiamondModel diamond;
 

@@ -291,6 +291,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 //        dict["filters"] = [
 //          {"diamondSearchId": this.filterId}
 //        ];
+        dict['isPredefinedPair'] = true;
         dict["filter"] = {};
         dict["filter"]["diamondSearchId"] = this.filterId;
         break;

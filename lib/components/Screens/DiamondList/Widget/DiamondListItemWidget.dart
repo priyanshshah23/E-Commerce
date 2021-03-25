@@ -1061,9 +1061,11 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             ),
             Flexible(
               flex: 4,
-              child: getTextWithLabel(
-                  (widget.item?.eClnNm ?? "-").replaceAll('null', '--'),
-                  "EC : "),
+              child: Text(
+                "EC : " + (widget.item?.eClnNm ?? "-").replaceAll('null', '--'),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
             ),
             // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
             Flexible(

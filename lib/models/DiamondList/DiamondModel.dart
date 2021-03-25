@@ -369,7 +369,7 @@ class DiamondModel {
     fcColDesc = json['fcColDesc'];
     ratio = json['ratio'];
     pltFile = isNullEmptyOrFalse(json['pltFile']) ? false : json['pltFile'];
-    groupNo = json['groupNo'];
+    groupNo = json['groupNo'] ?? 0;
     mfgStnId = json["mfgStnId"];
     layoutNo = json["layoutNo"];
 
