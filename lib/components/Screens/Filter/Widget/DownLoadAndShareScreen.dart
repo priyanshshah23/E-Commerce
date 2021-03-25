@@ -12,9 +12,8 @@ class DownLoadAndShareScreen extends StatefulWidget {
   String title = "";
   List<DiamondModel> diamondList;
   bool isFromDetailScreen = false;
-  
+
   Function(List<SelectionPopupModel>) onDownload;
-  
 
   DownLoadAndShareScreen({
     this.title,
@@ -32,7 +31,6 @@ class DownLoadAndShareScreen extends StatefulWidget {
 }
 
 class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
-  
   List<DiamondModel> diamondList;
   Function onDownload;
 
@@ -734,17 +732,35 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
   }
 
   void setDataInList() {
-    
+    //
 
     firstImageList.add(
       SelectionPopupModel(
         "1",
-        "Image",
+        "Ideal Image",
         fileType: DownloadAndShareDialogueConstant.realImage1,
         url: DiamondUrls.image,
       ),
     );
-    
+    firstImageList.add(
+      SelectionPopupModel(
+        "2",
+        "Natural Image",
+        fileType: DownloadAndShareDialogueConstant.naturalImage,
+        url: DiamondUrls.naturalImage,
+      ),
+    );
+    firstImageList.add(
+      SelectionPopupModel(
+        "3",
+        "Fluorescence Image",
+        fileType: DownloadAndShareDialogueConstant.flouresenceImg,
+        url: DiamondUrls.flouresenceImg,
+      ),
+    );
+
+    //
+
     // firstImageList.add(
     //   SelectionPopupModel(
     //     "3",
@@ -763,7 +779,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     // );
     firstImageList.add(
       SelectionPopupModel(
-        "2",
+        "4",
         "Heart & Arrow Image",
         fileType: DownloadAndShareDialogueConstant.heartAndArrowImg,
         url: DiamondUrls.heartImage,
@@ -772,7 +788,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
 
     firstImageList.add(
       SelectionPopupModel(
-        "3",
+        "5",
         "Plot Image",
         fileType: DownloadAndShareDialogueConstant.plottingImg,
         url: DiamondUrls.plotting,
@@ -780,7 +796,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     );
     firstImageList.add(
       SelectionPopupModel(
-        "4",
+        "6",
         "Propotion Image",
         fileType: DownloadAndShareDialogueConstant.propimage,
         url: DiamondUrls.proportion,

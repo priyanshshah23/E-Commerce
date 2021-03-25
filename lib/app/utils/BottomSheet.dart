@@ -139,6 +139,7 @@ class SelectionPopupModel {
   String subId;
   String buyername;
   String buyerId;
+  
 
   SelectionPopupModel.fromJson(Map<String, dynamic> parsedJson) {
     id = parsedJson["id"] ?? "";

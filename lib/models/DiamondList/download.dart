@@ -178,12 +178,15 @@ class DownloadState extends State<Download> {
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.propimage) {
           element.url = (DiamondUrls.proportion + model.vStnId + ".png");
+        } else if (element.fileType ==
+            DownloadAndShareDialogueConstant.naturalImage) {
+          element.url = (DiamondUrls.naturalImage + (model.vStnId) + ".jpg");
+        } else if (element.fileType ==
+            DownloadAndShareDialogueConstant.flouresenceImg) {
+          element.url = (DiamondUrls.flouresenceImg +
+              (model.vStnId) +
+              "/fluorescence.jpg");
         }
-        // else if (element.fileType ==
-        //     DownloadAndShareDialogueConstant.idealScopeImg) {
-        //   element.url = (DiamondUrls.plotting + (model.vStnId) + ".png");
-
-        // }
 
         // else if (element.fileType ==
         //     DownloadAndShareDialogueConstant.arrowImg) {
@@ -207,8 +210,7 @@ class DownloadState extends State<Download> {
         // }
         else if (element.fileType ==
             DownloadAndShareDialogueConstant.heartAndArrowImg) {
-          element.url = 
-            (DiamondUrls.heartImage +
+          element.url = (DiamondUrls.heartImage +
               (model.vStnId) +
               "/" +
               (model.vStnId) +
@@ -261,11 +263,10 @@ class DownloadState extends State<Download> {
         //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
         // }
         else if (element.fileType == DownloadAndShareDialogueConstant.video1) {
-          
           element.url = (DiamondUrls.natural + model.vStnId + ".mp4");
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.video2) {
-          element.url = (DiamondUrls.natural + model.vStnId + ".mp4");
+          element.url = (DiamondUrls.roughVideo + model.vStnId + "video.mp4");
         }
         //  else if (element.fileType ==
         //         DownloadAndShareDialogueConstant.video2 &&
@@ -333,6 +334,11 @@ class DownloadState extends State<Download> {
             }
           });
         }
+        //else {
+        //   print("----------------------------------...................drrrr");
+        //   Navigator.pop(context);
+        //   showToast(R.string.commonString.notYetAvailable, context: context);
+        // }
       });
     }
   }
@@ -456,6 +462,7 @@ class DownloadState extends State<Download> {
         callBack(100, true);
 
         if (mounted) {
+          print("------------------->>>>>>>>>>>>>>>>>app");
           setState(() {});
         }
       });

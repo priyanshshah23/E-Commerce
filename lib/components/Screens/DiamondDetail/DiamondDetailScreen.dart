@@ -101,6 +101,8 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
   bool videoFlag = false;
   bool imageFlag_hA = false;
   bool imageFlag_ploty = false;
+  bool imageFlag_flImage = false;
+  bool imageFlag_natureImage = false;
   bool imageFlag_proportion = false;
   bool videoFlag_nature = false;
   ScreenshotCallback screenshotCallback = ScreenshotCallback();
@@ -181,6 +183,20 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           });
         }
       }
+      if (imageFlag_flImage == false) {
+        if (mainModel.title.toLowerCase() == "fluorescence") {
+          setState(() {
+            imageFlag_flImage = true;
+          });
+        }
+      }
+      if (imageFlag_natureImage == false) {
+        if (mainModel.title.toLowerCase() == "natureimage") {
+          setState(() {
+            imageFlag_natureImage = true;
+          });
+        }
+      }
       if (imageFlag_hA == false) {
         if (mainModel.title.toLowerCase() == "heart&arrow") {
           setState(() {
@@ -203,7 +219,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         }
       }
       if (videoFlag_nature == false) {
-        if (mainModel.title.toLowerCase() == "natural") {
+        if (mainModel.title.toLowerCase() == "naturalvideo") {
           setState(() {
             videoFlag_nature = true;
           });
@@ -352,7 +368,28 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           arr: arrOfImages),
     );
     // }
+    List<DiamondDetailImagePagerModel> arrofNatureImage =
+        List<DiamondDetailImagePagerModel>();
 
+    arrofNatureImage.add(
+      DiamondDetailImagePagerModel(
+        title: "Natureimage",
+        url: (DiamondUrls.naturalImage + (diamondModel.vStnId) + ".jpg"),
+        type: "Image_Nature",
+        isSelected: true,
+        isImage: true,
+      ),
+    );
+    arrImages.add(
+      DiamondDetailImagePagerModel(
+        title: "Natureimage",
+        url: (DiamondUrls.naturalImage + (diamondModel.vStnId) + ".jpg"),
+        type: "Image_Nature",
+        isSelected: false,
+        isImage: true,
+        arr: arrofNatureImage,
+      ),
+    );
     //list of videofile
     List<DiamondDetailImagePagerModel> arrOfVideos =
         List<DiamondDetailImagePagerModel>();
@@ -414,6 +451,38 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         isImage: false,
         isVideo: true,
         arr: arrOfVideos,
+      ),
+    );
+
+    List<DiamondDetailImagePagerModel> arrOfNatural =
+        List<DiamondDetailImagePagerModel>();
+
+    // if (diamondModel.NaturalFile) {
+    arrOfNatural.add(
+      DiamondDetailImagePagerModel(
+        title: "NaturalVideo",
+        url: (DiamondUrls.natural + diamondModel.vStnId + ".mp4"),
+        type: "Video_natural",
+        isSelected: true,
+        isImage: false,
+        isVideo: true,
+      ),
+    );
+    // }
+
+    arrImages.add(
+      DiamondDetailImagePagerModel(
+        title: "NaturalVideo",
+        url: (DiamondUrls.natural + diamondModel.vStnId + ".mp4"),
+        // url: DiamondUrls.heartImage +
+        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
+        //     "/" +
+        //     "Heart_Black_BG.jpg",
+        type: "Video_natural",
+        isSelected: false,
+        isImage: false,
+        isVideo: true,
+        arr: arrOfNatural,
       ),
     );
 
@@ -569,6 +638,35 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       ),
     );
     // }
+
+    List<DiamondDetailImagePagerModel> arroffluorescenceImage =
+        List<DiamondDetailImagePagerModel>();
+
+    arroffluorescenceImage.add(
+      DiamondDetailImagePagerModel(
+        title: "Fluorescence",
+        url: (DiamondUrls.flouresenceImg +
+            (diamondModel.vStnId) +
+            "/fluorescence.jpg"),
+        type: "Image_fluorescence",
+        isSelected: true,
+        isImage: true,
+      ),
+    );
+    arrImages.add(
+      DiamondDetailImagePagerModel(
+        title: "Fluorescence",
+        url: (DiamondUrls.flouresenceImg +
+            (diamondModel.vStnId) +
+            "/fluorescence.jpg"),
+        type: "Image_fluorescence",
+        isSelected: false,
+        isImage: true,
+        arr: arroffluorescenceImage,
+      ),
+    );
+    //}
+
     List<DiamondDetailImagePagerModel> arrOfPloty =
         List<DiamondDetailImagePagerModel>();
 
@@ -577,31 +675,12 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "Ploty",
         url: (DiamondUrls.plotting + (diamondModel.vStnId) + ".png"),
-        //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
-//        url: "",
         type: "Image_ploty",
         isSelected: true,
         isImage: true,
       ),
     );
-    // }
 
-    // arrOfPloty.add(
-    //   DiamondDetailImagePagerModel(
-    //     title: "Ploty",
-    //     url: DiamondUrls.plotting +
-    //         (diamondModel.vStnId) +".png",
-    //         //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
-    //     type: "AssetImage",
-    //     isSelected: true,
-    //     isImage: true,
-    //   ),
-    // );
-    // print(DiamondUrls.plotting +
-    //     (diamondModel.vStnId) +
-    //     //(diamondModel.mfgStnId ?? diamondModel.vStnId) +
-    //     ".png");
-    // if (diamondModel.PlotyFile) {
     arrImages.add(
       DiamondDetailImagePagerModel(
         title: "Ploty",
@@ -623,8 +702,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
       DiamondDetailImagePagerModel(
         title: "Proportion",
         url: (DiamondUrls.proportion + diamondModel.vStnId + ".png"),
-        // (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-//        url: "",
         type: "Image_proportion",
         isSelected: true,
         isImage: true,
@@ -659,58 +736,6 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         arr: arrOfProportion,
       ),
     );
-    //}
-
-    List<DiamondDetailImagePagerModel> arrOfNatural =
-        List<DiamondDetailImagePagerModel>();
-
-    // if (diamondModel.NaturalFile) {
-    arrOfNatural.add(
-      DiamondDetailImagePagerModel(
-        title: "Natural",
-        url: (DiamondUrls.natural + diamondModel.vStnId + ".mp4"),
-        // url: (DiamondUrls.heartImage +
-        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-        // "/" +
-        // "Heart_Black_BG.jpg"),
-//        url: "",
-        type: "Video_natural",
-        isSelected: true,
-        isImage: false,
-        isVideo: true,
-      ),
-    );
-    // }
-
-    // arrOfProportion.add(
-    //   DiamondDetailImagePagerModel(
-    //     title: "Natural",
-    //     url: DiamondUrls.heartImage +
-    //         (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-    //         "/" +
-    //         "Arrow_Black_BG.jpg",
-    //     type: "AssetImage",
-    //     isSelected: true,
-    //     isImage: true,
-    //   ),
-    // );
-    // if (diamondModel.NaturalFile) {
-    arrImages.add(
-      DiamondDetailImagePagerModel(
-        title: "Natural",
-        url: (DiamondUrls.natural + diamondModel.vStnId + ".mp4"),
-        // url: DiamondUrls.heartImage +
-        //     (diamondModel.mfgStnId ?? diamondModel.vStnId) +
-        //     "/" +
-        //     "Heart_Black_BG.jpg",
-        type: "Video_natural",
-        isSelected: false,
-        isImage: false,
-        isVideo: true,
-        arr: arrOfNatural,
-      ),
-    );
-    //}
     //  print("--------length---------${arrImages.length}");
     setState(() {
       //
@@ -855,6 +880,18 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
           }
         } else if (model.type == "Video_natural") {
           if (videoFlag_nature) {
+            num = (num + model.arr.length);
+          } else {
+            num = num;
+          }
+        } else if (model.type == "Image_Nature") {
+          if (imageFlag_natureImage) {
+            num = (num + model.arr.length);
+          } else {
+            num = num;
+          }
+        } else if (model.type == "Image_fluorescence") {
+          if (imageFlag_flImage) {
             num = (num + model.arr.length);
           } else {
             num = num;
@@ -1090,6 +1127,17 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   ),
                                                 )
                                               : SizedBox(),
+                                          imageFlag_natureImage
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: getSize(10)),
+                                                  child: getRowItem(
+                                                    "Image_Nature",
+                                                    natureImage,
+                                                    2,
+                                                  ),
+                                                )
+                                              : SizedBox(),
                                           videoFlag
                                               ? Padding(
                                                   padding: EdgeInsets.only(
@@ -1097,19 +1145,38 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   child: getRowItem(
                                                     "Movie",
                                                     playButton,
-                                                    1,
+                                                    3,
                                                   ))
                                               : SizedBox(),
                                           // getRowItem("Video", playButton),
+                                          videoFlag_nature
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: getSize(10)),
+                                                  child: getRowItem(
+                                                    "Video_natural",
+                                                    nature,
+                                                    4,
+                                                  ))
+                                              : SizedBox(),
                                           Padding(
                                               padding: EdgeInsets.only(
                                                   right: getSize(10)),
                                               child: getRowItem(
                                                 "Certificate",
                                                 certi,
-                                                3,
+                                                5,
                                               )),
-
+                                          imageFlag_flImage
+                                              ? Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: getSize(10)),
+                                                  child: getRowItem(
+                                                    "Image_fluorescence",
+                                                    hA,
+                                                    6,
+                                                  ))
+                                              : SizedBox(),
                                           imageFlag_hA
                                               ? Padding(
                                                   padding: EdgeInsets.only(
@@ -1117,7 +1184,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   child: getRowItem(
                                                     "Image_hA",
                                                     hA,
-                                                    4,
+                                                    7,
                                                   ))
                                               : SizedBox(),
                                           imageFlag_ploty
@@ -1127,7 +1194,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   child: getRowItem(
                                                     "Image_ploty",
                                                     ploty,
-                                                    5,
+                                                    8,
                                                   ))
                                               : SizedBox(),
                                           imageFlag_proportion
@@ -1137,17 +1204,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                                                   child: getRowItem(
                                                     "Image_proportion",
                                                     proportion,
-                                                    6,
-                                                  ))
-                                              : SizedBox(),
-                                          videoFlag_nature
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Video_natural",
-                                                    nature,
-                                                    7,
+                                                    9,
                                                   ))
                                               : SizedBox(),
                                         ],

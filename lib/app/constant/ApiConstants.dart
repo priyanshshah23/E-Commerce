@@ -105,7 +105,7 @@ class ApiConstants {
   static const String searchReportNo = "web/v1/diamond/reportno/paginate";
 
   //Excel
-  static const String baseURLForExcel = "http://pndevelopapi.democ.in/data";
+  static const String baseURLForExcel = "http://arjivlocalapi.democ.in/data";
 
   static const String baseURL2 = "https://beta.arjivexports.com/device/";
   static const String termsCondition = baseURL2 + "terms-condition";
@@ -152,7 +152,7 @@ class DiamondUrls {
   // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static String video = commonUrl + "HDView/";
   static const String heartImage = commonUrlForImage + "HA/";
-
+  //https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/ROUGH/***/video.mp4
   // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String plotting = commonUrlForImage + "PLOTING/";
   static const String proportion = commonUrlForImage + "PLOTING/MEASUREMENT/";
@@ -161,11 +161,11 @@ class DiamondUrls {
   static const String arroImage =
       commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static const String videomp4 = commonUrl + "Mov/";
-  static const String roughVideo = commonUrl + "MFG/RoughVideo/";
+  static const String roughVideo = commonUrlForImage + "ROUGH/";
   static const String polVideo = commonUrl + "viewer3/mp4_videos/";
   static const String assetImage =
       commonUrl + "stonevideos/StoneImage_04-01-2020/";
-  static const String flouresenceImg = commonUrl + "FlsImages/";
+  static const String flouresenceImg = commonUrl + "HDView/imaged/";
   static const String idealScopeImg = commonUrl + "IDEAL_White_BG/";
   static const String darkFieldImg = commonUrl + "Dark_Field_White_BG/";
   static const String faceUpImg = commonUrl + "Office_Light_Black_BG/";
@@ -176,6 +176,12 @@ class DiamondUrls {
   static const String roughImage = commonUrl + "MFG/RoughImages/";
   static const String threeDImage = commonUrl + "MFG/PlanImages/"; // 3D Image
   static const String b2bImage = commonUrl + "RealImages/"; // B2B Image
+
+  //https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/NIMAGE/***.jpg
+  static const String naturalImage = commonUrlForImage + "NIMAGE/";
+
+  // flsImage: `https://arjivexports.blob.core.windows.net/arjivfiles/HDView/imaged/***/fluorescence.jpg`
+
 }
 
 class DiamondDetailImageConstant {

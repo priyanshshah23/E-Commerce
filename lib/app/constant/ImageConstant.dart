@@ -91,6 +91,9 @@ const String nature = "assets/DiamondDetail/nature.png";
 const String hA = "assets/DiamondDetail/heartandarrow.png";
 const String certi = "assets/DiamondDetail/quality.png";
 
+const String natureImage = "assets/DiamondDetail/naturaiamge.png";
+const String fluorescence = "assets/DiamondDetail/fluorescence.png";
+
 //PersonalInformation
 const String city = "assets/Common/city.png";
 const String country = "assets/Common/country.png";

@@ -60,6 +60,7 @@ class DownloadAndShareDialogueConstant {
   static const int img3D = 18;
 
   static const int propimage = 19;
+  static const int naturalImage = 20;
 }
 
 //Documents Type
