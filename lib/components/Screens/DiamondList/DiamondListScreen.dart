@@ -1070,7 +1070,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
         );
       }*/
-      else {  
+      else {
         list.add(GestureDetector(
           onTap: !isNullEmptyOrFalse(arraDiamond)
               ? () {
@@ -1446,25 +1446,40 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         ? BottomTabbarWidget(
             arrBottomTab: diamondConfig.arrBottomTab,
             onClickCallback: (obj) {
-              //
               if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
                 List<DiamondModel> selectedList =
                     arraDiamond.where((element) => element.isSelected).toList();
                 if (!isNullEmptyOrFalse(selectedList)) {
-                  showBottomSheetForMenu(
-                    context,
-                    diamondConfig.arrMoreMenu,
-                    (manageClick) {
-                      if (manageClick.bottomTabModel.type ==
-                          ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                        clearSelection();
-                      } else {
-                        manageBottomMenuClick(manageClick.bottomTabModel);
-                      }
-                    },
-                    R.string.commonString.more,
-                    isDisplaySelection: false,
-                  );
+                  var filter = selectedList
+                      .where((element) =>
+                          element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+                          element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+                      .toList();
+
+                  if (isNullEmptyOrFalse(filter)) {
+                    showBottomSheetForMenu(
+                      context,
+                      diamondConfig.arrMoreMenu,
+                      (manageClick) {
+                        if (manageClick.bottomTabModel.type ==
+                            ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+                          clearSelection();
+                        } else {
+                          manageBottomMenuClick(manageClick.bottomTabModel);
+                        }
+                      },
+                      R.string.commonString.more,
+                      isDisplaySelection: false,
+                    );
+                  } else {
+                    app.resolve<CustomDialogs>().errorDialog(
+                          context,
+                          "",
+                          R.string.commonString
+                              .holdMemoStatusDiamondMoreActions,
+                          btntitle: R.string.commonString.ok,
+                        );
+                  }
                 } else {
                   app.resolve<CustomDialogs>().confirmDialog(
                         context,
