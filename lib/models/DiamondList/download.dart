@@ -261,7 +261,7 @@ class DownloadState extends State<Download> {
         //   element.url = DiamondUrls.realImg2 + model.vStnId + ".jpg";
         // }
         else if (element.fileType == DownloadAndShareDialogueConstant.video1) {
-          print("-----type----video1");
+          
           element.url = (DiamondUrls.natural + model.vStnId + ".mp4");
         } else if (element.fileType ==
             DownloadAndShareDialogueConstant.video2) {
