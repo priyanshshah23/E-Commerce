@@ -387,7 +387,10 @@
       "unlockWithTouchId": "Unlock Arjiv using Touch Id",
       "unlockWithFaceId": "Unlock Arjiv using Face Id.",
       "mPin": "MPin",
-      "holdMemoStatusDiamondorder": "You can not confirmed stones which are already in hold or memo status",
+      "holdMemoStatusDiamondOrder": "You can not confirmed stones which are already in hold or memo status",
+      "holdMemoStatusDiamondOffer": "You can not make an offer for a stones which are already in hold or memo status",
+      "holdMemoStatusDiamondAddToCart" :"You can not add stones to cart which are already in hold or memo status",
+      "holdMemoStatusDiamondMoreActions" : "You can not perform any action on stones which are already in hold or memo status",
       "searchStoneIdCertificateNo": "Search Stone Id/Certificate No",
       "createMPin": "Create New MPin",
       "reentermpin": "Reenter MPin",
@@ -411,6 +414,7 @@
       "youreallywanttodelete": "You really want to delete"
     },
     "error_string": {
+
       "accessDenide": "Access denied",
       "pleaseSelectOfferTillDate": "Please select offer till date.",
       "pleaseSelectOfficeVisitDate": "Please select office visit date",

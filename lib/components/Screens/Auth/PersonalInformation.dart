@@ -282,10 +282,6 @@ class _PersonalInformationState extends State<PersonalInformation>
                   SizedBox(
                     height: getSize(20),
                   ),
-                  getAddressLineThreeTextField(),
-                  SizedBox(
-                    height: getSize(20),
-                  ),
                   getEmailTextField(),
                   SizedBox(
                     height: getSize(20),
@@ -1342,6 +1338,8 @@ class _PersonalInformationState extends State<PersonalInformation>
     PersonalInformationReq req = PersonalInformationReq();
     req.id = app.resolve<PrefUtils>().getUserDetails().id;
     req.address = _addressLineOneController.text.trim();
+    req.address2 = _addressLineTwoController.text.trim();
+    req.address3 = _addressLineThreeController.text.trim();
     req.firstName = _firstNameController.text.trim();
     req.lastName = _lastNameController.text.trim();
     req.mobile = _mobileController.text;
@@ -1350,7 +1348,8 @@ class _PersonalInformationState extends State<PersonalInformation>
     req.whatsappCounCode = selectedDialogCountryForWhatsapp.phoneCode;
     req.email = _emailController.text.trim();
     req.skype = _skypeController.text.trim();
-    req.pincode = companyInformationState.pinCodeController.text.trim();
+    // req.pincode = companyInformationState.pinCodeController.text.trim();
+    req.pincode = _pinCodeController.text.trim();
 
     countryList.forEach((element) {
       if (element.title == _countryController.text.trim()) {
@@ -1433,6 +1432,12 @@ class _PersonalInformationState extends State<PersonalInformation>
           if (resp.data.address != null) {
             _addressLineOneController.text = resp.data.address;
           }
+          if (resp.data.address2 != null) {
+            _addressLineTwoController.text = resp.data.address2;
+          }
+          if (resp.data.address3 != null) {
+            _addressLineThreeController.text = resp.data.address3;
+          }
           if (resp.data.mobile != null) {
             _mobileController.text = resp.data.mobile;
           }
@@ -1466,11 +1471,14 @@ class _PersonalInformationState extends State<PersonalInformation>
           if (resp.data.city != null) {
             _cityController.text = resp.data.city;
           }
-          if (resp.data.zipcode != null) {
-            companyInformationState.pinCodeController.text = resp.data.zipcode;
-          }
+          // if (resp.data.zipcode != null) {
+          //   companyInformationState.pinCodeController.text = resp.data.zipcode;
+          // }
           if (resp.data.skype != null) {
             _skypeController.text = resp.data.skype;
+          }
+          if (resp.data.pinCode != null) {
+            _pinCodeController.text = resp.data.pinCode;
           }
           setState(() {});
         }

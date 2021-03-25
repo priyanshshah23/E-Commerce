@@ -459,8 +459,14 @@ class CommonString {
   String unlockWithTouchId = "Unlock Arjiv using Touch Id";
   String unlockWithFaceId = "Unlock Arjiv using Face Id.";
   String mPin = "MPin";
-  String holdMemoStatusDiamondorder =
+  String holdMemoStatusDiamondOrder =
       "You can not confirmed stones which are already in hold or memo status";
+  String holdMemoStatusDiamondOffer =
+      "You can not make an offer for a stones which are already in hold or memo status";
+  String holdMemoStatusDiamondAddToCart =
+      "You can not add stones to cart which are already in hold or memo status";
+  String holdMemoStatusDiamondMoreActions =
+      "You can not perform any action on stones which are already in hold or memo status";
   String searchStoneIdCertificateNo = "Search Stone Id/Certificate No";
   String createMPin = "Create New MPin";
   String reentermpin = "Reenter MPin";

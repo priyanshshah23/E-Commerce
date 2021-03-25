@@ -506,8 +506,26 @@ class DiamondConfig {
   }
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
-    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
-        isPop: false, title: R.string.screenTitle.addedInCart);
+    var filter = list
+        .where((element) =>
+            element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+            element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+        .toList();
+
+    if (isNullEmptyOrFalse(filter)) {
+      callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+          isPop: false, title: R.string.screenTitle.addedInCart);
+    } else {
+      app.resolve<CustomDialogs>().errorDialog(
+            context,
+            "",
+            R.string.commonString.holdMemoStatusDiamondAddToCart,
+            btntitle: R.string.commonString.ok,
+          );
+    }
+
+    // callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+    //     isPop: false, title: R.string.screenTitle.addedInCart);
     // List<DiamondModel> selectedList = [];
     // DiamondModel model;
     // list.forEach((element) {
@@ -637,7 +655,7 @@ class DiamondConfig {
       app.resolve<CustomDialogs>().errorDialog(
             context,
             "",
-            R.string.commonString.holdMemoStatusDiamondorder,
+            R.string.commonString.holdMemoStatusDiamondOrder,
             btntitle: R.string.commonString.ok,
           );
 //      showToast(R.string.commonString.holdMemoStatusDiamondorder,
@@ -684,14 +702,32 @@ class DiamondConfig {
       model.isAddToOffer = true;
       selectedList.add(model);
     });
+
     AnalyticsReport.shared.sendAnalyticsData(
       buildContext: context,
       page: PageAnalytics.DIAMOND_LIST,
       section: SectionAnalytics.MYOFFER,
       action: ActionAnalytics.OPEN,
     );
-    openDiamondActionAcreen(
-        context, DiamondTrackConstant.TRACK_TYPE_OFFER, selectedList);
+
+    var filter = list
+        .where((element) =>
+            element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+            element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+        .toList();
+
+    if (isNullEmptyOrFalse(filter)) {
+      openDiamondActionAcreen(
+          context, DiamondTrackConstant.TRACK_TYPE_OFFER, selectedList);
+    } else {
+      app.resolve<CustomDialogs>().errorDialog(
+            context,
+            "",
+            R.string.commonString.holdMemoStatusDiamondOffer,
+            btntitle: R.string.commonString.ok,
+          );
+    }
+
     /* showOfferListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(
