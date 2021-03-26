@@ -177,12 +177,12 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
               child: Container(
                 width: MathUtilities.screenWidth(context),
                 decoration: BoxDecoration(
-                    boxShadow: getBoxShadow(context),
-                    color: appTheme.whiteColor,
-                    borderRadius: BorderRadius.circular(getSize(6)),
-                    border: Border.all(color: appTheme.colorPrimary)
-                    //boxShadow: getBoxShadow(context),
-                    ),
+                  boxShadow: getBoxShadow(context),
+                  color: appTheme.whiteColor,
+                  borderRadius: BorderRadius.circular(getSize(6)),
+                  //border: Border.all(color: appTheme.colorPrimary)
+                  //boxShadow: getBoxShadow(context),
+                ),
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),

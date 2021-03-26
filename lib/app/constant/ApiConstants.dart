@@ -15,9 +15,10 @@ class ApiConstants {
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 
   static const String imageBaseURL = baseURL;
-//  static const String dashboardImageBaseURL = "https://betaapi.arjivexports.com";
+  static const String dashboardImageBaseURL =
+      "https://betaapi.arjivexports.com";
 //  static const String dashboardImageBaseURL = "https://api.arjivexports.com";
-  static const String webPageUrl = "https://customer.arjivexports.com/";
+  //static const String webPageUrl = "https://customer.arjivexports.com/";
   static const String shareUrl =
       "https://customer.arjivexports.com/diamond-details/";
   static const String googleDocUrl =

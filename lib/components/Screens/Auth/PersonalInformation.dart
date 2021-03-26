@@ -46,8 +46,6 @@ class _PersonalInformationState extends State<PersonalInformation>
       TextEditingController();
   final TextEditingController _addressLineTwoController =
       TextEditingController();
-  final TextEditingController _addressLineThreeController =
-      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _skypeController = TextEditingController();
@@ -77,7 +75,6 @@ class _PersonalInformationState extends State<PersonalInformation>
   var _focusMiddleName = FocusNode();
   var _focusAddressLineOne = FocusNode();
   var _focusAddressLineTwo = FocusNode();
-  var _focusAddressLineThree = FocusNode();
   var _focusEmail = FocusNode();
   var _focusPinCode = FocusNode();
   var _focusCountry = FocusNode();
@@ -1267,46 +1264,6 @@ class _PersonalInformationState extends State<PersonalInformation>
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusAddressLineTwo.unfocus();
-        fieldFocusChange(context, _focusAddressLineThree);
-      },
-    );
-  }
-
-  getAddressLineThreeTextField() {
-    return CommonTextfield(
-      focusNode: _focusAddressLineThree,
-      readOnly: this.readOnly ? true : false,
-      textOption: TextFieldOption(
-        hintText: R.string.authStrings.addressThree,
-        maxLine: 1,
-        prefixWid: getCommonIconWidget(
-            imageName: company,
-            imageType: IconSizeType.small,
-            color: Colors.black),
-        fillColor: fromHex("#FFEFEF"),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(11)),
-          borderSide: BorderSide(width: 1, color: Colors.red),
-        ),
-        inputController: _addressLineThreeController,
-        formatter: [
-          //WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-        ],
-        //isSecureTextField: false
-      ),
-      textCallback: (text) {},
-      validation: (text) {
-//        if (text.trim().isEmpty) {
-//          return R.string.errorString.enterAddress;
-//        } else {
-//          return null;
-//        }
-        // }
-      },
-      inputAction: TextInputAction.next,
-      onNextPress: () {
-        _focusAddressLineThree.unfocus();
         fieldFocusChange(context, _focusEmail);
       },
     );
@@ -1339,7 +1296,6 @@ class _PersonalInformationState extends State<PersonalInformation>
     req.id = app.resolve<PrefUtils>().getUserDetails().id;
     req.address = _addressLineOneController.text.trim();
     req.address2 = _addressLineTwoController.text.trim();
-    req.address3 = _addressLineThreeController.text.trim();
     req.firstName = _firstNameController.text.trim();
     req.lastName = _lastNameController.text.trim();
     req.mobile = _mobileController.text;
@@ -1434,9 +1390,6 @@ class _PersonalInformationState extends State<PersonalInformation>
           }
           if (resp.data.address2 != null) {
             _addressLineTwoController.text = resp.data.address2;
-          }
-          if (resp.data.address3 != null) {
-            _addressLineThreeController.text = resp.data.address3;
           }
           if (resp.data.mobile != null) {
             _mobileController.text = resp.data.mobile;
