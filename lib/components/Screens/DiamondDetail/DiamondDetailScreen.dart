@@ -1102,115 +1102,118 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                               ),
                               Padding(
                                 padding: EdgeInsets.only(top: getSize(25)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          left: getSize(20),
-                                          right: getSize(20),
-                                          top: getSize(0),
-                                          bottom: getSize(0)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
-                                          imageFlag
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Image",
-                                                    gallary,
-                                                    0,
-                                                  ),
-                                                )
-                                              : SizedBox(),
-                                          imageFlag_natureImage
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Image_Nature",
-                                                    natureImage,
-                                                    2,
-                                                  ),
-                                                )
-                                              : SizedBox(),
-                                          videoFlag
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Movie",
-                                                    playButton,
-                                                    3,
-                                                  ))
-                                              : SizedBox(),
-                                          // getRowItem("Video", playButton),
-                                          videoFlag_nature
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Video_natural",
-                                                    nature,
-                                                    4,
-                                                  ))
-                                              : SizedBox(),
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: getSize(10)),
-                                              child: getRowItem(
-                                                "Certificate",
-                                                certi,
-                                                5,
-                                              )),
-                                          imageFlag_flImage
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Image_fluorescence",
-                                                    hA,
-                                                    6,
-                                                  ))
-                                              : SizedBox(),
-                                          imageFlag_hA
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Image_hA",
-                                                    hA,
-                                                    7,
-                                                  ))
-                                              : SizedBox(),
-                                          imageFlag_ploty
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Image_ploty",
-                                                    ploty,
-                                                    8,
-                                                  ))
-                                              : SizedBox(),
-                                          imageFlag_proportion
-                                              ? Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: getSize(10)),
-                                                  child: getRowItem(
-                                                    "Image_proportion",
-                                                    proportion,
-                                                    9,
-                                                  ))
-                                              : SizedBox(),
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: getSize(20),
+                                            right: getSize(20),
+                                            top: getSize(0),
+                                            bottom: getSize(0)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            imageFlag
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(10)),
+                                                    child: getRowItem(
+                                                      "Image",
+                                                      gallary,
+                                                      0,
+                                                    ),
+                                                  )
+                                                : SizedBox(),
+                                            imageFlag_natureImage
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(10)),
+                                                    child: getRowItem(
+                                                      "Image_Nature",
+                                                      natureImage,
+                                                      2,
+                                                    ),
+                                                  )
+                                                : SizedBox(),
+                                            videoFlag
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(10)),
+                                                    child: getRowItem(
+                                                      "Movie",
+                                                      playButton,
+                                                      3,
+                                                    ))
+                                                : Container(),
+                                            // getRowItem("Video", playButton),
+                                            videoFlag_nature
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(10)),
+                                                    child: getRowItem(
+                                                      "Video_natural",
+                                                      nature,
+                                                      4,
+                                                    ))
+                                                : SizedBox(),
+                                            Padding(
+                                                padding: EdgeInsets.only(
+                                                    right: getSize(10)),
+                                                child: getRowItem(
+                                                  "Certificate",
+                                                  certi,
+                                                  5,
+                                                )),
+                                            imageFlag_flImage
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(10)),
+                                                    child: getRowItem(
+                                                      "Image_fluorescence",
+                                                      fluorescence,
+                                                      6,
+                                                    ))
+                                                : SizedBox(),
+                                            imageFlag_hA
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(10)),
+                                                    child: getRowItem(
+                                                      "Image_hA",
+                                                      hA,
+                                                      7,
+                                                    ))
+                                                : SizedBox(),
+                                            imageFlag_ploty
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(10)),
+                                                    child: getRowItem(
+                                                      "Image_ploty",
+                                                      ploty,
+                                                      8,
+                                                    ))
+                                                : SizedBox(),
+                                            imageFlag_proportion
+                                                ? Padding(
+                                                    padding: EdgeInsets.only(
+                                                        right: getSize(10)),
+                                                    child: getRowItem(
+                                                      "Image_proportion",
+                                                      proportion,
+                                                      9,
+                                                    ))
+                                                : SizedBox(),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
