@@ -172,43 +172,72 @@ class _OrderListScreenState extends StatefulScreenWidgetState {
                 ],
               ),
             ),
+            // Padding(
+            //   padding: EdgeInsets.only(top: getSize(16), bottom: getSize(4)),
+            //   child: Container(
+            //     width: MathUtilities.screenWidth(context),
+            //     decoration: BoxDecoration(
+            //       boxShadow: getBoxShadow(context),
+            //       color: appTheme.whiteColor,
+            //       borderRadius: BorderRadius.circular(getSize(6)),
+            //       //border: Border.all(color: appTheme.colorPrimary)
+            //       //boxShadow: getBoxShadow(context),
+            //     ),
+            //     child: ListView.builder(
+            //       shrinkWrap: true,
+            //       physics: NeverScrollableScrollPhysics(),
+            //       itemCount: arraDiamond[index].memoDetails.length,
+            //       itemBuilder: (context, diamondIndex) {
+            //         return DiamondItemWidget(
+            //             leftPadding: 4.0,
+            //             rightPadding: 4.0,
+            //             // groupDiamondCalculation: diamondIndex ==
+            //             //         arraDiamond[index].memoDetails.length - 1
+            //             //     ? groupDiamondCalculation
+            //             //     : null,
+            //             item: arraDiamond[index].memoDetails[diamondIndex],
+            //             actionClick: (manageClick) {
+            //               print("Click");
+            //               arraDiamond[index]
+            //                       .memoDetails[diamondIndex]
+            //                       .isSelected =
+            //                   !arraDiamond[index]
+            //                       .memoDetails[diamondIndex]
+            //                       .isSelected;
+            //               manageDiamondSelection();
+            //               // manageRowClick(index, manageClick.type);
+            //             });
+            //       },
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.only(top: getSize(16), bottom: getSize(4)),
-              child: Container(
-                width: MathUtilities.screenWidth(context),
-                decoration: BoxDecoration(
-                  boxShadow: getBoxShadow(context),
-                  color: appTheme.whiteColor,
-                  borderRadius: BorderRadius.circular(getSize(6)),
-                  //border: Border.all(color: appTheme.colorPrimary)
-                  //boxShadow: getBoxShadow(context),
-                ),
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: arraDiamond[index].memoDetails.length,
-                  itemBuilder: (context, diamondIndex) {
-                    return DiamondItemWidget(
-                        leftPadding: 4.0,
-                        rightPadding: 4.0,
-                        // groupDiamondCalculation: diamondIndex ==
-                        //         arraDiamond[index].memoDetails.length - 1
-                        //     ? groupDiamondCalculation
-                        //     : null,
-                        item: arraDiamond[index].memoDetails[diamondIndex],
-                        actionClick: (manageClick) {
-                          print("Click");
-                          arraDiamond[index]
-                                  .memoDetails[diamondIndex]
-                                  .isSelected =
-                              !arraDiamond[index]
-                                  .memoDetails[diamondIndex]
-                                  .isSelected;
-                          manageDiamondSelection();
-                          // manageRowClick(index, manageClick.type);
-                        });
-                  },
-                ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemCount: arraDiamond[index].memoDetails.length,
+                itemBuilder: (context, diamondIndex) {
+                  return DiamondItemWidget(
+                      leftPadding: 4.0,
+                      rightPadding: 4.0,
+                      // groupDiamondCalculation: diamondIndex ==
+                      //         arraDiamond[index].memoDetails.length - 1
+                      //     ? groupDiamondCalculation
+                      //     : null,
+                      item: arraDiamond[index].memoDetails[diamondIndex],
+                      actionClick: (manageClick) {
+                        print("Click");
+                        arraDiamond[index]
+                                .memoDetails[diamondIndex]
+                                .isSelected =
+                            !arraDiamond[index]
+                                .memoDetails[diamondIndex]
+                                .isSelected;
+                        manageDiamondSelection();
+                        // manageRowClick(index, manageClick.type);
+                      });
+                },
               ),
             ),
           ],
