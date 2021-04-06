@@ -135,18 +135,26 @@ class BottomTabBar {
   static List<BottomTabModel> getFilterScreenBottomTabs(
       {bool isForEditSavedSearch = false}) {
     List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
-    arrBootomTab.add(BottomTabModel(
+    arrBootomTab.add(
+      BottomTabModel(
         title: R.string.screenTitle.upcoming,
         image: upcoming,
         code: BottomCodeConstant.filterSearchUpcoming,
         sequence: 0,
-        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
+        isCenter: false,
+        color: Colors.white,
+      ),
+    );
+    arrBootomTab.add(
+      BottomTabModel(
         title: R.string.screenTitle.newArrival,
         image: newArrival,
         code: BottomCodeConstant.filterSearchNewArrival,
         sequence: 1,
-        isCenter: false));
+        isCenter: false,
+        color: Colors.white,
+      ),
+    );
     // arrBootomTab.add(BottomTabModel(
     //     title: R.string.screenTitle.savedSearch,
     //     image: savedSearch,

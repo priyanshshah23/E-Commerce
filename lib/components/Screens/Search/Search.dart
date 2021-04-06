@@ -646,9 +646,15 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> manualReq = {};
     manualReq = {
       "or": [
-        {"stoneId": [_searchController.text]},
-        {"rptNo": [_searchController.text]},
-        {"vStnId": [_searchController.text]}
+        {
+          "stoneId": [_searchController.text]
+        },
+        {
+          "rptNo": [_searchController.text]
+        },
+        {
+          "vStnId": [_searchController.text]
+        }
       ]
     };
 
