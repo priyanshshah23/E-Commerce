@@ -85,8 +85,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   _DashboardState({this.moduleType, this.isFromDrawer});
 
-  RefreshController refreshController =
-      RefreshController(initialRefresh: false);
+  RefreshController refreshController = RefreshController(initialRefresh: false);
 
   final searchKey = new GlobalKey();
   final savedSearchKey = new GlobalKey();
@@ -124,14 +123,15 @@ class _DashboardState extends StatefulScreenWidgetState {
     dict["banners"] = true;
     print(dict);
     NetworkCall<DashboardResp>()
-        .makeCall(
-            () => app.resolve<ServiceModule>().networkService().dashboard(dict),
-            context,
+        .makeCall(() => app.resolve<ServiceModule>().networkService().dashboard(dict), context,
             isProgress: false)
         // !isRefress && !isLoading
         .then((resp) {
       this.dashboardModel = resp.data;
-      app.resolve<PrefUtils>().saveDashboardDetails(dashboardModel).then((value) => setState((){}));
+      app
+          .resolve<PrefUtils>()
+          .saveDashboardDetails(dashboardModel)
+          .then((value) => setState(() {}));
 //      setState(() {
 ////
 ////        if (!isNullEmptyOrFalse(this.dashboardModel.seller)) {
@@ -167,8 +167,7 @@ class _DashboardState extends StatefulScreenWidgetState {
             item.value = this.dashboardModel.newArrival.length.toString();
           }
         }
-      } else if (item.type ==
-          DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
+      } else if (item.type == DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY) {
         //TRACK_TYPE_BEST_BUY
         item.value =
             "${this.dashboardModel.tracks[DiamondTrackConstant.TRACK_TYPE_BEST_BUY.toString()].pieces}";
@@ -190,17 +189,14 @@ class _DashboardState extends StatefulScreenWidgetState {
         },
         child: (element.code == BottomCodeConstant.TBProfile)
             ? Padding(
-                padding: EdgeInsets.only(
-                    left: getSize(8.0), right: getSize(Spacing.rightPadding)),
+                padding: EdgeInsets.only(left: getSize(8.0), right: getSize(Spacing.rightPadding)),
                 child: Container(
                   width: getSize(30),
                   height: getSize(30),
-                  margin:
-                      EdgeInsets.only(top: getSize(16), bottom: getSize(16)),
+                  margin: EdgeInsets.only(top: getSize(16), bottom: getSize(16)),
                   child: Center(
                     child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.all(Radius.circular(getSize(15))),
+                      borderRadius: BorderRadius.all(Radius.circular(getSize(15))),
                       child: getImageView(
                         app.resolve<PrefUtils>().getUserDetails().profileImage,
                         placeHolderImage: placeHolder,
@@ -237,16 +233,14 @@ class _DashboardState extends StatefulScreenWidgetState {
                                 color: appTheme.whiteColor,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(
-                                    left: getSize(14.0), top: getSize(0.0)),
+                                padding: EdgeInsets.only(left: getSize(14.0), top: getSize(0.0)),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: Colors.red,
                                     shape: BoxShape.circle,
                                     // borderRadius: BorderRadius.circular(getSize(5)),
-                                    border: Border.all(
-                                        color: appTheme.whiteColor,
-                                        width: getSize(2)),
+                                    border:
+                                        Border.all(color: appTheme.whiteColor, width: getSize(2)),
                                   ),
                                   height: getSize(10),
                                   width: getSize(10),
@@ -299,9 +293,8 @@ class _DashboardState extends StatefulScreenWidgetState {
               context,
               diamondConfig.getScreenTitle(),
               bgColor: appTheme.colorPrimary,
-              leadingButton: isFromDrawer
-                  ? getDrawerButton(context, false)
-                  : getBackButton(context),
+              leadingButton:
+                  isFromDrawer ? getDrawerButton(context, false) : getBackButton(context),
               centerTitle: false,
               actionItems: getToolbarItem(),
               isWhite: true,
@@ -362,14 +355,12 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   checkTourIsShown() {
-    return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyHomeTour) ==
-            false &&
+    return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyHomeTour) == false &&
         isNullEmptyOrFalse(this.dashboardModel) == false);
   }
 
   showTour() {
-    return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyHomeTour) ==
-                false &&
+    return (app.resolve<PrefUtils>().isDisplayedTour(PrefUtils().keyHomeTour) == false &&
             isNullEmptyOrFalse(this.dashboardModel) == false)
         ? OverlayScreen(
             moduleType,
@@ -416,8 +407,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     decoration: BoxDecoration(
                       color: appTheme.colorPrimary,
                       borderRadius: BorderRadius.circular(getSize(5)),
-                      border: Border.all(
-                          color: appTheme.colorPrimary, width: getSize(1)),
+                      border: Border.all(color: appTheme.colorPrimary, width: getSize(1)),
                     ),
                     child: TextField(
                       textAlignVertical: TextAlignVertical(y: 1.0),
@@ -438,22 +428,16 @@ class _DashboardState extends StatefulScreenWidgetState {
                       decoration: InputDecoration(
                         fillColor: fromHex("#FFEFEF"),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(5))),
-                          borderSide: BorderSide(
-                              color: appTheme.dividerColor, width: getSize(1)),
+                          borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(color: appTheme.dividerColor, width: getSize(1)),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(5))),
-                          borderSide: BorderSide(
-                              color: appTheme.dividerColor, width: getSize(1)),
+                          borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(color: appTheme.dividerColor, width: getSize(1)),
                         ),
                         border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(5))),
-                          borderSide: BorderSide(
-                              color: appTheme.dividerColor, width: getSize(1)),
+                          borderRadius: BorderRadius.all(Radius.circular(getSize(5))),
+                          borderSide: BorderSide(color: appTheme.dividerColor, width: getSize(1)),
                         ),
 
                         hintStyle: appTheme.grey16HintTextStyle.copyWith(
@@ -467,8 +451,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                         // suffix: widget.textOption.postfixWidOnFocus,
                         suffixIcon: Padding(
                             padding: EdgeInsets.all(getSize(10)),
-                            child: Image.asset(search,
-                                color: appTheme.whiteColor)),
+                            child: Image.asset(search, color: appTheme.whiteColor)),
                       ),
                       onChanged: (String text) {
                         //
@@ -481,8 +464,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                         Map<String, dynamic> dict = new HashMap();
                         dict["isFromSearch"] = false;
                         dict["isFromManual"] = false;
-                        NavigationUtilities.pushRoute(SearchScreen.route,
-                            args: dict);
+                        NavigationUtilities.pushRoute(SearchScreen.route, args: dict);
                       },
                     ),
                   ),
@@ -654,8 +636,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   getStoneOfDaySection() {
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(
-            ModulePermissionConstant.permission_stone_of_the_day)
+        .getModulePermission(ModulePermissionConstant.permission_stone_of_the_day)
         .view) {
       if (!isNullEmptyOrFalse(this.dashboardModel)) {
         if (!isNullEmptyOrFalse(this.dashboardModel.featuredStone)) {
@@ -727,15 +708,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                       child: Padding(
                         padding: EdgeInsets.all(getSize(10)),
                         child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(61))),
+                          borderRadius: BorderRadius.all(Radius.circular(getSize(61))),
                           child: getImageView(
                             "",
                             finalUrl: true //model.img
-                                ? DiamondUrls.image +
-                                    model.mfgStnId +
-                                    "/" +
-                                    "still.jpg"
+                                ? DiamondUrls.image + model.mfgStnId + "/" + "still.jpg"
                                 : "",
                             width: getSize(122),
                             height: getSize(122),
@@ -768,8 +745,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                       decoration: BoxDecoration(
                         color: appTheme.lightBGColor,
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(5),
-                            bottomLeft: Radius.circular(5)),
+                            topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
                       ),
                       width: getSize(62),
                       child: Padding(
@@ -807,13 +783,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                                   // height: getSize(19),
                                   decoration: BoxDecoration(
                                       color: appTheme.whiteColor,
-                                      borderRadius:
-                                          BorderRadius.circular(getSize(5))),
+                                      borderRadius: BorderRadius.circular(getSize(5))),
                                   child: Padding(
                                     padding: EdgeInsets.all(getSize(2)),
                                     child: Text(
-                                      PriceUtilities.getPercent(
-                                          model.getFinalDiscount()),
+                                      PriceUtilities.getPercent(model.getFinalDiscount()),
                                       style: appTheme.green10TextStyle
                                           .copyWith(fontSize: getFontSize(9)),
                                     ),
@@ -919,14 +893,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                       child: Padding(
                         padding: EdgeInsets.all(getSize(10)),
                         child: ClipRRect(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(getSize(61))),
+                          borderRadius: BorderRadius.all(Radius.circular(getSize(61))),
                           child: getImageView(
                             "",
-                            finalUrl: DiamondUrls.image +
-                                model.mfgStnId +
-                                "/" +
-                                "still.jpg",
+                            finalUrl: DiamondUrls.image + model.mfgStnId + "/" + "still.jpg",
                             width: getSize(122),
                             height: getSize(122),
                             fit: BoxFit.cover,
@@ -958,8 +928,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     decoration: BoxDecoration(
                       color: appTheme.lightBGColor,
                       borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          bottomLeft: Radius.circular(5)),
+                          topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
                     ),
                     width: getSize(62),
                     child: Padding(
@@ -991,13 +960,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                                 // height: getSize(19),
                                 decoration: BoxDecoration(
                                     color: appTheme.whiteColor,
-                                    borderRadius:
-                                        BorderRadius.circular(getSize(5))),
+                                    borderRadius: BorderRadius.circular(getSize(5))),
                                 child: Padding(
                                   padding: EdgeInsets.all(getSize(2)),
                                   child: Text(
-                                    PriceUtilities.getPercent(
-                                        model.getFinalDiscount()),
+                                    PriceUtilities.getPercent(model.getFinalDiscount()),
                                     style: appTheme.green10TextStyle
                                         .copyWith(fontSize: getFontSize(9)),
                                   ),
@@ -1085,7 +1052,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   //     return SizedBox();
   //   }
   //   return Container(
-  //     child: buildtopSection(this.dashboardModel.banners),
+  //     child: buildtopSectfion(this.dashboardModel.banners),
   //   );
   // }
 
@@ -1129,8 +1096,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                     dict[ArgumentConstant.ModuleType] =
                         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                     dict[ArgumentConstant.IsFromDrawer] = false;
-                    NavigationUtilities.pushRoute(SavedSearchScreen.route,
-                        args: dict);
+                    NavigationUtilities.pushRoute(SavedSearchScreen.route, args: dict);
                   },
                   child: getViewAll(),
                 ),
@@ -1151,13 +1117,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                     dict[ArgumentConstant.ModuleType] =
                         DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH;
                     dict[ArgumentConstant.IsFromDrawer] = false;
-                    dict["filterId"] =
-                        dashboardModel.savedSearch.list[index].id;
-                    NavigationUtilities.pushRoute(DiamondListScreen.route,
-                        args: dict);
+                    dict["filterId"] = dashboardModel.savedSearch.list[index].id;
+                    NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
                   },
-                  child: getSavedSearchItem(
-                      this.dashboardModel.savedSearch.list[index]),
+                  child: getSavedSearchItem(this.dashboardModel.savedSearch.list[index]),
                 );
               }),
         ],
@@ -1184,13 +1147,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                 decoration: BoxDecoration(
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5)),
-                  border: Border.all(
-                      width: getSize(1), color: appTheme.borderColor),
+                  border: Border.all(width: getSize(1), color: appTheme.borderColor),
                   // boxShadow: getBoxShadow(context),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      getSize(20), getSize(8), getSize(20), getSize(8)),
+                  padding: EdgeInsets.fromLTRB(getSize(20), getSize(8), getSize(20), getSize(8)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -1218,11 +1179,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                               height: getSize(2),
                             ),
                             Text(
-                              DateUtilities()
-                                  .convertServerDateToFormatterString(
-                                      model.createdAt,
-                                      formatter:
-                                          DateUtilities.dd_mmm_yy_h_mm_a),
+                              DateUtilities().convertServerDateToFormatterString(model.createdAt,
+                                  formatter: DateUtilities.dd_mmm_yy_h_mm_a),
                               style: appTheme.black14TextStyle.copyWith(
                                 color: appTheme.textGreyColor,
                               ),
@@ -1248,11 +1206,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                   title: "",
                   desc: R.string.commonString.deleteItem,
                   positiveBtnTitle: R.string.commonString.ok,
-                  negativeBtnTitle: R.string.commonString.cancel,
-                  onClickCallback: (buttonType) {
+                  negativeBtnTitle: R.string.commonString.cancel, onClickCallback: (buttonType) {
                 if (buttonType == ButtonType.PositveButtonClick) {
-                  SyncManager.instance.callApiForDeleteSavedSearch(
-                      context, model.id, success: (resp) {
+                  SyncManager.instance.callApiForDeleteSavedSearch(context, model.id,
+                      success: (resp) {
                     this
                         .dashboardModel
                         .savedSearch
@@ -1383,8 +1340,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                                 width: MathUtilities.screenWidth(context) / 4.6,
                                 decoration: BoxDecoration(
                                   color: appTheme.lightBGColor,
-                                  borderRadius:
-                                      BorderRadius.circular(getSize(5)),
+                                  borderRadius: BorderRadius.circular(getSize(5)),
                                 ),
                                 child: Align(
                                   alignment: Alignment.centerRight,
@@ -1394,15 +1350,12 @@ class _DashboardState extends StatefulScreenWidgetState {
                                       right: getSize(10),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           "${model.crt} \n Carat",
-                                          style: appTheme.black14TextStyle
-                                              .copyWith(
+                                          style: appTheme.black14TextStyle.copyWith(
                                             fontWeight: FontWeight.w500,
                                             color: appTheme.colorPrimary,
                                           ),
@@ -1410,23 +1363,18 @@ class _DashboardState extends StatefulScreenWidgetState {
                                           textAlign: TextAlign.center,
                                         ),
                                         Container(
-                                          margin:
-                                              EdgeInsets.only(top: getSize(5)),
+                                          margin: EdgeInsets.only(top: getSize(5)),
                                           // width: getSize(55),
                                           // height: getSize(19),
                                           decoration: BoxDecoration(
                                               color: appTheme.whiteColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      getSize(5))),
+                                              borderRadius: BorderRadius.circular(getSize(5))),
                                           child: Padding(
                                             padding: EdgeInsets.all(getSize(2)),
                                             child: Text(
-                                              PriceUtilities.getPercent(
-                                                  model.getFinalDiscount()),
+                                              PriceUtilities.getPercent(model.getFinalDiscount()),
                                               style: appTheme.green10TextStyle
-                                                  .copyWith(
-                                                      fontSize: getFontSize(9)),
+                                                  .copyWith(fontSize: getFontSize(9)),
                                             ),
                                           ),
                                         ),
@@ -1454,14 +1402,10 @@ class _DashboardState extends StatefulScreenWidgetState {
                             child: Padding(
                               padding: EdgeInsets.all(getSize(10)),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(getSize(20))),
+                                borderRadius: BorderRadius.all(Radius.circular(getSize(20))),
                                 child: getImageView(
                                   "",
-                                  finalUrl: DiamondUrls.image +
-                                      model.mfgStnId +
-                                      "/" +
-                                      "still.jpg",
+                                  finalUrl: DiamondUrls.image + model.mfgStnId + "/" + "still.jpg",
                                   width: getSize(40),
                                   height: getSize(40),
                                   fit: BoxFit.fitWidth,
@@ -1565,13 +1509,11 @@ class _DashboardState extends StatefulScreenWidgetState {
                                   ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         "12.50 \n Carat",
-                                        style:
-                                            appTheme.black14TextStyle.copyWith(
+                                        style: appTheme.black14TextStyle.copyWith(
                                           fontWeight: FontWeight.w500,
                                           color: appTheme.colorPrimary,
                                         ),
@@ -1579,21 +1521,18 @@ class _DashboardState extends StatefulScreenWidgetState {
                                         textAlign: TextAlign.center,
                                       ),
                                       Container(
-                                        margin:
-                                            EdgeInsets.only(top: getSize(5)),
+                                        margin: EdgeInsets.only(top: getSize(5)),
                                         // width: getSize(55),
                                         // height: getSize(19),
                                         decoration: BoxDecoration(
                                             color: appTheme.whiteColor,
-                                            borderRadius: BorderRadius.circular(
-                                                getSize(5))),
+                                            borderRadius: BorderRadius.circular(getSize(5))),
                                         child: Padding(
                                           padding: EdgeInsets.all(getSize(2)),
                                           child: Text(
                                             "-44.33 %",
                                             style: appTheme.green10TextStyle
-                                                .copyWith(
-                                                    fontSize: getFontSize(9)),
+                                                .copyWith(fontSize: getFontSize(9)),
                                           ),
                                         ),
                                       ),
@@ -1621,8 +1560,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                           child: Padding(
                             padding: EdgeInsets.all(getSize(10)),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(getSize(20))),
+                              borderRadius: BorderRadius.all(Radius.circular(getSize(20))),
                               child: getImageView(
                                 "",
                                 width: getSize(40),
@@ -1750,8 +1688,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                 decoration: BoxDecoration(
                   color: appTheme.whiteColor,
                   borderRadius: BorderRadius.circular(getSize(5)),
-                  border: Border.all(
-                      width: getSize(1), color: appTheme.borderColor),
+                  border: Border.all(width: getSize(1), color: appTheme.borderColor),
                 ),
                 child: Padding(
                   padding: EdgeInsets.all(
@@ -1777,8 +1714,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                             children: [
                               InkWell(
                                   onTap: () async {
-                                    await whatsAppOpen(
-                                        this.dashboardModel.seller.mobile);
+                                    await whatsAppOpen(this.dashboardModel.seller.mobile);
                                   },
                                   child: Image.asset(
                                     whatsappIcon,
@@ -1789,8 +1725,7 @@ class _DashboardState extends StatefulScreenWidgetState {
                               InkWell(
                                 onTap: () {
                                   //change firstname to skypeId, when available on server.
-                                  openSkype(
-                                      this.dashboardModel.seller.firstName);
+                                  openSkype(this.dashboardModel.seller.firstName);
                                 },
                                 child: Image.asset(
                                   skypeIcon,
@@ -1811,10 +1746,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                       ),
                       InkWell(
                         onTap: () async {
-                          if (!isNullEmptyOrFalse(
-                              this.dashboardModel.seller.email)) {
-                            openURLWithApp(
-                                "mailto:?subject=PnShah&body=PnShah", context);
+                          if (!isNullEmptyOrFalse(this.dashboardModel.seller.email)) {
+                            openURLWithApp("mailto:?subject=PnShah&body=PnShah", context);
                           }
                         },
                         child: Row(
@@ -1839,11 +1772,8 @@ class _DashboardState extends StatefulScreenWidgetState {
                       ),
                       InkWell(
                         onTap: () {
-                          if (!isNullEmptyOrFalse(
-                              this.dashboardModel.seller.mobile)) {
-                            openURLWithApp(
-                                "tel://${this.dashboardModel.seller.mobile}",
-                                context);
+                          if (!isNullEmptyOrFalse(this.dashboardModel.seller.mobile)) {
+                            openURLWithApp("tel://${this.dashboardModel.seller.mobile}", context);
                           }
                         },
                         child: Row(
@@ -1887,8 +1817,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     if (await canLaunch(url())) {
       await launch(url());
     } else {
-      throw showToast("whatspp is not installed in this device",
-          context: context);
+      throw showToast("whatspp is not installed in this device", context: context);
     }
   }
 
@@ -1919,8 +1848,7 @@ class _DashboardState extends StatefulScreenWidgetState {
     );
   }
 
-  getText(String text,
-      {FontWeight fontWeight = FontWeight.normal, double fontsize = 12}) {
+  getText(String text, {FontWeight fontWeight = FontWeight.normal, double fontsize = 12}) {
     return Text(
       text,
       style: appTheme.black12TextStyle.copyWith(
@@ -1946,8 +1874,7 @@ class _DashboardState extends StatefulScreenWidgetState {
       child: Container(
         height: getSize(4),
         width: getSize(4),
-        decoration:
-            BoxDecoration(color: appTheme.dividerColor, shape: BoxShape.circle),
+        decoration: BoxDecoration(color: appTheme.dividerColor, shape: BoxShape.circle),
       ),
     );
   }
@@ -2010,8 +1937,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   openProfile() {
     Map<String, dynamic> dict = new HashMap();
     dict[ArgumentConstant.IsFromDrawer] = false;
-    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict)
-        .then((value) {
+    NavigationUtilities.pushRoute(MyAccountScreen.route, args: dict).then((value) {
       setState(() {});
     });
   }
@@ -2073,55 +1999,40 @@ class _DashboardState extends StatefulScreenWidgetState {
                     Container(
                         margin: EdgeInsets.all(10),
                         child: getText(
-                          this
-                              .dashboardModel
-                              .getBannerDetails(type)
-                              .description,
+                          this.dashboardModel.getBannerDetails(type).description,
                           fontWeight: FontWeight.bold,
                           fontsize: 16,
                         )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              getSideImages(type == HOME_TOP_CENTRE
-                                  ? HOME_TOP_LEFT_1
-                                  : HOME_BOTTOM_LEFT_1),
-                              SizedBox(
-                                height: getSize(13),
-                              ),
-                              getSideImages(type == HOME_TOP_CENTRE
-                                  ? HOME_TOP_RIGHT_1
-                                  : HOME_BOTTOM_RIGHT_1),
-                            ]),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              getSideImages(type == HOME_TOP_CENTRE
-                                  ? HOME_TOP_LEFT_2
-                                  : HOME_BOTTOM_LEFT_2),
-                              SizedBox(
-                                height: getSize(13),
-                              ),
-                              getSideImages(type == HOME_TOP_CENTRE
-                                  ? HOME_TOP_RIGHT_2
-                                  : HOME_BOTTOM_RIGHT_2),
-                            ]),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              getSideImages(type == HOME_TOP_CENTRE
-                                  ? HOME_TOP_LEFT_3
-                                  : HOME_BOTTOM_LEFT_3),
-                              SizedBox(
-                                height: getSize(13),
-                              ),
-                              getSideImages(type == HOME_TOP_CENTRE
-                                  ? HOME_TOP_RIGHT_3
-                                  : HOME_BOTTOM_RIGHT_3),
-                            ]),
+                        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                          getSideImages(
+                              type == HOME_TOP_CENTRE ? HOME_TOP_LEFT_1 : HOME_BOTTOM_LEFT_1),
+                          SizedBox(
+                            height: getSize(13),
+                          ),
+                          getSideImages(
+                              type == HOME_TOP_CENTRE ? HOME_TOP_RIGHT_1 : HOME_BOTTOM_RIGHT_1),
+                        ]),
+                        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                          getSideImages(
+                              type == HOME_TOP_CENTRE ? HOME_TOP_LEFT_2 : HOME_BOTTOM_LEFT_2),
+                          SizedBox(
+                            height: getSize(13),
+                          ),
+                          getSideImages(
+                              type == HOME_TOP_CENTRE ? HOME_TOP_RIGHT_2 : HOME_BOTTOM_RIGHT_2),
+                        ]),
+                        Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+                          getSideImages(
+                              type == HOME_TOP_CENTRE ? HOME_TOP_LEFT_3 : HOME_BOTTOM_LEFT_3),
+                          SizedBox(
+                            height: getSize(13),
+                          ),
+                          getSideImages(
+                              type == HOME_TOP_CENTRE ? HOME_TOP_RIGHT_3 : HOME_BOTTOM_RIGHT_3),
+                        ]),
                       ],
                     ),
                   ],
@@ -2144,8 +2055,7 @@ class _DashboardState extends StatefulScreenWidgetState {
   }
 
   getHomeSliderImage(String type) {
-    List<String> images =
-        this.dashboardModel.getBannerDetails(type).getSliderImage();
+    List<String> images = this.dashboardModel.getBannerDetails(type).getSliderImage();
     return Container(
       height: getSize(200),
       child: CarouselSlider(
@@ -2194,8 +2104,7 @@ class _DashboardState extends StatefulScreenWidgetState {
         .view) {
       Map<String, dynamic> dict = new HashMap();
       dict["filterId"] = id;
-      dict[ArgumentConstant.ModuleType] =
-          DiamondModuleConstant.MODULE_TYPE_SEARCH;
+      dict[ArgumentConstant.ModuleType] = DiamondModuleConstant.MODULE_TYPE_SEARCH;
       NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
     }
   }
@@ -2229,8 +2138,7 @@ class _DashboardState extends StatefulScreenWidgetState {
 
   Future<WebView> openWebView(String type) async {
     return WebView(
-        initialUrl:
-            this.dashboardModel.getBannerDetails(type).getDisplayImage(),
+        initialUrl: this.dashboardModel.getBannerDetails(type).getDisplayImage(),
         onPageStarted: (url) {
           // app.resolve<CustomDialogs>().showProgressDialog(context, "");
           setState(() {
