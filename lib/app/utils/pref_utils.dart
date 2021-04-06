@@ -380,6 +380,8 @@ class PrefUtils {
                 KYCStatus.pending) !=
             KYCStatus.approved) {*/
      if (module == ModulePermissionConstant.permission_searchDiamond ||
+        module == ModulePermissionConstant.permission_searchupcoming ||
+        module == ModulePermissionConstant.permission_searchnewarrival ||
         module == ModulePermissionConstant.permission_searchResult ||
         module == ModulePermissionConstant.permission_dashboard ||
         module == ModulePermissionConstant.permission_quickSearch ||

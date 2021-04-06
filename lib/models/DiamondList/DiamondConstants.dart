@@ -80,7 +80,9 @@ class ModulePermissionConstant {
   static const permission_stone_of_the_day = "stoneoftheday";
   static const permission_appointment = "APPOINTMENT";
   static const permission_address = "address";
-
+  static const permission_searchupcoming = "UPCOMING";
+  static const permission_searchnewarrival = "NEW_ARRIVAL";
+  
   static const permission_featured = "featured";
   static const permission_auction = "auction";
   static const permission_exclusive = "EXCLUSIVE";

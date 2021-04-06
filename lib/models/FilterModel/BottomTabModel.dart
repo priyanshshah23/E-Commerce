@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 
 class BottomCodeConstant {
   //filter
+
+  static const String filterSearchUpcoming = "FILTER_SEARCH_UPCOMING";
+  static const String filterSearchNewArrival = "FILTER_SEARCH_NEW_ARRIVAL";
   static const String filterSavedSearch = "FILTER_SAVED_SEARCH";
   static const String filterAddDemamd = "FILTER_ADD_DEMAND";
   static const String filterSearch = "FILTER_SEARCH";
@@ -133,17 +136,29 @@ class BottomTabBar {
       {bool isForEditSavedSearch = false}) {
     List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
     arrBootomTab.add(BottomTabModel(
-        title: R.string.screenTitle.savedSearch,
-        image: savedSearch,
-        code: BottomCodeConstant.filterSavedSearch,
+        title: R.string.screenTitle.upcoming,
+        image: upcoming,
+        code: BottomCodeConstant.filterSearchUpcoming,
         sequence: 0,
         isCenter: false));
     arrBootomTab.add(BottomTabModel(
-        title: R.string.screenTitle.addDemand,
-        image: addDemand,
-        code: BottomCodeConstant.filterAddDemamd,
+        title: R.string.screenTitle.newArrival,
+        image: newArrival,
+        code: BottomCodeConstant.filterSearchNewArrival,
         sequence: 1,
         isCenter: false));
+    // arrBootomTab.add(BottomTabModel(
+    //     title: R.string.screenTitle.savedSearch,
+    //     image: savedSearch,
+    //     code: BottomCodeConstant.filterSavedSearch,
+    //     sequence: 0,
+    //     isCenter: false));
+    // arrBootomTab.add(BottomTabModel(
+    //     title: R.string.screenTitle.addDemand,
+    //     image: addDemand,
+    //     code: BottomCodeConstant.filterAddDemamd,
+    //     sequence: 1,
+    //     isCenter: false));
     arrBootomTab.add(BottomTabModel(
         title: "",
         image: search,
