@@ -1827,11 +1827,23 @@ class DiamondConfig {
     var arr = List<Map<String, dynamic>>();
 
     for (var item in list) {
-      var dict = Map<String, dynamic>();
-      dict["id"] = item.memoNo;
-      dict["diamonds"] = [item.id];
-      arr.add(dict);
+      var mapIndex = arr.indexWhere((element) => element["id"] == item.memoNo);
+      if (mapIndex < 0) {
+        var dict = Map<String, dynamic>();
+        dict["id"] = item.memoNo;
+        dict["diamonds"] = [item.id];
+        arr.add(dict);
+      } else {
+        arr[mapIndex]['diamonds'].add(item.id);
+      }
     }
+    // for (var item in list) {
+    //   var dict = Map<String, dynamic>();
+    //   dict["id"] = item.memoNo;
+    //   dict["diamonds"] = [item.id];
+    //   arr.add(dict);
+    // }
+
     req["schedule"] = arr;
     app.resolve<CustomDialogs>().showProgressDialog(context, "");
 
