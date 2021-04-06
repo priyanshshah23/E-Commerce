@@ -765,6 +765,15 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
+
+  getUpcoming(){
+    SyncManager.instance.callAnalytics(context,
+        page: PageAnalytics.MYSAVED_SEARCH,
+        section: SectionAnalytics.LIST,
+        action: ActionAnalytics.CLICK);
+
+  }
+
   getSavedSearchPopUp() {
     SyncManager.instance.callAnalytics(context,
         page: PageAnalytics.MYSAVED_SEARCH,
@@ -805,7 +814,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           );
         },
       );
-    } else {
+    } 
+    else {
       SyncManager.instance.callAnalytics(context,
           page: PageAnalytics.MYSAVED_SEARCH,
           section: SectionAnalytics.ADD,
@@ -870,17 +880,25 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       arrBottomTab: arrBottomTab,
       onClickCallback: (obj) async {
         //
-        if (obj.code == BottomCodeConstant.filterSavedSearch) {
+        if (obj.code == BottomCodeConstant.filterSearchUpcoming) {
           if (app
               .resolve<PrefUtils>()
               .getModulePermission(
-                  ModulePermissionConstant.permission_mySavedSearch)
+                  ModulePermissionConstant.permission_searchupcoming)
               .view) {
-            getSavedSearchPopUp();
-          } else {
+                
+
+
+
+
+          } 
+          
+          else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
-        } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
+        } 
+        
+        else if (obj.code == BottomCodeConstant.filterAddDemamd) {
           if (app
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_myDemand)
