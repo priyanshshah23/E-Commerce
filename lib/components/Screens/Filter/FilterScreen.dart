@@ -765,13 +765,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
-
-  getUpcoming(){
+  getUpcoming() {
     SyncManager.instance.callAnalytics(context,
         page: PageAnalytics.MYSAVED_SEARCH,
         section: SectionAnalytics.LIST,
         action: ActionAnalytics.CLICK);
-
   }
 
   getSavedSearchPopUp() {
@@ -814,8 +812,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           );
         },
       );
-    } 
-    else {
+    } else {
       SyncManager.instance.callAnalytics(context,
           page: PageAnalytics.MYSAVED_SEARCH,
           section: SectionAnalytics.ADD,
@@ -886,46 +883,51 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_searchupcoming)
               .view) {
-                
-
-
-
-
-          } 
-          
-          else {
-            app.resolve<CustomDialogs>().accessDenideDialog(context);
-          }
-        } 
-        
-        else if (obj.code == BottomCodeConstant.filterAddDemamd) {
-          if (app
-              .resolve<PrefUtils>()
-              .getModulePermission(ModulePermissionConstant.permission_myDemand)
-              .insert) {
-            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
-              Map<String, dynamic> map = FilterRequest()
-                  .createRequest(arrList, selectedStatus: selectStatus);
-//              if (app.resolve<PrefUtils>().getUserDetails().type ==
-//                      UserConstant.CUSTOMER &&
-//                  map.length < 3) {
-//                app.resolve<CustomDialogs>().errorDialog(
-//                      context,
-//                      "",
-//                      "Please select any 2 criteria.",
-//                      btntitle: R.string.commonString.ok,
-//                    );
-//              } else
-              getAddDemand();
-            } else {
-              showToast(R.string.commonString.selectAtleastOneFilter,
-                  context: context);
-            }
-            // place code
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
-        } else if (obj.code == BottomCodeConstant.filterSearch) {
+        }
+        if (obj.code == BottomCodeConstant.filterSearchNewArrival) {
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(
+                  ModulePermissionConstant.permission_searchnewarrival)
+              .view) {
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
+        }
+
+//         else if (obj.code == BottomCodeConstant.filterAddDemamd) {
+//           if (app
+//               .resolve<PrefUtils>()
+//               .getModulePermission(ModulePermissionConstant.permission_myDemand)
+//               .insert) {
+//             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
+//               Map<String, dynamic> map = FilterRequest()
+//                   .createRequest(arrList, selectedStatus: selectStatus);
+// //              if (app.resolve<PrefUtils>().getUserDetails().type ==
+// //                      UserConstant.CUSTOMER &&
+// //                  map.length < 3) {
+// //                app.resolve<CustomDialogs>().errorDialog(
+// //                      context,
+// //                      "",
+// //                      "Please select any 2 criteria.",
+// //                      btntitle: R.string.commonString.ok,
+// //                    );
+// //              } else
+//               getAddDemand();
+//             } else {
+//               showToast(R.string.commonString.selectAtleastOneFilter,
+//                   context: context);
+//             }
+//             // place code
+//           } else {
+//             app.resolve<CustomDialogs>().accessDenideDialog(context);
+//           }
+//         }
+
+        else if (obj.code == BottomCodeConstant.filterSearch) {
           //Check internet is online or not
           var connectivityResult = await Connectivity().checkConnectivity();
           if (connectivityResult == ConnectivityResult.none) {
@@ -987,7 +989,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                       args: dict);
                 }, (onError) {});
 //                }
-              }else {
+              } else {
                 app.resolve<CustomDialogs>().accessDenideDialog(context);
               }
               // place code
@@ -1127,7 +1129,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               dict["filterId"] = diamondListResp.data.filter.id;
               dict["filters"] = FilterRequest().createRequest(arrList);
               dict['isCompanySelected'] = isCompanySelected ?? false;
-              dict['isLayoutSearch'] = segmentedControlValue == 3 ? true : false;
+              dict['isLayoutSearch'] =
+                  segmentedControlValue == 3 ? true : false;
               dict[ArgumentConstant.ModuleType] = moduleType;
               NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
