@@ -255,6 +255,65 @@ class SyncManager {
     }
   }
 
+  Future callApiForNewArrivalDiamondList(
+    BuildContext context,
+    Map<String, dynamic> req,
+    Function(DiamondListResp) success,
+    Function failure, {
+    bool isProgress = true,
+    String searchText,
+    bool isUpcoming,
+  }) async {
+    Map<String, dynamic> dict = {};
+    dict["isNotReturnTotal"] = true;
+    dict["isReturnCountOnly"] = true;
+    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
+      dict["filters"] = [req];
+    } else {
+      dict["filters"] = req;
+    }
+    dict["viewType"] = 2;
+    if (!isNullEmptyOrFalse(searchText)) {
+      dict["search"] = searchText;
+    }
+
+    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
+      NetworkCall<DiamondListResp>()
+          .makeCall(
+        () => app
+            .resolve<ServiceModule>()
+            .networkService()
+            .salesDiamondListPaginate(dict),
+        context,
+        isProgress: isProgress,
+      )
+          .then((diamondListResp) async {
+//        DiamondListResp resp=DiamondListResp();
+//        resp.message=diamondListResp.message;
+//        resp.data=diamondListResp.data.first;
+        success(diamondListResp);
+      }).catchError((onError) {
+        print(onError);
+      });
+    } else {
+      NetworkCall<DiamondListResp>()
+          .makeCall(
+        () => app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondListPaginate(dict),
+        context,
+        isProgress: isProgress,
+      )
+          .then((diamondListResp) async {
+        success(diamondListResp);
+      }).catchError((onError) {
+        print(onError);
+      });
+    }
+  }
+
+
   Future callApiForMatchPair(
     BuildContext context,
     Map<String, dynamic> req,

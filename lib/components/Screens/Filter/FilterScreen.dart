@@ -883,8 +883,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_searchupcoming)
               .view) {
-            callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_UPCOMING,
-                isUpcoming: true);
+            callApiForUpcoming(DiamondModuleConstant.MODULE_TYPE_UPCOMING);
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
@@ -895,6 +894,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               .getModulePermission(
                   ModulePermissionConstant.permission_searchnewarrival)
               .view) {
+            callApiForNewArrival(DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL);
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
@@ -1071,10 +1071,103 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     );
   }
 
+  callApiForUpcoming(int moduleType) {
+    Map<String, dynamic> map = FilterRequest().createRequest(arrList,
+        selectedStatus: selectStatus,
+        isFromLayout: segmentedControlValue == 3 ? true : false);
+    SyncManager.instance.callApiForUpcomingDiamondList(
+      context,
+      map,
+      (diamondListResp) {
+        if (diamondListResp.data.count == 0) {
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              desc: R.string.commonString.noDiamondFound,
+              positiveBtnTitle: R.string.commonString.ok,
+              negativeBtnTitle: R.string.screenTitle.addDemand,
+              onClickCallback: (buttonType) {
+            if (buttonType == ButtonType.NagativeButtonClick) {
+              if (app
+                  .resolve<PrefUtils>()
+                  .getModulePermission(
+                      ModulePermissionConstant.permission_myDemand)
+                  .insert) {
+                if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
+                  getAddDemand();
+                else {
+                  showToast(R.string.commonString.selectAtleastOneFilter,
+                      context: context);
+                }
+                // place code
+              }
+            }
+          });
+        } else {
+          Map<String, dynamic> dict = new HashMap();
+          dict["filterId"] = diamondListResp.data.filter.id;
+          dict["filters"] = FilterRequest().createRequest(arrList);
+          dict['isCompanySelected'] = isCompanySelected ?? false;
+          dict['isLayoutSearch'] = segmentedControlValue == 3 ? true : false;
+          dict[ArgumentConstant.ModuleType] = moduleType;
+          NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+        }
+      },
+      (onError) {
+        //print("Error");
+      },
+    );
+  }
+
+  callApiForNewArrival(int moduleType) {
+    Map<String, dynamic> map = FilterRequest().createRequest(arrList,
+        selectedStatus: selectStatus,
+        isFromLayout: segmentedControlValue == 3 ? true : false);
+    SyncManager.instance.callApiForNewArrivalDiamondList(
+      context,
+      map,
+      (diamondListResp) {
+        if (diamondListResp.data.count == 0) {
+          app.resolve<CustomDialogs>().confirmDialog(context,
+              desc: R.string.commonString.noDiamondFound,
+              positiveBtnTitle: R.string.commonString.ok,
+              negativeBtnTitle: R.string.screenTitle.addDemand,
+              onClickCallback: (buttonType) {
+            if (buttonType == ButtonType.NagativeButtonClick) {
+              if (app
+                  .resolve<PrefUtils>()
+                  .getModulePermission(
+                      ModulePermissionConstant.permission_myDemand)
+                  .insert) {
+                if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList)))
+                  getAddDemand();
+                else {
+                  showToast(R.string.commonString.selectAtleastOneFilter,
+                      context: context);
+                }
+                // place code
+              }
+            }
+          });
+        } else {
+          Map<String, dynamic> dict = new HashMap();
+          dict["filterId"] = diamondListResp.data.filter.id;
+          dict["filters"] = FilterRequest().createRequest(arrList);
+          dict['isCompanySelected'] = isCompanySelected ?? false;
+          dict['isLayoutSearch'] = segmentedControlValue == 3 ? true : false;
+          dict[ArgumentConstant.ModuleType] = moduleType;
+          NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
+        }
+      },
+      (onError) {
+        //print("Error");
+      },
+    );
+  }
+
   callApiForGetFilterId(int moduleType,
       {bool isSavedSearch = false,
       bool isSearch = false,
-      bool isUpcoming = false}) {
+      bool isUpcoming = false,
+      bool isNewArrival = false}) {
     SyncManager.instance.callAnalytics(context,
         page: PageAnalytics.DIAMOND_SEARCH,
         section: SectionAnalytics.SEARCH,
@@ -1139,41 +1232,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
             }
-          } else if (isUpcoming) {
-            if (diamondListResp.data.count == 0) {
-              app.resolve<CustomDialogs>().confirmDialog(context,
-                  desc: R.string.commonString.noDiamondFound,
-                  positiveBtnTitle: R.string.commonString.ok,
-                  negativeBtnTitle: R.string.screenTitle.addDemand,
-                  onClickCallback: (buttonType) {
-                if (buttonType == ButtonType.NagativeButtonClick) {
-                  if (app
-                      .resolve<PrefUtils>()
-                      .getModulePermission(
-                          ModulePermissionConstant.permission_myDemand)
-                      .insert) {
-                    if (!isNullEmptyOrFalse(
-                        FilterRequest().createRequest(arrList)))
-                      getAddDemand();
-                    else {
-                      showToast(R.string.commonString.selectAtleastOneFilter,
-                          context: context);
-                    }
-                    // place code
-                  }
-                }
-              });
-            } else {
-              Map<String, dynamic> dict = new HashMap();
-              dict["filterId"] = diamondListResp.data.filter.id;
-              dict["filters"] = FilterRequest().createRequest(arrList);
-              dict['isCompanySelected'] = isCompanySelected ?? false;
-              dict['isLayoutSearch'] =
-                  segmentedControlValue == 3 ? true : false;
-              dict[ArgumentConstant.ModuleType] = moduleType;
-              NavigationUtilities.pushRoute(DiamondListScreen.route,
-                  args: dict);
-            }
           } else {
             Map<String, dynamic> dict = new HashMap();
             dict["filterId"] = diamondListResp.data.filter.id;
@@ -1189,72 +1247,6 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         //print("Error");
       },
     );
-    if (isUpcoming) {
-      SyncManager.instance.callApiForUpcomingDiamondList(
-        context,
-        map,
-        (diamondListResp) {
-          if (isSavedSearch) {
-            openBottomSheetForSavedSearch(
-                context,
-                FilterRequest()
-                    .createRequest(arrList, selectedStatus: selectStatus),
-                isSearch: isSearch,
-                savedSearchModel: this.savedSearchModel);
-          } else {
-            if (isUpcoming) {
-              if (diamondListResp.data.count == 0) {
-                app.resolve<CustomDialogs>().confirmDialog(context,
-                    desc: R.string.commonString.noDiamondFound,
-                    positiveBtnTitle: R.string.commonString.ok,
-                    negativeBtnTitle: R.string.screenTitle.addDemand,
-                    onClickCallback: (buttonType) {
-                  if (buttonType == ButtonType.NagativeButtonClick) {
-                    if (app
-                        .resolve<PrefUtils>()
-                        .getModulePermission(
-                            ModulePermissionConstant.permission_myDemand)
-                        .insert) {
-                      if (!isNullEmptyOrFalse(
-                          FilterRequest().createRequest(arrList)))
-                        getAddDemand();
-                      else {
-                        showToast(R.string.commonString.selectAtleastOneFilter,
-                            context: context);
-                      }
-                      // place code
-                    }
-                  }
-                });
-              } else {
-                Map<String, dynamic> dict = new HashMap();
-                dict["filterId"] = diamondListResp.data.filter.id;
-                dict["filters"] = FilterRequest().createRequest(arrList);
-                dict['isCompanySelected'] = isCompanySelected ?? false;
-                dict['isLayoutSearch'] =
-                    segmentedControlValue == 3 ? true : false;
-                dict[ArgumentConstant.ModuleType] = moduleType;
-                NavigationUtilities.pushRoute(DiamondListScreen.route,
-                    args: dict);
-              }
-            } else {
-              Map<String, dynamic> dict = new HashMap();
-              dict["filterId"] = diamondListResp.data.filter.id;
-              dict["filters"] = FilterRequest().createRequest(arrList);
-              dict['isCompanySelected'] = isCompanySelected ?? false;
-              dict['isLayoutSearch'] =
-                  segmentedControlValue == 3 ? true : false;
-              dict[ArgumentConstant.ModuleType] = moduleType;
-              NavigationUtilities.pushRoute(DiamondListScreen.route,
-                  args: dict);
-            }
-          }
-        },
-        (onError) {
-          //print("Error");
-        },
-      );
-    }
 //    }
   }
 

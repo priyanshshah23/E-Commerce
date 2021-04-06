@@ -298,6 +298,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
         dict["viewType"] = 2;
+        dict["sort"] = [];
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         /* dict["filters"] = [
