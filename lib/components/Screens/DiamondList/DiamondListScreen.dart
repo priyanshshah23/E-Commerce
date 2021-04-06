@@ -324,18 +324,36 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 //        Map<String, dynamic> dict1 = Map<String, dynamic>();
 //        dict1["inDt"] = "ASC";
 //        dict["sort"] = [dict1];
+        // dict["filters"] = {};
+        // dict["filters"] = [
+        //   {"diamondSearchId": this.filterId}
+        // ];
+        // dict["isAppendMasters"] = true;
+        // dict["isSkipSave"] = true;
+        // Map<String, dynamic> dict1 = Map<String, dynamic>();
+        // dict1["inDt"] = "ASC";
+        // dict["sort"] = [dict1];
+        //print("===========>" + this.filterId);
+        // dict["filters"] = {};
+        // dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
+        // dict["filters"]["inDt"] = {};
 
-        dict["filters"] = {};
-        dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
-        dict["filters"]["inDt"] = {};
-
-        print(date.add(Duration(days: 5, hours: 5, minutes: 30)));
-        dict["filters"]["inDt"]["<="] =
-            date.add(Duration(days: 7)).toUtc().toIso8601String();
-        Map<String, dynamic> dict1 = Map<String, dynamic>();
-        dict1["inDt"] = "ASC";
-        dict["sort"] = [dict1];
-
+        // print(date.add(Duration(days: 5, hours: 5, minutes: 30)));
+        // dict["filters"]["inDt"]["<="] =
+        //     date.add(Duration(days: 7)).toUtc().toIso8601String();
+        // Map<String, dynamic> dict1 = Map<String, dynamic>();
+        // dict1["inDt"] = "ASC";
+        // dict["sort"] = [dict1];
+        if (app.resolve<PrefUtils>().getUserDetails().type ==
+            UserConstant.SALES) {
+          dict["filters"] = [
+            {"diamondSearchId": this.filterId}
+          ];
+        } else {
+          dict["filters"] = {};
+          dict["filters"]["diamondSearchId"] = this.filterId;
+          dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
+        }
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         if (app.resolve<PrefUtils>().getUserDetails().type ==
