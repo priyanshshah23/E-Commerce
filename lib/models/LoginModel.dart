@@ -536,8 +536,8 @@ class Address {
     region = json['region'];
     city = json['city'];
     postalCode = json['postalCode'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
+    // latitude = json['latitude'];
+    // longitude = json['longitude'];
     timezone = json['timezone'];
   }
 
