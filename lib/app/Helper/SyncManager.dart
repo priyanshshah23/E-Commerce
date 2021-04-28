@@ -152,7 +152,7 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
+    if (!app.resolve<PrefUtils>().isUserCustomer()) {
       dict["filters"] = [req];
     } else {
       dict["filters"] = req;
@@ -161,7 +161,7 @@ class SyncManager {
       dict["search"] = searchText;
     }
 
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
+    if (!app.resolve<PrefUtils>().isUserCustomer()) {
       NetworkCall<DiamondListResp>()
           .makeCall(
         () => app
@@ -209,7 +209,7 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
+    if (!app.resolve<PrefUtils>().isUserCustomer()) {
       dict["filters"] = [req];
     } else {
       dict["filters"] = req;
@@ -219,7 +219,7 @@ class SyncManager {
       dict["search"] = searchText;
     }
 
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
+    if (!app.resolve<PrefUtils>().isUserCustomer()) {
       NetworkCall<DiamondListResp>()
           .makeCall(
         () => app
@@ -267,7 +267,7 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
+    if (!app.resolve<PrefUtils>().isUserCustomer()) {
       dict["filters"] = [req];
     } else {
       dict["filters"] = req;
@@ -277,7 +277,7 @@ class SyncManager {
       dict["search"] = searchText;
     }
 
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES) {
+    if (!app.resolve<PrefUtils>().isUserCustomer()) {
       NetworkCall<DiamondListResp>()
           .makeCall(
         () => app

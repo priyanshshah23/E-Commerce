@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     user = app.resolve<PrefUtils>().getUserDetails();
     selectedType = getDefaultModuleType();
-    if (user.type == UserConstant.SALES) {
+    if (!app.resolve<PrefUtils>().isUserCustomer()) {
       openSearch(DiamondModuleConstant.MODULE_TYPE_SEARCH);
     } else if (user.isKycUploaded == false) {
       if (user.kycRequired) {
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       print(
           "--------------------------kyc-----------------${user.isKycUploaded}");
-      /* if (user.type == UserConstant.CUSTOMER) {
+      /* if (app.resolve<PrefUtils>().isUserCustomer()) {
         //Kyc rejected
         if (user.account.isApproved == KYCStatus.rejected &&
             user.account.isKycUploaded == true) {
@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   int getDefaultModuleType() {
-    return user.type == UserConstant.CUSTOMER
+    return app.resolve<PrefUtils>().isUserCustomer()
         ? DiamondModuleConstant.MODULE_TYPE_HOME
         : DiamondModuleConstant.MODULE_TYPE_SEARCH;
   }
@@ -157,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         });
       } else {
-        if (user.type == UserConstant.CUSTOMER) {
+        if (app.resolve<PrefUtils>().isUserCustomer()) {
           manageDrawerClick(
               context, DiamondModuleConstant.MODULE_TYPE_HOME, false);
         } else {

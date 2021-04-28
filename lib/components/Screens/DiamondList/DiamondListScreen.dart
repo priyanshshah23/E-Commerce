@@ -265,8 +265,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES) {
+        if (!app.resolve<PrefUtils>().isUserCustomer()) {
           dict["filters"] = [
             {"diamondSearchId": this.filterId}
           ];
@@ -277,8 +276,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES) {
+        if (!app.resolve<PrefUtils>().isUserCustomer()) {
           dict["filters"] = [
             {"diamondSearchId": this.filterId}
           ];
@@ -345,8 +343,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         // Map<String, dynamic> dict1 = Map<String, dynamic>();
         // dict1["inDt"] = "ASC";
         // dict["sort"] = [dict1];
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES) {
+        if (!app.resolve<PrefUtils>().isUserCustomer()) {
           dict["filters"] = [
             {"diamondSearchId": this.filterId}
           ];
@@ -357,8 +354,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         }
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES) {
+        if (!app.resolve<PrefUtils>().isUserCustomer()) {
           dict["filters"] = [
             {"or": diamondConfig.getExclusiveDiamondReq()}
           ];
@@ -390,8 +386,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["isAppendDiamond"] = 1;
         break;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES) {
+        if (!app.resolve<PrefUtils>().isUserCustomer()) {
           dict["filters"] = [
             {"wSts": "D"}
           ];
@@ -773,15 +768,17 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   callBlockApi({bool isProgress = false}) {
-    if (page == DEFAULT_PAGE) {
-      diamondConfig.callApiForBlock(context, arraDiamond, (resp) {
-        fillArrayList();
-      }, isProgress: isProgress);
-    } else {
-      diamondConfig.setBlockDetail(diamondConfig.trackBlockData, arraDiamond,
-          (resp) {
-        fillArrayList();
-      });
+    if (!app.resolve<PrefUtils>().isUserCustomer()) {
+      if (page == DEFAULT_PAGE) {
+        diamondConfig.callApiForBlock(context, arraDiamond, (resp) {
+          fillArrayList();
+        }, isProgress: isProgress);
+      } else {
+        diamondConfig.setBlockDetail(diamondConfig.trackBlockData, arraDiamond,
+            (resp) {
+          fillArrayList();
+        });
+      }
     }
   }
 

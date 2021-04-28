@@ -340,8 +340,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     : getBackButton(context),
                 centerTitle: false,
                 actionItems: [
-                  if (app.resolve<PrefUtils>().getUserDetails().type ==
-                      UserConstant.SALES)
+                  if (!app.resolve<PrefUtils>().isUserCustomer())
                     InkWell(
                       onTap: () {
                         Navigator.push(
@@ -405,8 +404,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                         ),
                       ),
                     ),
-                  if (app.resolve<PrefUtils>().getUserDetails().type ==
-                      UserConstant.SALES)
+                  if (!app.resolve<PrefUtils>().isUserCustomer())
                     InkWell(
                       onTap: () {
                         openDialogueForSelectStatus(context);
@@ -1175,8 +1173,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> map = FilterRequest().createRequest(arrList,
         selectedStatus: selectStatus,
         isFromLayout: segmentedControlValue == 3 ? true : false);
-//    if (app.resolve<PrefUtils>().getUserDetails().type ==
-//            UserConstant.CUSTOMER &&
+//    if (app.resolve<PrefUtils>().isUserCustomer() &&
 //        map.length < 3) {
 //      app.resolve<CustomDialogs>().errorDialog(
 //            context,
@@ -1528,8 +1525,7 @@ class _FilterItemState extends State<FilterItem> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES)
+        if (!app.resolve<PrefUtils>().isUserCustomer())
           Padding(
             padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
             child: Row(
@@ -1706,8 +1702,7 @@ class _FilterItemState extends State<FilterItem> {
               ],
             ),
           ),
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.CUSTOMER)
+        if (app.resolve<PrefUtils>().isUserCustomer())
           Padding(
             padding: EdgeInsets.only(top: getSize(16.0), bottom: getSize(16.0)),
             child: Row(

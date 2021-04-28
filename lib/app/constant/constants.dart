@@ -201,8 +201,17 @@ class StaticPageConstant {
 }
 
 class UserConstant {
-  static const int SALES = 1;
-  static const int CUSTOMER = 4;
+  static const int SUPER_ADMIN = 1;
+  static const int ADMIN = 2;
+  static const int SUB_USER = 3;
+  static const int PRIMARY = 4;
+  static const int PERMANENT_GUEST = 5;
+  static const int EMPLOYEE = 6;
+  static const int API_USER = 7;
+  static const int SELLER = 8;
+  static const int CUSTOMER = 9;
+  static const int SECONDARY = 10;
+  static const int MASTER_SALES = 11;
 }
 
 class selectStatusList {

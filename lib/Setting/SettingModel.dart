@@ -8,8 +8,7 @@ import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 class DrawerSetting {
   List<DrawerModel> getDrawerItems() {
     List<DrawerModel> drawerList = [];
-    if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.CUSTOMER &&
+    if (app.resolve<PrefUtils>().isUserCustomer() &&
         app
             .resolve<PrefUtils>()
             .getModulePermission(ModulePermissionConstant.permission_dashboard)
@@ -501,11 +500,11 @@ class BottomMenuSetting {
   List<BottomTabModel> getMoreMenuItems(
       {bool isDetail = false, bool isCompare = false}) {
     List<BottomTabModel> moreMenuList = [];
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES &&
+    if (!app.resolve<PrefUtils>().isUserCustomer() &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
       addCartInBottomMenu(moreMenuList);
     }
-    if (app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES &&
+    if (!app.resolve<PrefUtils>().isUserCustomer()&&
         moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
       addWatchlistInBottomMenu(moreMenuList, home_watchlist);
     }
@@ -654,8 +653,7 @@ class BottomMenuSetting {
 
         break;
       default:
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES) {
+        if (!app.resolve<PrefUtils>().isUserCustomer()) {
           if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY ||
               moduleType == DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST ||
               moduleType == DiamondModuleConstant.MODULE_TYPE_MY_CART ||
