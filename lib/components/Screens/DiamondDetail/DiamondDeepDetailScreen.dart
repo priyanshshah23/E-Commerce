@@ -356,8 +356,9 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
   Widget getTabBlock(DiamondDetailImagePagerModel model) {
     return (model.isImage == false)
         ? Container(
-            height: getSize(245),
-            width: getSize(354),
+            height: getSize(286),
+            width: MathUtilities.screenWidth(context),
+            // width: getSize(354),
             child: Stack(
               children: [
                 FutureBuilder<Widget>(
@@ -389,8 +390,9 @@ class _DiamondDeepDetailScreenState extends State<DiamondDeepDetailScreen> {
                           isStringEmpty(model.url) == false)
                       ? model.arr[model.subIndex].url
                       : model.url,
-                  height: getSize(245),
-                  width: getSize(354),
+                  height: getSize(286),
+                  width: MathUtilities.screenWidth(context),
+                  //width: getSize(354),
                   fit: BoxFit.fill,
                   shape: BoxDecoration(
                     color: appTheme.whiteColor,

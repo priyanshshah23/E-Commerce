@@ -33,7 +33,9 @@ class DiamondDetailUIAPIKeys {
   static const String comments = "comments";
   static const String kToSStr = "kToSStr";
   static const String clr = "clr";
+  static const String lbCmt = "lbCmt";
   static const String col = "col";
+  static const String clrNm = "clrNm";
 }
 
 class DiamondDetailUIModel {
@@ -89,6 +91,7 @@ class DiamondDetailUIComponentModel {
   int sequence;
   bool isActive;
   bool isPercentage;
+  bool isDegree;
 
   String value;
 
@@ -98,6 +101,7 @@ class DiamondDetailUIComponentModel {
     this.sequence,
     this.isActive,
     this.isPercentage,
+    this.isDegree,
   });
 
   DiamondDetailUIComponentModel.fromJson(Map<String, dynamic> json) {
@@ -108,6 +112,7 @@ class DiamondDetailUIComponentModel {
     sequence = json['sequence'];
     isActive = json["isActive"];
     isPercentage = json['isPercentage'] ?? false;
+    isDegree = json['isDegree'] ?? false;
   }
 
   Map<String, dynamic> toJson() {
@@ -117,6 +122,7 @@ class DiamondDetailUIComponentModel {
     data['sequence'] = this.sequence;
     data['isActive'] = this.isActive;
     data['isPercentage'] = this.isPercentage;
+    data['isDegree'] = this.isDegree;
 
     return data;
   }

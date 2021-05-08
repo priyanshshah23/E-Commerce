@@ -771,14 +771,53 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
             sequence: element.sequence,
             isPercentage: element.isPercentage,
             isActive: element.isActive,
+            isDegree: element.isDegree,
           );
-
           if (isStringEmpty(element.apiKey) == false) {
             dynamic valueElement = diamondModel.toJson()[element.apiKey];
             if (valueElement != null) {
               if (element.apiKey == DiamondDetailUIAPIKeys.pricePerCarat) {
                 //
+
                 diamonDetailComponent.value = diamondModel.getPricePerCarat();
+              } else if (element.apiKey == DiamondDetailUIAPIKeys.ratio) {
+                var filter = diamondDetailUIModel.parameters
+                    .where((element) =>
+                        element.apiKey == DiamondDetailUIAPIKeys.shpNm)
+                    .toList();
+                if (isNullEmptyOrFalse(filter) == false) {
+                  if (filter.first.value == "ROUND") {
+                    element.value = "-";
+                  } else {
+                    diamonDetailComponent.value = valueElement;
+                  }
+                }
+              } else if (element.apiKey == DiamondDetailUIAPIKeys.kToSStr) {
+                var filter = diamondDetailUIModel.parameters
+                    .where((element) =>
+                        element.apiKey == DiamondDetailUIAPIKeys.clrNm)
+                    .toList();
+                if (isNullEmptyOrFalse(filter) == false) {
+                  if (filter.first.value == "FL" ||
+                      filter.first.value == "IF") {
+                    element.value = "NONE";
+                  } else {
+                    diamonDetailComponent.value = valueElement;
+                  }
+                }
+              } else if (element.apiKey == DiamondDetailUIAPIKeys.lbCmt) {
+                var filter = diamondDetailUIModel.parameters
+                    .where((element) =>
+                        element.apiKey == DiamondDetailUIAPIKeys.clrNm)
+                    .toList();
+                if (isNullEmptyOrFalse(filter) == false) {
+                  if (filter.first.value == "FL" ||
+                      filter.first.value == "IF") {
+                    element.value = "NONE";
+                  } else {
+                    diamonDetailComponent.value = valueElement;
+                  }
+                }
               } else if (element.apiKey == DiamondDetailUIAPIKeys.amount) {
                 //
                 diamonDetailComponent.value = diamondModel.getAmount();
@@ -789,6 +828,9 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
               }
               if (element.isPercentage) {
                 diamonDetailComponent.value = "${diamonDetailComponent.value}%";
+              }
+              if (element.isDegree) {
+                diamonDetailComponent.value = "${diamonDetailComponent.value}°";
               }
             } else {
               diamonDetailComponent.value = "-";
@@ -1380,6 +1422,19 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
 
   Widget getDiamondDetailUIComponent(
       DiamondDetailUIModel diamondDetailUIModel) {
+    diamondDetailUIModel.parameters.forEach((element) {
+      if (element.apiKey == DiamondDetailUIAPIKeys.shpNm) {
+        if (element.value == "ROUND") {
+          diamondDetailUIModel.parameters.forEach((item) {
+            print("------------------------------${item.apiKey}");
+            print("------------------------------${item.value}");
+            if (item.apiKey == DiamondDetailUIAPIKeys.ratio) {
+              item.value = "-";
+            }
+          });
+        }
+      }
+    });
     if (diamondDetailUIModel.columns == 1) {
       return Column(
         children: [
@@ -1399,9 +1454,11 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                           style: appTheme.grey14HintTextStyle),
                     ),
                     // Spacer(),
+
                     Expanded(
                       flex: 6,
-                      child: Text(diamondDetailUIModel.parameters[j].value,
+                      child: Text(
+                          diamondDetailUIModel?.parameters[j]?.value ?? "-",
                           textAlign: TextAlign.right,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

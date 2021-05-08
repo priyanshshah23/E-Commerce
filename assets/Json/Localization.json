@@ -797,8 +797,10 @@
         "brownTinge",
         "otherTinge",
         "reportNo",
-        "packetNo"
+        "packetNo",
+        "heightTitle"
       ],
+      "heightTitle":"Height",
       "shape": "Shape",
       "caratRange": "Carat",
       "basicDetail": "Basic Details",
