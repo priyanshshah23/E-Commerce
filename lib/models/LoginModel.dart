@@ -171,7 +171,7 @@ class User {
   String photoId;
   String pinCode;
   String reference;
-  List<String> roles;
+  String roles;
   bool updateRequired;
   bool isIntoHide;
   String updateIp;
@@ -265,7 +265,7 @@ class User {
     photoId = json['photoId'];
     pinCode = json['pinCode'];
     reference = json['reference'];
-    roles = json['roles'].cast<String>();
+    roles = json['roles'];
     updateRequired = json['updateRequired'];
     isIntoHide = json['isIntoHide'];
     updateIp = json['updateIp'];

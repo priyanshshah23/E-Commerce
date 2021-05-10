@@ -814,6 +814,7 @@ class ScreenTitle {
 }
 
 class Dynamickeys {
+  String heightTitle = "Height";
   String shape = "Shape";
   String caratRange = "Carat";
   String basicDetail = "Basic Details";
@@ -907,6 +908,7 @@ class Dynamickeys {
   String packetNo = "Packet No";
   String byKey(String key) => _dynamicValues[key];
   Map<String, String> _dynamicValues = {
+    "heightTitle": "Height",
     "shape": "Shape",
     "caratRange": "Carat",
     "basicDetail": "Basic Details",

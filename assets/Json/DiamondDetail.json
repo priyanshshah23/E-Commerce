@@ -61,12 +61,6 @@
         "isActive": true
       },
       {
-        "title": "rationTitle",
-        "apiKey": "ratio",
-        "sequence": 10,
-        "isActive": true
-      },
-      {
         "title": "fluorescenceTitle",
         "apiKey": "fluNm",
         "sequence": 11,
@@ -96,7 +90,7 @@
     "parameters": [
       {
         "title": "brownTinge",
-        "apiKey": "-",
+        "apiKey": "shdNm",
         "sequence": 1,
         "isActive": true
       },
@@ -108,7 +102,7 @@
       },
       {
         "title": "otherTinge",
-        "apiKey": "-",
+        "apiKey": "ovrtnNm",
         "sequence": 3,
         "isActive": true
       },
@@ -131,12 +125,29 @@
         "title": "dimensionTitle",
         "apiKey": "msrmnt",
         "sequence": 1,
+        "isActive": false
+      },
+      {
+        "title": "lengthTitle",
+        "apiKey": "length",
+        "sequence": 1,
         "isActive": true
       },
-
+      {
+        "title": "widthTitle",
+        "apiKey": "width",
+        "sequence": 1,
+        "isActive": true
+      },
+      {
+        "title": "heightTitle",
+        "apiKey": "height",
+        "sequence": 1,
+        "isActive": true
+      },
       {
         "title": "tableTitle",
-        "apiKey": "ratio",
+        "apiKey": "tblPer",
         "sequence": 2,
         "isActive": true,
         "isPercentage": true
@@ -149,11 +160,17 @@
         "isPercentage": true
       },
       {
+        "title": "rationTitle",
+        "apiKey": "ratio",
+        "sequence": 10,
+        "isActive": true
+      },
+      {
         "title": "pavAngleTitle",
         "apiKey": "pAng",
         "sequence": 4,
         "isActive": true,
-        "isPercentage": true
+        "isDegree": true
       },
       {
         "title": "pavHeight",
@@ -166,13 +183,15 @@
         "title": "crownAngleTitle",
         "apiKey": "cAng",
         "sequence": 6,
-        "isActive": true
+        "isActive": true,
+        "isDegree": true
       },
       {
         "title": "crownHeightTitle",
         "apiKey": "cHgt",
         "sequence": 7,
-        "isActive": true
+        "isActive": true,
+        "isPercentage": true
       },
       {
         "title": "culetTitle",
@@ -191,7 +210,7 @@
         "title": "eTK",
         "apiKey": "-",
         "sequence": 10,
-        "isActive": true
+        "isActive": false
       }
     ]
   },
@@ -210,7 +229,7 @@
       },
       {
         "title": "labComments",
-        "apiKey": "comments",
+        "apiKey": "lbCmt",
         "sequence": 2,
         "isActive": true
       },
@@ -221,33 +240,22 @@
         "isActive": true
       },
       {
+        "title": "sideBlack",
+        "apiKey": "blkSdNm",
+        "sequence": 5,
+        "isActive": true
+      },
+      {
         "title": "tableOpen",
         "apiKey": "opTblNm",
         "sequence": 4,
         "isActive": true
       },
-      {
-        "title": "sideBlack",
-        "apiKey": "blkSd",
-        "sequence": 5,
-        "isActive": true
-      },
+      
       {
         "title": "crownOpen",
         "apiKey": "opCrwnNm",
         "sequence": 6,
-        "isActive": true
-      },
-      {
-        "title": "tableInclusion",
-        "apiKey": "wTbl",
-        "sequence": 7,
-        "isActive": true
-      },
-      {
-        "title": "sideInclusion",
-        "apiKey": "wSd",
-        "sequence": 8,
         "isActive": true
       },
       {
@@ -261,6 +269,18 @@
         "apiKey": "opGrd",
         "sequence": 10,
         "isActive": true
+      },
+      {
+        "title": "tableInclusion",
+        "apiKey": "wTblNm",
+        "sequence": 7,
+        "isActive": true
+      },
+      {
+        "title": "sideInclusion",
+        "apiKey": "wSdNm",
+        "sequence": 8,
+        "isActive": true
       }
     ]
   },
@@ -273,13 +293,13 @@
     "parameters": [
       {
         "title": "laserInsTitle",
-        "apiKey": "eClnNm",
+        "apiKey": "lsrInc",
         "sequence": 1,
         "isActive": true
       },
       {
         "title": "heartArrow",
-        "apiKey": "mlkNm",
+        "apiKey": "hANm",
         "sequence": 2,
         "isActive": true
       },
@@ -293,7 +313,8 @@
         "title": "eyeCleanTitle",
         "apiKey": "eClnNm",
         "sequence": 4,
-        "isActive": true
+        "isActive": true,
+        "isPercentage": true
       }
     ]
   }

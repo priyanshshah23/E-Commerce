@@ -1045,6 +1045,52 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   }
 
   getTableDetails() {
+    if (widget.item.shpNm == "ROUND") {
+      return Expanded(
+        child: Container(
+          height: getSize(16),
+          // padding: EdgeInsets.only(left: getSize(16)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Align(
+                alignment: Alignment.centerLeft,
+                child: getTextWithLabel(
+                  ("-").replaceAll('null', '--'),
+                  "R : ",
+                ),
+              ),
+              Flexible(
+                flex: 4,
+                child: Text(
+                  "EC : " +
+                      (widget.item?.eClnNm ?? "-").replaceAll('null', '--'),
+                  // overflow: TextOverflow.ellipsis,
+                  // maxLines: 1,
+                ),
+              ),
+              // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
+              Flexible(
+                flex: 2,
+                child: getTextWithLabel(
+                    (widget.item?.depPer.toString() ?? "-")
+                        .replaceAll('null', '--'),
+                    "D% : "),
+              ),
+              Flexible(
+                flex: 2,
+                child: getTextWithLabel(
+                    (widget.item?.tblPer.toString() ?? "-")
+                        .replaceAll('null', '--'),
+                    "T% : "),
+              ),
+              // getAmountText(widget.item?.getAmount() ?? ""),
+            ],
+          ),
+        ),
+      );
+    }
+
     return Expanded(
       child: Container(
         height: getSize(16),
@@ -1063,8 +1109,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               flex: 4,
               child: Text(
                 "EC : " + (widget.item?.eClnNm ?? "-").replaceAll('null', '--'),
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
+                // overflow: TextOverflow.ellipsis,
+                // maxLines: 1,
               ),
             ),
             // PriceUtilities.getPercent(widget.item?.depPer ?? 0)
@@ -2265,14 +2311,14 @@ getLayoutAndMAtchPairClick(
   SyncManager.instance.callApiForMatchPair(context, map, (diamondListResp) {
     Map<String, dynamic> dict = new HashMap();
     dict["filterId"] = diamondListResp.data.filter.id;
-    if (isLayoutSearch) {
-      dict[ArgumentConstant.ModuleType] =
-          DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT;
-      dict["isLayoutSearch"] = isLayoutSearch;
-    } else {
+//    if (isLayoutSearch) {
+//      dict[ArgumentConstant.ModuleType] =
+//          DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT;
+//      dict["isLayoutSearch"] = isLayoutSearch;
+//    } else {
       dict[ArgumentConstant.ModuleType] =
           DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
-    }
+//    }
     NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
   }, (onError) {}, isFromList: true);
 }

@@ -226,8 +226,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
 //        if(app.resolve<PrefUtils>().getUserDetails().type == UserConstant.SALES)
-        return app.resolve<PrefUtils>().getUserDetails().type ==
-                UserConstant.SALES
+        return !app.resolve<PrefUtils>().isUserCustomer()
             ? app
                 .resolve<ServiceModule>()
                 .networkService()
@@ -352,8 +351,7 @@ class DiamondConfig {
             );
           }
         } else {
-          if (app.resolve<PrefUtils>().getUserDetails().type ==
-              UserConstant.SALES)
+          if (!app.resolve<PrefUtils>().isUserCustomer())
             list.add(BottomTabModel(
               title: "",
               image: buildingIcon,
@@ -397,8 +395,7 @@ class DiamondConfig {
               moduleType ==
                   DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
           } else {
-            if (app.resolve<PrefUtils>().getUserDetails().type ==
-                UserConstant.CUSTOMER)
+            if (app.resolve<PrefUtils>().isUserCustomer())
               list.add(BottomTabModel(
                   title: "",
                   image: download,
@@ -438,8 +435,7 @@ class DiamondConfig {
         actionAddToWishList(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_PLACE_ORDER:
-        if (app.resolve<PrefUtils>().getUserDetails().type ==
-            UserConstant.SALES) {
+        if (!app.resolve<PrefUtils>().isUserCustomer()) {
           actionBuyNow(context, list, refreshList);
         } else {
           actionPlaceOrder(context, list, refreshList);

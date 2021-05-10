@@ -135,6 +135,7 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
           sequence: element.sequence,
           isPercentage: element.isPercentage,
           isActive: element.isActive,
+          isDegree: element.isDegree,
         );
 
         if (isStringEmpty(element.apiKey) == false) {
@@ -156,6 +157,9 @@ class _DiamondCompareScreenState extends StatefulScreenWidgetState {
             }
             if (element.isPercentage) {
               diamonDetailComponent.value = "${diamonDetailComponent.value}%";
+            }
+            if (element.isDegree) {
+              diamonDetailComponent.value = "${diamonDetailComponent.value}°";
             }
           }
         }

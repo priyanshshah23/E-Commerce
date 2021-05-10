@@ -292,7 +292,16 @@ class PrefUtils {
     var userJson = json.decode(_preferences.getString(keyUser));
     return userJson != null ? new User.fromJson(userJson) : null;
   }
-
+  isUserCustomer() {
+    if (getUserDetails().type == UserConstant.CUSTOMER ||
+        getUserDetails().type == UserConstant.PRIMARY ||
+        getUserDetails().type == UserConstant.API_USER ||
+        getUserDetails().type == UserConstant.SECONDARY) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   // Company detail Getter setter
   Future<void> saveCompany(SelectionPopupModel company) {
     _preferences.setString(keyCompany, json.encode(company));
