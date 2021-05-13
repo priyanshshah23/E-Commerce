@@ -2036,6 +2036,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         }
       },
       child: TextField(
+        enabled: !widget.item.isFcCol,
         textAlign: TextAlign.center,
         focusNode: _focusOfferedDisc,
         controller: _offeredDiscountTextFieldController,
