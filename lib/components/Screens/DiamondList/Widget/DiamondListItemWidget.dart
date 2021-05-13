@@ -468,22 +468,22 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   getBargainDiscountColor(int userType) {
     switch (userType) {
       case 1:
-        return Colors.green;
+        return appTheme.greenColor;
         break;
       case 2:
-        return Colors.green;
+        return appTheme.greenColor;
         break;
       case 8:
-        return Colors.green;
+        return appTheme.greenColor;
         break;
       case 4:
-        return Colors.red;
+        return appTheme.redColor;
         break;
       case 10:
-        return Colors.red;
+        return appTheme.redColor;
         break;
       default:
-        return Colors.black;
+        return appTheme.blackColor;
         break;
     }
   }
@@ -497,7 +497,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         bargainItems.add(
           Text(
             element.trackDiscount.toString(),
-            style: appTheme.black14TextStyle.copyWith(
+            style: appTheme.black12TextStyle.copyWith(
               color: getBargainDiscountColor(element.userType),
             ),
           ),
@@ -512,13 +512,18 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       return Padding(
         padding: EdgeInsets.only(left: getSize(10), right: getSize(10)),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               'Bargain: ',
-              style: appTheme.black14TextStyle,
+              style: appTheme.dividerColorNormal12Title.copyWith(
+                fontWeight: FontWeight.bold,
+                color: appTheme.textColor.withOpacity(0.3),
+              ),
             ),
             SizedBox(),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: bargainItems,
             ),
           ],

@@ -486,7 +486,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   diamondModel.remarks = element.remarks;
                   // if (element.bargainTrack.isNotEmpty &&
                   //     element.bargainTrack != null) {
-                  print("<><><><><> BARGAIN TRACK <><><><><>");
                   diamondModel.bargainTrack = element.bargainTrack;
                   // }
                   break;
@@ -1402,6 +1401,53 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                         moduleType: moduleType,
                       )
                     : SizedBox(),
+                SizedBox(height: getSize(8)),
+                if (moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER)
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: getSize(16),
+                      right: getSize(16),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              height: getSize(16),
+                              width: getSize(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(getSize(4)),
+                                color: appTheme.greenColor,
+                              ),
+                            ),
+                            SizedBox(width: getSize(6)),
+                            Text(
+                              'Admin Offer',
+                              style: appTheme.blackNormal14TitleColorblack,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              height: getSize(16),
+                              width: getSize(16),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(getSize(4)),
+                                color: appTheme.redColor,
+                              ),
+                            ),
+                            SizedBox(width: getSize(6)),
+                            Text(
+                              'My Offer',
+                              style: appTheme.blackNormal14TitleColorblack,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 SizedBox(
                   height: getSize(16),
                 ),
