@@ -1791,72 +1791,75 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
               // Row(),
               Spacer(),
-              Padding(
-                padding: EdgeInsets.only(right: getSize(10)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // InkWell(
-                    //   onTap: () {
-                    //     app.resolve<CustomDialogs>().confirmDialog(
-                    //           context,
-                    //           title: R.string.screenTitle.remarks,
-                    //           desc: widget.item.remarks ?? "-",
-                    //           positiveBtnTitle: R.string.commonString.ok,
-                    //         );
-                    //   },
-                    //   child: Padding(
-                    //     padding: EdgeInsets.all(getSize(2.0)),
-                    //     child: Image.asset(
-                    //       exclamation,
-                    //       width: getSize(16),
-                    //       height: getSize(16),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   width: getSize(10),
-                    // ),
-                    widget.item.offerStatus != OfferStatus.rejected
-                        ? InkWell(
+              totalSeconds == 0
+                  ? SizedBox()
+                  : Padding(
+                      padding: EdgeInsets.only(right: getSize(10)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // InkWell(
+                          //   onTap: () {
+                          //     app.resolve<CustomDialogs>().confirmDialog(
+                          //           context,
+                          //           title: R.string.screenTitle.remarks,
+                          //           desc: widget.item.remarks ?? "-",
+                          //           positiveBtnTitle: R.string.commonString.ok,
+                          //         );
+                          //   },
+                          //   child: Padding(
+                          //     padding: EdgeInsets.all(getSize(2.0)),
+                          //     child: Image.asset(
+                          //       exclamation,
+                          //       width: getSize(16),
+                          //       height: getSize(16),
+                          //     ),
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   width: getSize(10),
+                          // ),
+                          widget.item.offerStatus != OfferStatus.rejected
+                              ? InkWell(
+                                  onTap: () {
+                                    widget.actionClick(ManageCLick(
+                                        type: clickConstant.CLICK_TYPE_EDIT));
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.all(getSize(2.0)),
+                                    child: Image.asset(
+                                      edit_icon,
+                                      width: getSize(16),
+                                      height: getSize(16),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(),
+                          widget.item.offerStatus != OfferStatus.rejected
+                              ? SizedBox(
+                                  width: getSize(10),
+                                )
+                              : SizedBox(),
+                          InkWell(
                             onTap: () {
-                              widget.actionClick(ManageCLick(
-                                  type: clickConstant.CLICK_TYPE_EDIT));
+                              widget.actionClick(
+                                ManageCLick(
+                                    type: clickConstant.CLICK_TYPE_DELETE),
+                              );
                             },
                             child: Padding(
                               padding: EdgeInsets.all(getSize(2.0)),
                               child: Image.asset(
-                                edit_icon,
+                                delete_icon_medium,
                                 width: getSize(16),
                                 height: getSize(16),
                               ),
                             ),
-                          )
-                        : SizedBox(),
-                    widget.item.offerStatus != OfferStatus.rejected
-                        ? SizedBox(
-                            width: getSize(10),
-                          )
-                        : SizedBox(),
-                    InkWell(
-                      onTap: () {
-                        widget.actionClick(
-                          ManageCLick(type: clickConstant.CLICK_TYPE_DELETE),
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.all(getSize(2.0)),
-                        child: Image.asset(
-                          delete_icon_medium,
-                          width: getSize(16),
-                          height: getSize(16),
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -2316,8 +2319,8 @@ getLayoutAndMAtchPairClick(
 //          DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT;
 //      dict["isLayoutSearch"] = isLayoutSearch;
 //    } else {
-      dict[ArgumentConstant.ModuleType] =
-          DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
 //    }
     NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
   }, (onError) {}, isFromList: true);
