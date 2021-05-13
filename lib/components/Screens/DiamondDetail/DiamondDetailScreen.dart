@@ -780,44 +780,45 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                 //
 
                 diamonDetailComponent.value = diamondModel.getPricePerCarat();
-              } else if (element.apiKey == DiamondDetailUIAPIKeys.ratio) {
-                var filter = diamondDetailUIModel.parameters
-                    .where((element) =>
-                        element.apiKey == DiamondDetailUIAPIKeys.shpNm)
-                    .toList();
-                if (isNullEmptyOrFalse(filter) == false) {
-                  if (filter.first.value == "ROUND") {
-                    element.value = "-";
-                  } else {
-                    diamonDetailComponent.value = valueElement;
-                  }
-                }
-              } else if (element.apiKey == DiamondDetailUIAPIKeys.kToSStr) {
-                var filter = diamondDetailUIModel.parameters
-                    .where((element) =>
-                        element.apiKey == DiamondDetailUIAPIKeys.clrNm)
-                    .toList();
-                if (isNullEmptyOrFalse(filter) == false) {
-                  if (filter.first.value == "FL" ||
-                      filter.first.value == "IF") {
-                    element.value = "NONE";
-                  } else {
-                    diamonDetailComponent.value = valueElement;
-                  }
-                }
-              } else if (element.apiKey == DiamondDetailUIAPIKeys.lbCmt) {
-                var filter = diamondDetailUIModel.parameters
-                    .where((element) =>
-                        element.apiKey == DiamondDetailUIAPIKeys.clrNm)
-                    .toList();
-                if (isNullEmptyOrFalse(filter) == false) {
-                  if (filter.first.value == "FL" ||
-                      filter.first.value == "IF") {
-                    element.value = "NONE";
-                  } else {
-                    diamonDetailComponent.value = valueElement;
-                  }
-                }
+                // } else if (element.apiKey == DiamondDetailUIAPIKeys.ratio) {
+                //   var filter = diamondDetailUIModel.parameters
+                //       .where((element) =>
+                //           element.apiKey == DiamondDetailUIAPIKeys.shpNm)
+                //       .toList();
+                //   if (isNullEmptyOrFalse(filter) == false) {
+                //     if (filter.first.value == "ROUND") {
+                //       element.value = "-";
+                //     } else {
+                //       diamonDetailComponent.value = valueElement;
+                //     }
+                //   }
+                // } else if (element.apiKey == DiamondDetailUIAPIKeys.kToSStr) {
+                //   var filter = diamondDetailUIModel.parameters
+                //       .where((element) =>
+                //           element.apiKey == DiamondDetailUIAPIKeys.clrNm)
+                //       .toList();
+                //   if (isNullEmptyOrFalse(filter) == false) {
+                //     if (filter.first.value == "FL" ||
+                //         filter.first.value == "IF") {
+                //       element.value = "NONE";
+                //     } else {
+                //       diamonDetailComponent.value = valueElement;
+                //     }
+                //   }
+                // } else if (element.apiKey == DiamondDetailUIAPIKeys.lbCmt) {
+                //   var filter = diamondDetailUIModel.parameters
+                //       .where((element) =>
+                //           element.apiKey == DiamondDetailUIAPIKeys.clrNm)
+                //       .toList();
+                //   if (isNullEmptyOrFalse(filter) == false) {
+                //     if (filter.first.value == "FL" ||
+                //         filter.first.value == "IF") {
+                //       element.value = "NONE";
+                //     } else {
+                //       diamonDetailComponent.value = valueElement;
+                //     }
+                //   }
+
               } else if (element.apiKey == DiamondDetailUIAPIKeys.amount) {
                 //
                 diamonDetailComponent.value = diamondModel.getAmount();
@@ -1317,7 +1318,7 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
                             arrDiamondDetailUIModel[index - 1].isExpand
                                 ? getDiamondDetailUIComponent(
                                     arrDiamondDetailUIModel[index - 1],
-                                  )
+                                    arrDiamondDetailUIModel)
                                 : SizedBox(),
                           ],
                         ),
@@ -1420,21 +1421,34 @@ class _DiamondDetailScreenState extends State<DiamondDetailScreen>
         duration: Duration(milliseconds: 500), curve: Curves.easeIn);
   }
 
-  Widget getDiamondDetailUIComponent(
-      DiamondDetailUIModel diamondDetailUIModel) {
-    diamondDetailUIModel.parameters.forEach((element) {
-      if (element.apiKey == DiamondDetailUIAPIKeys.shpNm) {
-        if (element.value == "ROUND") {
-          diamondDetailUIModel.parameters.forEach((item) {
-            print("------------------------------${item.apiKey}");
-            print("------------------------------${item.value}");
-            if (item.apiKey == DiamondDetailUIAPIKeys.ratio) {
-              item.value = "-";
-            }
-          });
+  Widget getDiamondDetailUIComponent(DiamondDetailUIModel diamondDetailUIModel,
+      List<DiamondDetailUIModel> diamondDetailUiModelList) {
+    var shapeObject;
+    var ratioObject;
+    for (int i = 0; i < diamondDetailUiModelList.length; i++) {
+      var diamondDetailItem = diamondDetailUiModelList[i];
+      if (shapeObject == null) {
+        diamondDetailItem.parameters.forEach((element) {
+          if (element.apiKey == DiamondDetailUIAPIKeys.shpNm &&
+              element.value == "ROUND") {
+            shapeObject = element;
+          }
+        });
+        if (shapeObject != null) {
+          print((shapeObject as DiamondDetailUIComponentModel).value);
         }
       }
-    });
+      if (ratioObject == null)
+        diamondDetailItem.parameters.forEach((element) {
+          if (element.apiKey == DiamondDetailUIAPIKeys.ratio) {
+            ratioObject = element;
+          }
+        });
+    }
+    if (shapeObject != null && ratioObject != null) {
+      (ratioObject as DiamondDetailUIComponentModel).value = '-';
+    }
+
     if (diamondDetailUIModel.columns == 1) {
       return Column(
         children: [
