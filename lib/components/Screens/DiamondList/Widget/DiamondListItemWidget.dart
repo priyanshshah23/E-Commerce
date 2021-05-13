@@ -314,6 +314,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                 ),
                               ),
                               getBidDetail(),
+                              if (widget.moduleType ==
+                                  DiamondModuleConstant.MODULE_TYPE_MY_OFFER)
+                                getBargainTrack(),
                               getOfferData(),
                               getWatchlistData()
                             ],
@@ -454,11 +457,76 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             getWatchListDetail(),
             getNotesDetail(),
             getOfferValues(),
+
             // ),
           ],
         ),
       ),
     );
+  }
+
+  getBargainDiscountColor(int userType) {
+    switch (userType) {
+      case 1:
+        return Colors.green;
+        break;
+      case 2:
+        return Colors.green;
+        break;
+      case 8:
+        return Colors.green;
+        break;
+      case 4:
+        return Colors.red;
+        break;
+      case 10:
+        return Colors.red;
+        break;
+      default:
+        return Colors.black;
+        break;
+    }
+  }
+
+  getBargainTrack() {
+    List<Widget> bargainItems = List<Widget>();
+
+    if (widget.item.bargainTrack != null &&
+        widget.item.bargainTrack.isNotEmpty) {
+      widget.item.bargainTrack.forEach((element) {
+        bargainItems.add(
+          Text(
+            element.trackDiscount.toString(),
+            style: appTheme.black14TextStyle.copyWith(
+              color: getBargainDiscountColor(element.userType),
+            ),
+          ),
+        );
+        bargainItems.add(Text(' | '));
+      });
+    }
+
+    // bargainItems.reversed;
+
+    if (bargainItems.isNotEmpty && bargainItems != null) {
+      return Padding(
+        padding: EdgeInsets.only(left: getSize(10), right: getSize(10)),
+        child: Row(
+          children: [
+            Text(
+              'Bargain: ',
+              style: appTheme.black14TextStyle,
+            ),
+            SizedBox(),
+            Row(
+              children: bargainItems,
+            ),
+          ],
+        ),
+      );
+    } else {
+      return SizedBox();
+    }
   }
 
   getColumn(String text, String lable, int flex) {
@@ -2316,8 +2384,8 @@ getLayoutAndMAtchPairClick(
 //          DiamondModuleConstant.MODULE_TYPE_DIAMOND_SEARCH_RESULT;
 //      dict["isLayoutSearch"] = isLayoutSearch;
 //    } else {
-      dict[ArgumentConstant.ModuleType] =
-          DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+    dict[ArgumentConstant.ModuleType] =
+        DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
 //    }
     NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
   }, (onError) {}, isFromList: true);

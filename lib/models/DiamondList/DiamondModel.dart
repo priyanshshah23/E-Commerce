@@ -2,6 +2,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
+import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:flutter/material.dart';
 
 import 'DiamondTrack.dart';
@@ -186,6 +187,8 @@ class DiamondModel {
   String expiryDate;
 
   int status;
+
+  List<BargainTrack> bargainTrack;
 
   getBidStatus(int offerStatus) {
     switch (offerStatus) {
@@ -420,6 +423,12 @@ class DiamondModel {
     opCrwn = json['opCrwn'];
     isNotes = json['isNotes'] ?? false;
     isNoteEditable = json['isNoteEditable'] ?? false;
+    if (json['bargainTrack'] != null) {
+      bargainTrack = new List<BargainTrack>();
+      json['bargainTrack'].forEach((v) {
+        bargainTrack.add(new BargainTrack.fromJson(v));
+      });
+    }
   }
 
   String getOfferStatus() {
@@ -593,6 +602,9 @@ class DiamondModel {
     data['offerValidDate'] = this.offerValidDate;
     data['isNotes'] = this.isNotes;
     data['isNoteEditable'] = this.isNoteEditable;
+    if (this.bargainTrack != null) {
+      data['bargainTrack'] = this.bargainTrack.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 

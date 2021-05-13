@@ -450,44 +450,45 @@ class TrackItem {
   List<CabinSlot> cabinSlot;
   String userAccount;
   String createdBy;
+  List<BargainTrack> bargainTrack;
 
-  TrackItem({
-    this.createdAt,
-    this.updatedAt,
-    this.id,
-    this.enquiryNo,
-    this.purpose,
-    this.trackType,
-    this.name,
-    this.trackTxnId,
-    this.memoNo,
-    this.reminderDate,
-    this.trackPricePerCarat,
-    this.trackDiscount,
-    this.trackAmount,
-    this.newPricePerCarat,
-    this.newDiscount,
-    this.newAmount,
-    this.offerStatus,
-    this.offerValidDate,
-    this.isCounterOffer,
-    this.remarks,
-    this.isActive,
-    this.isDeleted,
-    this.isSystemDeleted,
-    this.isNameDeleted,
-    this.deviceType,
-    this.status,
-    this.updateIp,
-    this.createIp,
-    this.isSentReminder,
-    this.addedBy,
-    //  this.user,
-    this.diamond,
-    this.userAccount,
-    this.createdBy,
-    this.date,
-  });
+  TrackItem(
+      {this.createdAt,
+      this.updatedAt,
+      this.id,
+      this.enquiryNo,
+      this.purpose,
+      this.trackType,
+      this.name,
+      this.trackTxnId,
+      this.memoNo,
+      this.reminderDate,
+      this.trackPricePerCarat,
+      this.trackDiscount,
+      this.trackAmount,
+      this.newPricePerCarat,
+      this.newDiscount,
+      this.newAmount,
+      this.offerStatus,
+      this.offerValidDate,
+      this.isCounterOffer,
+      this.remarks,
+      this.isActive,
+      this.isDeleted,
+      this.isSystemDeleted,
+      this.isNameDeleted,
+      this.deviceType,
+      this.status,
+      this.updateIp,
+      this.createIp,
+      this.isSentReminder,
+      this.addedBy,
+      //  this.user,
+      this.diamond,
+      this.userAccount,
+      this.createdBy,
+      this.date,
+      this.bargainTrack});
 
   TrackItem.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -540,6 +541,12 @@ class TrackItem {
     }
     userAccount = json['userAccount'];
     createdBy = json['createdBy'];
+    if (json['bargainTrack'] != null) {
+      bargainTrack = new List<BargainTrack>();
+      json['bargainTrack'].forEach((v) {
+        bargainTrack.add(new BargainTrack.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -583,6 +590,47 @@ class TrackItem {
     }
     data['userAccount'] = this.userAccount;
     data['createdBy'] = this.createdBy;
+    if (this.bargainTrack != null) {
+      data['bargainTrack'] = this.bargainTrack.map((v) => v.toJson()).toList();
+    }
+
+    return data;
+  }
+}
+
+class BargainTrack {
+  double trackPricePerCarat;
+  double trackAmount;
+  double trackDiscount;
+  String createdBy;
+  int userType;
+  String updatedAt;
+
+  BargainTrack(
+      {this.trackPricePerCarat,
+      this.trackAmount,
+      this.trackDiscount,
+      this.createdBy,
+      this.updatedAt,
+      this.userType});
+
+  BargainTrack.fromJson(Map<String, dynamic> json) {
+    trackPricePerCarat = json['trackPricePerCarat'];
+    trackAmount = json['trackAmount'];
+    trackDiscount = json['trackDiscount'];
+    createdBy = json['createdBy'];
+    updatedAt = json['updatedAt'];
+    userType = json['userType'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['trackPricePerCarat'] = this.trackPricePerCarat;
+    data['trackAmount'] = this.trackAmount;
+    data['trackDiscount'] = this.trackDiscount;
+    data['createdBy'] = this.createdBy;
+    data['updatedAt'] = this.updatedAt;
+    data['userType'] = this.userType;
     return data;
   }
 }

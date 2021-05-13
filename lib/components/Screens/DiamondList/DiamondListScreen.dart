@@ -484,6 +484,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   diamondModel.newDiscount = element.newDiscount;
                   diamondModel.newPricePerCarat = element.newPricePerCarat;
                   diamondModel.remarks = element.remarks;
+                  // if (element.bargainTrack.isNotEmpty &&
+                  //     element.bargainTrack != null) {
+                  print("<><><><><> BARGAIN TRACK <><><><><>");
+                  diamondModel.bargainTrack = element.bargainTrack;
+                  // }
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
                   break;
