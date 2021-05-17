@@ -171,7 +171,7 @@ class User {
   String photoId;
   String pinCode;
   String reference;
-  String roles;
+  // List<String> roles;
   bool updateRequired;
   bool isIntoHide;
   String updateIp;
@@ -265,7 +265,7 @@ class User {
     photoId = json['photoId'];
     pinCode = json['pinCode'];
     reference = json['reference'];
-    roles = json['roles'];
+    // roles = json['roles'];
     updateRequired = json['updateRequired'];
     isIntoHide = json['isIntoHide'];
     updateIp = json['updateIp'];
@@ -380,7 +380,7 @@ class User {
     data['photoId'] = this.photoId;
     data['pinCode'] = this.pinCode;
     data['reference'] = this.reference;
-    data['roles'] = this.roles;
+    // data['roles'] = this.roles;
     data['updateRequired'] = this.updateRequired;
     data['isIntoHide'] = this.isIntoHide;
     data['updateIp'] = this.updateIp;
@@ -427,14 +427,16 @@ class User {
   String getFullName() {
     var fn = "";
     if (!isNullEmptyOrFalse(firstName)) {
-      fn = firstName.trim()
+      fn = firstName
+          .trim()
           .split(' ')
           .map((word) => word[0].toUpperCase() + word.substring(1))
           .join(' ');
     }
     var ln = "";
     if (!isNullEmptyOrFalse(lastName)) {
-      ln = lastName.trim()
+      ln = lastName
+          .trim()
           .split(' ')
           .map((word) => word[0].toUpperCase() + word.substring(1))
           .join(' ');
