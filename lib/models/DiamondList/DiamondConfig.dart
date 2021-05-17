@@ -322,15 +322,15 @@ class DiamondConfig {
               isCenter: true,
             ),
           );
-          list.add(
-            BottomTabModel(
-              title: "",
-              image: download,
-              code: BottomCodeConstant.TBDownloadView,
-              sequence: 1,
-              isCenter: true,
-            ),
-          );
+          // list.add(
+          //   BottomTabModel(
+          //     title: "",
+          //     image: download,
+          //     code: BottomCodeConstant.TBDownloadView,
+          //     sequence: 1,
+          //     isCenter: true,
+          //   ),
+          // );
           // list.add(BottomTabModel(
           //     title: "",
           //     image: clock,
