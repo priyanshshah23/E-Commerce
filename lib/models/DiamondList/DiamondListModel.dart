@@ -599,9 +599,9 @@ class TrackItem {
 }
 
 class BargainTrack {
-  double trackPricePerCarat;
-  double trackAmount;
-  double trackDiscount;
+  num trackPricePerCarat;
+  num trackAmount;
+  num trackDiscount;
   String createdBy;
   int userType;
   String updatedAt;

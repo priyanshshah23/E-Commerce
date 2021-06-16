@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
@@ -496,22 +497,32 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       widget.item.bargainTrack.forEach((element) {
         bargainItems.add(
           Text(
-            element.trackDiscount.toString(),
+            '${element.trackDiscount.toString()} | ${element.trackPricePerCarat.toString()}',
             style: appTheme.black12TextStyle.copyWith(
               color: getBargainDiscountColor(element.userType),
             ),
           ),
         );
-        bargainItems.add(Text(' | '));
+        // bargainItems.add(Text(' | '));
       });
+      String newPrice = widget.item.newDiscount.toString();
+      String newPricePerCarat = widget.item.newPricePerCarat.toString();
+      bargainItems.add(
+        Text(
+          '${newPrice ?? ""} | ${newPricePerCarat ?? ""}',
+          style: appTheme.black12TextStyle.copyWith(
+            color: appTheme.redColor,
+          ),
+        ),
+      );
     }
 
-    // bargainItems.reversed;
+    bargainItems.reversed;
 
     if (bargainItems.isNotEmpty && bargainItems != null) {
       return Padding(
         padding: EdgeInsets.only(left: getSize(10), right: getSize(10)),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
@@ -522,7 +533,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               ),
             ),
             SizedBox(),
-            Row(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: bargainItems,
             ),
@@ -1552,6 +1563,19 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   //Offer detail
   getOfferData() {
+    var adminOfferedPrice;
+    BargainTrack lastApproved = null;
+    if (widget.item.bargainTrack != null &&
+        widget.item.bargainTrack.isNotEmpty) {
+      widget.item.bargainTrack.forEach((element) {
+        if (element.userType == UserConstant.SUPER_ADMIN ||
+            element.userType == UserConstant.ADMIN ||
+            element.userType == UserConstant.SELLER) {
+          lastApproved = element;
+          print('dis => ${element.trackDiscount}');
+        }
+      });
+    }
     return widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER
         ? Padding(
             padding: EdgeInsets.only(top: getSize(8.0)),
@@ -1568,14 +1592,19 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 children: <Widget>[
                   Center(
                     child: Text(
-                      PriceUtilities.getPercent(widget.item.newDiscount),
+                      PriceUtilities.getPercent(lastApproved != null
+                          ? lastApproved.trackDiscount
+                          : widget.item.newDiscount),
                       style: appTheme.black16MediumTextStyle.copyWith(
                           color: Colors.green, fontSize: getFontSize(14)),
                     ),
                   ),
                   Center(
                     child: Text(
-                      PriceUtilities.getPrice(widget.item.newAmount) + "/Ct",
+                      PriceUtilities.getPrice(lastApproved != null
+                              ? lastApproved.trackPricePerCarat
+                              : widget.item.newAmount) +
+                          "/Ct",
                       style: appTheme.black16MediumTextStyle.copyWith(
                         fontSize: getFontSize(14),
                       ),
@@ -1583,7 +1612,9 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                   ),
                   Center(
                     child: Text(
-                      PriceUtilities.getPrice(widget.item.newPricePerCarat) +
+                      PriceUtilities.getPrice(lastApproved != null
+                              ? lastApproved.trackPricePerCarat
+                              : widget.item.newPricePerCarat) +
                           "/Amt",
                       style: appTheme.black16MediumTextStyle.copyWith(
                         fontSize: getFontSize(14),
@@ -2048,15 +2079,15 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               //     : oldValue)
 
               // new regx = ^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$
-              RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
-                      .hasMatch(newValue.text)
+              // RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
+              RegExp(r'^([+-]?[0-9]*.?[0-9]{0,2})?$').hasMatch(newValue.text)
                   ? newValue
                   : oldValue)
         ],
         style: appTheme.blackNormal14TitleColorblack.copyWith(
           color: appTheme.colorPrimary,
         ),
-        keyboardType: TextInputType.text,
+        keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
         decoration: InputDecoration(
           focusedBorder: InputBorder.none,
@@ -2127,8 +2158,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
               //     : oldValue)
 
               // new regx = ^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$
-              RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
-                      .hasMatch(newValue.text)
+              // RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
+              RegExp(r'^([+-]?[0-9]*.?[0-9]{0,2})?$').hasMatch(newValue.text)
                   ? newValue
                   : oldValue)
         ],
