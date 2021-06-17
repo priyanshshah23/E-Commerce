@@ -1943,9 +1943,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                   width: getSize(10),
                                 )
                               : SizedBox(),
-                          (widget.item.offerStatus != OfferStatus.rejected ||
-                                  widget.item.offerStatus !=
-                                      OfferStatus.accepted)
+                          (widget.item.offerStatus != OfferStatus.rejected)
                               ? InkWell(
                                   onTap: () {
                                     widget.actionClick(
