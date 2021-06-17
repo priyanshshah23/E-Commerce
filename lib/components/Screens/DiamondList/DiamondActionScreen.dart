@@ -42,6 +42,7 @@ class DiamondActionScreen extends StatefulScreenWidget {
   int actionType = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
   List<DiamondModel> diamondList;
   bool isOfferUpdate;
+  bool isFromOfferScreen;
 
   DiamondActionScreen(
     Map<String, dynamic> arguments, {
@@ -50,9 +51,16 @@ class DiamondActionScreen extends StatefulScreenWidget {
     if (arguments != null) {
       if (arguments[ArgumentConstant.ModuleType] != null) {
         moduleType = arguments[ArgumentConstant.ModuleType];
+        print('moduleType => $moduleType');
       }
       if (arguments[ArgumentConstant.ActionType] != null) {
         actionType = arguments[ArgumentConstant.ActionType];
+        print('actionType => $actionType');
+      }
+
+      if ((this.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) &&
+          (this.actionType == DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER)) {
+        isFromOfferScreen = true;
       }
       if (arguments[ArgumentConstant.DiamondList] != null) {
         diamondList = arguments[ArgumentConstant.DiamondList];
@@ -68,7 +76,8 @@ class DiamondActionScreen extends StatefulScreenWidget {
       moduleType: moduleType,
       actionType: actionType,
       diamondList: diamondList,
-      isOfferUpdate: isOfferUpdate);
+      isOfferUpdate: isOfferUpdate,
+      isFromOfferScreen: isFromOfferScreen);
 }
 
 class _DiamondActionScreenState extends StatefulScreenWidgetState {
@@ -86,6 +95,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   bool isCMChargesApplied = false;
   List<SlotModel> arrSlots = [];
   bool isOfferUpdate;
+  bool isFromOfferScreen;
 
   List<String> invoiceList = [
     InvoiceTypesString.today,
@@ -98,6 +108,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     this.actionType,
     this.diamondList,
     this.isOfferUpdate = false,
+    this.isFromOfferScreen,
   });
 
   DiamondConfig diamondConfig;
@@ -402,6 +413,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                           date: selectedPopUpDate,
                                           companyName:
                                               _nameController.text.trim(),
+                                          isFromOffer: isFromOfferScreen,
                                         );
                                       },
                                     ));

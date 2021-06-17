@@ -114,14 +114,22 @@ class PlaceOrderReq {
   String comment;
   String company;
   String date;
+  bool isFromCounterOffer;
 
-  PlaceOrderReq({this.diamonds, this.comment, this.company, this.date});
+  PlaceOrderReq({
+    this.diamonds,
+    this.comment,
+    this.company,
+    this.date,
+    this.isFromCounterOffer = false,
+  });
 
   PlaceOrderReq.fromJson(Map<String, dynamic> json) {
     diamonds = json['diamonds'].cast<String>();
     comment = json['comment'];
     company = json['company'];
     date = json['date'];
+    isFromCounterOffer = json['isFromCounterOffer'];
   }
 
   Map<String, dynamic> toJson() {
@@ -130,6 +138,7 @@ class PlaceOrderReq {
     data['comment'] = this.comment;
     data['company'] = this.company;
     data['date'] = this.date;
+    data['isFromCounterOffer'] = this.isFromCounterOffer;
     return data;
   }
 }

@@ -735,8 +735,15 @@ class DiamondConfig {
     });*/
   }
 
-  actionAll(BuildContext context, List<DiamondModel> list, int trackType,
-      {String remark, String companyName, String date}) {
+  actionAll(
+    BuildContext context,
+    List<DiamondModel> list,
+    int trackType, {
+    String remark,
+    String companyName,
+    String date,
+    bool isFromOffer = false,
+  }) {
     switch (trackType) {
       case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
         callApiFoCreateTrack(
@@ -750,11 +757,14 @@ class DiamondConfig {
         break;
       case DiamondTrackConstant.TRACK_TYPE_OFFER:
         callApiFoCreateTrack(
-            context, list, DiamondTrackConstant.TRACK_TYPE_OFFER,
-            remark: remark,
-            isPop: true,
-            date: date,
-            title: R.string.screenTitle.addedInOffer);
+          context,
+          list,
+          DiamondTrackConstant.TRACK_TYPE_OFFER,
+          remark: remark,
+          isPop: true,
+          date: date,
+          title: R.string.screenTitle.addedInOffer,
+        );
         break;
       case DiamondTrackConstant.TRACK_TYPE_BID:
         callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_BID,
@@ -763,7 +773,12 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
         callApiFoPlaceOrder(context, list, () {
           Navigator.pop(context, true);
-        }, isPop: true, remark: remark, companyName: companyName, date: date);
+        },
+            isPop: true,
+            remark: remark,
+            companyName: companyName,
+            date: date,
+            isFromOffer: isFromOffer);
         break;
       case DiamondTrackConstant.TRACK_TYPE_UPDATE_COMMENT:
         print('Update Comment api');
@@ -1871,10 +1886,16 @@ class DiamondConfig {
       String remark,
       String companyName,
       String title,
-      String date}) async {
+      String date,
+      bool isFromOffer = false}) async {
     Map<String, dynamic> dict = {};
     PlaceOrderReq req = PlaceOrderReq();
     OfflineStockTrackModel trackModel = OfflineStockTrackModel();
+
+    if (isFromOffer == true) {
+      req.isFromCounterOffer = isFromOffer;
+      dict['isFromCounterOffer'] = isFromOffer;
+    }
 
     req.company = companyName;
     req.comment = remark;

@@ -1563,7 +1563,6 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
   //Offer detail
   getOfferData() {
-    var adminOfferedPrice;
     BargainTrack lastApproved = null;
     if (widget.item.bargainTrack != null &&
         widget.item.bargainTrack.isNotEmpty) {
@@ -1572,7 +1571,6 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             element.userType == UserConstant.ADMIN ||
             element.userType == UserConstant.SELLER) {
           lastApproved = element;
-          print('dis => ${element.trackDiscount}');
         }
       });
     }
@@ -1945,22 +1943,27 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                                   width: getSize(10),
                                 )
                               : SizedBox(),
-                          InkWell(
-                            onTap: () {
-                              widget.actionClick(
-                                ManageCLick(
-                                    type: clickConstant.CLICK_TYPE_DELETE),
-                              );
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.all(getSize(2.0)),
-                              child: Image.asset(
-                                delete_icon_medium,
-                                width: getSize(16),
-                                height: getSize(16),
-                              ),
-                            ),
-                          ),
+                          (widget.item.offerStatus != OfferStatus.rejected ||
+                                  widget.item.offerStatus !=
+                                      OfferStatus.accepted)
+                              ? InkWell(
+                                  onTap: () {
+                                    widget.actionClick(
+                                      ManageCLick(
+                                          type:
+                                              clickConstant.CLICK_TYPE_DELETE),
+                                    );
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.all(getSize(2.0)),
+                                    child: Image.asset(
+                                      delete_icon_medium,
+                                      width: getSize(16),
+                                      height: getSize(16),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(),
                         ],
                       ),
                     ),
