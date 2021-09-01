@@ -540,12 +540,12 @@ Future showNotesDialog(BuildContext context, ActionClick actionClick) {
                               maxLine: 3,
                               hintText: R.string.screenTitle.comment,
                               inputController: _commentController,
-                              formatter: [
-                                WhitelistingTextInputFormatter(
-                                    new RegExp(alphaRegEx)),
-                                BlacklistingTextInputFormatter(
-                                    RegExp(RegexForEmoji))
-                              ],
+                              // formatter: [
+                              //   WhitelistingTextInputFormatter(
+                              //       new RegExp(alphaRegEx)),
+                              //   BlacklistingTextInputFormatter(
+                              //       RegExp(RegexForEmoji))
+                              // ],
                               //isSecureTextField: false
                             ),
                             validation: (text) {

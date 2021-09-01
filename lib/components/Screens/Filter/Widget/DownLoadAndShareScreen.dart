@@ -219,7 +219,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
                         //callEmailApi();
                         if (checkValidation()) {
                           openURLWithApp(
-                              "mailto:?subject=Diamond%20Details&body= Dear Sir / Madam Greetings of the day from Finestar Team. Please have a look at below stock file.\n\n${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
+                              "mailto:?subject=Diamond%20Details&body= Dear Sir / Madam Greetings of the day from Arjiv Team. Please have a look at below stock file.\n\n${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
 //                              "mailto:?subject=DiamNow&body=DiamNow",
                               context,
                               isPop: true);

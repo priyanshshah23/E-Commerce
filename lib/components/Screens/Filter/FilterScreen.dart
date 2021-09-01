@@ -1218,6 +1218,31 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   }
                 }
               });
+            }
+            else if (diamondListResp.data.count >250 ) {
+              app.resolve<CustomDialogs>().confirmDialog(context,
+                  title: R.string.commonString.diamond250,
+                  desc: R.string.commonString.narrowSearch,
+                  positiveBtnTitle: R.string.commonString.ok);
+                  //negativeBtnTitle: R.string.screenTitle.addDemand,
+                  // onClickCallback: (buttonType) {
+                  //   if (buttonType == ButtonType.NagativeButtonClick) {
+                  //     if (app
+                  //         .resolve<PrefUtils>()
+                  //         .getModulePermission(
+                  //         ModulePermissionConstant.permission_myDemand)
+                  //         .insert) {
+                  //       if (!isNullEmptyOrFalse(
+                  //           FilterRequest().createRequest(arrList)))
+                  //         getAddDemand();
+                  //       else {
+                  //         showToast(R.string.commonString.selectAtleastOneFilter,
+                  //             context: context);
+                  //       }
+                  //       // place code
+                  //     }
+                  //   }
+                  // });
             } else {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
@@ -1287,7 +1312,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   }
                 }
               });
-            } else {
+            }else {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
               dict["filters"] = FilterRequest().createRequest(arrList);

@@ -395,6 +395,8 @@ class CommonString {
   String noDiamondFound =
       "No Diamonds matching your search. Please add you demand.";
   String selectType = "Select Virtual Type";
+  String narrowSearch = "Please narrow your search criteria";
+  String diamond250 = ">250 Stone Found";
   String noSavedSearch = "No Saved Search Exists";
   String searchCity = "Search city";
   String searchCountry = "Search Country";
@@ -716,7 +718,7 @@ class ScreenTitle {
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
   String confirmStone = "Confirm Stone";
-  String myOffice = "My Office";
+  String myOffice = "My Appointments";
   String myOffer = "My Offer";
   String myPurchased = "My Purchased History";
   String mySavedSearch = "Saved Search";

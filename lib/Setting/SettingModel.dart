@@ -29,16 +29,16 @@ class DrawerSetting {
         isSelected: true,
         type: DiamondModuleConstant.MODULE_TYPE_SEARCH,
       ));
-    if (app
-        .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_quickSearch)
-        .view)
-      drawerList.add(DrawerModel(
-        image: quickSearch,
-        title: R.string.screenTitle.quickSearch,
-        isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH,
-      ));
+    // if (app
+    //     .resolve<PrefUtils>()
+    //     .getModulePermission(ModulePermissionConstant.permission_quickSearch)
+    //     .view)
+    //   drawerList.add(DrawerModel(
+    //     image: quickSearch,
+    //     title: R.string.screenTitle.quickSearch,
+    //     isSelected: false,
+    //     type: DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH,
+    //   ));
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(ModulePermissionConstant.permission_exclusive)
@@ -548,9 +548,9 @@ class BottomMenuSetting {
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
       addCommentInBottomMenu(moreMenuList);
     }
-    if (!isDetail && !isCompare) {
-      addCompareInBottomMenu(moreMenuList, compare);
-    }
+    // if (!isDetail && !isCompare) {
+    //   addCompareInBottomMenu(moreMenuList, compare);
+    // }
 
 //    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_REMINDER) {
 //      if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {

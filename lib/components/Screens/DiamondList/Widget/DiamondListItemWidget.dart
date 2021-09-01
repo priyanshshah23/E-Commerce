@@ -10,6 +10,7 @@ import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/ImageUtils.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
 import 'package:diamnow/app/utils/price_utility.dart';
+import 'package:diamnow/components/Screens/DiamondDetail/DiamondDetailScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/DiamondListScreen.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondOfferInfoWidget.dart';
 import 'package:diamnow/models/DiamondList/DiamondConfig.dart';
@@ -755,24 +756,42 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Expanded(
-            // flex: 4,
-            child: Row(
-              children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  alignment: Alignment.centerLeft,
-                  child: getText(
-                    (widget.item?.vStnId ?? "").replaceAll('null', '--'),
-                    appTheme.blackNormal14TitleColorblack,
+            child: InkWell(
+              onTap: () {
+                var dict = Map<String, dynamic>();
+                dict[ArgumentConstant.DiamondDetail] = widget.item;
+                dict[ArgumentConstant.ModuleType] = widget.moduleType;
+                NavigationUtilities.push(
+                  DiamondDetailScreen(
+                    arguments: dict,
                   ),
-                ),
-                SizedBox(
-                  width: getSize(8),
-                ),
-                getImageOfMatchPairOrLayout(widget.item.pairStkNo),
-              ],
+                );
+              },
+              // flex: 4,
+              child: Row(
+                children: [
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: getText(
+                      (widget.item?.vStnId ?? "").replaceAll('null', '--'),
+                      appTheme.blue14TextStyle.copyWith(
+                          fontSize: getFontSize(16),
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline),
+
+                     // appTheme.blackNormal14TitleColorblack,
+                    ),
+                  ),
+                  SizedBox(
+                    width: getSize(8),
+                  ),
+                  getImageOfMatchPairOrLayout(widget.item.pairStkNo),
+                ],
+              ),
             ),
           ),
+
           // Expanded(
           //   flex: 2,
           //   child: FittedBox(
