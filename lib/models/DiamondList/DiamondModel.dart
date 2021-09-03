@@ -59,7 +59,7 @@ class DiamondModel {
   num strLn;
   String symNm;
   num tblPer;
-  num newDiscount;
+  var newDiscount;
   num newAmount;
   num newPricePerCarat;
   String remarks;
@@ -83,7 +83,7 @@ class DiamondModel {
   bool isSeal;
   String inDt;
   String memoNo;
-  String offerValidDate;
+  var offerValidDate;
   String date;
   int offerStatus;
   String brlncyNm;
@@ -130,8 +130,8 @@ class DiamondModel {
   num bidAmount;
   String offeredDiscount;
   num offeredAmount;
-  String offeredValiddate;
   String offeredPricePerCarat;
+  int hours;
   String createdAt;
   String pairStkNo;
 

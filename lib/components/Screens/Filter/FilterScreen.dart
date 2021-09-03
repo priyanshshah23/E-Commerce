@@ -960,7 +960,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 args: dict,
               );
             } else if (segmentedControlValue == 2) {
-//              print("-------------------------");
+              print("-------------------------");
               if (app
                   .resolve<PrefUtils>()
                   .getModulePermission(

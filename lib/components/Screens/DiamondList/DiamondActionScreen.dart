@@ -97,6 +97,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   bool isOfferUpdate;
   bool isFromOfferScreen;
 
+
+
   List<String> invoiceList = [
     InvoiceTypesString.today,
     InvoiceTypesString.tomorrow,
@@ -135,6 +137,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
       RxBus.register<bool>(tag: eventBusRefreshList).listen((event) {
         print("action update");
         setState(() {
+
           manageDiamondCalculation();
         });
       });
@@ -223,6 +226,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         return DiamondItemWidget(
             item: diamondList[index],
             isUpdateOffer: diamondList[index].isUpdateOffer,
+            hourPop: true,
             actionClick: (manageClick) {
               setState(() {
                 if (this.actionType ==
@@ -435,8 +439,8 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                           diamondConfig.actionAll(
                               context, diamondList, actionType);
                           break;
-                        case DiamondTrackConstant.TRACK_TYPE_OFFER:
                         case DiamondTrackConstant.TRACK_TYPE_OFFICE:
+                        case DiamondTrackConstant.TRACK_TYPE_OFFER:
                           showDialog(
                               context: context,
                               builder: (BuildContext cnt) {
@@ -471,8 +475,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                                             diamondConfig.actionAll(context,
                                                 diamondList, actionType,
                                                 remark: remark,
-                                                date: selectedPopUpDate,
-                                                companyName: "");
+                                                companyName: _nameController.text.trim());
                                           }
                                         }
                                       },
@@ -482,7 +485,9 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
 
                         default:
                           diamondConfig.actionAll(
-                              context, diamondList, actionType);
+                              context, diamondList, actionType,
+                            companyName: _nameController.text.trim()
+                          );
                           break;
                       }
                     },
@@ -718,7 +723,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     req["newAmount"] = model.offeredAmount;
     req["newPricePerCarat"] = model.offeredPricePerCarat;
     req["newDiscount"] = model.offeredDiscount;
-    req["offerValidDate"] = offerDate;
+    req["offerValidDate"] = model.offerValidDate;
 
     app.resolve<CustomDialogs>().showProgressDialog(context, "");
 

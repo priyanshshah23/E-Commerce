@@ -1046,11 +1046,11 @@ Widget setInvoiceDropDown(
 //                    checkValidation();
 //                  });
               },
-              validation: (text) {
-                if (text.isEmpty) {
-                  return R.string.errorString.selectInvoiceDate;
-                }
-              },
+              // validation: (text) {
+              //   if (text.isEmpty) {
+              //     return R.string.errorString.selectInvoiceDate;
+              //   }
+              // },
               inputAction: TextInputAction.next,
               onNextPress: () {
                 FocusScope.of(context).unfocus();

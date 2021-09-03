@@ -221,9 +221,17 @@ class Master {
 
   static List<String> getSelectedId(List<Master> masters) {
     List<String> ids = [];
-
+    List<String> locId = ["60f7ab28122980067ee9b335","60f7ab9e122980067ee9b343","5d035ebcac36b81af74acde0"];
+   // arrStr.add("60f7ab28122980067ee9b335");
+    //   arrStr.add("60f7ab9e122980067ee9b343")
+    ids.clear();
     for (Master item in masters) {
-      if (item.isSelected) {
+      // if(item.name=="INDIA"&&item.parentCode=="LOCATION"){
+      //   for(var i in locId) {
+      //     ids.add(i);
+      //   }
+      // }
+       if (item.isSelected) {
         if (item.sId != R.string.commonString.all && item.sId != "ShowMore") {
           ids.add(item.sId);
         }

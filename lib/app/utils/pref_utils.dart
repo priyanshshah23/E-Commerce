@@ -393,6 +393,7 @@ class PrefUtils {
         module == ModulePermissionConstant.permission_searchnewarrival ||
         module == ModulePermissionConstant.permission_searchResult ||
         module == ModulePermissionConstant.permission_dashboard ||
+        module == ModulePermissionConstant.permission_matchPair ||
         module == ModulePermissionConstant.permission_quickSearch ||
         module == ModulePermissionConstant.permission_newGoods ||
         module == ModulePermissionConstant.permission_exclusive ||

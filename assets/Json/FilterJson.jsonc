@@ -683,8 +683,7 @@
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "basic",
-    "maxValue": 100,
-    "minValue": 0,
+
     "fromToStyle": {
       "showUnderline": true,
       "showBorder": false,
@@ -798,8 +797,6 @@
     "labelFrom": "Pair No.",
     "labelTo": "To",
     "tab": "basic",
-    "maxValue": 100,
-    "minValue": 0,
     "isOnlyFrom": true,
     "fromToStyle": {
       "showUnderline": true,
@@ -818,8 +815,6 @@
     "labelFrom": "Layout No.",
     "labelTo": "To",
     "tab": "basic",
-    "maxValue": 100,
-    "minValue": 0,
     "isOnlyFrom": true,
     "fromToStyle": {
       "showUnderline": true,
@@ -2161,7 +2156,7 @@
     "isShowMore": false,
     "tab": "matchpair",
     "sequence": 19,
-    "isActive": true,
+    "isActive": false,
     "masterSelection": [
       {
         "code": "3EX",
@@ -2274,7 +2269,7 @@
     "isShowMore": false,
     "tab": "matchpair",
     "sequence": 20,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -2289,7 +2284,7 @@
     "isShowMore": false,
     "tab": "matchpair",
     "sequence": 21,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -2304,7 +2299,7 @@
     "isShowMore": false,
     "tab": "matchpair",
     "sequence": 22,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -2625,8 +2620,6 @@
     "labelFrom": "Pair No.",
     "labelTo": "To",
     "tab": "matchpair",
-    "maxValue": 100,
-    "minValue": 0,
     "isOnlyFrom": true,
     "fromToStyle": {
       "showUnderline": true,
@@ -2645,8 +2638,6 @@
     "labelFrom": "Layout No.",
     "labelTo": "To",
     "tab": "matchpair",
-    "maxValue": 100,
-    "minValue": 0,
     "isOnlyFrom": true,
     "fromToStyle": {
       "showUnderline": true,
@@ -2669,6 +2660,7 @@
     "bottomPadding": 4
   },
   {
+    "megaTitle": "Price & Disc%",
     "title": "Discount %",
     "viewType": "fromto",
     "apiKey": "back",
@@ -2677,8 +2669,6 @@
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "matchpair",
-    "maxValue": 100,
-    "minValue": 0,
     "fromToStyle": {
       "showUnderline": true,
       "showBorder": false,
@@ -2792,7 +2782,7 @@
     "tab": "layout",
     "isWhiteColor": false,
     "sequence": 3,
-    "isActive": true,
+    "isActive": false,
     "showFromTo": true,
     "fromToStyle": {
       "showUnderline": true,
@@ -2817,14 +2807,14 @@
   },
   {
     "title": "Color",
-    "viewType": "groupwidget",
+    "viewType": "selection",
     "groupMasterCode": "COLORGROUP",
     "allLableTitle": "All",
     "apiKey": "col",
     "masterCode": "COLOR",
-    "showRadio": true,
+    "showRadio": false,
     "showGroup": false,
-    "showWhiteFancy": true,
+    "isWhiteColor": true,
     "verticalScroll": false,
     "orientation": "v",
     "isShowAll": false,
@@ -2892,7 +2882,7 @@
     "isShowMore": false,
     "tab": "layout",
     "sequence": 19,
-    "isActive": true,
+    "isActive": false,
     "masterSelection": [
       {
         "code": "3EX",
@@ -3005,7 +2995,7 @@
     "isShowMore": false,
     "tab": "layout",
     "sequence": 20,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3020,7 +3010,7 @@
     "isShowMore": false,
     "tab": "layout",
     "sequence": 21,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3035,7 +3025,7 @@
     "isShowMore": false,
     "tab": "layout",
     "sequence": 22,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3064,7 +3054,7 @@
     "sequence": 11,
     "gridViewItemCount": 3,
     "showMoreTagAfterTotalItemCount": 9,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3093,7 +3083,7 @@
     "gridViewItemCount": 5,
     "showMoreTagAfterTotalItemCount": 5,
     "sequence": 13,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3120,7 +3110,7 @@
     "isShowMore": false,
     "tab": "layout",
     "sequence": 17,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3149,7 +3139,7 @@
     "tab": "layout",
     "isWhiteColor": false,
     "sequence": 7,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3178,7 +3168,7 @@
     "showMoreTagAfterTotalItemCount": 5,
     "tab": "layout",
     "sequence": 70,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3207,7 +3197,7 @@
     "isShowMore": false,
     "tab": "layout",
     "sequence": 68,
-    "isActive": true,
+    "isActive": false,
     "valueKeyisCode": false
   },
   {
@@ -3223,7 +3213,7 @@
     "bottomPadding": 4
   },
   {
-    "megaTitle": "Parameters",
+    "megaTitle": "Measurement",
     "title": "Length (MM)",
     "viewType": "fromto",
     "apiKey": "length",
@@ -3321,7 +3311,7 @@
     "viewType": "fromto",
     "apiKey": "ratio",
     "sequence": 36,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "layout",
@@ -3352,12 +3342,10 @@
     "viewType": "fromto",
     "apiKey": "pairStkNo",
     "sequence": 36,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "Pair No.",
     "labelTo": "To",
     "tab": "layout",
-    "maxValue": 100,
-    "minValue": 0,
     "isOnlyFrom": true,
     "fromToStyle": {
       "showUnderline": true,
@@ -3372,7 +3360,7 @@
     "viewType": "fromto",
     "apiKey": "layoutNo",
     "sequence": 36,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "Layout No.",
     "labelTo": "To",
     "tab": "layout",
@@ -3404,12 +3392,10 @@
     "viewType": "fromto",
     "apiKey": "back",
     "sequence": 30,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "From",
     "labelTo": "To",
     "tab": "layout",
-    "maxValue": 100,
-    "minValue": 0,
     "fromToStyle": {
       "showUnderline": true,
       "showBorder": false,
@@ -3435,7 +3421,7 @@
     "viewType": "fromto",
     "apiKey": "ctPr",
     "sequence": 28,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "From",
     "tab": "layout",
     "labelTo": "To",
@@ -3454,7 +3440,7 @@
     "viewType": "fromto",
     "apiKey": "ctPr",
     "sequence": 28,
-    "isActive": true,
+    "isActive": false,
     "labelFrom": "From",
     "tab": "layout",
     "labelTo": "To",

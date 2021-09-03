@@ -47,11 +47,12 @@ class Diamonds {
   num trackPricePerCarat;
   num trackAmount;
   String vStnId;
-  String offerValidDate;
+  var offerValidDate;
   num trackDiscount;
   num newPricePerCarat;
   num newAmount;
-  num newDiscount;
+  var newDiscount;
+  num validityHours;
 
   Diamonds({
     this.diamond,
@@ -64,6 +65,7 @@ class Diamonds {
     this.bidDiscount,
     this.remarks,
     this.reminderDate,
+    this.validityHours,
   });
 
   Diamonds.fromJson(Map<String, dynamic> json) {
@@ -82,6 +84,7 @@ class Diamonds {
     newAmount = json['newAmount'];
     vStnId = json['vStnId'];
     reminderDate = json['reminderDate'];
+    validityHours = json['validityHours'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +108,7 @@ class Diamonds {
     if (this.newAmount != null) data['newAmount'] = this.newAmount;
     if (this.vStnId != null) data['vStnId'] = this.vStnId;
     if (this.reminderDate != null) data['reminderDate'] = this.reminderDate;
+    if (this.validityHours != null) data['validityHours'] = this.validityHours;
     return data;
   }
 }

@@ -421,9 +421,10 @@ class TrackItem {
   String reminderDate;
   num trackPricePerCarat;
   num trackDiscount;
+  num validityHours;
   num trackAmount;
   num newPricePerCarat;
-  num newDiscount;
+  var newDiscount;
   num newAmount;
   int offerStatus;
   String offerValidDate;
@@ -464,6 +465,7 @@ class TrackItem {
       this.memoNo,
       this.reminderDate,
       this.trackPricePerCarat,
+        this.validityHours,
       this.trackDiscount,
       this.trackAmount,
       this.newPricePerCarat,
@@ -516,6 +518,7 @@ class TrackItem {
     isDeleted = json['isDeleted'];
     isSystemDeleted = json['isSystemDeleted'];
     isNameDeleted = json['isNameDeleted'];
+    validityHours = json["validityHours"];
     deviceType = json['deviceType'];
     status = json['status'];
     updateIp = json['updateIp'];

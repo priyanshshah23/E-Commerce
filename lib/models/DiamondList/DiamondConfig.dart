@@ -502,23 +502,23 @@ class DiamondConfig {
   }
 
   actionAddToCart(BuildContext context, List<DiamondModel> list) {
-    var filter = list
-        .where((element) =>
-            element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
-            element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
-        .toList();
-
-    if (isNullEmptyOrFalse(filter)) {
+    // var filter = list
+    //     .where((element) =>
+    //         element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+    //         element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+    //     .toList();
+    //
+    // if (isNullEmptyOrFalse(filter)) {
       callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
           isPop: false, title: R.string.screenTitle.addedInCart);
-    } else {
-      app.resolve<CustomDialogs>().errorDialog(
-            context,
-            "",
-            R.string.commonString.holdMemoStatusDiamondAddToCart,
-            btntitle: R.string.commonString.ok,
-          );
-    }
+    // } else {
+    //   app.resolve<CustomDialogs>().errorDialog(
+    //         context,
+    //         "",
+    //         R.string.commonString.holdMemoStatusDiamondAddToCart,
+    //         btntitle: R.string.commonString.ok,
+    //       );
+    // }
 
     // callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
     //     isPop: false, title: R.string.screenTitle.addedInCart);
@@ -599,6 +599,7 @@ class DiamondConfig {
     });
     openDiamondActionAcreen(
         context, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST, selectedList);
+
     // if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
     /* callApiFoCreateTrack(
         context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
@@ -649,14 +650,15 @@ class DiamondConfig {
           placeOrder: placeOrder);
     } else {
       app.resolve<CustomDialogs>().errorDialog(
-            context,
-            "",
-            R.string.commonString.holdMemoStatusDiamondOrder,
-            btntitle: R.string.commonString.ok,
-          );
+        context,
+        "",
+        R.string.commonString.holdMemoStatusDiamondOrder,
+        btntitle: R.string.commonString.ok,
+      );
+    }
 //      showToast(R.string.commonString.holdMemoStatusDiamondorder,
 //          context: context);
-    }
+
 
     /*showPlaceOrderDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -706,23 +708,22 @@ class DiamondConfig {
       action: ActionAnalytics.OPEN,
     );
 
-    var filter = list
-        .where((element) =>
-            element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
-            element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
-        .toList();
-
-    if (isNullEmptyOrFalse(filter)) {
+    // var filter = list
+    //     .where((element) =>
+    //         element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+    //         element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+    //     .toList();
+    //
+    // if (isNullEmptyOrFalse(filter)) {
       openDiamondActionAcreen(
           context, DiamondTrackConstant.TRACK_TYPE_OFFER, selectedList);
-    } else {
-      app.resolve<CustomDialogs>().errorDialog(
-            context,
-            "",
-            R.string.commonString.holdMemoStatusDiamondOffer,
-            btntitle: R.string.commonString.ok,
-          );
-    }
+    // } else {
+    //   app.resolve<CustomDialogs>().errorDialog(
+    //         context,
+    //         "",
+    //         R.string.commonString.holdMemoStatusDiamondOffer,
+    //         btntitle: R.string.commonString.ok,
+    //       );
 
     /* showOfferListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -740,6 +741,7 @@ class DiamondConfig {
     List<DiamondModel> list,
     int trackType, {
     String remark,
+        int selectHour,
     String companyName,
     String date,
     bool isFromOffer = false,
@@ -762,7 +764,6 @@ class DiamondConfig {
           DiamondTrackConstant.TRACK_TYPE_OFFER,
           remark: remark,
           isPop: true,
-          date: date,
           title: R.string.screenTitle.addedInOffer,
         );
         break;
@@ -1512,12 +1513,14 @@ class DiamondConfig {
       reqDiamond["trackDiscount"] = element.back;
       reqDiamond["trackAmount"] = element.amt;
       reqDiamond["trackPricePerCarat"] = element.ctPr;
+      reqDiamond["newDiscount"] = element.newDiscount;
 
       diamonds = Diamonds(
           diamond: element.id,
           trackDiscount: element.back,
           trackAmount: element.amt,
-          trackPricePerCarat: element.ctPr);
+          trackPricePerCarat: element.ctPr,
+          newDiscount: element.newDiscount);
       switch (trackType) {
         // case DiamondTrackConstant.TRACK_TYPE_WATCH_LIST:
         //   diamonds.newDiscount = num.parse(element.selectedBackPer);
@@ -1536,15 +1539,17 @@ class DiamondConfig {
           diamonds.newDiscount = num.parse(element.offeredDiscount);
           diamonds.newAmount = element.offeredAmount;
           diamonds.newPricePerCarat = num.parse(element.offeredPricePerCarat);
-          diamonds.offerValidDate = date;
+          diamonds.offerValidDate = element.offerValidDate;
+          diamonds.validityHours = element.hours;
 
           reqDiamond["vStnId"] = element.vStnId;
           reqDiamond["newDiscount"] = num.parse(element.offeredDiscount);
+          reqDiamond["validityHours"] = element.hours;
+          reqDiamond["offerValidDate"] = element.offerValidDate;
           reqDiamond["newAmount"] = element.offeredAmount;
           reqDiamond["newPricePerCarat"] =
               num.parse(element.offeredPricePerCarat);
-          reqDiamond["offerValidDate"] = date;
-
+         // reqDiamond["offerValidDate"] = date;
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;

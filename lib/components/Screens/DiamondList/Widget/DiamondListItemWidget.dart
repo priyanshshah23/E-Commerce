@@ -30,6 +30,7 @@ class DiamondItemWidget extends StatefulWidget {
   num rightPadding;
   SlidableController controller;
   List<Widget> list;
+  bool hourPop = false;
   DiamondCalculation groupDiamondCalculation;
   int moduleType;
   List<Widget> leftSwipeList;
@@ -42,6 +43,7 @@ class DiamondItemWidget extends StatefulWidget {
     this.rightPadding = 0,
     this.controller,
     this.list,
+    this.hourPop,
     this.moduleType,
     this.leftSwipeList,
     this.groupDiamondCalculation,
@@ -65,6 +67,14 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   Timer _timer;
   bool isTimerCompleted = false;
   var totalSeconds = 0;
+  List<int> hourStatus = [
+    HourStatus.Today,
+    HourStatus.Tommorrow,
+    HourStatus.After,
+  ];
+  int selectedHourStatus = HourStatus.Today;
+  var selectedDate = DateTime.now();
+
 
   @override
   void initState() {
@@ -101,6 +111,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
       widget.item.offeredPricePerCarat = PriceUtilities.getDoubleValue(
           num.parse(_offeredPricePerCaratTextfieldContoller.text) *
               widget.item.crt);
+      widget.item.hours;
     }
     if (widget.item.isNotes) {
       _noteController.text = widget.item.remarks;
@@ -506,7 +517,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         );
         // bargainItems.add(Text(' | '));
       });
-      String newPrice = widget.item.newDiscount.toString();
+      var newPrice = widget.item.newDiscount.toString();
       String newPricePerCarat = widget.item.newPricePerCarat.toString();
       bargainItems.add(
         Text(
@@ -1151,7 +1162,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
     if (widget.item.shpNm == "ROUND") {
       return Expanded(
         child: Container(
-          height: getSize(16),
+          height: getSize(19),
           // padding: EdgeInsets.only(left: getSize(16)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1168,7 +1179,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 child: Text(
                   "EC : " +
                       (widget.item?.eClnNm ?? "-").replaceAll('null', '--'),
-                  // overflow: TextOverflow.ellipsis,
+                   overflow: TextOverflow.ellipsis,
                   // maxLines: 1,
                 ),
               ),
@@ -1196,7 +1207,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 
     return Expanded(
       child: Container(
-        height: getSize(16),
+        height: getSize(19),
         // padding: EdgeInsets.only(left: getSize(16)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1570,6 +1581,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     child: popupList(widget.item, backPerList, item,
                         (selectedValue) {
                       widget.item.selectedBackPer = selectedValue;
+                      widget.item.newDiscount= selectedValue;
                       RxBus.post(true, tag: eventBusDropDown);
                     }, isPer: true),
                   ),
@@ -1773,29 +1785,133 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     ],
                   ),
                 ),
+
                 Container(
-                    color: appTheme.lightColorPrimary,
-                    height: getSize(40),
-                    child: Center(
-                        child: RichText(
-                      text: TextSpan(
-                        text: 'Offered Amt :    ',
-                        style: appTheme.primary16TextStyle.copyWith(
-                          fontSize: getFontSize(14),
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: PriceUtilities.getPrice(offeredAmt),
-                            style: appTheme.primary16TextStyle,
-                          ),
-                        ],
+                  color: appTheme.lightColorPrimary,
+                  child: Row(
+                    children: [
+                      Container(
+                          height: getSize(40),
+                          child: Center(
+                              child: RichText(
+                            text: TextSpan(
+                              text: 'Offered Amt :    ',
+                              style: appTheme.primary16TextStyle.copyWith(
+                                fontSize: getFontSize(14),
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: PriceUtilities.getPrice(offeredAmt),
+                                  style: appTheme.primary16TextStyle,
+                                ),
+                              ],
+                            ),
+                          ))),
+                      Spacer(),
+                      Container(
+                        // width: getSize(180),
+                        child: getFilterDropDown(),
                       ),
-                    )))
+                    ],
+                  ),
+                ),
+
               ],
             ),
           )
         : SizedBox();
   }
+  getFilterDropDown() {
+    return PopupMenuButton<String>(
+      shape: TooltipShapeBorder(arrowArc: 0.5),
+      onSelected: (newValue) {
+        setState(() {
+          selectedHourStatus = int.parse(newValue);
+          widget.item.hours = selectedHourStatus;
+          var currentTime = DateTime.now();
+          print("current=>=$currentTime");
+          var selectedDate1;
+          selectedDate1 = DateTime(
+              currentTime.year, currentTime.month, currentTime.day, currentTime.hour+selectedHourStatus, currentTime.minute);
+          selectedDate  = currentTime.add(Duration(hours: selectedHourStatus));
+          var t = selectedDate.toUtc().toIso8601String();
+          print("48Time=>$t");
+          widget.item.offerValidDate = t.toString();
+
+        });
+        // callApiForUpdateOffer();
+      },
+      itemBuilder: (context) => [
+        for (var status in hourStatus)
+          PopupMenuItem(
+            value: status.toString(),
+            height: getSize(30),
+            child: Container(
+              width: 20,
+             //   width: MathUtilities.screenWidth(context) - getSize(50),
+                margin: EdgeInsets.symmetric(
+                  horizontal: getSize(16),
+                  // vertical: getSize(2.5)
+                ),
+                child: getText(
+                    getOrderStatus(status),
+                    appTheme.blackNormal14TitleColorblack.copyWith(
+                        color: status == selectedHourStatus
+                            ? appTheme.textColor
+                            : appTheme.textColor.withOpacity(0.5)))),
+          ),
+        PopupMenuItem(
+          height: getSize(30),
+          value: "Start",
+          child: SizedBox(),
+        ),
+      ],
+      child: Container(
+        height: getSize(46),
+        width: getSize(130),
+        margin: EdgeInsets.symmetric(horizontal: getSize(16)),
+        padding: EdgeInsets.symmetric(horizontal: getSize(16)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Hours : ",
+              style: appTheme.primary16TextStyle.copyWith(
+                fontSize: getFontSize(14),
+              ),            ),
+            Expanded(
+              child: Text(
+                getOrderStatus(selectedHourStatus),
+                style: appTheme.blackNormal14TitleColorblack,
+              ),
+            ),
+            Image.asset(
+              dropDown,
+              height: getSize(6),
+              width: getSize(10),
+            )
+          ],
+        ),
+      ),
+      offset: Offset(25, 70),
+    );
+  }
+  getOrderStatus(int status) {
+    switch (status) {
+      case HourStatus.Today:
+        return '24';
+        break;
+      case HourStatus.Tommorrow:
+        return '48';
+        break;
+      case HourStatus.After:
+        return '72';
+        break;
+      default:
+        return ;
+    }
+  }
+
 
   getOfferedBottomSection() {
     if (widget.moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
@@ -2048,24 +2164,24 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
             _offeredPricePerCaratTextfieldContoller.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-          } else if (discount > (widget.item.back - minOfferedDiscount)) {
-            _offeredDiscountTextFieldController.text =
-                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
-            _offeredPricePerCaratTextfieldContoller.text =
-                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-            showToast(
-              "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
-              context: context,
-            );
-          } else if (maxOfferedDiscount > discount) {
-            _offeredDiscountTextFieldController.text =
-                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
-            _offeredPricePerCaratTextfieldContoller.text =
-                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-            showToast(
-              "Cannot allow discount greater than ${PriceUtilities.getDoubleValue(maxOfferedDiscount)}",
-              context: context,
-            );
+          // } else if (discount > (widget.item.back - minOfferedDiscount)) {
+          //   _offeredDiscountTextFieldController.text =
+          //       PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+          //   _offeredPricePerCaratTextfieldContoller.text =
+          //       PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+          //   showToast(
+          //     "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
+          //     context: context,
+          //   );
+          // } else if (maxOfferedDiscount > discount) {
+          //   _offeredDiscountTextFieldController.text =
+          //       PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+          //   _offeredPricePerCaratTextfieldContoller.text =
+          //       PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+          //   showToast(
+          //     "Cannot allow discount greater than ${PriceUtilities.getDoubleValue(maxOfferedDiscount)}",
+          //     context: context,
+          //   );
           } else {
             _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(discount);
@@ -2135,24 +2251,24 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
             _offeredPricePerCaratTextfieldContoller.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-          } else if (-discount > (widget.item.back - minOfferedDiscount)) {
-            _offeredDiscountTextFieldController.text =
-                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
-            _offeredPricePerCaratTextfieldContoller.text =
-                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-            showToast(
-              "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
-              context: context,
-            );
-          } else if (maxOfferedDiscount > -discount) {
-            _offeredDiscountTextFieldController.text =
-                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
-            _offeredPricePerCaratTextfieldContoller.text =
-                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-            showToast(
-              "Cannot allow discount greater than ${PriceUtilities.getDoubleValue(maxOfferedDiscount)}",
-              context: context,
-            );
+          // } else if (-discount > (widget.item.back - minOfferedDiscount)) {
+          //   _offeredDiscountTextFieldController.text =
+          //       PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+          //   _offeredPricePerCaratTextfieldContoller.text =
+          //       PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+          //   showToast(
+          //     "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
+          //     context: context,
+          //   );
+          // } else if (maxOfferedDiscount > -discount) {
+          //   _offeredDiscountTextFieldController.text =
+          //       PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+          //   _offeredPricePerCaratTextfieldContoller.text =
+          //       PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+          //   showToast(
+          //     "Cannot allow discount greater than ${PriceUtilities.getDoubleValue(maxOfferedDiscount)}",
+          //     context: context,
+          //   );
           } else {
             _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(-discount);

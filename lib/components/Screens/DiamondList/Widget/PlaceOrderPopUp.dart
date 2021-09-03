@@ -39,7 +39,7 @@ class PlaceOrderPopUp extends StatefulWidget {
 
 class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
   final TextEditingController _commentController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   bool autovalid = false;
@@ -80,7 +80,9 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
               padding: EdgeInsets.only(top: getSize(30)),
               child: Text(
                 R.string.screenTitle.confirmStone,
-                style: appTheme.blackSemiBold18TitleColorblack,
+                style: TextStyle(decoration: TextDecoration.underline)
+                //style: appTheme.blackSemiBold18TitleColorblack,
+
               ),
             ),
             SizedBox(
@@ -314,33 +316,38 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
 
   getCompanyNameTextfield() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-      child: CommonTextfield(
-        enable: true,
-        autoFocus: false,
-        textOption: TextFieldOption(
-          prefixWid: getCommonIconWidget(
-              imageName: company, imageType: IconSizeType.small),
-          hintText: R.string.authStrings.companyName,
-          maxLine: 1,
-          inputController: _nameController,
-          formatter: [
-            WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-            BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-          ],
-          //isSecureTextField: false
-        ),
-        validation: (text) {
-          if (text.isEmpty) {
-            return R.string.authStrings.enterCompanyName;
-          }
-        },
-        textCallback: (text) {},
-        inputAction: TextInputAction.next,
-        onNextPress: () {
-          FocusScope.of(context).unfocus();
-        },
+      padding: EdgeInsets.only(
+        left: getSize(Spacing.leftPadding),
+        right: getSize(Spacing.rightPadding),
       ),
+     // padding: EdgeInsets.symmetric(horizontal: getSize(20)),
+      child: Center(child: Text(app.resolve<PrefUtils>().getUserDetails()?.account?.companyName ??"" )),
+      // child: CommonTextfield(
+      //   enable: true,
+      //   autoFocus: false,
+      //   textOption: TextFieldOption(
+      //     prefixWid: getCommonIconWidget(
+      //         imageName: company, imageType: IconSizeType.small),
+      // //    hintText: R.string.authStrings.companyName,
+      //     maxLine: 1,
+      //     inputController: _nameController,
+      //     // formatter: [
+      //     //   WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+      //     //   BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+      //     // ],
+      //     //isSecureTextField: false
+      //   ),
+      //   // validation: (text) {
+      //   //   if (text.isEmpty) {
+      //   //     return R.string.authStrings.enterCompanyName;
+      //   //   }
+      //   // },
+      //   textCallback: (text) {},
+      //   inputAction: TextInputAction.next,
+      //   onNextPress: () {
+      //     FocusScope.of(context).unfocus();
+      //   },
+      // ),
     );
   }
 
@@ -423,11 +430,11 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
 //                    checkValidation();
 //                  });
             },
-            validation: (text) {
-              if (text.isEmpty) {
-                return R.string.errorString.selectInvoiceDate;
-              }
-            },
+            // validation: (text) {
+            //   if (text.isEmpty) {
+            //     return R.string.errorString.selectInvoiceDate;
+            //   }
+            // },
             inputAction: TextInputAction.next,
             onNextPress: () {
               FocusScope.of(context).unfocus();

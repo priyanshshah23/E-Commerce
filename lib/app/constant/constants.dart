@@ -43,7 +43,7 @@ const successStatusCode = 200;
 const addedSuccesStatusCode = 201;
 const notFoundStatusCode = 404;
 
-const signupURl = "https://customer.arjivexports.com/device/signup";
+const signupURl = baseURL+"device/signup";
 const termConditionUrl = "https://loremipsum.io/";
 const privacyPolicyUrl = "https://loremipsum.io/";
 const aboutUsUrl = "https://loremipsum.io/";
@@ -110,6 +110,7 @@ class Spacing {
   static num leftPadding = 16.0;
   static num rightPadding = 16.0;
 }
+List<String> DefaultLoc = [];
 
 //Master Code
 class MasterCode {
@@ -191,6 +192,11 @@ class DiamondStatus {
   static const String DIAMOND_STATUS_UPCOMING = "U";
   static const String DIAMOND_STATUS_HOLD = "H";
   static const String DIAMOND_STONE_OF_THE_DAY = "D";
+}
+class HourStatus {
+  static const Today = 24;
+  static const Tommorrow = 48;
+  static const After = 72;
 }
 
 class StaticPageConstant {

@@ -114,6 +114,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       this.isLayoutSearch});
 
   DiamondConfig diamondConfig;
+  DiamondItemWidget _itemWidget;
+  _DiamondListScreenState screenState;
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
   int page = DEFAULT_PAGE;
@@ -230,6 +232,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   openTerms() {
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
         !isTermsOpen) {
+      
       /*   Timer(
         Duration(seconds: 1),
             () => (),
@@ -1440,7 +1443,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                             ),
                             SizedBox(width: getSize(6)),
                             Text(
-                              'My Offer',
+                              'My Offer List',
                               style: appTheme.blackNormal14TitleColorblack,
                             ),
                           ],
@@ -1517,14 +1520,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
                 List<DiamondModel> selectedList =
                     arraDiamond.where((element) => element.isSelected).toList();
+                print("List........................$selectedList");
                 if (!isNullEmptyOrFalse(selectedList)) {
-                  var filter = selectedList
-                      .where((element) =>
-                          element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
-                          element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
-                      .toList();
-
-                  if (isNullEmptyOrFalse(filter)) {
+                  // var filter = selectedList
+                  //     .where((element) =>
+                  //         element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+                  //         element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+                  //     .toList();
+                  //
+                  // if (isNullEmptyOrFalse(filter)) {
                     showBottomSheetForMenu(
                       context,
                       diamondConfig.arrMoreMenu,
@@ -1539,15 +1543,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                       R.string.commonString.more,
                       isDisplaySelection: false,
                     );
-                  } else {
-                    app.resolve<CustomDialogs>().errorDialog(
-                          context,
-                          "",
-                          R.string.commonString
-                              .holdMemoStatusDiamondMoreActions,
-                          btntitle: R.string.commonString.ok,
-                        );
-                  }
+                  // } else {
+                  //   app.resolve<CustomDialogs>().errorDialog(
+                  //         context,
+                  //         "",
+                  //         R.string.commonString
+                  //             .holdMemoStatusDiamondMoreActions,
+                  //         btntitle: R.string.commonString.ok,
+                  //       );
+                  // }
                 } else {
                   app.resolve<CustomDialogs>().confirmDialog(
                         context,
@@ -1556,15 +1560,24 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                         positiveBtnTitle: R.string.commonString.ok,
                       );
                 }
-              } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
-                showStatusDialogue();
+              // } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
+              //   showStatusDialogue();
 //          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
 //              (manageClick) {}, R.string.commonString.status,
 //              isDisplaySelection: false);
               } else if (obj.type ==
                   ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
                 clearSelection();
-              } else {
+              }
+            //   else if (){
+            //     app.resolve<CustomDialogs>().confirmDialog(
+            //       context,
+            //       title: "Hello Error",
+            //       desc: R.string.errorString.diamondSelectionError,
+            //       positiveBtnTitle: R.string.commonString.ok,
+            //     );
+            // }
+              else {
                 manageBottomMenuClick(obj);
               }
             },

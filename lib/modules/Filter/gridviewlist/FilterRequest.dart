@@ -83,10 +83,10 @@ class FilterRequest {
       if (element.viewType == ViewTypes.fromTo) {
         if (!isNullEmptyOrFalse((element as FromToModel).valueFrom) &&
             !isNullEmptyOrFalse((element as FromToModel).valueTo)) {
-          Map<String, int> fromToValue = {};
+          Map<String, num> fromToValue = {};
 
-          fromToValue[">="] = int.parse((element as FromToModel).valueFrom);
-          fromToValue["<="] = int.parse((element as FromToModel).valueTo);
+          fromToValue[">="] = num.parse((element as FromToModel).valueFrom);
+          fromToValue["<="] = num.parse((element as FromToModel).valueTo);
 
           map[element.apiKey] = fromToValue;
         }

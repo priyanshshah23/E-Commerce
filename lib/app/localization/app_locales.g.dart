@@ -717,13 +717,13 @@ class ScreenTitle {
   String myBid = "My Bid";
   String myHold = "My Hold";
   String myOrder = "My Ordered List";
-  String confirmStone = "Confirm Stone";
+  String confirmStone = "My Confirm List";
   String myOffice = "My Appointments";
-  String myOffer = "My Offer";
-  String myPurchased = "My Purchased History";
+  String myOffer = "My Offer List";
+  String myPurchased = "My Invoices History";
   String mySavedSearch = "Saved Search";
   String savedSearch = "Saved Search";
-  String myDemand = "My Demand";
+  String myDemand = "My Demand/Order Request";
   String contactUs = "Contact Us";
   String changePassword = "Change Password";
   String logout = "Logout";

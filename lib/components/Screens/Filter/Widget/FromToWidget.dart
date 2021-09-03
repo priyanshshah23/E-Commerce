@@ -237,18 +237,24 @@ class _FromToWidgetState extends State<FromToWidget> {
         onSubmitted: (value) {},
         focusNode: _focusMinValue,
         controller: _minValueController,
+        // inputFormatters: [
+        //   // old regx = r'(^[+-]?\d*.?\d{0,2})$'
+        //   TextInputFormatter.withFunction((oldValue, newValue) =>
+        //       // RegExp(r'(^[+-]?[0-9]+\d*.?\d{0,2})$').hasMatch(newValue.text)
+        //       //     ? newValue
+        //       //     : oldValue)
+        //
+        //       // new regx = ^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$
+        //       RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
+        //               .hasMatch(newValue.text)
+        //           ? newValue
+        //           : oldValue)
+        // ],
         inputFormatters: [
-          // old regx = r'(^[+-]?\d*.?\d{0,2})$'
           TextInputFormatter.withFunction((oldValue, newValue) =>
-              // RegExp(r'(^[+-]?[0-9]+\d*.?\d{0,2})$').hasMatch(newValue.text)
-              //     ? newValue
-              //     : oldValue)
-
-              // new regx = ^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$
-              RegExp(r'^([+-]?[0-9]+[0-9]*.?[0-9]{0,2})?$')
-                      .hasMatch(newValue.text)
-                  ? newValue
-                  : oldValue)
+          RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+              ? newValue
+              : oldValue)
         ],
         style: appTheme.blackNormal14TitleColorblack,
         keyboardType: widget.fromTomodel.apiKey == "back"
