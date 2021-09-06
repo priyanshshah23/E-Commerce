@@ -233,7 +233,14 @@ class Master {
       // }
        if (item.isSelected) {
         if (item.sId != R.string.commonString.all && item.sId != "ShowMore") {
-          ids.add(item.sId);
+          if (item.name == "INDIA") {
+            app.resolve<PrefUtils>().getLoc().forEach((element2) {
+              ids.add(element2);
+            });
+            ids.add(item.sId);
+          } else {
+            ids.add(item.sId);
+          }
         }
         for (Master groped in item.grouped) {
           if (groped.sId != R.string.commonString.all &&

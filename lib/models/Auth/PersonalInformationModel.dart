@@ -122,7 +122,7 @@ class PersonalInformationReq {
     whatsapp = json['whatsapp'];
     whatsappCounCode = json['whatsappCounCode'];
     skype = json['skype'] ?? "";
-    pincode = json['pinCode'] ?? "";
+    pincode = json['pinCode'];
 //    wechat = json['wechat'];
   }
 
@@ -151,6 +151,9 @@ class PersonalInformationReq {
     }
     if (this.address3 != null) {
       data['address3'] = this.address3;
+    }
+    if (this.pincode != null) {
+      data['pinCode'] = this.pincode;
     }
     if (this.country != null) {
       data['country'] = this.country;
@@ -196,7 +199,7 @@ class PersonalInformationReq {
       data['countryCode'] = this.countryCode;
     }
     if (!isNullEmptyOrFalse(this.skype)) data['skype'] = this.skype;
-    if (!isNullEmptyOrFalse(this.pincode)) data['pinCode'] = this.pincode;
+   // if (!isNullEmptyOrFalse(this.pincode)) data['pinCode'] = this.pincode;
 //    data['skype'] = this.skype;
 //    data['wechat'] = this.wechat;
     return data;

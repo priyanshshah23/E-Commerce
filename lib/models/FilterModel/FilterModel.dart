@@ -423,6 +423,8 @@ class SelectionModel extends FormBaseModel {
   bool showFromTo;
   int showMoreTagAfterTotalItemCount = 9;
   bool valueKeyisCode;
+  String fromDate;
+  String toDate;
 
   SelectionModel(
       {title,

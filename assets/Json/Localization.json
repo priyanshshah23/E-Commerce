@@ -142,7 +142,7 @@
       "delete": "Delete",
       "details": "Details",
       "edit": "Edit",
-      "addDemand": "Add demand",
+      "addDemand": "Add Demand/Order Request",
       "demandTitle": "Demand Title",
       "pleaseEnterDemandTitle": "Please enter Demand Title",
       "demandAddedSuccessfully": "Your new demand request has been submitted successfully",

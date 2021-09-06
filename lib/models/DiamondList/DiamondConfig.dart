@@ -611,16 +611,32 @@ class DiamondConfig {
             context, list, DiamondTrackConstant.TRACK_TYPE_WATCH_LIST,
             isPop: true, title: "Added in Watchlist");
       }
+      ( The selected diamond(s) C1713-1B, C1861-1B is in Hold/Memo/Upcoming. )
+
     });*/
   }
 
   openDiamondActionAcreen(
       BuildContext context, int actionType, List<DiamondModel> list,
-      {Function placeOrder}) async {
+      {List<DiamondModel> list2,Function placeOrder}) async {
     var dict = Map<String, dynamic>();
-    dict[ArgumentConstant.DiamondList] = list;
-    dict[ArgumentConstant.ModuleType] = moduleType;
-    dict[ArgumentConstant.ActionType] = actionType;
+
+    // list.forEach((element) async {
+    //   if(element.wSts!="A"){
+    //     app.resolve<CustomDialogs>().errorDialog(
+    //       context,
+    //       "",
+    //       "( The selected diamond(s) C1713-1B, C1861-1B is in Hold/Memo/Upcoming. )",
+    //       btntitle: R.string.commonString.ok,
+    //     );
+    //   }
+    //   else {
+        dict[ArgumentConstant.DiamondList] = list;
+        dict[ArgumentConstant.ModuleType] = moduleType;
+        dict[ArgumentConstant.ActionType] = actionType;
+        dict[ArgumentConstant.DiamondList1] = list2;
+      // }
+      // });
     bool isBack = await Navigator.of(context).push(MaterialPageRoute(
       settings: RouteSettings(name: DiamondActionScreen.route),
       builder: (context) => DiamondActionScreen(dict),
@@ -633,29 +649,36 @@ class DiamondConfig {
   actionPlaceOrder(
       BuildContext context, List<DiamondModel> list, Function placeOrder) {
     List<DiamondModel> selectedList = [];
+    List<DiamondModel> selectedList1 = [];
     DiamondModel model;
     list.forEach((element) {
-      model = DiamondModel.fromJson(element.toJson());
-      selectedList.add(model);
+      if(element.wSts=="A") {
+        model = DiamondModel.fromJson(element.toJson());
+        selectedList.add(model);
+      }
+      else{
+        model = DiamondModel.fromJson(element.toJson());
+        selectedList1.add(model);
+      }
     });
 
-    var filter = list
-        .where((element) =>
-            element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
-            element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
-        .toList();
-    if (isNullEmptyOrFalse(filter)) {
+    // var filter = list
+    //     .where((element) =>
+    //         element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+    //         element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+    //     .toList();
+    // if (isNullEmptyOrFalse(filter)) {
       openDiamondActionAcreen(
-          context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
+          context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,list2: selectedList1,
           placeOrder: placeOrder);
-    } else {
-      app.resolve<CustomDialogs>().errorDialog(
-        context,
-        "",
-        R.string.commonString.holdMemoStatusDiamondOrder,
-        btntitle: R.string.commonString.ok,
-      );
-    }
+    // } else {
+    //   app.resolve<CustomDialogs>().errorDialog(
+    //     context,
+    //     "",
+    //     R.string.commonString.holdMemoStatusDiamondOrder,
+    //     btntitle: R.string.commonString.ok,
+    //   );
+    // }
 //      showToast(R.string.commonString.holdMemoStatusDiamondorder,
 //          context: context);
 

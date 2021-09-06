@@ -48,6 +48,7 @@ class PrefUtils {
   String get keyUser => "keyUser";
 
   String get keyCompany => "keyCompany";
+  String get KeyLoc => "KeyLoc";
 
   String get keyUserPermission => "keyUserPermission";
 
@@ -317,6 +318,22 @@ class PrefUtils {
     }
   }
 
+
+  void saveLocData(List<String> dict) {
+    _preferences.setString(KeyLoc, json.encode(dict));
+    print(KeyLoc);
+  }
+
+  List<dynamic> getLoc() {
+    var data = _preferences.getString(KeyLoc);
+    if (data != null) {
+      print(data);
+      return json.decode(data);
+    }
+    return null;
+  }
+
+
   Future<void> saveUserPermission(UserPermissions user) async {
     _preferences.setString(keyUserPermission, json.encode(user));
   }
@@ -505,6 +522,8 @@ class PrefUtils {
         .deleteAlldiamondModelItems();
     await AppDatabase.instance.offlineStockTracklDao
         .deleteAlldiamondModelItems();
+    DefaultLoc.clear();
+
   }
 }
 

@@ -41,6 +41,7 @@ class DiamondActionScreen extends StatefulScreenWidget {
   int moduleType = DiamondModuleConstant.MODULE_TYPE_SEARCH;
   int actionType = DiamondTrackConstant.TRACK_TYPE_WATCH_LIST;
   List<DiamondModel> diamondList;
+  List<DiamondModel> diamondList1;
   bool isOfferUpdate;
   bool isFromOfferScreen;
 
@@ -63,7 +64,12 @@ class DiamondActionScreen extends StatefulScreenWidget {
         isFromOfferScreen = true;
       }
       if (arguments[ArgumentConstant.DiamondList] != null) {
+        // if(arguments[ArgumentConstant.DiamondList]==)
         diamondList = arguments[ArgumentConstant.DiamondList];
+      }
+      if (arguments[ArgumentConstant.DiamondList1] != null) {
+        // if(arguments[ArgumentConstant.DiamondList]==)
+        diamondList1 = arguments[ArgumentConstant.DiamondList1];
       }
       if (arguments["isOfferUpdate"] != null) {
         isOfferUpdate = arguments["isOfferUpdate"] ?? false;
@@ -76,6 +82,7 @@ class DiamondActionScreen extends StatefulScreenWidget {
       moduleType: moduleType,
       actionType: actionType,
       diamondList: diamondList,
+      diamondList1: diamondList1,
       isOfferUpdate: isOfferUpdate,
       isFromOfferScreen: isFromOfferScreen);
 }
@@ -88,7 +95,10 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   bool autovalid = false;
   int moduleType;
   int actionType;
+  List<String> error = [];
+  bool errorHM = false;
   List<DiamondModel> diamondList;
+  List<DiamondModel> diamondList1;
   String selectedDate;
   bool isAllSelected = false;
   bool isCheckBoxChecked = false;
@@ -109,6 +119,7 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
     this.moduleType,
     this.actionType,
     this.diamondList,
+    this.diamondList1,
     this.isOfferUpdate = false,
     this.isFromOfferScreen,
   });
@@ -120,6 +131,11 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
+    diamondList1.forEach((element) {
+      error.add(element.vStnId);
+      errorHM = true;
+      print(error);
+    });
     if (this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION) {
       diamondConfig =
           DiamondConfig(DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION);
@@ -281,6 +297,12 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                 ),
                 SizedBox(
                   height: getSize(20),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(10.0,0.0,10.0,0.0),
+                  child: Text("(The Selected diamond(s) $error is in Hold/Memo/Upcoming.)",
+                    style: appTheme.error16TextStyle,
+                  ),
                 ),
                 Container(
                   child: getDiamondList(),

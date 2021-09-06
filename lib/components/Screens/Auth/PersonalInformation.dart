@@ -66,6 +66,8 @@ class _PersonalInformationState extends State<PersonalInformation>
 
   Country selectedDialogCountryForMobile =
       CountryPickerUtils.getCountryByIsoCode("US");
+  Country selectedDialogCountry = CountryPickerUtils.getCountryByIsoCode("US");
+
   Country selectedDialogCountryForWhatsapp =
       CountryPickerUtils.getCountryByIsoCode("US");
 
@@ -109,7 +111,7 @@ class _PersonalInformationState extends State<PersonalInformation>
 
   @override
   void dispose() {
-    companyInformationState.pinCodeController.dispose();
+    //companyInformationState.pinCodeController.dispose();
     super.dispose();
   }
 
@@ -297,7 +299,7 @@ class _PersonalInformationState extends State<PersonalInformation>
                     height: getSize(20),
                   ),
                   getPinCodeTextField(
-                      zipCodeTitle: "ZipCode *", rd: this.readOnly),
+                      ),
                   SizedBox(
                     height: getSize(20),
                   ),
@@ -357,18 +359,19 @@ class _PersonalInformationState extends State<PersonalInformation>
     );
   }
 
-  getPinCodeTextField({String zipCodeTitle = "", bool rd}) {
+  getPinCodeTextField() {
     return CommonTextfield(
         focusNode: _focusPinCode,
-        readOnly: rd == null
-            ? this.readOnly
-                ? true
-                : false
-            : rd,
+        readOnly: this.readOnly ? true : false,
+        // readOnly: rd == null
+        //     ? this.readOnly
+        //         ? true
+        //         : false
+        //     : rd,
         textOption: TextFieldOption(
-            hintText: isNullEmptyOrFalse(zipCodeTitle)
-                ? R.string.commonString.lblPinCode + "*"
-                : zipCodeTitle,
+            hintText:
+                 R.string.commonString.lblPinCode,
+                // : zipCodeTitle,
             maxLine: 1,
             prefixWid: getCommonIconWidget(
                 imageName: pincode,
@@ -377,23 +380,23 @@ class _PersonalInformationState extends State<PersonalInformation>
             formatter: [
               BlacklistingTextInputFormatter(new RegExp(RegexForTextField))
             ],
-            keyboardType: TextInputType.number,
-            inputController: _pinCodeController,
-            isSecureTextField: false),
-        textCallback: (text) {
+          //  keyboardType: TextInputType.number,
+            inputController: _pinCodeController
+            ),
+        textCallback: (text) {},
 //          setState(() {
 //            checkValidation();
 //          });
-        },
-        validation: (text) {
-          if (text.isEmpty) {
-            return R.string.errorString.enterPinCode;
-          } else if (!validatePincode(text)) {
-            return R.string.errorString.enterValidPinCode;
-          } else {
-            return null;
-          }
-        },
+
+        // validation: (text) {
+        //   if (text.isEmpty) {
+        //     return R.string.errorString.enterPinCode;
+        //   } else if (!validatePincode(text)) {
+        //     return R.string.errorString.enterValidPinCode;
+        //   } else {
+        //     return null;
+        //   }
+        // },
         inputAction: TextInputAction.next,
         onNextPress: () {
           _focusPinCode.unfocus();
@@ -1090,14 +1093,14 @@ class _PersonalInformationState extends State<PersonalInformation>
       textCallback: (text) {
         // _firstNameController.text = _firstNameController.text.trim();
       },
-      validation: (text) {
-        if (text.trim().isEmpty) {
-          return R.string.authStrings.skype;
-        } else {
-          return null;
-        }
-        // }
-      },
+      // validation: (text) {
+      //   if (text.trim().isEmpty) {
+      //     return R.string.authStrings.skype;
+      //   } else {
+      //     return null;
+      //   }
+      //   // }
+      // },
       inputAction: TextInputAction.done,
       onNextPress: () {
         _focusSkype.unfocus();
@@ -1253,14 +1256,14 @@ class _PersonalInformationState extends State<PersonalInformation>
         //isSecureTextField: false
       ),
       textCallback: (text) {},
-      validation: (text) {
-        if (text.trim().isEmpty) {
-          return R.string.errorString.enterAddress;
-        } else {
-          return null;
-        }
-        // }
-      },
+      // validation: (text) {
+      //   if (text.trim().isEmpty) {
+      //     return R.string.errorString.enterAddress;
+      //   } else {
+      //     return null;
+      //   }
+      //   // }
+      // },
       inputAction: TextInputAction.next,
       onNextPress: () {
         _focusAddressLineTwo.unfocus();
@@ -1283,7 +1286,7 @@ class _PersonalInformationState extends State<PersonalInformation>
 
   checkValidation() async {
     if (await isValidMobile(_mobileController.text.trim(),
-            selectedDialogCountryForMobile.isoCode) ==
+        selectedDialogCountry.isoCode) ==
         false) {
       showToast(R.string.errorString.enterValidPhone, context: context);
       return false;
@@ -1298,6 +1301,7 @@ class _PersonalInformationState extends State<PersonalInformation>
     req.address2 = _addressLineTwoController.text.trim();
     req.firstName = _firstNameController.text.trim();
     req.lastName = _lastNameController.text.trim();
+    req.pincode = _pinCodeController.text.trim();
     req.mobile = _mobileController.text;
     req.countryCode = selectedDialogCountryForMobile.phoneCode;
     req.whatsapp = _whatsAppMobileController.text;
@@ -1305,7 +1309,6 @@ class _PersonalInformationState extends State<PersonalInformation>
     req.email = _emailController.text.trim();
     req.skype = _skypeController.text.trim();
     // req.pincode = companyInformationState.pinCodeController.text.trim();
-    req.pincode = _pinCodeController.text.trim();
 
     countryList.forEach((element) {
       if (element.title == _countryController.text.trim()) {

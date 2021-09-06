@@ -716,11 +716,11 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         title: R.string.commonString.demandadded,
         desc: R.string.commonString.demandAddedSuccessfully,
         negativeBtnTitle: R.string.commonString.myDemand,
-        positiveBtnTitle: R.string.commonString.home,
+        positiveBtnTitle: R.string.commonString.ok,
         onClickCallback: (click) {
-          if (click == ButtonType.PositveButtonClick) {
-            AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-          } else {
+          if (click == ButtonType.NagativeButtonClick) {
+          //   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+          // } else {
             Map<String, dynamic> dict = {};
             dict[ArgumentConstant.ModuleType] =
                 DiamondModuleConstant.MODULE_TYPE_MY_DEMAND;

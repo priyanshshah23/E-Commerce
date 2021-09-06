@@ -996,9 +996,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   List<Widget> getToolbarItem() {
     List<Widget> list = [];
-    for (int i = 0; i < diamondConfig.toolbarList.length; i++) {
+    for (int i = 0; i < diamondConfig.toolbarList.length-1; i++) {
       var element = diamondConfig.toolbarList[i];
-      if (element.code == BottomCodeConstant.TBDownloadView &&
+      /*if (element.code == BottomCodeConstant.TBDownloadView &&
           OfflineStockManager.shared.isDownloading) {
         list.add(
           GestureDetector(
@@ -1054,7 +1054,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             ),
           ),
         );
-      }
+      }*/
       /*else if (element.code == BottomCodeConstant.TBCompanySelction) {
         GestureDetector(
           onTap: !isNullEmptyOrFalse(arraDiamond)
@@ -1094,7 +1094,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
         );
       }*/
-      else {
+      // else {
         list.add(GestureDetector(
           onTap: !isNullEmptyOrFalse(arraDiamond)
               ? () {
@@ -1148,7 +1148,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       }
 
       ;
-    }
+
 
     return list;
   }
@@ -1291,51 +1291,51 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ),
         );
         break;
-      case BottomCodeConstant.TBDownloadView:
-        if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
-          if (Platform.isIOS) {
-            LocalNotificationManager.instance
-                .requestPermissions()
-                .then((value) {
-              diamondConfig.actionDownloadOffline(
-                context,
-                () {
-                  onRefreshList();
-                },
-                sortRequest: sortRequest,
-                filterId: filterId,
-              );
-            });
-          } else {
-            diamondConfig.actionDownloadOffline(
-              context,
-              () {
-                onRefreshList();
-              },
-              sortRequest: sortRequest,
-              filterId: filterId,
-            );
-          }
-        } else {
-          List<DiamondModel> selectedList =
-              arraDiamond.where((element) => element.isSelected).toList();
-          if (!isNullEmptyOrFalse(selectedList)) {
-            BottomTabModel tabModel = BottomTabModel();
-            tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
-            diamondConfig.manageDiamondAction(context, arraDiamond, tabModel,
-                () {
-              onRefreshList();
-            });
-          } else {
-            app.resolve<CustomDialogs>().confirmDialog(
-                  context,
-                  title: "",
-                  desc: R.string.errorString.diamondSelectionError,
-                  positiveBtnTitle: R.string.commonString.ok,
-                );
-          }
-        }
-        break;
+      // case BottomCodeConstant.TBDownloadView:
+      //   if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
+      //     if (Platform.isIOS) {
+      //       LocalNotificationManager.instance
+      //           .requestPermissions()
+      //           .then((value) {
+      //         diamondConfig.actionDownloadOffline(
+      //           context,
+      //           () {
+      //             onRefreshList();
+      //           },
+      //           sortRequest: sortRequest,
+      //           filterId: filterId,
+      //         );
+      //       });
+      //     } else {
+      //       diamondConfig.actionDownloadOffline(
+      //         context,
+      //         () {
+      //           onRefreshList();
+      //         },
+      //         sortRequest: sortRequest,
+      //         filterId: filterId,
+      //       );
+      //     }
+      //   } else {
+      //     List<DiamondModel> selectedList =
+      //         arraDiamond.where((element) => element.isSelected).toList();
+      //     if (!isNullEmptyOrFalse(selectedList)) {
+      //       BottomTabModel tabModel = BottomTabModel();
+      //       tabModel.type = ActionMenuConstant.ACTION_TYPE_DOWNLOAD;
+      //       diamondConfig.manageDiamondAction(context, arraDiamond, tabModel,
+      //           () {
+      //         onRefreshList();
+      //       });
+      //     } else {
+      //       app.resolve<CustomDialogs>().confirmDialog(
+      //             context,
+      //             title: "",
+      //             desc: R.string.errorString.diamondSelectionError,
+      //             positiveBtnTitle: R.string.commonString.ok,
+      //           );
+      //     }
+      //   }
+      //   break;
     }
   }
 

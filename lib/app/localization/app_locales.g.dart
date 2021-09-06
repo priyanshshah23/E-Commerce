@@ -138,7 +138,7 @@ class AuthStrings {
   String logout = "Log Out";
   String logoutConfirmationMsg = "Are you sure you want to log out?";
   String address = "Address*";
-  String addressTwo = "Address2*";
+  String addressTwo = "Address2";
   String addressThree = "Address3";
   String accountNumber = "Account Number";
   String bankerName = "Bankers Name";
@@ -210,7 +210,7 @@ class CommonString {
   String delete = "Delete";
   String details = "Details";
   String edit = "Edit";
-  String addDemand = "Add demand";
+  String addDemand = "Add Demand/Order Request";
   String demandTitle = "Demand Title";
   String pleaseEnterDemandTitle = "Please enter Demand Title";
   String demandAddedSuccessfully =
@@ -308,7 +308,7 @@ class CommonString {
   String lblCity = "City";
   String lblCountry = "Country";
   String lblName = "Name";
-  String lblPinCode = "Zip Code";
+  String lblPinCode = "Pin Code";
   String lblMobileNumber = "Mobile Number";
   String lblState = "State";
   String lblCode = "Code:";

@@ -9,6 +9,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
+import 'package:flutter/material.dart';
 
 class FilterRequest {
   Map<String, dynamic> createRequest(
@@ -28,7 +29,6 @@ class FilterRequest {
           List<Master> arrMaster = selectionModel.masters
               .where((element) => element.isSelected == true)
               .toList();
-
           if (!isNullEmptyOrFalse(arrMaster)) {
             for (var item in arrMaster) {
               if (item.code == MasterCode.canadamark) {
@@ -66,7 +66,17 @@ class FilterRequest {
 
             map[selectionModel.apiKey] = arr;
           }
-        } else {
+        }
+        else if (selectionModel.masterCode == MasterCode.arrivals) {
+          if (!isNullEmptyOrFalse((element as SelectionModel).fromDate) &&
+              !isNullEmptyOrFalse((element as SelectionModel).toDate)) {
+            map["inDt"] = {
+              ">=": selectionModel.fromDate,
+              "<=": selectionModel.toDate
+            };
+          }
+        }
+        else {
           if (selectionModel.masterCode == MasterCode.stage) {
             arrStage = Master.getSelectedId(selectionModel.masters);
 

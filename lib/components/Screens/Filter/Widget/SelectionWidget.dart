@@ -754,14 +754,16 @@ class _TagWidgetState extends State<TagWidget> {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2101),
+      firstDate: DateTime.now().subtract(Duration(days: 10)),
+      lastDate: DateTime.now(),
     );
     setState(() {
       if (!isNullEmptyOrFalse(picked)) {
         fromDate = picked;
         _fromDateController.text = myFormat.format(picked);
+        widget.model.fromDate = fromDate.toIso8601String();
       }
+
 
       print("From Date====>" + fromDate.toString());
     });
@@ -771,16 +773,19 @@ class _TagWidgetState extends State<TagWidget> {
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: fromDate,
-      firstDate: fromDate,
-      lastDate: DateTime(2101),
+      firstDate: DateTime.now().subtract(Duration(days: 10)),
+      lastDate: DateTime.now(),
     );
     setState(() {
       if (!isNullEmptyOrFalse(picked)) {
         toDate = picked;
         _toDateController.text = myFormat.format(picked);
+        widget.model.toDate = toDate.toIso8601String();
+
+
       }
       ;
-      print("To Date====>" + toDate.toString());
+      print("To Date====>" + toDate.toIso8601String());
     });
   }
 

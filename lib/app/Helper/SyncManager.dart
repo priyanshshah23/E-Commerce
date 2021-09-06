@@ -78,6 +78,15 @@ class SyncManager {
       //Append static data masters
       List<Master> arrLocalData = await Config().getLocalDataJson();
       masterResp.data.masters.list.addAll(arrLocalData);
+        masterResp.data.masters.list.forEach((element) {
+          if(((element.parentCode=="LOCATION")&& (element.name =="Surat"))||((element.parentCode=="LOCATION")&& (element.name =="IND-RC"))){
+            DefaultLoc.add(element.sId);
+            print(DefaultLoc);
+          }
+        });
+        DefaultLoc.forEach((element) {
+          app.resolve<PrefUtils>().saveLocData(DefaultLoc);
+        });
 
       await AppDatabase.instance.masterDao
           .addOrUpdate(masterResp.data.masters.list);

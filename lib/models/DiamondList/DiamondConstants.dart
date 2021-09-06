@@ -129,6 +129,7 @@ class ArgumentConstant {
   static const IsFromDrawer = "isFromDrawer";
   static const DiamondDetail = "diamondModel";
   static const DiamondList = "diamondList";
+  static const DiamondList1 = "diamondList1";
 }
 
 typedef ActionClick(ManageCLick manageCLick);
