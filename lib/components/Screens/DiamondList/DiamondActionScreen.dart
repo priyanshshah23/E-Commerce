@@ -131,11 +131,13 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
   @override
   void initState() {
     super.initState();
-    diamondList1.forEach((element) {
-      error.add(element.vStnId);
-      errorHM = true;
-      print(error);
-    });
+    if((actionType==DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER)&&(diamondList1.isNotEmpty)){
+      diamondList1.forEach((element) {
+        error.add(element.vStnId);
+        errorHM = true;
+        print(error);
+      });
+    }
     if (this.actionType == DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION) {
       diamondConfig =
           DiamondConfig(DiamondModuleConstant.MODULE_TYPE_FINAL_CALCULATION);
@@ -299,11 +301,16 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
                   height: getSize(20),
                 ),
                 Container(
-                  margin: EdgeInsets.fromLTRB(10.0,0.0,10.0,0.0),
-                  child: Text("(The Selected diamond(s) $error is in Hold/Memo/Upcoming.)",
-                    style: appTheme.error16TextStyle,
-                  ),
-                ),
+                  child:Column(
+                    children: [
+                      errorHM
+                      ?Container(
+                      margin: EdgeInsets.fromLTRB(10.0,0.0,10.0,0.0),
+                    child: Text("(The Selected diamond(s) $error is in Hold/Memo/Upcoming.)",
+                    style: appTheme.error16TextStyle,),
+                      )
+                      :SizedBox()
+                ])),
                 Container(
                   child: getDiamondList(),
                 ),

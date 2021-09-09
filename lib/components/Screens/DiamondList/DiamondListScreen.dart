@@ -475,6 +475,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
                   diamondModel.trackItemEnquiry = trackDiamonds;
+                  diamondModel.remarks = element.remarks;
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
                   diamondModel.createdAt = element.createdAt;

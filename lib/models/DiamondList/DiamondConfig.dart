@@ -385,6 +385,7 @@ class DiamondConfig {
                 sequence: 3,
                 isCenter: true));
           }
+
           // if (app
           //         .resolve<PrefUtils>()
           //         .getModulePermission(getPermissionFromModuleType(moduleType))
@@ -731,23 +732,23 @@ class DiamondConfig {
       action: ActionAnalytics.OPEN,
     );
 
-    // var filter = list
-    //     .where((element) =>
-    //         element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
-    //         element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
-    //     .toList();
-    //
-    // if (isNullEmptyOrFalse(filter)) {
+    var filter = list
+        .where((element) =>
+            element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
+            element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
+        .toList();
+
+    if (isNullEmptyOrFalse(filter)) {
       openDiamondActionAcreen(
           context, DiamondTrackConstant.TRACK_TYPE_OFFER, selectedList);
-    // } else {
-    //   app.resolve<CustomDialogs>().errorDialog(
-    //         context,
-    //         "",
-    //         R.string.commonString.holdMemoStatusDiamondOffer,
-    //         btntitle: R.string.commonString.ok,
-    //       );
-
+    } else {
+      app.resolve<CustomDialogs>().errorDialog(
+        context,
+        "",
+        R.string.commonString.holdMemoStatusDiamondOffer,
+        btntitle: R.string.commonString.ok,
+      );
+    }
     /* showOfferListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
         callApiFoCreateTrack(

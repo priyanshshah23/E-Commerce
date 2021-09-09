@@ -46,6 +46,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   String totalSearch = "";
   String searchText = "";
   bool isFromSearch;
+  List<String> temp = [];
   List<String> arrList = [];
   List<String> arrSelected = [];
   Timer timer;
@@ -136,7 +137,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
 //            height: getSize(40),
             child: TextFormField(
               minLines: 1,
-              maxLines: isFromManual ? null : 1,
+              maxLines: isFromManual ? null : 5,
               textAlignVertical: TextAlignVertical(y: 1.0),
               textInputAction: TextInputAction.search,
               focusNode: _focusSearch,
@@ -188,12 +189,39 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                         height: getSize(16), width: getSize(16))),
               ),
               onChanged: (String text) {
+                // print(text.split('\n');
+                temp = text.split('\n')!=null?text.split('\n'):null;
+                temp.removeAt(temp.length-1);
+                print(text);
+
+                // arrSelected = temp;
+                //callApiForSearchStoneId(temp);
+                // for(var t =0;t<temp.length;t++)
+                //   {
+                //     _searchController.text  = temp[t];
+                //     callApiForSearchStoneId(temp[0]);
+                //    // openSuggestion();
+                //     print(temp[t]);
+                //   }
+            //    text= temp ;
+                //print(temp);
                 if (!isFromSearch) {
                   this.searchText = text;
-                  openSuggestion();
+                  if(text.contains('\n')){
+                    temp = text.split('\n')!=null?text.split('\n'):null;
+                    temp.removeAt(temp.length-1);
+                  }
+                  //
+                   openSuggestion();
                   setState(() {});
                 } else {
                   if (!isFromManual) {
+                    if(text.contains('\n')){
+                      temp = text.split('\n')!=null?text.split('\n'):null;
+                      temp.removeAt(temp.length-1);
+                    }
+                    // List<String> temp = text.split('\n')!=null?text.split('\n'):null;
+                    // arrSelected = temp;
                     if (text.length > 2) {
                       if (timer != null) timer.cancel();
                       timer = Timer(Duration(seconds: 2), () {
@@ -523,6 +551,8 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   }
 
   getChips() {
+    Set<String> set= new Set<String>.from(arrSelected);
+    arrSelected = List<String>.from(set);
     if (isNullEmptyOrFalse(arrSelected)) {
       return Container();
     }
@@ -635,28 +665,28 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   callCountApi() {
     print("-------------------$isFromManual");
     Map<String, dynamic> req = {};
-    req = {
-      "or": [
-        {"stoneId": arrSelected},
-        {"rptNo": arrSelected},
-        {"vStnId": arrSelected}
-      ]
-    };
-
     Map<String, dynamic> manualReq = {};
-    manualReq = {
-      "or": [
-        {
-          "stoneId": [_searchController.text]
-        },
-        {
-          "rptNo": [_searchController.text]
-        },
-        {
-          "vStnId": [_searchController.text]
-        }
-      ]
-    };
+    arrSelected = temp.isNotEmpty?temp:arrSelected;
+    if(isFromManual){
+      manualReq = {
+        "or": [
+          {"stoneId": [_searchController.text]},
+          {"rptNo": [_searchController.text]},
+          {"vStnId": [_searchController.text]}
+        ]
+      };
+    }
+    else {
+      req = {
+        "or": [
+          {"stoneId": arrSelected},
+          {"rptNo": arrSelected},
+          {"vStnId": arrSelected}
+        ]
+      };
+    }
+
+
 
     SyncManager.instance.callApiForDiamondList(
       context,
@@ -677,7 +707,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
       (onError) {
         //print("Error");
       },
-      searchText: isFromSearch ? null : _searchController.text.trim(),
+      searchText: isFromSearch ? null : _searchController.text,
     );
   }
 

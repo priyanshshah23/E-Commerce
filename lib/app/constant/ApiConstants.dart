@@ -17,7 +17,7 @@ class ApiConstants {
 //  static const String dashboardImageBaseURL = "https://api.arjivexports.com";
   //static const String webPageUrl = "https://customer.arjivexports.com/";
   static const String shareUrl =
-      "https://customer.arjivexports.com/diamond-details/";
+      baseURL+"/diamond-details/";
   static const String googleDocUrl =
       "https://docs.google.com/viewer?embedded=true&url=";
 
@@ -102,7 +102,8 @@ class ApiConstants {
   static const String searchReportNo = "web/v1/diamond/reportno/paginate";
 
   //Excel
-  static const String baseURLForExcel = "http://arjivlocalapi.democ.in/data";
+  static const String baseURLForExcel2 = "http://arjivlocalapi.democ.in/data";
+  static const String baseURLForExcel = "https://betaapi.arjivexports.com/data";
 
   static const String baseURL2 = "https://beta.arjivexports.com/device/";
   static const String termsCondition = baseURL2 + "terms-condition";

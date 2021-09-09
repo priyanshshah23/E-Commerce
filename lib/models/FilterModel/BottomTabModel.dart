@@ -161,12 +161,7 @@ class BottomTabBar {
     //     code: BottomCodeConstant.filterSavedSearch,
     //     sequence: 0,
     //     isCenter: false));
-    // arrBootomTab.add(BottomTabModel(
-    //     title: R.string.screenTitle.addDemand,
-    //     image: addDemand,
-    //     code: BottomCodeConstant.filterAddDemamd,
-    //     sequence: 1,
-    //     isCenter: false));
+
     arrBootomTab.add(BottomTabModel(
         title: "",
         image: search,
@@ -180,6 +175,12 @@ class BottomTabBar {
         image: saveAndSearch,
         code: BottomCodeConstant.filterSaveAndSearch,
         sequence: 3,
+        isCenter: false));
+    arrBootomTab.add(BottomTabModel(
+        title: R.string.screenTitle.addDemand,
+        image: addDemand,
+        code: BottomCodeConstant.filterAddDemamd,
+        sequence: 1,
         isCenter: false));
 //    arrBootomTab.add(BottomTabModel(
 //        title: R.string.screenTitle.matchPair,

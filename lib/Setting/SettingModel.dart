@@ -631,6 +631,7 @@ class BottomMenuSetting {
         addDownloadInBottomMenu(moreMenuList, downloadWhite, isCenter: false);
         break;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        addWatchlistInBottomMenu(moreMenuList, addToWatchlist, isCenter: false);
         if (!isDetail && !isCompare) {
           addCompareInBottomMenu(moreMenuList, compare, isCenter: false);
           addClearSelectionInBottomMenu(moreMenuList, clearSelectionWhite,

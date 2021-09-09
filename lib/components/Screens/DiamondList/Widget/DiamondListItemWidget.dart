@@ -65,6 +65,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   var _focusNote = FocusNode();
   Duration difference;
   Timer _timer;
+  var re;
   bool isTimerCompleted = false;
   var totalSeconds = 0;
   List<int> hourStatus = [
@@ -79,6 +80,8 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   @override
   void initState() {
     super.initState();
+    widget.item.hours;
+    re = widget.item.remarks;
     widget.item.setBidAmount();
     if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       calcualteDifference();
@@ -95,6 +98,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
 //        Future.delayed(Duration(seconds: 1));
         setState(() {});
       });
+
 
       _offeredDiscountTextFieldController.text = PriceUtilities.getDoubleValue(
           widget.isUpdateOffer
@@ -154,12 +158,17 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          widget.item.isGroupSelected =
-                              !widget.item.isGroupSelected;
-                          Map<String, dynamic> map = {};
-                          map["diamondModel"] = widget.item;
-                          map["isSelected"] = widget.item.isGroupSelected;
-                          RxBus.post(map, tag: eventSelectAllGroupDiamonds);
+                          if(widget.item.offerStatus==OfferStatus.expired)
+                            {
+
+                            }else {
+                            widget.item.isGroupSelected =
+                            !widget.item.isGroupSelected;
+                            Map<String, dynamic> map = {};
+                            map["diamondModel"] = widget.item;
+                            map["isSelected"] = widget.item.isGroupSelected;
+                            RxBus.post(map, tag: eventSelectAllGroupDiamonds);
+                          }
                         });
                       },
                       child: Row(children: [
@@ -455,6 +464,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       ),
                     ),
                   ),
+
+                  Column(
+                    children: [
+                      if(widget.moduleType==DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY)
+                          getEnquiryRemarks(),
+                        ]),
                   if (widget.item.isSectionOfferDisplay)
                     DiamondOfferInfoWidget(
                       widget.item,
@@ -499,6 +514,61 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
         return appTheme.blackColor;
         break;
     }
+  }
+  getEnquiryRemarks(){
+    return Container(
+      child: re!=null
+    ? Container(
+    decoration: BoxDecoration(
+    color: appTheme.dividerColor,
+    borderRadius: BorderRadius.only(
+    topLeft: Radius.circular(getSize(6)),
+    bottomLeft: Radius.circular(getSize(6)),
+    )),
+    // width: getSize(341),
+    child: Row(
+    children: [
+    Padding(
+    padding: const EdgeInsets.only(
+    left: 11, bottom: 11, top: 9),
+    child: Text(
+    "Remarks : " + widget.item.remarks,
+    style: appTheme.blackMedium12TitleColorblack,
+    ),
+    ),
+    ],
+    ),
+    )
+        : Container(
+        decoration: BoxDecoration(
+            color: appTheme.dividerColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(getSize(6)),
+              bottomLeft: Radius.circular(getSize(6)),
+            )),
+        // width: getSize(341),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 11, bottom: 11, top: 9),
+              child: Text(
+                "Remarks : ---" ,
+                style: appTheme.blackMedium12TitleColorblack,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    //   child: Column(
+    //     children: [
+    //       re!=null
+    //       ?Text(re)
+    //           :SizedBox(),
+    //     ],
+    //   ),
+    // );
   }
 
   getBargainTrack() {

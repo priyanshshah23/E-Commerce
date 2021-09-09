@@ -898,34 +898,34 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           }
         }
 
-//         else if (obj.code == BottomCodeConstant.filterAddDemamd) {
-//           if (app
-//               .resolve<PrefUtils>()
-//               .getModulePermission(ModulePermissionConstant.permission_myDemand)
-//               .insert) {
-//             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
-//               Map<String, dynamic> map = FilterRequest()
-//                   .createRequest(arrList, selectedStatus: selectStatus);
-// //              if (app.resolve<PrefUtils>().getUserDetails().type ==
-// //                      UserConstant.CUSTOMER &&
-// //                  map.length < 3) {
-// //                app.resolve<CustomDialogs>().errorDialog(
-// //                      context,
-// //                      "",
-// //                      "Please select any 2 criteria.",
-// //                      btntitle: R.string.commonString.ok,
-// //                    );
-// //              } else
-//               getAddDemand();
-//             } else {
-//               showToast(R.string.commonString.selectAtleastOneFilter,
-//                   context: context);
-//             }
-//             // place code
-//           } else {
-//             app.resolve<CustomDialogs>().accessDenideDialog(context);
-//           }
-//         }
+        else if (obj.code == BottomCodeConstant.filterAddDemamd) {
+          if (app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_myDemand)
+              .insert) {
+            if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
+              Map<String, dynamic> map = FilterRequest()
+                  .createRequest(arrList, selectedStatus: selectStatus);
+             if (app.resolve<PrefUtils>().getUserDetails().type ==
+                     UserConstant.CUSTOMER &&
+                 map.length < 3) {
+               app.resolve<CustomDialogs>().errorDialog(
+                     context,
+                     "",
+                     "Please select any 2 criteria.",
+                     btntitle: R.string.commonString.ok,
+                   );
+             } else
+              getAddDemand();
+            } else {
+              showToast(R.string.commonString.selectAtleastOneFilter,
+                  context: context);
+            }
+            // place code
+          } else {
+            app.resolve<CustomDialogs>().accessDenideDialog(context);
+          }
+        }
 
         else if (obj.code == BottomCodeConstant.filterSearch) {
           //Check internet is online or not

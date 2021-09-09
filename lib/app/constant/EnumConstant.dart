@@ -101,6 +101,7 @@ class OfferStatus {
   static const int pending = 1;
   static const int accepted = 2;
   static const int rejected = 3;
+  static const int expired = 4;
 }
 
 //MARK: Analytics
