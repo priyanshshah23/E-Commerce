@@ -136,8 +136,13 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
-        widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
+        if(((widget.item.offerStatus==OfferStatus.expired)||(widget.item.offerStatus==OfferStatus.rejected))&&(widget.moduleType==DiamondModuleConstant.MODULE_TYPE_MY_OFFER))
+        {
+
+        }else {
+          FocusScope.of(context).unfocus();
+          widget.actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_ROW));
+        }
       },
       child: Padding(
         padding: EdgeInsets.only(
@@ -158,7 +163,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                     child: InkWell(
                       onTap: () {
                         setState(() {
-                          if(widget.item.offerStatus==OfferStatus.expired)
+                          if(((widget.item.offerStatus==OfferStatus.expired)||(widget.item.offerStatus==OfferStatus.rejected))&&(widget.moduleType==DiamondModuleConstant.MODULE_TYPE_MY_OFFER))
                             {
 
                             }else {
@@ -671,7 +676,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
   getCaratDetail(ActionClick actionClick) {
     return GestureDetector(
       onTap: () {
-        actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
+        if(((widget.item.offerStatus==OfferStatus.expired)||(widget.item.offerStatus==OfferStatus.rejected))&&(widget.moduleType==DiamondModuleConstant.MODULE_TYPE_MY_OFFER))
+        {
+
+        }else {
+          actionClick(ManageCLick(type: clickConstant.CLICK_TYPE_SELECTION));
+        }
       },
       child: Container(
         padding: EdgeInsets.only(

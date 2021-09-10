@@ -3,10 +3,12 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'package:collection/collection.dart';
+import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/Helper/NetworkClient.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/components/Screens/StaticPage/StaticPage.dart';
 import 'package:diamnow/models/OfflineSearchHistory/OfflineStockTrack.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart' as path;
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
 import 'package:diamnow/app/Helper/AppDatabase.dart';
@@ -762,15 +764,18 @@ class SyncManager {
       String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
       String excelFileUrl = url;
       print("Excel file URL : " + url);
-      if (!Platform.isIOS) {
-        url = "https://docs.google.com/viewer?embedded=true&url=" + url;
-      }
+      // if (!Platform.isIOS) {
+      //   url = "https://docs.google.com/viewer?embedded=true&url=" + url;
+      // }
       print("Final ExcelFile Viewer Url : " + url);
 
       //navigate to static page...
       DownloadState downloadStateObj = DownloadState();
       final dir = await downloadStateObj.getDownloadDirectory();
-      String fileName = "FinalExcel.xlsx";
+      DateTime now = new DateTime.now();
+      var formatter = DateFormat('dd_MM_yyyy_hh_mm_ss');
+      String formattedDate = formatter.format(now);
+      String fileName = "FinalExcel_${formattedDate}.xlsx";
       final savePath = path.join(dir.path, fileName);
       print("file:/" + savePath);
 
@@ -778,23 +783,23 @@ class SyncManager {
         callback(url);
       } else {
         await downloadExcel(excelFileUrl, savePath, context);
-        if (Platform.isIOS) {
-          Map<String, dynamic> dict = {};
-          dict["strUrl"] = url;
-          dict['filePath'] = savePath;
-          dict[ArgumentConstant.IsFromDrawer] = false;
-          dict["isForExcel"] = true;
-          dict["screenTitle"] = excelApiResponse.data.excelName;
-          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
-        } else {
-          Map<String, dynamic> dict = {};
-          dict["strUrl"] = url;
-          dict['filePath'] = savePath;
-          dict[ArgumentConstant.IsFromDrawer] = false;
-          dict["isForExcel"] = true;
-          dict["screenTitle"] = excelApiResponse.data.excelName;
-          NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
-        }
+        // if (Platform.isIOS) {
+        //   Map<String, dynamic> dict = {};
+        //   dict["strUrl"] = url;
+        //   dict['filePath'] = savePath;
+        //   dict[ArgumentConstant.IsFromDrawer] = false;
+        //   dict["isForExcel"] = true;
+        //   dict["screenTitle"] = excelApiResponse.data.excelName;
+        //   NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        // } else {
+        //   Map<String, dynamic> dict = {};
+        //   dict["strUrl"] = url;
+        //   dict['filePath'] = savePath;
+        //   dict[ArgumentConstant.IsFromDrawer] = false;
+        //   dict["isForExcel"] = true;
+        //   dict["screenTitle"] = excelApiResponse.data.excelName;
+        //   NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+        // }
       }
       // getWebView(context, url);
     }).catchError((onError) {
@@ -835,12 +840,24 @@ class SyncManager {
       deleteOnError: true,
     )
         .then((value) {
-      app.resolve<CustomDialogs>().errorDialog(
-            context,
-            "Downloded",
-            "Excel File is downloded.",
-            btntitle: R.string.commonString.ok,
-          );
+      LocalNotificationManager.instance.showExcelDownloadNotification(savePath);
+      app.resolve<CustomDialogs>().confirmDialog(
+          NavigationUtilities.key.currentState.overlay.context,
+          title: 'Download',
+          desc:
+          'File(s) downloaded successfully. Please check your download folder to view files.',
+          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (view) {
+        if (view.index == ButtonType.PositveButtonClick) {
+          Navigator.pop(context);
+        }
+      });
+    //   app.resolve<CustomDialogs>().errorDialog(
+    //
+    //         context,
+    //         "Downloded",
+    //         "Excel File is downloded.",
+    //         btntitle: R.string.commonString.ok,
+    //       );
     });
   }
 

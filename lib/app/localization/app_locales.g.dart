@@ -138,7 +138,7 @@ class AuthStrings {
   String logout = "Log Out";
   String logoutConfirmationMsg = "Are you sure you want to log out?";
   String address = "Address*";
-  String addressTwo = "Address2";
+  String addressTwo = "Address2*";
   String addressThree = "Address3";
   String accountNumber = "Account Number";
   String bankerName = "Bankers Name";
@@ -308,7 +308,7 @@ class CommonString {
   String lblCity = "City";
   String lblCountry = "Country";
   String lblName = "Name";
-  String lblPinCode = "Pin Code";
+  String lblPinCode = "Zip Code";
   String lblMobileNumber = "Mobile Number";
   String lblState = "State";
   String lblCode = "Code:";
@@ -395,8 +395,6 @@ class CommonString {
   String noDiamondFound =
       "No Diamonds matching your search. Please add you demand.";
   String selectType = "Select Virtual Type";
-  String narrowSearch = "Please narrow your search criteria";
-  String diamond250 = ">250 Stone Found";
   String noSavedSearch = "No Saved Search Exists";
   String searchCity = "Search city";
   String searchCountry = "Search Country";
@@ -430,6 +428,8 @@ class CommonString {
   String download = "Download";
   String share = "Share";
   String placeOrder = "Place order";
+  String diamond250 = ">250 stone Found.";
+  String narrowSearch = "Please narrow your search criteria.";
   String enterComment = "Please Enter Note";
   String deleteItem = "Are you sure you want to delete?";
   String shippingPolicy = "Shipping Policy";
@@ -610,7 +610,7 @@ class ScreenTitle {
   String addedInBid = "Added in Bid";
   String myEnquiry = "My Enquiry";
   String delete = "Delete";
-  String addDemand = "Add Demand";
+  String addDemand = "Order Request";
   String matchPair = "Match Pair";
   String layout = "Layout";
   String savedAndSearch = "Save & Search";

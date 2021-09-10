@@ -1,6 +1,8 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:android_intent/android_intent.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/constants.dart';
@@ -133,6 +135,20 @@ class LocalNotificationManager {
         dict[ArgumentConstant.IsFromDrawer] = true;
 
         NavigationUtilities.pushRoute(FilterScreen.route, args: dict);
+
+      }
+      else if (dict['moduleType'] ==
+          NotificationIdentifier.offlineExcelDownloaded) {
+        if (Platform.isAndroid) {
+          if (dict['filePath'] != null) {
+            final AndroidIntent intent = AndroidIntent(
+              action: 'action_view',
+              data: Uri.encodeFull(dict['filePath']),
+              type: 'application/*',
+            );
+            intent.launch();
+          }
+        }
       }
     }
   }
@@ -214,5 +230,38 @@ class LocalNotificationManager {
           dictPayload: dictFilter);
       app.resolve<PrefUtils>().saveFilterOffline(null);
     }
+  }
+  showExcelDownloadNotification(String filePath,
+      {String title, String desc}) async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      NotificationIdentifier.offlineExcelDownloaded.toString(),
+      AndroidNotificationIdentifier.offlineExcelDownloadChannelName,
+      AndroidNotificationIdentifier.offlineExcelDownloadChannelDescription,
+      priority: Priority.high,
+      playSound: true,
+      importance: Importance.max,
+      icon: '@mipmap/ic_launcher',
+    );
+
+    var iOSPlatformChannelSpecifics =
+    IOSNotificationDetails(sound: "slow_spring_board.aiff");
+
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    Map<String, dynamic> payload = {};
+    payload["moduleType"] = NotificationIdentifier.offlineExcelDownloaded;
+    payload['filePath'] = filePath;
+
+    await flutterLocalNotificationsPlugin.show(
+      // title ?? NotificationIdentifier.offlineStockDownload,
+      title ?? NotificationIdentifier.offlineExcelDownloaded,
+      APPNAME,
+      desc ??
+          "File(s) downloaded successfully. Please check your download folder to view files.",
+      platformChannelSpecifics,
+      payload: json.encode(payload) ?? "",
+    );
   }
 }

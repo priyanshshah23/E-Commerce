@@ -1342,7 +1342,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   setSelectAllDiamond(BottomTabModel model) {
     arraDiamond.forEach((element) {
-      element.isSelected = model.isSelected;
+      if((moduleType==DiamondModuleConstant.MODULE_TYPE_MY_OFFER)&&((element.offerStatus==OfferStatus.expired)||(element.offerStatus==OfferStatus.rejected))){
+
+      }else {
+        element.isSelected = model.isSelected;
+      }
     });
     setAllSelectImage(model);
     setState(() {});

@@ -112,6 +112,7 @@ class Spacing {
 }
 List<String> DefaultLoc = [];
 
+
 //Master Code
 class MasterCode {
   static const String shape = "SHAPE";
@@ -345,11 +346,15 @@ class NotificationConstant {
 class NotificationIdentifier {
   static const int offlineStockDownload = 1;
   static const int offlineOrderSynced = 2;
+  static const int offlineExcelDownloaded = 3;
+
 }
 
 class AndroidNotificationIdentifier {
   static const offlineStockDownloadChannelName = "Offline Stock";
   static const offlineStockDownloadChannelDescription = "Stock";
+  static const offlineExcelDownloadChannelName = "Offline Excel";
+  static const offlineExcelDownloadChannelDescription = "Excel";
 }
 
 class BlockSetting {
