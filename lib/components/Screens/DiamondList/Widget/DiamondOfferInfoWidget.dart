@@ -14,6 +14,8 @@ class DiamondOfferInfoWidget extends StatefulWidget {
   final num topPadding;
   final num bottomPadding;
 
+
+
   DiamondOfferInfoWidget(
     this.diamondModel,
     this.moduleType, {
@@ -28,9 +30,16 @@ class DiamondOfferInfoWidget extends StatefulWidget {
 }
 
 class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
+  String startTime;
+  String endTime;
   @override
   void initState() {
     super.initState();
+    startTime = DateUtilities().convertServerDateToFormatterString(widget.diamondModel.start,
+        formatter: DateUtilities.hh_mm_a);
+
+    endTime = DateUtilities().convertServerDateToFormatterString(widget.diamondModel.end,
+        formatter: DateUtilities.hh_mm_a);
   }
 
   @override
@@ -114,7 +123,7 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
           ),
           Spacer(),
           Text(
-            getDate(),
+            getDate(startTime,endTime),
             style: appTheme.black14TextStyle,
           ),
         ],
@@ -173,13 +182,14 @@ class _DiamondOfferInfoWidgetState extends State<DiamondOfferInfoWidget> {
     return "-";
   }
 
-  String getDate() {
+  String getDate(String startTime,String endTime) {
+    String v = DateUtilities().convertServerDateToFormatterString(
+        widget.diamondModel.date,
+        formatter: DateUtilities.dd_mm_yyyy)+"["+startTime+"-"+endTime+"]";
     if (widget.moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
       return isNullEmptyOrFalse(widget.diamondModel.date)
           ? "-"
-          : DateUtilities().convertServerDateToFormatterString(
-              widget.diamondModel.date,
-              formatter: DateUtilities.dd_mm_yyyy);
+          : v;
     } else if (widget.moduleType ==
         DiamondModuleConstant.MODULE_TYPE_MY_OFFER) {
       return isNullEmptyOrFalse(widget.diamondModel.offerValidDate)

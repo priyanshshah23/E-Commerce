@@ -13,6 +13,8 @@ import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:simple_moment/simple_moment.dart';
+import 'package:intl/intl.dart';
 
 class OfferViewScreen extends StatefulWidget {
   static const route = "OfferView";
@@ -45,6 +47,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   int selectedSlot = 0;
   int selectedVirtualType = -1;
   List<SlotModel> arrSlots = [];
+  List<SlotModel> disableSlots = [];
   List<String> virtualList = [
     VirtualTypesString.phoneCall,
     VirtualTypesString.webConference,
@@ -58,6 +61,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
     super.initState();
     days = setDateList();
     callApiforTimeSlots();
+
   }
 
   getDate(int day) {
@@ -76,6 +80,31 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             isProgress: true)
         .then((resp) async {
       arrSlots = resp.data.list;
+
+      DateTime now = DateTime.now();
+
+      arrSlots.forEach((element) {
+        DateTime serverStart = DateUtilities().convertServerStringToFormatterDate(element.start);
+
+        if (now.isAfter(DateTime(
+            now.year,
+            now.month,
+            now.day,
+            serverStart.hour,
+            serverStart.minute,
+            serverStart.second,
+            serverStart.millisecond))){
+          element.disable = true;
+          print("Hello");
+        }else{
+          element.disable = false;
+        }
+        // var t = "${form1} ${element.endTime}";
+        // if(t.compareTo(form)>=0){
+        //   print(t);
+        // }
+
+      });
       setState(() {});
     }).catchError((onError) {
       if (onError is ErrorResp) {
@@ -462,7 +491,16 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                     return InkWell(
                       onTap: () {
                         setState(() {
-                          selectedSlot = index;
+                          print(DateTime.now().toIso8601String());
+                          print(DateTime.now().minute);
+                          arrSlots.forEach((element) {
+                           // element.
+                          });
+                          if(arrSlots[index].disable){
+
+                          }else {
+                            selectedSlot = index;
+                          }
                         });
                       },
                       child: Container(
@@ -471,16 +509,16 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(getSize(5)),
                           border: Border.all(color: appTheme.borderColor),
-                          color: selectedSlot == index
-                              ? appTheme.colorPrimary
+                          color: arrSlots[index].disable
+                              ? appTheme.colorPrimaryShadow
                               : Colors.transparent,
                         ),
                         child: Center(
                           child: Text(
                             "${arrSlots[index].startTime} - ${arrSlots[index].endTime}",
-                            style: selectedSlot == index
-                                ? appTheme.white16TextStyle
-                                : appTheme.black16TextStyle,
+                            style:appTheme.black16TextStyle
+                                // ? appTheme.white16TextStyle
+                                // : appTheme.black16TextStyle,
                           ),
                         ),
                       ),

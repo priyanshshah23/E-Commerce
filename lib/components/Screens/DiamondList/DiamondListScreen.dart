@@ -449,6 +449,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 switch (moduleType) {
                   case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
                     diamonds.memoNo = element.id;
+                    element.cabinSlot.forEach((element1) {
+                      diamonds.start=element1.start;
+                      diamonds.end=element1.end;
+                    });
                     diamonds.date = element.date;
                     diamonds.createdAt = element.createdAt;
                     diamonds.purpose = element.purpose;
@@ -486,14 +490,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   diamondModel.offerStatus = element.offerStatus;
                   diamondModel.newAmount = element.newAmount;
                   diamondModel.newDiscount = element.newDiscount;
+                  diamondModel.bargainTrack = element.bargainTrack;
                   diamondModel.newPricePerCarat = element.newPricePerCarat;
                   diamondModel.remarks = element.remarks;
                   // if (element.bargainTrack.isNotEmpty &&
                   //     element.bargainTrack != null) {
-                  diamondModel.bargainTrack = element.bargainTrack;
                   // }
-                  break;
-                case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
                   break;
                 case DiamondModuleConstant.MODULE_TYPE_MY_REMINDER:
                   diamondModel.trackItemReminder = trackDiamonds;

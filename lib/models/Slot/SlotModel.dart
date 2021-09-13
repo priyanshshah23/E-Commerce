@@ -59,6 +59,7 @@ class SlotModel {
   String reason;
   bool isDeleted;
   String cabinId;
+  bool disable;
   String startTime;
   String endTime;
 
@@ -97,6 +98,7 @@ class SlotModel {
 
     startTime = DateUtilities().convertServerDateToFormatterString(start,
         formatter: DateUtilities.hh_mm_a);
+
     endTime = DateUtilities().convertServerDateToFormatterString(end,
         formatter: DateUtilities.hh_mm_a);
   }

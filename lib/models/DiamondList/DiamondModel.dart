@@ -28,6 +28,8 @@ class DiamondModel {
   String lbCmt;
   num cAng;
   num cHgt;
+  String start;
+  String end;
   String cultNm;
   String cutNm;
   num depPer;
