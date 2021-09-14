@@ -44,7 +44,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   DateTime pickedDate = DateTime.now();
   String pd = DateTime.now().toIso8601String();
   int selectedDate = -1;
-  int selectedSlot = 0;
+  int selectedSlot ;
   int selectedVirtualType = -1;
   List<SlotModel> arrSlots = [];
   List<SlotModel> disableSlots = [];
@@ -252,7 +252,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                               positiveBtnTitle: R.string.commonString.ok,
                             );
                         return;
-                      } else if (selectedSlot < 0) {
+                      } else if (selectedSlot ==null) {
                         app.resolve<CustomDialogs>().confirmDialog(
                               context,
                               title: "",
@@ -491,8 +491,6 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                     return InkWell(
                       onTap: () {
                         setState(() {
-                          print(DateTime.now().toIso8601String());
-                          print(DateTime.now().minute);
                           arrSlots.forEach((element) {
                            // element.
                           });
@@ -500,6 +498,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
 
                           }else {
                             selectedSlot = index;
+
                           }
                         });
                       },
@@ -510,8 +509,10 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                           borderRadius: BorderRadius.circular(getSize(5)),
                           border: Border.all(color: appTheme.borderColor),
                           color: arrSlots[index].disable
-                              ? appTheme.colorPrimaryShadow
-                              : Colors.transparent,
+                                  ? appTheme.colorPrimaryShadow
+                              : selectedSlot==index
+                                 ? appTheme.colorPrimary
+                                 : Colors.transparent,
                         ),
                         child: Center(
                           child: Text(
