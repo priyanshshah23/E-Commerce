@@ -372,6 +372,7 @@ class DiamondConfig {
             list.add(BottomTabModel(
                 title: "",
                 image: gridView,
+                selectedImage: selectGridList,
                 code: BottomCodeConstant.TBGrideView,
                 sequence: 2,
                 isCenter: true));

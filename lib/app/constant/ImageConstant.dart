@@ -82,6 +82,7 @@ const String placeOrder = "assets/DiamondDetail/placeOrder.png";
 const String comment = "assets/DiamondDetail/comment.png";
 const String clock = "assets/DiamondDetail/clock.png";
 const String selectList = "assets/DiamondDetail/selectAllList.png";
+const String selectGridList = "assets/DiamondDetail/selectAllList-grid.png";
 const String medal = "assets/DiamondDetail/medal.png";
 const String playButton = "assets/DiamondDetail/play-button.png";
 const String gallary = "assets/DiamondDetail/image.png";

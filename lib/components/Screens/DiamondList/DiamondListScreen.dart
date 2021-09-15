@@ -127,6 +127,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   int viewTypeCount = 0;
   ScreenshotCallback screenshotCallback = ScreenshotCallback();
   bool isTermsOpen = false;
+  ScrollController _controller;
 
   @override
   void initState() {
@@ -134,6 +135,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     if (app.resolve<PrefUtils>().getCompanyDetails() != null) {
       isCompanySelected = true;
     }
+    _controller = ScrollController();
     Config().getOptionsJson().then((result) {
       result.forEach((element) {
         if (element.isActive) {
@@ -610,6 +612,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondList.state.listItems = viewTypeCount == 0
         ? ListView.builder(
             itemCount: arraDiamond.length,
+             controller: _controller,
             itemBuilder: (context, index) {
               return DiamondItemWidget(
                   controller: controller,
@@ -695,46 +698,47 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   });
             },
           )
-        : viewTypeCount == 1
-            ? ListView.builder(
-                itemCount: arraDiamond.length,
-                itemBuilder: (context, index) {
-                  return DiamondExpandItemWidget(
-                      item: arraDiamond[index],
-                      leftSwipeList: getLeftAction((manageClick) async {
-                        //Detail
-                        var dict = Map<String, dynamic>();
-                        dict[ArgumentConstant.DiamondDetail] =
-                            arraDiamond[index];
-                        dict[ArgumentConstant.ModuleType] = moduleType;
-
-                        //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
-                        bool isBack =
-                            await Navigator.of(context).push(MaterialPageRoute(
-                          settings:
-                              RouteSettings(name: DiamondDetailScreen.route),
-                          builder: (context) =>
-                              DiamondDetailScreen(arguments: dict),
-                        ));
-                        if (isBack != null && isBack) {
-                          onRefreshList();
-                        }
-                      }),
-                      list: getRightAction((manageClick) {
-                        manageRowClick(index, manageClick.type);
-                      }),
-                      actionClick: (manageClick) {
-                        manageRowClick(index, manageClick.type);
-                      });
-                },
-              )
-            : viewTypeCount == 2
+        // : viewTypeCount == 1
+        //     ? ListView.builder(
+        //         itemCount: arraDiamond.length,
+        //         itemBuilder: (context, index) {
+        //           return DiamondExpandItemWidget(
+        //               item: arraDiamond[index],
+        //               leftSwipeList: getLeftAction((manageClick) async {
+        //                 //Detail
+        //                 var dict = Map<String, dynamic>();
+        //                 dict[ArgumentConstant.DiamondDetail] =
+        //                     arraDiamond[index];
+        //                 dict[ArgumentConstant.ModuleType] = moduleType;
+        //
+        //                 //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+        //                 bool isBack =
+        //                     await Navigator.of(context).push(MaterialPageRoute(
+        //                   settings:
+        //                       RouteSettings(name: DiamondDetailScreen.route),
+        //                   builder: (context) =>
+        //                       DiamondDetailScreen(arguments: dict),
+        //                 ));
+        //                 if (isBack != null && isBack) {
+        //                   onRefreshList();
+        //                 }
+        //               }),
+        //               list: getRightAction((manageClick) {
+        //                 manageRowClick(index, manageClick.type);
+        //               }),
+        //               actionClick: (manageClick) {
+        //                 manageRowClick(index, manageClick.type);
+        //               });
+        //         },
+        //       )
+            : viewTypeCount == 1
                 ? GridView.count(
                     shrinkWrap: true,
                     crossAxisCount: 2,
                     childAspectRatio: (166) / (202 + 73),
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 8,
+
                     padding: EdgeInsets.only(
                       left: getSize(Spacing.leftPadding),
                       bottom: getSize(Spacing.leftPadding),
@@ -1272,14 +1276,19 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         setSelectAllDiamond(model);
         break;
       case BottomCodeConstant.TBGrideView:
-        viewTypeCount += 1;
-        if (viewTypeCount == 3) {
+        if (viewTypeCount == 1) {
           viewTypeCount = 0;
+        }else {
+          viewTypeCount = 1;
         }
         fillArrayList();
+        model.isSelected = !model.isSelected;
+        setState(() {
+        });
         diamondList.state.setApiCalling(false);
         break;
       case BottomCodeConstant.TBSortView:
+        _controller.animateTo(0, duration: Duration(seconds: 1),curve: Curves.easeIn);
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -1290,6 +1299,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             callBack: (value) {
               sortRequest = value;
               callApi(true);
+              fillArrayList();
+              _controller.dispose();
             },
           ),
         );
