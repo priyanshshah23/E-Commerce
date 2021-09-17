@@ -1,12 +1,24 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
+import 'package:diamnow/app/network/NetworkCall.dart';
+import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
+import 'package:diamnow/models/excel/ExcelApiResponse.dart';
+import 'package:flutter_archive/flutter_archive.dart';
+import 'package:path/path.dart' as path;
+import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
+import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class DownLoadAndShareScreen extends StatefulWidget {
   String title = "";
@@ -58,7 +70,15 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
   bool isExcelExpanded = true;
   bool isRoughExpanded = true;
 
-  List<String> selectMenuString;
+  List<String> selectMenuString = [];
+  List<String> selectMenuString1 = [];
+  String select;
+  List<String> savePath = [];
+  Email email;
+  List<String> data = [];
+  String platformResponse;
+  String saveExcel;
+  bool excelSaved;
 
   _DownLoadAndShareScreenState(
     this.title, {
@@ -72,7 +92,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     super.initState();
   }
 
-  checkValidation() {
+  checkValidation1() {
     totalList = (firstImageList +
             secondImageList +
             firstVideoList +
@@ -96,6 +116,163 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     selectMenuString = data;
     debugPrint("------------------------------${selectMenuString.toString()}");
     return !isNullEmptyOrFalse(totalList);
+  }
+
+  checkValidation() async {
+    totalList = (firstImageList +
+            secondImageList +
+            firstVideoList +
+            secondVideoList +
+            firstCertificateList +
+            secondCertificateList +
+            firstExcelList)
+        .where((element) {
+      return element.isSelected;
+    }).toList();
+    List<String> data1 = [];
+    DownloadState downloadStateObj = DownloadState();
+    final dir = await downloadStateObj.getDownloadDirectory();
+    DateTime now = new DateTime.now();
+    String savePath1;
+    String fileName;
+    bool excelTitle = false;
+    excelSaved = false;
+    String fileExcel;
+    savePath = [];
+    int p = 0;
+    String formattedDate;
+    var formatter = DateFormat('dd_MM_yyyy_hh_mm_ss');
+    diamondList.forEach(
+      (element) async {
+        await totalList.forEach(
+          (v) async {
+            p++;
+            formattedDate = formatter.format(now) + "${p}";
+            if (v.title == "Certificate") {
+              data.add(v.url + element.vStnId + ".pdf");
+              fileName = "Certificate_${formattedDate}.pdf";
+            } else if (v.title == "Ideal Image" ||
+                v.title == "Natural Image" ||
+                v.title == "Fluorescence Image" ||
+                v.title == "Heart & Arrow Image" ||
+                v.title == "Plot Image" ||
+                v.title == "Propotion Image") {
+              data.add(v.url + element.vStnId + ".jpg");
+              fileName = "Image${formattedDate}.jpg";
+            } else if (v.title == "Natural Video" || v.title == "HD Video") {
+              data.add(v.url + element.vStnId + ".mp4");
+              fileName = "Video${formattedDate}.mp4";
+            } else if (v.title == "Excel") {
+              excelTitle = true;
+            } else {
+              print("No Action");
+            }
+            savePath1 = path.join(dir.path, fileName);
+            savePath.add(savePath1);
+          },
+        );
+      },
+    );
+    if (excelTitle == true) {
+      callApiForExcel(context, diamondList);
+      print("........................$saveExcel");
+    }
+    selectMenuString = data;
+    debugPrint("------------------------------${selectMenuString.toString()}");
+    if ((saveExcel == null) && (excelSaved == true)) {
+      email = Email(
+        body: selectMenuString.map((e) => e.toString()).toList().join("\n\n"),
+        subject: "Diamond Details",
+        recipients: ['priyansh@mailinator.com'],
+        // attachmentPaths: [saveExcel],
+        isHTML: false,
+      );
+      try {
+        await FlutterEmailSender.send(email).then((value1) {
+          print("hell");
+        });
+        platformResponse = 'success';
+      } catch (error) {
+        platformResponse = error.toString();
+        print("...................$platformResponse");
+      }
+    }
+
+    return !isNullEmptyOrFalse(totalList);
+  }
+
+  callApiForExcel(BuildContext context, List<DiamondModel> diamondList,
+      {bool isForShare = false, void callback(String)}) {
+    final Completer<WebViewController> _controller =
+        Completer<WebViewController>();
+
+    List<String> stoneId = [];
+    diamondList.forEach((element) {
+      stoneId.add(element.id);
+    });
+    Map<String, dynamic> dict = {};
+    dict["id"] = stoneId;
+
+    NetworkCall<ExcelApiResponse>()
+        .makeCall(
+      () => app.resolve<ServiceModule>().networkService().getExcel(dict),
+      context,
+    )
+        .then((excelApiResponse) async {
+      // success(diamondListResp);
+      String url = ApiConstants.baseURLForExcel + excelApiResponse.data.data;
+      String excelFileUrl = url;
+      print("Excel file URL : " + url);
+      print("Final ExcelFile Viewer Url : " + url);
+
+      DownloadState downloadStateObj = DownloadState();
+      final dir = await downloadStateObj.getDownloadDirectory();
+      DateTime now = new DateTime.now();
+      var formatter = DateFormat('dd_MM_yyyy_hh_mm_ss');
+      String formattedDate = formatter.format(now);
+      String fileName = "FinalExcel_${formattedDate}.xlsx";
+      saveExcel = path.join(dir.path, fileName);
+      print("file:/" + saveExcel);
+      Dio dio = Dio();
+      dio
+          .download(
+        excelFileUrl,
+        saveExcel,
+        deleteOnError: true,
+      )
+          .then((value) async {
+        excelSaved = true;
+        email = Email(
+          body: selectMenuString.map((e) => e.toString()).toList().join("\n\n"),
+          subject: "Diamond Details",
+          recipients: ['priyansh@mailinator.com'],
+          attachmentPaths: [saveExcel],
+          isHTML: false,
+        );
+        try {
+          await FlutterEmailSender.send(email);
+          platformResponse = 'success';
+        } catch (error) {
+          platformResponse = error.toString();
+          print("...................$platformResponse");
+        }
+        Navigator.pop(context);
+      });
+    }).catchError((onError) {
+      showToast("There is problem on server, please try again later.",
+          context: context);
+      print(onError);
+    });
+  }
+
+  downloadCertificate(
+      String excelFileUrl, String savePath1, BuildContext context) {
+    Dio dio = Dio();
+    dio.download(
+      excelFileUrl,
+      savePath1,
+      deleteOnError: true,
+    );
   }
 
   @override
@@ -180,7 +357,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        if (checkValidation()) {
+                        if (checkValidation1()) {
 //                          whatsAppOpen();
                           openURLWithApp(
                               "whatsapp://send?phone=&text=${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
@@ -218,12 +395,23 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
                       onTap: () {
                         //callEmailApi();
                         if (checkValidation()) {
-                          openURLWithApp(
-                              "mailto:?subject=Diamond%20Details&body= Dear Sir / Madam Greetings of the day from Arjiv Team. Please have a look at below stock file.\n\n${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
-//                              "mailto:?subject=DiamNow&body=DiamNow",
-                              context,
-                              isPop: true);
-                          Navigator.pop(context);
+                          //  for(int y=0;y<savePath.length;y++) {
+                          //     final Email email = Email(
+                          //        body: 'Email body',
+                          //        subject: 'Email subject',
+                          //        recipients: ['priyansh@mailinator.com'],
+                          //        cc: ['shahpriyansh91@gmail.com'],
+                          //        attachmentPaths: [savePath[0]],
+                          //        isHTML: false,
+                          //      );
+                          // //   }
+                          //   await FlutterEmailSender.send(email);
+//                           openURLWithApp(
+//                               "mailto:?subject=Diamond%20Details&body= Dear Sir / Madam Greetings of the day from Arjiv Team. Please have a look at below stock file.\n\n${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
+// //                              "mailto:?subject=DiamNow&body=DiamNow",
+//                               context,
+//                               isPop: true);
+//                           Navigator.pop(context);
                         } else {
                           app.resolve<CustomDialogs>().errorDialog(
                               context, title, "Please select any",
@@ -253,7 +441,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
                   Expanded(
                     child: InkWell(
                       onTap: () {
-                        if (checkValidation()) {
+                        if (checkValidation1()) {
                           print(
                               "------------------skype:?chat=${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}");
                           openURLWithApp(

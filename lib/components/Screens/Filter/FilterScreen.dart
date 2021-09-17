@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:diamnow/app/AppConfiguration/AppNavigation.dart';
@@ -47,6 +48,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:rxbus/rxbus.dart';
 
 class FilterScreen extends StatefulScreenWidget {
@@ -108,6 +110,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   List<SelectStatusModel> selectStatusModel = [];
   bool isCompanySelected = false;
   bool isStatusSelected = false;
+  bool isProgress = true;
 
   //PopUp data for savedsearch...
   List<SelectionPopupModel> saveSearchList = List<SelectionPopupModel>();
@@ -719,8 +722,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
         positiveBtnTitle: R.string.commonString.ok,
         onClickCallback: (click) {
           if (click == ButtonType.NagativeButtonClick) {
-          //   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
-          // } else {
+            //   AppNavigation.shared.movetoHome(isPopAndSwitch: true);
+            // } else {
             Map<String, dynamic> dict = {};
             dict[ArgumentConstant.ModuleType] =
                 DiamondModuleConstant.MODULE_TYPE_MY_DEMAND;
@@ -896,9 +899,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
-        }
-
-        else if (obj.code == BottomCodeConstant.filterAddDemamd) {
+        } else if (obj.code == BottomCodeConstant.filterAddDemamd) {
           if (app
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_myDemand)
@@ -906,17 +907,17 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
               Map<String, dynamic> map = FilterRequest()
                   .createRequest(arrList, selectedStatus: selectStatus);
-             if (app.resolve<PrefUtils>().getUserDetails().type ==
-                     UserConstant.CUSTOMER &&
-                 map.length < 3) {
-               app.resolve<CustomDialogs>().errorDialog(
-                     context,
-                     "",
-                     "Please select any 2 criteria.",
-                     btntitle: R.string.commonString.ok,
-                   );
-             } else
-              getAddDemand();
+              if (app.resolve<PrefUtils>().getUserDetails().type ==
+                      UserConstant.CUSTOMER &&
+                  map.length < 3) {
+                app.resolve<CustomDialogs>().errorDialog(
+                      context,
+                      "",
+                      "Please select any 2 criteria.",
+                      btntitle: R.string.commonString.ok,
+                    );
+              } else
+                getAddDemand();
             } else {
               showToast(R.string.commonString.selectAtleastOneFilter,
                   context: context);
@@ -925,9 +926,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           } else {
             app.resolve<CustomDialogs>().accessDenideDialog(context);
           }
-        }
-
-        else if (obj.code == BottomCodeConstant.filterSearch) {
+        } else if (obj.code == BottomCodeConstant.filterSearch) {
           //Check internet is online or not
           var connectivityResult = await Connectivity().checkConnectivity();
           if (connectivityResult == ConnectivityResult.none) {
@@ -1218,31 +1217,30 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   }
                 }
               });
-            }
-            else if (diamondListResp.data.count >250 ) {
+            } else if (diamondListResp.data.count > 250) {
               app.resolve<CustomDialogs>().confirmDialog(context,
                   title: R.string.commonString.diamond250,
                   desc: R.string.commonString.narrowSearch,
                   positiveBtnTitle: R.string.commonString.ok);
-                  //negativeBtnTitle: R.string.screenTitle.addDemand,
-                  // onClickCallback: (buttonType) {
-                  //   if (buttonType == ButtonType.NagativeButtonClick) {
-                  //     if (app
-                  //         .resolve<PrefUtils>()
-                  //         .getModulePermission(
-                  //         ModulePermissionConstant.permission_myDemand)
-                  //         .insert) {
-                  //       if (!isNullEmptyOrFalse(
-                  //           FilterRequest().createRequest(arrList)))
-                  //         getAddDemand();
-                  //       else {
-                  //         showToast(R.string.commonString.selectAtleastOneFilter,
-                  //             context: context);
-                  //       }
-                  //       // place code
-                  //     }
-                  //   }
-                  // });
+              //negativeBtnTitle: R.string.screenTitle.addDemand,
+              // onClickCallback: (buttonType) {
+              //   if (buttonType == ButtonType.NagativeButtonClick) {
+              //     if (app
+              //         .resolve<PrefUtils>()
+              //         .getModulePermission(
+              //         ModulePermissionConstant.permission_myDemand)
+              //         .insert) {
+              //       if (!isNullEmptyOrFalse(
+              //           FilterRequest().createRequest(arrList)))
+              //         getAddDemand();
+              //       else {
+              //         showToast(R.string.commonString.selectAtleastOneFilter,
+              //             context: context);
+              //       }
+              //       // place code
+              //     }
+              //   }
+              // });
             } else {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
@@ -1312,7 +1310,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   }
                 }
               });
-            }else {
+            } else {
               Map<String, dynamic> dict = new HashMap();
               dict["filterId"] = diamondListResp.data.filter.id;
               dict["filters"] = FilterRequest().createRequest(arrList);
@@ -1433,6 +1431,7 @@ class _FilterItemState extends State<FilterItem> {
 
   @override
   Widget build(BuildContext context) {
+    print("..............................hello coming soon");
     return ListView.builder(
       shrinkWrap: true,
       itemCount: widget.arrList.length,

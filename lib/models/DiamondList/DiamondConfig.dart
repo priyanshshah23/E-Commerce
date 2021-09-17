@@ -1241,17 +1241,17 @@ class DiamondConfig {
 
   //Download excel
   downloadExcel(String excelFileUrl, String savePath) {
-//    Dio dio = Dio();
-//
-//    dio
-//        .download(
-//      excelFileUrl,
-//      savePath,
-//      deleteOnError: true,
-//    )
-//        .then((value) {
-//      print("excel downlaoded");
-//    });
+   Dio dio = Dio();
+
+   dio
+       .download(
+     excelFileUrl,
+     savePath,
+     deleteOnError: true,
+   )
+       .then((value) {
+     print("excel downlaoded");
+   });
   }
 
   actionDownload(

@@ -735,6 +735,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         : viewTypeCount == 1
             ? GridView.count(
                 shrinkWrap: true,
+                controller: _controller,
                 crossAxisCount: 2,
                 childAspectRatio: (166) / (202 + 73),
                 mainAxisSpacing: 10,
@@ -1287,7 +1288,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         } else {
           viewTypeCount = 1;
         }
-        fillArrayList();
+        if (sort == true) {
+          fillArrayList(isFromSort: true);
+        } else {
+          fillArrayList();
+        }
         model.isSelected = !model.isSelected;
         setState(() {});
         diamondList.state.setApiCalling(false);

@@ -779,9 +779,9 @@ class SyncManager {
       final savePath = path.join(dir.path, fileName);
       print("file:/" + savePath);
 
-      if (isForShare) {
-        callback(url);
-      } else {
+      // if (isForShare) {
+      //   callback(url);
+      // } else {
         await downloadExcel(excelFileUrl, savePath, context);
         // if (Platform.isIOS) {
         //   Map<String, dynamic> dict = {};
@@ -800,7 +800,7 @@ class SyncManager {
         //   dict["screenTitle"] = excelApiResponse.data.excelName;
         //   NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
         // }
-      }
+      // }
       // getWebView(context, url);
     }).catchError((onError) {
       showToast("There is problem on server, please try again later.",
