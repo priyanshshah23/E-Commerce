@@ -13,7 +13,6 @@ import 'package:diamnow/models/Slot/SlotModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:simple_moment/simple_moment.dart';
 import 'package:intl/intl.dart';
 
 class OfferViewScreen extends StatefulWidget {
@@ -95,15 +94,9 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             serverStart.second,
             serverStart.millisecond))){
           element.disable = true;
-          print("Hello");
         }else{
           element.disable = false;
         }
-        // var t = "${form1} ${element.endTime}";
-        // if(t.compareTo(form)>=0){
-        //   print(t);
-        // }
-
       });
       setState(() {});
     }).catchError((onError) {
@@ -498,7 +491,6 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
 
                           }else {
                             selectedSlot = index;
-
                           }
                         });
                       },

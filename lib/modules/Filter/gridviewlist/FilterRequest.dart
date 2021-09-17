@@ -302,10 +302,10 @@ class FilterDataSource {
               for (var master in item.masters) {
                 for (var tCarat in master.grouped) {
                   for (var model in arrSelected) {
-                    if (num.parse(tCarat.webDisplay.split("-")[0]) ==
-                            num.parse(model[">="].toString()) &&
-                        num.parse(tCarat.webDisplay.split("-")[1]) ==
-                            num.parse(model["<="].toString())) {
+                    if (num.tryParse(tCarat.webDisplay.split("-")[0]) ==
+                            num.tryParse(model[">="].toString()) &&
+                        num.tryParse(tCarat.webDisplay.split("-")[1]) ==
+                            num.tryParse(model["<="].toString())) {
                       tCarat.isSelected = true;
                       master.isSelected = true;
                       arrDup.remove(model);

@@ -2244,16 +2244,17 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
             _offeredPricePerCaratTextfieldContoller.text =
                 PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-          // } else if (discount > (widget.item.back - minOfferedDiscount)) {
-          //   _offeredDiscountTextFieldController.text =
-          //       PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
-          //   _offeredPricePerCaratTextfieldContoller.text =
-          //       PriceUtilities.getDoubleValue(widget.item.getFinalRate());
-          //   showToast(
-          //     "Cannot allow discount less than ${PriceUtilities.getDoubleValue(widget.item.back - minOfferedDiscount)}",
-          //     context: context,
-          //   );
-          // } else if (maxOfferedDiscount > discount) {
+          }
+          else if (discount < -100 ) {
+            _offeredDiscountTextFieldController.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
+            _offeredPricePerCaratTextfieldContoller.text =
+                PriceUtilities.getDoubleValue(widget.item.getFinalRate());
+            showToast(
+              "Cannot allow discount less than 100",context: context
+            );
+          //}
+          //else if (maxOfferedDiscount > discount) {
           //   _offeredDiscountTextFieldController.text =
           //       PriceUtilities.getDoubleValue(widget.item.getFinalDiscount());
           //   _offeredPricePerCaratTextfieldContoller.text =

@@ -128,6 +128,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   ScreenshotCallback screenshotCallback = ScreenshotCallback();
   bool isTermsOpen = false;
   ScrollController _controller;
+  bool sort = false;
 
   @override
   void initState() {
@@ -234,7 +235,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   openTerms() {
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
         !isTermsOpen) {
-      
       /*   Timer(
         Duration(seconds: 1),
             () => (),
@@ -452,8 +452,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
                     diamonds.memoNo = element.id;
                     element.cabinSlot.forEach((element1) {
-                      diamonds.start=element1.start;
-                      diamonds.end=element1.end;
+                      diamonds.start = element1.start;
+                      diamonds.end = element1.end;
                     });
                     diamonds.date = element.date;
                     diamonds.createdAt = element.createdAt;
@@ -530,6 +530,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       manageDiamondSelection();
       //callBlockApi(isProgress: true);
       page = page + 1;
+
       diamondList.state.setApiCalling(false);
     }).catchError((onError) {
       if (page == DEFAULT_PAGE) {
@@ -538,7 +539,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         diamondList.state.totalCount = arraDiamond.length;
         manageDiamondSelection();
       }
-
       diamondList.state.setApiCalling(false);
     });
   }
@@ -604,7 +604,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     callApi(false);
   }
 
-  fillArrayList() {
+  fillArrayList({bool isFromSort = false}) {
+    print('<><><><><>$isFromSort');
     if (arraDiamond.length == 0) {
       return;
     }
@@ -612,7 +613,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     diamondList.state.listItems = viewTypeCount == 0
         ? ListView.builder(
             itemCount: arraDiamond.length,
-             controller: _controller,
+            controller: _controller,
             itemBuilder: (context, index) {
               return DiamondItemWidget(
                   controller: controller,
@@ -731,54 +732,60 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         //               });
         //         },
         //       )
-            : viewTypeCount == 1
-                ? GridView.count(
-                    shrinkWrap: true,
-                    crossAxisCount: 2,
-                    childAspectRatio: (166) / (202 + 73),
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 8,
+        : viewTypeCount == 1
+            ? GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                childAspectRatio: (166) / (202 + 73),
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 8,
+                padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  bottom: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                ),
+                children: List.generate(arraDiamond.length, (index) {
+                  var item = arraDiamond[index];
+                  return DiamondGridItemWidget(
+                      item: item,
+                      list: getRightAction((manageClick) {
+                        manageRowClick(index, manageClick.type);
+                      }),
+                      actionClick: (manageClick) {
+                        manageRowClick(index, manageClick.type);
+                      });
+                }),
+              )
+            : GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                childAspectRatio: 0.8,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 8,
+                padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  bottom: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                ),
+                children: List.generate(arraDiamond.length, (index) {
+                  var item = arraDiamond[index];
+                  return DiamondSquareGridItem(
+                      item: item,
+                      list: getRightAction((manageClick) {
+                        manageRowClick(index, manageClick.type);
+                      }),
+                      actionClick: (manageClick) {
+                        manageRowClick(index, manageClick.type);
+                      });
+                }),
+              );
 
-                    padding: EdgeInsets.only(
-                      left: getSize(Spacing.leftPadding),
-                      bottom: getSize(Spacing.leftPadding),
-                      right: getSize(Spacing.rightPadding),
-                    ),
-                    children: List.generate(arraDiamond.length, (index) {
-                      var item = arraDiamond[index];
-                      return DiamondGridItemWidget(
-                          item: item,
-                          list: getRightAction((manageClick) {
-                            manageRowClick(index, manageClick.type);
-                          }),
-                          actionClick: (manageClick) {
-                            manageRowClick(index, manageClick.type);
-                          });
-                    }),
-                  )
-                : GridView.count(
-                    shrinkWrap: true,
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.8,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 8,
-                    padding: EdgeInsets.only(
-                      left: getSize(Spacing.leftPadding),
-                      bottom: getSize(Spacing.leftPadding),
-                      right: getSize(Spacing.rightPadding),
-                    ),
-                    children: List.generate(arraDiamond.length, (index) {
-                      var item = arraDiamond[index];
-                      return DiamondSquareGridItem(
-                          item: item,
-                          list: getRightAction((manageClick) {
-                            manageRowClick(index, manageClick.type);
-                          }),
-                          actionClick: (manageClick) {
-                            manageRowClick(index, manageClick.type);
-                          });
-                    }),
-                  );
+    if (isFromSort) {
+      _controller.animateTo(_controller.position.minScrollExtent,
+          duration: Duration(milliseconds: 10), curve: Curves.linear);
+      //action
+      print('ACTION');
+    }
   }
 
   callBlockApi({bool isProgress = false}) {
@@ -1003,7 +1010,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   List<Widget> getToolbarItem() {
     List<Widget> list = [];
-    for (int i = 0; i < diamondConfig.toolbarList.length-1; i++) {
+    for (int i = 0; i < diamondConfig.toolbarList.length - 1; i++) {
       var element = diamondConfig.toolbarList[i];
       /*if (element.code == BottomCodeConstant.TBDownloadView &&
           OfflineStockManager.shared.isDownloading) {
@@ -1102,60 +1109,59 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         );
       }*/
       // else {
-        list.add(GestureDetector(
-          onTap: !isNullEmptyOrFalse(arraDiamond)
-              ? () {
-                  manageToolbarClick(element);
-                }
-              : null,
-          child: Padding(
-            padding: EdgeInsets.only(
-                right: i == diamondConfig.toolbarList.length - 1
-                    ? getSize(Spacing.rightPadding)
-                    : getSize(8),
-                left: getSize(8.0)),
-            child: element.code == BottomCodeConstant.TBCompanySelection
-                ? Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          buildingIcon,
-                          height: getSize(20),
-                          width: getSize(20),
+      list.add(GestureDetector(
+        onTap: !isNullEmptyOrFalse(arraDiamond)
+            ? () {
+                manageToolbarClick(element);
+              }
+            : null,
+        child: Padding(
+          padding: EdgeInsets.only(
+              right: i == diamondConfig.toolbarList.length - 1
+                  ? getSize(Spacing.rightPadding)
+                  : getSize(8),
+              left: getSize(8.0)),
+          child: element.code == BottomCodeConstant.TBCompanySelection
+              ? Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Center(
+                      child: Image.asset(
+                        buildingIcon,
+                        height: getSize(20),
+                        width: getSize(20),
+                      ),
+                    ),
+                    Visibility(
+                      visible: isCompanySelected,
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: getSize(10),
+                        ),
+                        height: getSize(8),
+                        width: getSize(8),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: appTheme.colorPrimary,
                         ),
                       ),
-                      Visibility(
-                        visible: isCompanySelected,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                            top: getSize(10),
-                          ),
-                          height: getSize(8),
-                          width: getSize(8),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: appTheme.colorPrimary,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                : Image.asset(
-                    element.isSelected
-                        ? (element.selectedImage != null
-                            ? element.selectedImage
-                            : element.image)
-                        : element.image,
-                    height: getSize(20),
-                    width: getSize(20),
-                  ),
-          ),
-        ));
-      }
+                    )
+                  ],
+                )
+              : Image.asset(
+                  element.isSelected
+                      ? (element.selectedImage != null
+                          ? element.selectedImage
+                          : element.image)
+                      : element.image,
+                  height: getSize(20),
+                  width: getSize(20),
+                ),
+        ),
+      ));
+    }
 
-      ;
-
+    ;
 
     return list;
   }
@@ -1278,17 +1284,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case BottomCodeConstant.TBGrideView:
         if (viewTypeCount == 1) {
           viewTypeCount = 0;
-        }else {
+        } else {
           viewTypeCount = 1;
         }
         fillArrayList();
         model.isSelected = !model.isSelected;
-        setState(() {
-        });
+        setState(() {});
         diamondList.state.setApiCalling(false);
         break;
       case BottomCodeConstant.TBSortView:
-        _controller.animateTo(0, duration: Duration(seconds: 1),curve: Curves.easeIn);
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -1299,11 +1303,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             callBack: (value) {
               sortRequest = value;
               callApi(true);
-              fillArrayList();
-              _controller.dispose();
+              if (value != null) {
+                sort = true;
+                fillArrayList(isFromSort: true);
+              }
+
+              // sort = true;
+              //fillArrayList(isFromSort: true);
+              //  diamondList.state.setApiCalling(false);
+              // if (arraDiamond != null && arraDiamond.isNotEmpty) {
+              //   _controller.animateTo(_controller.position.minScrollExtent,
+              //       duration: Duration(seconds: 1), curve: Curves.linear);
+              // }
             },
           ),
         );
+
         break;
       // case BottomCodeConstant.TBDownloadView:
       //   if (moduleType == DiamondModuleConstant.MODULE_TYPE_SEARCH) {
@@ -1355,9 +1370,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
   setSelectAllDiamond(BottomTabModel model) {
     arraDiamond.forEach((element) {
-      if((moduleType==DiamondModuleConstant.MODULE_TYPE_MY_OFFER)&&((element.offerStatus==OfferStatus.expired)||(element.offerStatus==OfferStatus.rejected))){
-
-      }else {
+      if ((moduleType == DiamondModuleConstant.MODULE_TYPE_MY_OFFER) &&
+          ((element.offerStatus == OfferStatus.expired) ||
+              (element.offerStatus == OfferStatus.rejected))) {
+      } else {
         element.isSelected = model.isSelected;
       }
     });
@@ -1373,7 +1389,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   manageDiamondSelection() {
-    fillArrayList();
+    if (sort == true) {
+      fillArrayList(isFromSort: true);
+    } else {
+      fillArrayList();
+    }
     diamondCalculation.setAverageCalculation(arraDiamond);
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
       diamondFinalCalculation.setAverageCalculation(arraDiamond,
@@ -1547,20 +1567,20 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   //     .toList();
                   //
                   // if (isNullEmptyOrFalse(filter)) {
-                    showBottomSheetForMenu(
-                      context,
-                      diamondConfig.arrMoreMenu,
-                      (manageClick) {
-                        if (manageClick.bottomTabModel.type ==
-                            ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
-                          clearSelection();
-                        } else {
-                          manageBottomMenuClick(manageClick.bottomTabModel);
-                        }
-                      },
-                      R.string.commonString.more,
-                      isDisplaySelection: false,
-                    );
+                  showBottomSheetForMenu(
+                    context,
+                    diamondConfig.arrMoreMenu,
+                    (manageClick) {
+                      if (manageClick.bottomTabModel.type ==
+                          ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
+                        clearSelection();
+                      } else {
+                        manageBottomMenuClick(manageClick.bottomTabModel);
+                      }
+                    },
+                    R.string.commonString.more,
+                    isDisplaySelection: false,
+                  );
                   // } else {
                   //   app.resolve<CustomDialogs>().errorDialog(
                   //         context,
@@ -1578,8 +1598,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                         positiveBtnTitle: R.string.commonString.ok,
                       );
                 }
-              // } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
-              //   showStatusDialogue();
+                // } else if (obj.type == ActionMenuConstant.ACTION_TYPE_STATUS) {
+                //   showStatusDialogue();
 //          showBottomSheetForMenu(context, diamondConfig.arrStatusMenu,
 //              (manageClick) {}, R.string.commonString.status,
 //              isDisplaySelection: false);
@@ -1587,14 +1607,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   ActionMenuConstant.ACTION_TYPE_CLEAR_SELECTION) {
                 clearSelection();
               }
-            //   else if (){
-            //     app.resolve<CustomDialogs>().confirmDialog(
-            //       context,
-            //       title: "Hello Error",
-            //       desc: R.string.errorString.diamondSelectionError,
-            //       positiveBtnTitle: R.string.commonString.ok,
-            //     );
-            // }
+              //   else if (){
+              //     app.resolve<CustomDialogs>().confirmDialog(
+              //       context,
+              //       title: "Hello Error",
+              //       desc: R.string.errorString.diamondSelectionError,
+              //       positiveBtnTitle: R.string.commonString.ok,
+              //     );
+              // }
               else {
                 manageBottomMenuClick(obj);
               }
