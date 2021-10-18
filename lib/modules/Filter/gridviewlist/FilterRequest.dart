@@ -12,11 +12,10 @@ import 'package:diamnow/models/SavedSearch/SavedSearchModel.dart';
 import 'package:flutter/material.dart';
 
 class FilterRequest {
-  Map<String, dynamic> createRequest(
-    List<FormBaseModel> list, {
-    List selectedStatus,
-    bool isFromLayout = false,
-  }) {
+  Map<String, dynamic> createRequest(List<FormBaseModel> list,
+      {List selectedStatus,
+      bool isFromLayout = false,
+      bool isFromMatch = false}) {
     Map<String, dynamic> map = {};
     map["isFcCol"] = false;
     List<String> arrWsts = [];
@@ -66,8 +65,7 @@ class FilterRequest {
 
             map[selectionModel.apiKey] = arr;
           }
-        }
-        else if (selectionModel.masterCode == MasterCode.arrivals) {
+        } else if (selectionModel.masterCode == MasterCode.arrivals) {
           if (!isNullEmptyOrFalse((element as SelectionModel).fromDate) &&
               !isNullEmptyOrFalse((element as SelectionModel).toDate)) {
             map["inDt"] = {
@@ -75,8 +73,7 @@ class FilterRequest {
               "<=": selectionModel.toDate
             };
           }
-        }
-        else {
+        } else {
           if (selectionModel.masterCode == MasterCode.stage) {
             arrStage = Master.getSelectedId(selectionModel.masters);
 
@@ -214,6 +211,12 @@ class FilterRequest {
     }
     if (selectedStatus != null && selectedStatus.length > 0) {
       map['sSts'] = selectedStatus;
+    }
+    if (isFromMatch) {
+      map['layoutNo'] = ["", "0"];
+      map["pairStkNo"] = {
+        "!=": [""]
+      };
     }
     if (isFromLayout) {
       map['layoutNo'] = {

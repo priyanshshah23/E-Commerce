@@ -672,6 +672,23 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     manageRowClick(index, manageClick.type);
                     setState(() {
                       if (moduleType ==
+                          DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+                        List<DiamondModel> filter = arraDiamond
+                            .where((element) =>
+                                element.pairStkNo ==
+                                arraDiamond[index].pairStkNo)
+                            .toList();
+
+                        if (isNullEmptyOrFalse(filter) == false) {
+                          filter.forEach((element) {
+                            if (arraDiamond[index].isSelected) {
+                              element.isSelected = true;
+                            } else
+                              element.isSelected = false;
+                          });
+                        }
+                      }
+                      if (moduleType ==
                               DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
                           moduleType ==
                               DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
@@ -1312,14 +1329,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 sort = true;
                 fillArrayList(isFromSort: true);
               }
-
-              // sort = true;
-              //fillArrayList(isFromSort: true);
-              //  diamondList.state.setApiCalling(false);
-              // if (arraDiamond != null && arraDiamond.isNotEmpty) {
-              //   _controller.animateTo(_controller.position.minScrollExtent,
-              //       duration: Duration(seconds: 1), curve: Curves.linear);
-              // }
             },
           ),
         );

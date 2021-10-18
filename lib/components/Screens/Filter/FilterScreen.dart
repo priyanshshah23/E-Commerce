@@ -447,12 +447,71 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     ),
                   InkWell(
                     onTap: () {
-                      NavigationUtilities.pushRoute(Notifications.route);
+                      arrList.forEach((element) {
+                        if (element is SelectionModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.isShowAllSelected = false;
+                          element.caratRangeChipsToShow = [];
+                        }
+                        if (element is KeyToSymbolModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                        }
+                        if (element is FromToModel) {
+                          element.valueFrom = "";
+                          element.valueTo = "";
+                        }
+                        if (element is ColorModel) {
+                          element.masters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.mainMasters.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.groupMaster.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.intensity.forEach((element) {
+                            element.isSelected = false;
+                          });
+                          element.overtone.forEach((element) {
+                            element.isSelected = false;
+                          });
+                        }
+                      });
+                      selectStatus.clear();
+                      selectStatusModel.forEach((element) {
+                        element.isSelected = false;
+                      });
+                      isStatusSelected = false;
+                      isCompanySelected = false;
+                      app.resolve<PrefUtils>().saveCompany(null);
+                      setState(() {});
+
+                      //  NavigationUtilities.pushRoute(Notifications.route);
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
                           right: getSize(Spacing.rightPadding),
                           left: getSize(8.0)),
+                      child: Image.asset(
+                        reset,
+                        height: getSize(22),
+                        width: getSize(22),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      NavigationUtilities.pushRoute(Notifications.route);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          right: getSize(8.0),
+                          left: getSize(Spacing.leftPadding)),
                       child: Image.asset(
                         notification,
                         height: getSize(20),
@@ -965,8 +1024,10 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   .getModulePermission(
                       ModulePermissionConstant.permission_matchPair)
                   .view) {
-                Map<String, dynamic> map = FilterRequest()
-                    .createRequest(arrList, selectedStatus: selectStatus);
+                Map<String, dynamic> map = FilterRequest().createRequest(
+                    arrList,
+                    selectedStatus: selectStatus,
+                    isFromMatch: true);
 //                if (/*app.resolve<PrefUtils>().getUserDetails().type ==
 //                        UserConstant.CUSTOMER &&*/
 //                    map.length < 3) {

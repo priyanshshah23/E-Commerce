@@ -188,12 +188,12 @@ class BottomTabBar {
 //        code: BottomCodeConstant.filteMatchPair,
 //        sequence: 4,
 //        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: "Reset",
-        image: reset,
-        code: BottomCodeConstant.filterReset,
-        sequence: 4,
-        isCenter: false));
+//     arrBootomTab.add(BottomTabModel(
+//         title: "Reset",
+//         image: reset,
+//         code: BottomCodeConstant.filterReset,
+//         sequence: 4,
+//         isCenter: false));
     return arrBootomTab;
   }
 }

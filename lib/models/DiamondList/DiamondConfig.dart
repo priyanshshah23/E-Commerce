@@ -465,13 +465,272 @@ class DiamondConfig {
         actionMemo(context, list, refreshList);
         break;
       case ActionMenuConstant.ACTION_TYPE_DOWNLOAD:
-        actionDownload(context, list, isDownloadSearched: true);
+        showDialog(
+            barrierDismissible: true,
+            context: context,
+            builder: (BuildContext context) {
+              return StatefulBuilder(builder: (context, setState) {
+                return Dialog(
+                    insetPadding: EdgeInsets.only(
+                        left: getSize(Spacing.leftPadding),
+                        right: getSize(Spacing.rightPadding)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(getSize(15)))),
+                    child: Container(
+                      width: MathUtilities.screenWidth(context),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getSize(20),
+                        vertical: getSize(29),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            "Download",
+                            textAlign: TextAlign.center,
+                            style: appTheme.blackSemiBold18TitleColorblack,
+                          ),
+                          SizedBox(
+                            height: getSize(20),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              top: getSize(24),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      // Navigator.pop(context);
+                                      actionDownload(context, list,
+                                          isDownloadSearched: true);
+                                      // details = false;
+                                      // _onShare(context, list, details);
+                                    },
+                                    child: Container(
+                                      height: getSize(50),
+                                      decoration: BoxDecoration(
+                                        color: appTheme.colorPrimary
+                                            .withOpacity(0.15),
+                                        border: Border.all(
+                                          color: appTheme.colorPrimary,
+                                          width: getSize(1),
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(getSize(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            getSize(8),
+                                            getSize(14),
+                                            getSize(8),
+                                            getSize(14)),
+                                        child: Text(
+                                          "Diamond Details",
+                                          textAlign: TextAlign.center,
+                                          style: appTheme
+                                              .commonAlertDialogueDescStyle
+                                              .copyWith(
+                                            color: appTheme.blackColor,
+                                            fontSize: getFontSize(16),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: getSize(20),
+                                ),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      SyncManager sync = SyncManager();
+                                      sync.callApiForExcel(context, list);
+                                      // details = true;
+                                      // _onShare(context, list, details);
+                                    },
+                                    child: Container(
+                                      height: getSize(50),
+                                      decoration: BoxDecoration(
+                                        color: appTheme.colorPrimary
+                                            .withOpacity(0.15),
+                                        border: Border.all(
+                                          color: appTheme.colorPrimary,
+                                          width: getSize(1),
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(getSize(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            getSize(8),
+                                            getSize(14),
+                                            getSize(8),
+                                            getSize(14)),
+                                        child: Text(
+                                          "Excel",
+                                          textAlign: TextAlign.center,
+                                          style: appTheme
+                                              .commonAlertDialogueDescStyle
+                                              .copyWith(
+                                            color: appTheme.blackColor,
+                                            fontSize: getFontSize(16),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ));
+              });
+            });
+        // actionDownload(context, list, isDownloadSearched: true);
         break;
       case ActionMenuConstant.ACTION_TYPE_EXCEL:
         actionExportExcel(context, list);
         break;
       case ActionMenuConstant.ACTION_TYPE_SHARE:
-        actionDownload(context, list, isForShare: true);
+        showDialog(
+            barrierDismissible: true,
+            context: context,
+            builder: (BuildContext context) {
+              return StatefulBuilder(builder: (context, setState) {
+                return Dialog(
+                    insetPadding: EdgeInsets.only(
+                        left: getSize(Spacing.leftPadding),
+                        right: getSize(Spacing.rightPadding)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(getSize(15)))),
+                    child: Container(
+                      width: MathUtilities.screenWidth(context),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: getSize(20),
+                        vertical: getSize(29),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Text(
+                            "Share",
+                            textAlign: TextAlign.center,
+                            style: appTheme.blackSemiBold18TitleColorblack,
+                          ),
+                          SizedBox(
+                            height: getSize(20),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              top: getSize(24),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      actionDownload(context, list,
+                                          isForShare: true);
+                                      // details = false;
+                                      // _onShare(context, list, details);
+                                    },
+                                    child: Container(
+                                      height: getSize(50),
+                                      decoration: BoxDecoration(
+                                        color: appTheme.colorPrimary
+                                            .withOpacity(0.15),
+                                        border: Border.all(
+                                          color: appTheme.colorPrimary,
+                                          width: getSize(1),
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(getSize(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            getSize(8),
+                                            getSize(14),
+                                            getSize(8),
+                                            getSize(14)),
+                                        child: Text(
+                                          "Diamond Details",
+                                          textAlign: TextAlign.center,
+                                          style: appTheme
+                                              .commonAlertDialogueDescStyle
+                                              .copyWith(
+                                            color: appTheme.blackColor,
+                                            fontSize: getFontSize(16),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: getSize(20),
+                                ),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      SyncManager sync = SyncManager();
+                                      sync.callApiForExcel(context, list,
+                                          isForShare: true);
+                                      // details = true;
+                                      // _onShare(context, list, details);
+                                    },
+                                    child: Container(
+                                      height: getSize(50),
+                                      decoration: BoxDecoration(
+                                        color: appTheme.colorPrimary
+                                            .withOpacity(0.15),
+                                        border: Border.all(
+                                          color: appTheme.colorPrimary,
+                                          width: getSize(1),
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(getSize(5)),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.fromLTRB(
+                                            getSize(8),
+                                            getSize(14),
+                                            getSize(8),
+                                            getSize(14)),
+                                        child: Text(
+                                          "Excel",
+                                          textAlign: TextAlign.center,
+                                          style: appTheme
+                                              .commonAlertDialogueDescStyle
+                                              .copyWith(
+                                            color: appTheme.blackColor,
+                                            fontSize: getFontSize(16),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ));
+              });
+            });
+        //actionDownload(context, list, isForShare: true);
 
         break;
 
@@ -511,8 +770,8 @@ class DiamondConfig {
     //     .toList();
     //
     // if (isNullEmptyOrFalse(filter)) {
-      callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
-          isPop: false, title: R.string.screenTitle.addedInCart);
+    callApiFoCreateTrack(context, list, DiamondTrackConstant.TRACK_TYPE_CART,
+        isPop: false, title: R.string.screenTitle.addedInCart);
     // } else {
     //   app.resolve<CustomDialogs>().errorDialog(
     //         context,
@@ -620,7 +879,7 @@ class DiamondConfig {
 
   openDiamondActionAcreen(
       BuildContext context, int actionType, List<DiamondModel> list,
-      {List<DiamondModel> list2,Function placeOrder}) async {
+      {List<DiamondModel> list2, Function placeOrder}) async {
     var dict = Map<String, dynamic>();
 
     // list.forEach((element) async {
@@ -633,12 +892,12 @@ class DiamondConfig {
     //     );
     //   }
     //   else {
-        dict[ArgumentConstant.DiamondList] = list;
-        dict[ArgumentConstant.ModuleType] = moduleType;
-        dict[ArgumentConstant.ActionType] = actionType;
-        dict[ArgumentConstant.DiamondList1] = list2;
-      // }
-      // });
+    dict[ArgumentConstant.DiamondList] = list;
+    dict[ArgumentConstant.ModuleType] = moduleType;
+    dict[ArgumentConstant.ActionType] = actionType;
+    dict[ArgumentConstant.DiamondList1] = list2;
+    // }
+    // });
     bool isBack = await Navigator.of(context).push(MaterialPageRoute(
       settings: RouteSettings(name: DiamondActionScreen.route),
       builder: (context) => DiamondActionScreen(dict),
@@ -654,11 +913,10 @@ class DiamondConfig {
     List<DiamondModel> selectedList1 = [];
     DiamondModel model;
     list.forEach((element) {
-      if(element.wSts=="A") {
+      if (element.wSts == "A") {
         model = DiamondModel.fromJson(element.toJson());
         selectedList.add(model);
-      }
-      else{
+      } else {
         model = DiamondModel.fromJson(element.toJson());
         selectedList1.add(model);
       }
@@ -670,9 +928,9 @@ class DiamondConfig {
     //         element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
     //     .toList();
     // if (isNullEmptyOrFalse(filter)) {
-      openDiamondActionAcreen(
-          context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,list2: selectedList1,
-          placeOrder: placeOrder);
+    openDiamondActionAcreen(
+        context, DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER, selectedList,
+        list2: selectedList1, placeOrder: placeOrder);
     // } else {
     //   app.resolve<CustomDialogs>().errorDialog(
     //     context,
@@ -683,7 +941,6 @@ class DiamondConfig {
     // }
 //      showToast(R.string.commonString.holdMemoStatusDiamondorder,
 //          context: context);
-
 
     /*showPlaceOrderDialog(context, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -744,11 +1001,11 @@ class DiamondConfig {
           context, DiamondTrackConstant.TRACK_TYPE_OFFER, selectedList);
     } else {
       app.resolve<CustomDialogs>().errorDialog(
-        context,
-        "",
-        R.string.commonString.holdMemoStatusDiamondOffer,
-        btntitle: R.string.commonString.ok,
-      );
+            context,
+            "",
+            R.string.commonString.holdMemoStatusDiamondOffer,
+            btntitle: R.string.commonString.ok,
+          );
     }
     /* showOfferListDialog(context, selectedList, (manageClick) {
       if (manageClick.type == clickConstant.CLICK_TYPE_CONFIRM) {
@@ -766,7 +1023,7 @@ class DiamondConfig {
     List<DiamondModel> list,
     int trackType, {
     String remark,
-        int selectHour,
+    int selectHour,
     String companyName,
     String date,
     bool isFromOffer = false,
@@ -1241,17 +1498,17 @@ class DiamondConfig {
 
   //Download excel
   downloadExcel(String excelFileUrl, String savePath) {
-   Dio dio = Dio();
+    Dio dio = Dio();
 
-   dio
-       .download(
-     excelFileUrl,
-     savePath,
-     deleteOnError: true,
-   )
-       .then((value) {
-     print("excel downlaoded");
-   });
+    dio
+        .download(
+      excelFileUrl,
+      savePath,
+      deleteOnError: true,
+    )
+        .then((value) {
+      print("excel downlaoded");
+    });
   }
 
   actionDownload(
@@ -1286,6 +1543,7 @@ class DiamondConfig {
     );
     print("++++++++++++++++${isDownloadSearched}+++++++++${isForShare}");
     NavigationUtilities.push(DownLoadAndShareScreen(
+      isForShare: isForShare,
       diamondList: list,
       title: isDownloadSearched
           ? R.string.commonString.download
@@ -1574,7 +1832,7 @@ class DiamondConfig {
           reqDiamond["newAmount"] = element.offeredAmount;
           reqDiamond["newPricePerCarat"] =
               num.parse(element.offeredPricePerCarat);
-         // reqDiamond["offerValidDate"] = date;
+          // reqDiamond["offerValidDate"] = date;
           break;
         case DiamondTrackConstant.TRACK_TYPE_BID:
           diamonds.vStnId = element.vStnId;

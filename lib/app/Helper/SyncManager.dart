@@ -29,6 +29,7 @@ import 'package:diamnow/models/excel/ExcelApiResponse.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
+import 'package:share/share.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class SyncManager {
@@ -80,15 +81,17 @@ class SyncManager {
       //Append static data masters
       List<Master> arrLocalData = await Config().getLocalDataJson();
       masterResp.data.masters.list.addAll(arrLocalData);
-        masterResp.data.masters.list.forEach((element) {
-          if(((element.parentCode=="LOCATION")&& (element.name =="Surat"))||((element.parentCode=="LOCATION")&& (element.name =="IND-RC"))){
-            DefaultLoc.add(element.sId);
-            print(DefaultLoc);
-          }
-        });
-        DefaultLoc.forEach((element) {
-          app.resolve<PrefUtils>().saveLocData(DefaultLoc);
-        });
+      masterResp.data.masters.list.forEach((element) {
+        if (((element.parentCode == "LOCATION") && (element.name == "Surat")) ||
+            ((element.parentCode == "LOCATION") &&
+                (element.name == "IND-RC"))) {
+          DefaultLoc.add(element.sId);
+          print(DefaultLoc);
+        }
+      });
+      DefaultLoc.forEach((element) {
+        app.resolve<PrefUtils>().saveLocData(DefaultLoc);
+      });
 
       await AppDatabase.instance.masterDao
           .addOrUpdate(masterResp.data.masters.list);
@@ -324,7 +327,6 @@ class SyncManager {
     }
   }
 
-
   Future callApiForMatchPair(
     BuildContext context,
     Map<String, dynamic> req,
@@ -337,9 +339,10 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
+    dict["isPredefinedPair"] = true;
     if (isFromList) {
       dict["isSkipSave"] = false;
-      dict["isPredefinedPair"] = true;
+      //   dict["isPredefinedPair"] = true;
     }
     dict["filter"] = req;
     if (!isNullEmptyOrFalse(searchText)) {
@@ -782,24 +785,25 @@ class SyncManager {
       // if (isForShare) {
       //   callback(url);
       // } else {
-        await downloadExcel(excelFileUrl, savePath, context);
-        // if (Platform.isIOS) {
-        //   Map<String, dynamic> dict = {};
-        //   dict["strUrl"] = url;
-        //   dict['filePath'] = savePath;
-        //   dict[ArgumentConstant.IsFromDrawer] = false;
-        //   dict["isForExcel"] = true;
-        //   dict["screenTitle"] = excelApiResponse.data.excelName;
-        //   NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
-        // } else {
-        //   Map<String, dynamic> dict = {};
-        //   dict["strUrl"] = url;
-        //   dict['filePath'] = savePath;
-        //   dict[ArgumentConstant.IsFromDrawer] = false;
-        //   dict["isForExcel"] = true;
-        //   dict["screenTitle"] = excelApiResponse.data.excelName;
-        //   NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
-        // }
+      await downloadExcel(excelFileUrl, savePath, context,
+          isForShare: isForShare);
+      // if (Platform.isIOS) {
+      //   Map<String, dynamic> dict = {};
+      //   dict["strUrl"] = url;
+      //   dict['filePath'] = savePath;
+      //   dict[ArgumentConstant.IsFromDrawer] = false;
+      //   dict["isForExcel"] = true;
+      //   dict["screenTitle"] = excelApiResponse.data.excelName;
+      //   NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+      // } else {
+      //   Map<String, dynamic> dict = {};
+      //   dict["strUrl"] = url;
+      //   dict['filePath'] = savePath;
+      //   dict[ArgumentConstant.IsFromDrawer] = false;
+      //   dict["isForExcel"] = true;
+      //   dict["screenTitle"] = excelApiResponse.data.excelName;
+      //   NavigationUtilities.pushRoute(StaticPageScreen.route, args: dict);
+      // }
       // }
       // getWebView(context, url);
     }).catchError((onError) {
@@ -830,7 +834,8 @@ class SyncManager {
   }
 
   //Download excel
-  downloadExcel(String excelFileUrl, String savePath, BuildContext context) {
+  downloadExcel(String excelFileUrl, String savePath, BuildContext context,
+      {bool isForShare}) {
     Dio dio = Dio();
 
     dio
@@ -839,25 +844,34 @@ class SyncManager {
       savePath,
       deleteOnError: true,
     )
-        .then((value) {
-      LocalNotificationManager.instance.showExcelDownloadNotification(savePath);
-      app.resolve<CustomDialogs>().confirmDialog(
-          NavigationUtilities.key.currentState.overlay.context,
-          title: 'Download',
-          desc:
-          'File(s) downloaded successfully. Please check your download folder to view files.',
-          positiveBtnTitle: R.string.commonString.ok, onClickCallback: (view) {
-        if (view.index == ButtonType.PositveButtonClick) {
-          Navigator.pop(context);
-        }
-      });
-    //   app.resolve<CustomDialogs>().errorDialog(
-    //
-    //         context,
-    //         "Downloded",
-    //         "Excel File is downloded.",
-    //         btntitle: R.string.commonString.ok,
-    //       );
+        .then((value) async {
+      if (isForShare == false) {
+        LocalNotificationManager.instance
+            .showExcelDownloadNotification(savePath);
+        app.resolve<CustomDialogs>().confirmDialog(
+            NavigationUtilities.key.currentState.overlay.context,
+            title: 'Download',
+            desc:
+                'File(s) downloaded successfully. Please check your download folder to view files.',
+            positiveBtnTitle: R.string.commonString.ok,
+            onClickCallback: (view) {
+          if (view.index == ButtonType.PositveButtonClick) {
+            Navigator.pop(context);
+          }
+        });
+      } else {
+        await Share.shareFiles(
+          [savePath],
+          subject: "Diamond Details",
+        );
+      }
+      //   app.resolve<CustomDialogs>().errorDialog(
+      //
+      //         context,
+      //         "Downloded",
+      //         "Excel File is downloded.",
+      //         btntitle: R.string.commonString.ok,
+      //       );
     });
   }
 

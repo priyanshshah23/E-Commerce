@@ -459,39 +459,39 @@ class LoginScreenState extends StatefulScreenWidgetState {
                                       ],
                                     ),
                                   ),*/
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      top: getSize(20),
-                                      bottom: getSize(20),
-                                    ),
-                                    child: Container(
-                                      child: Text(
-                                        R.string.commonString.lblOr
-                                            .toLowerCase(),
-                                        style: TextStyle(
-                                          fontSize: getFontSize(21),
-                                          color: appTheme.textGreyColor,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    // margin: EdgeInsets.only(
-                                    //     top: getSize(10), left: getSize(0)),
-                                    child: AppButton.flat(
-                                      onTap: () {
-                                        NavigationUtilities.pushRoute(
-                                            GuestSignInScreen.route);
-                                      },
-                                      textColor: appTheme.colorPrimary,
-                                      backgroundColor:
-                                          appTheme.whiteColor.withOpacity(0.1),
-                                      // borderRadius: getSize(5),
-                                      fitWidth: true,
-                                      text: R.string.authStrings.signInAsGuest,
-                                      //isButtonEnabled: enableDisableSigninButton(),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(
+                                  //     top: getSize(20),
+                                  //     bottom: getSize(20),
+                                  //   ),
+                                  //   child: Container(
+                                  //     child: Text(
+                                  //       R.string.commonString.lblOr
+                                  //           .toLowerCase(),
+                                  //       style: TextStyle(
+                                  //         fontSize: getFontSize(21),
+                                  //         color: appTheme.textGreyColor,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // Container(
+                                  //   // margin: EdgeInsets.only(
+                                  //   //     top: getSize(10), left: getSize(0)),
+                                  //   child: AppButton.flat(
+                                  //     onTap: () {
+                                  //       NavigationUtilities.pushRoute(
+                                  //           GuestSignInScreen.route);
+                                  //     },
+                                  //     textColor: appTheme.colorPrimary,
+                                  //     backgroundColor:
+                                  //         appTheme.whiteColor.withOpacity(0.1),
+                                  //     // borderRadius: getSize(5),
+                                  //     fitWidth: true,
+                                  //     text: R.string.authStrings.signInAsGuest,
+                                  //     //isButtonEnabled: enableDisableSigninButton(),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ],

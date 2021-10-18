@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/app.export.dart';
+import 'package:diamnow/app/base/BaseList.dart';
 import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -10,13 +11,15 @@ import 'package:diamnow/app/network/ServiceModule.dart';
 import 'package:diamnow/app/utils/BaseDialog.dart';
 import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/models/excel/ExcelApiResponse.dart';
-import 'package:flutter_archive/flutter_archive.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/models/DiamondList/download.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -24,6 +27,7 @@ class DownLoadAndShareScreen extends StatefulWidget {
   String title = "";
   List<DiamondModel> diamondList;
   bool isFromDetailScreen = false;
+  bool isForShare = false;
 
   Function(List<SelectionPopupModel>) onDownload;
 
@@ -31,12 +35,14 @@ class DownLoadAndShareScreen extends StatefulWidget {
     this.title,
     this.diamondList,
     this.onDownload,
+    this.isForShare,
     this.isFromDetailScreen = false,
   });
 
   @override
   _DownLoadAndShareScreenState createState() => _DownLoadAndShareScreenState(
         title,
+        isForShare: isForShare,
         diamondList: this.diamondList,
         onDownload: onDownload,
       );
@@ -78,17 +84,22 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
   List<String> data = [];
   String platformResponse;
   String saveExcel;
-  bool excelSaved;
+  List<String> allPath = [];
+  bool isForShare;
+  bool isPath;
+  int shareValue = 0;
 
   _DownLoadAndShareScreenState(
     this.title, {
     this.diamondList,
+    this.isForShare,
     this.onDownload,
   });
 
   @override
   void initState() {
     setDataInList();
+    print(isForShare);
     super.initState();
   }
 
@@ -115,6 +126,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     );
     selectMenuString = data;
     debugPrint("------------------------------${selectMenuString.toString()}");
+
     return !isNullEmptyOrFalse(totalList);
   }
 
@@ -129,16 +141,19 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
         .where((element) {
       return element.isSelected;
     }).toList();
-    List<String> data1 = [];
     DownloadState downloadStateObj = DownloadState();
     final dir = await downloadStateObj.getDownloadDirectory();
     DateTime now = new DateTime.now();
     String savePath1;
     String fileName;
+    shareValue = 0;
+
     bool excelTitle = false;
-    excelSaved = false;
-    String fileExcel;
+    selectMenuString = [];
     savePath = [];
+    data = [];
+    isPath = false;
+    allPath = [];
     int p = 0;
     String formattedDate;
     var formatter = DateFormat('dd_MM_yyyy_hh_mm_ss');
@@ -173,31 +188,31 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
         );
       },
     );
-    if (excelTitle == true) {
-      callApiForExcel(context, diamondList);
-      print("........................$saveExcel");
-    }
     selectMenuString = data;
-    debugPrint("------------------------------${selectMenuString.toString()}");
-    if ((saveExcel == null) && (excelSaved == true)) {
-      email = Email(
-        body: selectMenuString.map((e) => e.toString()).toList().join("\n\n"),
-        subject: "Diamond Details",
-        recipients: ['priyansh@mailinator.com'],
-        // attachmentPaths: [saveExcel],
-        isHTML: false,
-      );
-      try {
-        await FlutterEmailSender.send(email).then((value1) {
-          print("hell");
-        });
-        platformResponse = 'success';
-      } catch (error) {
-        platformResponse = error.toString();
-        print("...................$platformResponse");
-      }
-    }
+    if (excelTitle == true) {
+      callApiForExcel(context, diamondList, callback: (url) async {
+        print("..............................value.$selectMenuString");
+        await Share.shareFiles(
+          [url],
+          text: selectMenuString.map((e) => e.toString()).toList().join("\n\n"),
+          subject: "Diamond Details",
+        );
+      });
+      print("........................$saveExcel");
+    } else if (excelTitle == false) {
+      //For Download And Share
 
+      // for (int v = 0; v < selectMenuString.length; v++) {
+      //   print(selectMenuString.length);
+      //   print("..................................");
+      //   await downloadAll(selectMenuString[v], savePath[v], context);
+      // }
+
+      //Only Share links
+      await Share.share(
+          selectMenuString.map((e) => e.toString()).toList().join("\n\n"),
+          subject: "Diamond Details");
+    }
     return !isNullEmptyOrFalse(totalList);
   }
 
@@ -241,22 +256,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
         deleteOnError: true,
       )
           .then((value) async {
-        excelSaved = true;
-        email = Email(
-          body: selectMenuString.map((e) => e.toString()).toList().join("\n\n"),
-          subject: "Diamond Details",
-          recipients: ['priyansh@mailinator.com'],
-          attachmentPaths: [saveExcel],
-          isHTML: false,
-        );
-        try {
-          await FlutterEmailSender.send(email);
-          platformResponse = 'success';
-        } catch (error) {
-          platformResponse = error.toString();
-          print("...................$platformResponse");
-        }
-        Navigator.pop(context);
+        callback(saveExcel);
       });
     }).catchError((onError) {
       showToast("There is problem on server, please try again later.",
@@ -265,14 +265,35 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     });
   }
 
-  downloadCertificate(
-      String excelFileUrl, String savePath1, BuildContext context) {
+  downloadAll(String excelFileUrl, String savePath1, BuildContext context,
+      {void callback(String), bool isPaths}) {
     Dio dio = Dio();
-    dio.download(
+    dio
+        .download(
       excelFileUrl,
       savePath1,
       deleteOnError: true,
-    );
+    )
+        .catchError((onError) {
+      shareValue++;
+      if (selectMenuString.length == shareValue) {
+        app.resolve<CustomDialogs>().errorDialog(
+              NavigationUtilities.key.currentState.overlay.context,
+              "Oops!!!",
+              "No Data Found!",
+              btntitle: R.string.commonString.ok,
+            );
+      }
+    }).then((value) async {
+      shareValue++;
+      allPath.add(savePath1);
+      if (selectMenuString.length == shareValue) {
+        await Share.shareFiles(allPath, subject: "Diamond Details");
+        // await Share.share(
+        //     selectMenuString.map((e) => e.toString()).toList().join("\n\n"),
+        //     subject: "Diamond Details");
+      }
+    });
   }
 
   @override
@@ -305,9 +326,9 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
                 secondVideoList.forEach((element) {
                   element.isSelected = isAllSelected;
                 });
-                firstExcelList.forEach((element) {
-                  element.isSelected = isAllSelected;
-                });
+                // firstExcelList.forEach((element) {
+                //   element.isSelected = isAllSelected;
+                // });
                 firstCertificateList.forEach((element) {
                   element.isSelected = isAllSelected;
                 });
@@ -354,58 +375,47 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
         child: title == R.string.screenTitle.shareStone
             ? Row(
                 children: [
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        if (checkValidation1()) {
-//                          whatsAppOpen();
-                          openURLWithApp(
-                              "whatsapp://send?phone=&text=${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
-                              context,
-                              isPop: true);
-                        } else {
-                          app.resolve<CustomDialogs>().errorDialog(
-                              context, title, "Please select any",
-                              btntitle: R.string.commonString.ok);
-//                          showToast("Please select any", context: context);
-                        }
-                      },
-                      child: Container(
-                        height: getSize(46),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: appTheme.whiteColor,
-                          borderRadius: BorderRadius.circular(getSize(5)),
-                        ),
-                        child: Text(
-                          "WhatsApp",
-                          textAlign: TextAlign.center,
-                          style: appTheme.white16TextStyle.copyWith(
-                            color: appTheme.whatsAppColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: getSize(16),
-                  ),
+//                   Expanded(
+//                     child: InkWell(
+//                       onTap: () {
+//                         if (checkValidation()) {
+// //                          whatsAppOpen();
+//                           /*openURLWithApp(
+//                               "whatsapp://send?phone=&text=${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
+//                               context,
+//                               isPop: true);*/
+//                         } else {
+//                           app.resolve<CustomDialogs>().errorDialog(
+//                               context, title, "Please select any",
+//                               btntitle: R.string.commonString.ok);
+// //                          showToast("Please select any", context: context);
+//                         }
+//                       },
+//                       child: Container(
+//                         height: getSize(46),
+//                         alignment: Alignment.center,
+//                         decoration: BoxDecoration(
+//                           color: appTheme.whiteColor,
+//                           borderRadius: BorderRadius.circular(getSize(5)),
+//                         ),
+//                         child: Text(
+//                           "WhatsApp",
+//                           textAlign: TextAlign.center,
+//                           style: appTheme.white16TextStyle.copyWith(
+//                             color: appTheme.whatsAppColor,
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     width: getSize(16),
+//                   ),
                   Expanded(
                     child: InkWell(
                       onTap: () {
                         //callEmailApi();
                         if (checkValidation()) {
-                          //  for(int y=0;y<savePath.length;y++) {
-                          //     final Email email = Email(
-                          //        body: 'Email body',
-                          //        subject: 'Email subject',
-                          //        recipients: ['priyansh@mailinator.com'],
-                          //        cc: ['shahpriyansh91@gmail.com'],
-                          //        attachmentPaths: [savePath[0]],
-                          //        isHTML: false,
-                          //      );
-                          // //   }
-                          //   await FlutterEmailSender.send(email);
 //                           openURLWithApp(
 //                               "mailto:?subject=Diamond%20Details&body= Dear Sir / Madam Greetings of the day from Arjiv Team. Please have a look at below stock file.\n\n${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
 // //                              "mailto:?subject=DiamNow&body=DiamNow",
@@ -426,7 +436,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
                           borderRadius: BorderRadius.circular(getSize(5)),
                         ),
                         child: Text(
-                          "Gmail",
+                          "Share",
                           textAlign: TextAlign.center,
                           style: appTheme.white16TextStyle.copyWith(
                             color: appTheme.gmailColor,
@@ -435,42 +445,42 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: getSize(16),
-                  ),
-                  Expanded(
-                    child: InkWell(
-                      onTap: () {
-                        if (checkValidation1()) {
-                          print(
-                              "------------------skype:?chat=${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}");
-                          openURLWithApp(
-                              "skype:?chat=${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
-                              context,
-                              isPop: true);
-                        } else {
-                          app.resolve<CustomDialogs>().errorDialog(
-                              context, title, "Please select any",
-                              btntitle: R.string.commonString.ok);
-                        }
-                      },
-                      child: Container(
-                        height: getSize(46),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: appTheme.whiteColor,
-                          borderRadius: BorderRadius.circular(getSize(5)),
-                        ),
-                        child: Text(
-                          "Skype",
-                          textAlign: TextAlign.center,
-                          style: appTheme.white16TextStyle.copyWith(
-                            color: appTheme.skypeColor,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
+                  // SizedBox(
+                  //   width: getSize(16),
+                  // ),
+                  // Expanded(
+                  //   child: InkWell(
+                  //     onTap: () {
+                  //       if (checkValidation()) {
+                  //         print(
+                  //             "------------------skype:?chat=${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}");
+                  //         // openURLWithApp(
+                  //         //     "skype:?chat=${selectMenuString.map((e) => e.toString()).toList().join("\n\n")}",
+                  //         //     context,
+                  //         //     isPop: true);
+                  //       } else {
+                  //         app.resolve<CustomDialogs>().errorDialog(
+                  //             context, title, "Please select any",
+                  //             btntitle: R.string.commonString.ok);
+                  //       }
+                  //     },
+                  //     child: Container(
+                  //       height: getSize(46),
+                  //       alignment: Alignment.center,
+                  //       decoration: BoxDecoration(
+                  //         color: appTheme.whiteColor,
+                  //         borderRadius: BorderRadius.circular(getSize(5)),
+                  //       ),
+                  //       child: Text(
+                  //         "Skype",
+                  //         textAlign: TextAlign.center,
+                  //         style: appTheme.white16TextStyle.copyWith(
+                  //           color: appTheme.skypeColor,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // )
                 ],
               )
             : Row(
@@ -556,10 +566,12 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
               type: DownloadDataType.Certificate,
               firstList: firstCertificateList,
               secondList: secondCertificateList),
-          getRowWithTitle(
-              title: "Excel",
-              type: DownloadDataType.Excel,
-              firstList: firstExcelList),
+          // isForShare == false
+          //     ? getRowWithTitle(
+          //         title: "Excel",
+          //         type: DownloadDataType.Excel,
+          //         firstList: firstExcelList)
+          //     : SizedBox(),
           // getRowWithTitle(
           //     title: "Rough",
           //     type: DownloadDataType.Rough,

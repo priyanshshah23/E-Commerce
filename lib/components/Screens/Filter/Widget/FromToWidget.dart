@@ -34,7 +34,17 @@ class _FromToWidgetState extends State<FromToWidget> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _focusMaxValue.dispose();
+    _focusMinValue.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    _minValueController.text = widget.fromTomodel.valueFrom;
+    _maxValueController.text = widget.fromTomodel.valueTo;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -252,9 +262,9 @@ class _FromToWidgetState extends State<FromToWidget> {
         // ],
         inputFormatters: [
           TextInputFormatter.withFunction((oldValue, newValue) =>
-          RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
-              ? newValue
-              : oldValue)
+              RegExp(r'(^[+-]?\d*.?\d{0,2})$').hasMatch(newValue.text)
+                  ? newValue
+                  : oldValue)
         ],
         style: appTheme.blackNormal14TitleColorblack,
         keyboardType: widget.fromTomodel.apiKey == "back"
