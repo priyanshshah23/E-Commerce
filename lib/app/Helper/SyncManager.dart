@@ -335,6 +335,7 @@ class SyncManager {
     bool isProgress = true,
     String searchText,
     bool isFromList = false,
+    bool isFromLayout = false,
   }) async {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
@@ -343,8 +344,10 @@ class SyncManager {
     if (isFromList) {
       dict["isSkipSave"] = false;
       //   dict["isPredefinedPair"] = true;
+    } else if (isFromLayout) {
+      dict["filters"]["diamondSearchId"] = req;
     }
-    dict["filter"] = req;
+    dict["filter"] = {};
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
     }

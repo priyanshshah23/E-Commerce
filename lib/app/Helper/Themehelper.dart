@@ -284,6 +284,13 @@ class BaseTheme {
         fontWeight: FontWeight.w500);
   }
 
+  TextStyle get blue16BoldTextStyle {
+    return TextStyle(
+        fontSize: getFontSize(16),
+        color: colorPrimary,
+        fontWeight: FontWeight.w700);
+  }
+
   TextStyle get black18TextStyle {
     return TextStyle(
         fontSize: getFontSize(18),

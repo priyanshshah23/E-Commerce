@@ -26,6 +26,7 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondItemGridWid
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondSquareGridItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/FinalCalculation.dart';
+import 'package:diamnow/components/Screens/DiamondList/Widget/LayoutListItemWidget.dart';
 import 'package:diamnow/components/Screens/DiamondList/Widget/SortBy/FilterPopup.dart';
 import 'package:diamnow/components/Screens/More/BottomsheetForMoreMenu.dart';
 import 'package:diamnow/components/Screens/MyBid/BidTerms.dart';
@@ -118,6 +119,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   _DiamondListScreenState screenState;
   BaseList diamondList;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
+  List<Summary> summaryDiamond = List<Summary>();
   int page = DEFAULT_PAGE;
   DiamondCalculation diamondCalculation = DiamondCalculation();
   DiamondCalculation diamondFinalCalculation = DiamondCalculation();
@@ -259,8 +261,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }
 
     Map<String, dynamic> dict = {};
-    dict["page"] = page;
-    dict["limit"] = DEFAULT_LIMIT;
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT) {
+      dict["page"] = page;
+      dict["limit"] = DEFAULT_LIMIT;
+    }
     if (sortRequest != null) {
       dict["sort"] = sortRequest;
     }
@@ -279,7 +283,6 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           dict["filters"]["diamondSearchId"] = this.filterId;
         }
         break;
-      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         if (!app.resolve<PrefUtils>().isUserCustomer()) {
           dict["filters"] = [
@@ -297,6 +300,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict['isPredefinedPair'] = true;
         dict["filter"] = {};
         dict["filter"]["diamondSearchId"] = this.filterId;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
+        dict['isPredefinedPair'] = true;
+        dict["filter"] = {};
+        dict["filter"]["diamondSearchId"] = this.filterId;
+        dict["sendSummary"] = true;
+        dict["noDiamondDetails"] = true;
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_INNER_LAYOUT:
+        dict['isPredefinedPair'] = true;
+        dict["filter"] = {};
+        dict["filter"]["layoutNo"] = {
+          "in": [this.filterId]
+        };
+        dict["isLayout"] = true;
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
@@ -518,17 +536,26 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           });
           arraDiamond.addAll(list);
           break;
-
+        case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
+          summaryDiamond.addAll(diamondListResp.data.summary);
+          break;
         default:
           arraDiamond.addAll(diamondListResp.data.diamonds);
           break;
       }
-      diamondConfig.setMatchPairItem(arraDiamond,
-          isLayoutSearch: isLayoutSearch ?? false);
-      diamondList.state.listCount = arraDiamond.length;
-      diamondList.state.totalCount = diamondListResp.data.count;
-      manageDiamondSelection();
-      //callBlockApi(isProgress: true);
+      if (moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT) {
+        diamondConfig.setMatchPairItem(arraDiamond,
+            isLayoutSearch: isLayoutSearch ?? false);
+        diamondList.state.listCount = arraDiamond.length;
+        diamondList.state.totalCount = diamondListResp.data.count;
+        manageDiamondSelection();
+        //callBlockApi(isProgress: true);
+      } else {
+        diamondList.state.listCount = summaryDiamond.length;
+        diamondList.state.totalCount = diamondListResp.data.count;
+        manageDiamondSelection(layout: true);
+        //callBlockApi(isProgress: true);
+      }
       page = page + 1;
 
       diamondList.state.setApiCalling(false);
@@ -604,118 +631,142 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     callApi(false);
   }
 
-  fillArrayList({bool isFromSort = false}) {
+  fillArrayList({bool isFromSort = false, bool isFromLayout = false}) {
     print('<><><><><>$isFromSort');
-    if (arraDiamond.length == 0) {
+    if ((arraDiamond.length == 0) && (isFromLayout == false)) {
+      return;
+    } else if ((summaryDiamond.length == 0) && (isFromLayout == true)) {
       return;
     }
     SlidableController controller = SlidableController();
     diamondList.state.listItems = viewTypeCount == 0
-        ? ListView.builder(
-            itemCount: arraDiamond.length,
-            controller: _controller,
-            itemBuilder: (context, index) {
-              return DiamondItemWidget(
-                  controller: controller,
-                  moduleType: moduleType,
-                  item: arraDiamond[index],
-                  leftSwipeList: getLeftAction((manageClick) async {
-                    if (manageClick.type ==
-                        clickConstant.CLICK_TYPE_OFFER_EDIT) {
-                      //Update offer
-                      List<DiamondModel> selectedList = [];
-                      DiamondModel model;
+        ? moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT
+            ? ListView.builder(
+                itemCount: arraDiamond.length,
+                controller: _controller,
+                itemBuilder: (context, index) {
+                  return DiamondItemWidget(
+                      controller: controller,
+                      moduleType: moduleType,
+                      item: arraDiamond[index],
+                      leftSwipeList: getLeftAction((manageClick) async {
+                        if (manageClick.type ==
+                            clickConstant.CLICK_TYPE_OFFER_EDIT) {
+                          //Update offer
+                          List<DiamondModel> selectedList = [];
+                          DiamondModel model;
 
-                      model =
-                          DiamondModel.fromJson(arraDiamond[index].toJson());
-                      model.isAddToOffer = true;
-                      model.isUpdateOffer = true;
-                      model.trackItemOffer = arraDiamond[index].trackItemOffer;
-                      selectedList.add(model);
+                          model = DiamondModel.fromJson(
+                              arraDiamond[index].toJson());
+                          model.isAddToOffer = true;
+                          model.isUpdateOffer = true;
+                          model.trackItemOffer =
+                              arraDiamond[index].trackItemOffer;
+                          selectedList.add(model);
 
-                      var dict = Map<String, dynamic>();
-                      dict[ArgumentConstant.DiamondList] = selectedList;
-                      dict[ArgumentConstant.ModuleType] = moduleType;
-                      dict[ArgumentConstant.ActionType] =
-                          DiamondTrackConstant.TRACK_TYPE_OFFER;
-                      dict["isOfferUpdate"] = true;
+                          var dict = Map<String, dynamic>();
+                          dict[ArgumentConstant.DiamondList] = selectedList;
+                          dict[ArgumentConstant.ModuleType] = moduleType;
+                          dict[ArgumentConstant.ActionType] =
+                              DiamondTrackConstant.TRACK_TYPE_OFFER;
+                          dict["isOfferUpdate"] = true;
 
-                      bool isBack = await NavigationUtilities.pushRoute(
-                          DiamondActionScreen.route,
-                          args: dict);
-                      if (isBack != null && isBack) {
-                        onRefreshList();
-                      }
-                    } else {
-                      //Detail
-                      var dict = Map<String, dynamic>();
-                      dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
-                      dict[ArgumentConstant.ModuleType] = moduleType;
+                          bool isBack = await NavigationUtilities.pushRoute(
+                              DiamondActionScreen.route,
+                              args: dict);
+                          if (isBack != null && isBack) {
+                            onRefreshList();
+                          }
+                        } else {
+                          //Detail
+                          var dict = Map<String, dynamic>();
+                          dict[ArgumentConstant.DiamondDetail] =
+                              arraDiamond[index];
+                          dict[ArgumentConstant.ModuleType] = moduleType;
 
-                      //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
-                      bool isBack =
-                          await Navigator.of(context).push(MaterialPageRoute(
-                        settings:
-                            RouteSettings(name: DiamondDetailScreen.route),
-                        builder: (context) =>
-                            DiamondDetailScreen(arguments: dict),
-                      ));
-                      if (isBack != null && isBack) {
-                        onRefreshList();
-                      }
-                    }
-                  }),
-                  list: getRightAction((manageClick) {
-                    manageRowClick(index, manageClick.type);
-                  }),
-                  actionClick: (manageClick) {
-                    manageRowClick(index, manageClick.type);
-                    setState(() {
-                      if (moduleType ==
-                          DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
-                        List<DiamondModel> filter = arraDiamond
-                            .where((element) =>
-                                element.pairStkNo ==
-                                arraDiamond[index].pairStkNo)
-                            .toList();
-
-                        if (isNullEmptyOrFalse(filter) == false) {
-                          filter.forEach((element) {
-                            if (arraDiamond[index].isSelected) {
-                              element.isSelected = true;
-                            } else
-                              element.isSelected = false;
-                          });
-                        }
-                      }
-                      if (moduleType ==
-                              DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
-                          moduleType ==
-                              DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
-                        List<DiamondModel> filter = arraDiamond
-                            .where((element) =>
-                                element.memoNo == arraDiamond[index].memoNo)
-                            .toList();
-                        if (isNullEmptyOrFalse(filter) == false) {
-                          List<DiamondModel> filter2 = filter
-                              .where((element) => element.isSelected == true)
-                              .toList();
-
-                          if (filter.length == filter2.length) {
-                            filter.forEach((element) {
-                              element.isGroupSelected = true;
-                            });
-                          } else {
-                            filter.forEach((element) {
-                              element.isGroupSelected = false;
-                            });
+                          //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+                          bool isBack = await Navigator.of(context)
+                              .push(MaterialPageRoute(
+                            settings:
+                                RouteSettings(name: DiamondDetailScreen.route),
+                            builder: (context) =>
+                                DiamondDetailScreen(arguments: dict),
+                          ));
+                          if (isBack != null && isBack) {
+                            onRefreshList();
                           }
                         }
-                      }
-                    });
-                  });
-            },
-          )
+                      }),
+                      list: getRightAction((manageClick) {
+                        manageRowClick(index, manageClick.type);
+                      }),
+                      actionClick: (manageClick) {
+                        manageRowClick(index, manageClick.type);
+                        setState(() {
+                          if (moduleType ==
+                              DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+                            List<DiamondModel> filter = arraDiamond
+                                .where((element) =>
+                                    element.pairStkNo ==
+                                    arraDiamond[index].pairStkNo)
+                                .toList();
+
+                            if (isNullEmptyOrFalse(filter) == false) {
+                              filter.forEach((element) {
+                                if (arraDiamond[index].isSelected) {
+                                  element.isSelected = true;
+                                } else
+                                  element.isSelected = false;
+                              });
+                            }
+                          }
+                          if (moduleType ==
+                                  DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
+                              moduleType ==
+                                  DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
+                            List<DiamondModel> filter = arraDiamond
+                                .where((element) =>
+                                    element.memoNo == arraDiamond[index].memoNo)
+                                .toList();
+                            if (isNullEmptyOrFalse(filter) == false) {
+                              List<DiamondModel> filter2 = filter
+                                  .where(
+                                      (element) => element.isSelected == true)
+                                  .toList();
+
+                              if (filter.length == filter2.length) {
+                                filter.forEach((element) {
+                                  element.isGroupSelected = true;
+                                });
+                              } else {
+                                filter.forEach((element) {
+                                  element.isGroupSelected = false;
+                                });
+                              }
+                            }
+                          }
+                        });
+                      });
+                },
+              )
+            : GridView.count(
+                shrinkWrap: true,
+                crossAxisCount: 1,
+                childAspectRatio: 1.25,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 8,
+                padding: EdgeInsets.only(
+                  left: getSize(Spacing.leftPadding),
+                  bottom: getSize(Spacing.leftPadding),
+                  right: getSize(Spacing.rightPadding),
+                ),
+                children: List.generate(summaryDiamond.length, (index) {
+                  return DiamondSquareGridItem(
+                    summary: summaryDiamond[index],
+                    moduleType: moduleType,
+                  );
+                }))
+
         // : viewTypeCount == 1
         //     ? ListView.builder(
         //         itemCount: arraDiamond.length,
@@ -1402,9 +1453,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     model.isSelected = (list != null && list.length == arraDiamond.length);
   }
 
-  manageDiamondSelection() {
+  manageDiamondSelection({bool layout = false}) {
     if (sort == true) {
       fillArrayList(isFromSort: true);
+    } else if (layout) {
+      fillArrayList(isFromLayout: layout);
     } else {
       fillArrayList();
     }
@@ -1432,7 +1485,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           backgroundColor: appTheme.whiteColor,
           appBar: getAppBar(
             context,
-            diamondConfig.getScreenTitle(),
+            moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT
+                ? diamondConfig.getScreenTitle()
+                : diamondConfig.getScreenTitle() +
+                    "(" +
+                    summaryDiamond.length.toString() +
+                    ")",
             bgColor: appTheme.whiteColor,
             leadingButton: isFromDrawer
                 ? getDrawerButton(context, true)
@@ -1444,7 +1502,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                   ),
             centerTitle: false,
             textalign: TextAlign.left,
-            actionItems: getToolbarItem(),
+            actionItems: moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT
+                ? getToolbarItem()
+                : null,
           ),
           bottomNavigationBar: getBottomTab(),
           body: SafeArea(

@@ -678,10 +678,11 @@ class DiamondModel {
     this.bidAmount = this.ctPr;
   }
 
-  String getDiamondImage() {
+  String getDiamondImage({bool layout = false}) {
     // element.url = DiamondUrls.image + item.vStnId + "/" + "still.jpg";
-
-    if (isStringEmpty(vStnId) == false) {
+    if (layout == true) {
+      return DiamondUrls.image + layoutNo + ".jpg";
+    } else if (isStringEmpty(vStnId) == false) {
       return DiamondUrls.image + vStnId + ".jpg";
     }
     //img

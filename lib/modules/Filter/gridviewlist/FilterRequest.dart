@@ -222,6 +222,12 @@ class FilterRequest {
       map['layoutNo'] = {
         "nin": ["", "0"]
       };
+      // map["pairStkNo"] = {
+      //   "!=": [""]
+      // };
+      // map["wSts"] = ["A", "M", "H", "D", "E", "B"];
+      // map["isSearchVisible"] = true;
+      // map["isDeleted"] = false;
     }
     return map;
   }

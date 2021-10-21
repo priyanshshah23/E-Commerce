@@ -271,7 +271,7 @@ class PrefUtils {
   }
 
   DashboardModel getDashboardDetails() {
-    if (_preferences.getString(keyCompany) != null){
+    if (_preferences.getString(keyCompany) != null) {
       var data = _preferences.getString(keyDashboard);
       if (data != null) {
         var dashboardJson = json.decode(data);
@@ -293,6 +293,7 @@ class PrefUtils {
     var userJson = json.decode(_preferences.getString(keyUser));
     return userJson != null ? new User.fromJson(userJson) : null;
   }
+
   isUserCustomer() {
     if (getUserDetails().type == UserConstant.CUSTOMER ||
         getUserDetails().type == UserConstant.PRIMARY ||
@@ -303,6 +304,7 @@ class PrefUtils {
       return false;
     }
   }
+
   // Company detail Getter setter
   Future<void> saveCompany(SelectionPopupModel company) {
     _preferences.setString(keyCompany, json.encode(company));
@@ -318,7 +320,6 @@ class PrefUtils {
     }
   }
 
-
   void saveLocData(List<String> dict) {
     _preferences.setString(KeyLoc, json.encode(dict));
     print(KeyLoc);
@@ -332,7 +333,6 @@ class PrefUtils {
     }
     return null;
   }
-
 
   Future<void> saveUserPermission(UserPermissions user) async {
     _preferences.setString(keyUserPermission, json.encode(user));
@@ -405,12 +405,13 @@ class PrefUtils {
         (app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
                 KYCStatus.pending) !=
             KYCStatus.approved) {*/
-     if (module == ModulePermissionConstant.permission_searchDiamond ||
+    if (module == ModulePermissionConstant.permission_searchDiamond ||
         module == ModulePermissionConstant.permission_searchupcoming ||
         module == ModulePermissionConstant.permission_searchnewarrival ||
         module == ModulePermissionConstant.permission_searchResult ||
         module == ModulePermissionConstant.permission_dashboard ||
         module == ModulePermissionConstant.permission_matchPair ||
+        module == ModulePermissionConstant.permission_layout ||
         module == ModulePermissionConstant.permission_quickSearch ||
         module == ModulePermissionConstant.permission_newGoods ||
         module == ModulePermissionConstant.permission_exclusive ||
@@ -444,7 +445,7 @@ class PrefUtils {
       data.downloadExcel = false;
     }
 //Admin permission
- /*   data = UserPermissionsData(module: module);
+    /*   data = UserPermissionsData(module: module);
     data.view = true;
     data.insert = true;
     data.update = true;
@@ -523,7 +524,6 @@ class PrefUtils {
     await AppDatabase.instance.offlineStockTracklDao
         .deleteAlldiamondModelItems();
     DefaultLoc.clear();
-
   }
 }
 

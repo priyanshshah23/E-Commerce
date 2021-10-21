@@ -1053,6 +1053,15 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                 app.resolve<CustomDialogs>().accessDenideDialog(context);
               }
               // place code
+            } else if (segmentedControlValue == 3) {
+              if (app
+                  .resolve<PrefUtils>()
+                  .getModulePermission(
+                      ModulePermissionConstant.permission_layout)
+                  .view) {
+                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_LAYOUT,
+                    isLayout: true);
+              }
             } else if (app
                 .resolve<PrefUtils>()
                 .getModulePermission(
@@ -1225,7 +1234,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       {bool isSavedSearch = false,
       bool isSearch = false,
       bool isUpcoming = false,
-      bool isNewArrival = false}) {
+      bool isNewArrival = false,
+      bool isLayout = false}) {
     SyncManager.instance.callAnalytics(context,
         page: PageAnalytics.DIAMOND_SEARCH,
         section: SectionAnalytics.SEARCH,
@@ -1233,6 +1243,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> map = FilterRequest().createRequest(arrList,
         selectedStatus: selectStatus,
         isFromLayout: segmentedControlValue == 3 ? true : false);
+
 //    if (app.resolve<PrefUtils>().isUserCustomer() &&
 //        map.length < 3) {
 //      app.resolve<CustomDialogs>().errorDialog(
@@ -1313,6 +1324,12 @@ class _FilterScreenState extends StatefulScreenWidgetState {
               NavigationUtilities.pushRoute(DiamondListScreen.route,
                   args: dict);
             }
+          } else if (isLayout == true) {
+            Map<String, dynamic> dict = new HashMap();
+            dict["filterId"] = diamondListResp.data.filter.id;
+            dict[ArgumentConstant.ModuleType] =
+                DiamondModuleConstant.MODULE_TYPE_LAYOUT;
+            NavigationUtilities.pushRoute(DiamondListScreen.route, args: dict);
           } else {
             Map<String, dynamic> dict = new HashMap();
             dict["filterId"] = diamondListResp.data.filter.id;

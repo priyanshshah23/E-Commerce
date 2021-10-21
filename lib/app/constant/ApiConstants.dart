@@ -16,8 +16,7 @@ class ApiConstants {
       "https://betaapi.arjivexports.com";
 //  static const String dashboardImageBaseURL = "https://api.arjivexports.com";
   //static const String webPageUrl = "https://customer.arjivexports.com/";
-  static const String shareUrl =
-      baseURL+"/diamond-details/";
+  static const String shareUrl = baseURL + "/diamond-details/";
   static const String googleDocUrl =
       "https://docs.google.com/viewer?embedded=true&url=";
 
@@ -146,6 +145,7 @@ class DiamondUrls {
   static const String commonUrlForImage =
       "https://arjivexports.blob.core.windows.net/arjivfiles/Imaged/";
   static const String image = commonUrlForImage + "IMAGE/";
+  static const String layout = commonUrlForImage + "Layout/";
 
   // commonUrlForImage + "stonevideos/StoneImage_04-01-2020/";
   static String video = commonUrl + "HDView/";

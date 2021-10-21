@@ -146,20 +146,22 @@ class Data {
   bool maxLimit;
 
   List<TrackItem> list;
+  List<Summary> summary;
   List<DiamondModel> diamonds;
 
-  Data({
-    this.filter,
-    this.count,
-    this.maxLimit,
-    this.diamonds,
-  });
+  Data({this.filter, this.count, this.maxLimit, this.diamonds, this.summary});
 
   Data.fromJson(Map<String, dynamic> json) {
     filter =
         json['filter'] != null ? new FilterResp.fromJson(json['filter']) : null;
     count = json['count'];
     maxLimit = json['maxLimit'];
+    if (json['summary'] != null) {
+      summary = new List<Summary>();
+      json['summary'].forEach((v) {
+        summary.add(new Summary.fromJson(v));
+      });
+    }
     if (json['diamonds'] != null) {
       diamonds = new List<DiamondModel>();
       json['diamonds'].forEach((v) {
@@ -189,6 +191,9 @@ class Data {
     data['maxLimit'] = this.maxLimit;
     if (this.diamonds != null) {
       data['diamonds'] = this.diamonds.map((v) => v.toJson()).toList();
+    }
+    if (this.summary != null) {
+      data['summary'] = this.summary.map((v) => v.toJson()).toList();
     }
     if (this.list != null) {
       data['list'] = this.list.map((v) => v.toJson()).toList();
@@ -409,6 +414,104 @@ class CabinSlot {
   }
 }
 
+class Summary {
+  String layoutNo;
+  int stoneCount;
+  String totalCrt;
+  String totalAmt;
+  String avgCtPr;
+  String avgBack;
+  String avgRap;
+  String colRange;
+  String clrRange;
+  String fluRange;
+  String crtRange;
+  num maxAmt;
+  num minAmt;
+  String vStnIds;
+  String shapes;
+  String avgSize;
+  ShapesCount shapesCount;
+
+  Summary(
+      {this.layoutNo,
+      this.stoneCount,
+      this.totalCrt,
+      this.totalAmt,
+      this.avgCtPr,
+      this.avgBack,
+      this.avgRap,
+      this.colRange,
+      this.clrRange,
+      this.fluRange,
+      this.crtRange,
+      this.maxAmt,
+      this.minAmt,
+      this.vStnIds,
+      this.shapes,
+      this.shapesCount});
+
+  Summary.fromJson(Map<String, dynamic> json) {
+    layoutNo = json['layoutNo'];
+    stoneCount = json['stoneCount'];
+    totalCrt = json['totalCrt'];
+    totalAmt = json['totalAmt'];
+    avgCtPr = json['avgCtPr'];
+    avgBack = json['avgBack'];
+    avgRap = json['avgRap'];
+    colRange = json['colRange'];
+    clrRange = json['clrRange'];
+    fluRange = json['fluRange'];
+    crtRange = json['crtRange'];
+    maxAmt = json['maxAmt'];
+    minAmt = json['minAmt'];
+    vStnIds = json['vStnIds'];
+    shapes = json['shapes'];
+    shapesCount = json['shapesCount'] != null
+        ? new ShapesCount.fromJson(json['shapesCount'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['layoutNo'] = this.layoutNo;
+    data['stoneCount'] = this.stoneCount;
+    data['totalCrt'] = this.totalCrt;
+    data['totalAmt'] = this.totalAmt;
+    data['avgCtPr'] = this.avgCtPr;
+    data['avgBack'] = this.avgBack;
+    data['avgRap'] = this.avgRap;
+    data['colRange'] = this.colRange;
+    data['clrRange'] = this.clrRange;
+    data['fluRange'] = this.fluRange;
+    data['crtRange'] = this.crtRange;
+    data['maxAmt'] = this.maxAmt;
+    data['minAmt'] = this.minAmt;
+    data['vStnIds'] = this.vStnIds;
+    data['shapes'] = this.shapes;
+    if (this.shapesCount != null) {
+      data['shapesCount'] = this.shapesCount.toJson();
+    }
+    return data;
+  }
+}
+
+class ShapesCount {
+  int kITE;
+
+  ShapesCount({this.kITE});
+
+  ShapesCount.fromJson(Map<String, dynamic> json) {
+    kITE = json['KITE'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['KITE'] = this.kITE;
+    return data;
+  }
+}
+
 class TrackItem {
   String createdAt;
   String updatedAt;
@@ -465,7 +568,7 @@ class TrackItem {
       this.memoNo,
       this.reminderDate,
       this.trackPricePerCarat,
-        this.validityHours,
+      this.validityHours,
       this.trackDiscount,
       this.trackAmount,
       this.newPricePerCarat,

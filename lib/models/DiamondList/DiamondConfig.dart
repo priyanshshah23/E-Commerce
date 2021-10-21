@@ -215,7 +215,6 @@ class DiamondConfig {
       int moduleType, Map<String, dynamic> dict) {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
-      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
@@ -256,6 +255,16 @@ class DiamondConfig {
             .networkService()
             .diamondBidList(dict);
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondMatchPairList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
+        return app
+            .resolve<ServiceModule>()
+            .networkService()
+            .diamondMatchPairList(dict);
+      case DiamondModuleConstant.MODULE_TYPE_INNER_LAYOUT:
         return app
             .resolve<ServiceModule>()
             .networkService()

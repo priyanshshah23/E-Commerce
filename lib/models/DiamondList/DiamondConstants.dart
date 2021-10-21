@@ -37,6 +37,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH = 33;
   static const MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY = 34;
   static const MODULE_TYPE_LAYOUT = 35;
+  static const MODULE_TYPE_INNER_LAYOUT = 36;
   static const MODULE_TYPE_MY_BID_HISTORY = 37;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
@@ -64,6 +65,7 @@ class ModulePermissionConstant {
   static const permission_compare = "COMPARE";
   static const permission_showSelected = "showSelected";
   static const permission_matchPair = "MATCH_PAIR";
+  static const permission_layout = "LAYOUT";
   static const permission_iAmLucky = "iAmLucky";
   static const permission_parcelList = "parcelList";
   static const permission_newGoods = "NEW_ARRIVAL_BID_IT";
@@ -82,7 +84,7 @@ class ModulePermissionConstant {
   static const permission_address = "address";
   static const permission_searchupcoming = "UPCOMING";
   static const permission_searchnewarrival = "NEW_ARRIVAL";
-  
+
   static const permission_featured = "featured";
   static const permission_auction = "auction";
   static const permission_exclusive = "EXCLUSIVE";
@@ -235,7 +237,6 @@ class ActionMenuConstant {
   static const ACTION_TYPE_CONFIRM_STONE = 22;
   static const ACTION_TYPE_OFFICE_VIEW = 23;
   static const ACTION_TYPE_UPDATE_NOTE = 24;
-
 }
 
 class MoreMenuConstant {
