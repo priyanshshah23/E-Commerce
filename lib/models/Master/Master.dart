@@ -221,8 +221,7 @@ class Master {
 
   static List<String> getSelectedId(List<Master> masters) {
     List<String> ids = [];
-    List<String> locId = ["60f7ab28122980067ee9b335","60f7ab9e122980067ee9b343","5d035ebcac36b81af74acde0"];
-   // arrStr.add("60f7ab28122980067ee9b335");
+    // arrStr.add("60f7ab28122980067ee9b335");
     //   arrStr.add("60f7ab9e122980067ee9b343")
     ids.clear();
     for (Master item in masters) {
@@ -231,7 +230,7 @@ class Master {
       //     ids.add(i);
       //   }
       // }
-       if (item.isSelected) {
+      if (item.isSelected) {
         if (item.sId != R.string.commonString.all && item.sId != "ShowMore") {
           if (item.name == "INDIA") {
             app.resolve<PrefUtils>().getLoc().forEach((element2) {
@@ -293,8 +292,13 @@ class Master {
         color: appTheme.whiteColor,
         width: getSize(32),
         height: getSize(32),
-        errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-          return Center(child: Text('N/A',style: TextStyle(color: appTheme.whiteColor),));
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace stackTrace) {
+          return Center(
+              child: Text(
+            'N/A',
+            style: TextStyle(color: appTheme.whiteColor),
+          ));
         },
       );
     }
@@ -303,7 +307,8 @@ class Master {
       color: Colors.black,
       width: getSize(32),
       height: getSize(32),
-      errorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace stackTrace) {
         return Center(child: Text('N/A'));
       },
     );
@@ -312,8 +317,8 @@ class Master {
   checkImageValid(BuildContext context) async {
     String code;
     await _initImages(context);
-    for(var i =0;i<list.length;i++){
-      code=list[i].split("/").last;
+    for (var i = 0; i < list.length; i++) {
+      code = list[i].split("/").last;
     }
     imageCode = code;
   }

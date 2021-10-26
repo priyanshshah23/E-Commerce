@@ -57,6 +57,7 @@ class DownloadState extends State<Download> {
   // CancelToken cancelToken;
   Map<String, CancelToken> mapOfCancelToken = {};
   bool breakForLoop = false;
+  int savePathLength = 0;
 
   DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
@@ -448,6 +449,8 @@ class DownloadState extends State<Download> {
         deleteOnError: true,
         cancelToken: mapOfCancelToken[key],
       ).then((_) {
+        savePathLength++;
+        print(uri);
         // print("download completed");
         // print("download completed" + progress.toString());
         if (progress >= 100) {
@@ -459,7 +462,20 @@ class DownloadState extends State<Download> {
           }
         }
       }).catchError((error) {
-        callBack(100, true);
+        savePathLength++;
+        if (totalDownloadableFilesForAllDiamonds == savePathLength &&
+            totalDownloadedFiles == 0) {
+          Navigator.pop(context);
+          Navigator.pop(context);
+          app.resolve<CustomDialogs>().errorDialog(
+                NavigationUtilities.key.currentState.overlay.context,
+                "Oops!!!",
+                "No Files Found!",
+                btntitle: R.string.commonString.ok,
+              );
+        } else {
+          callBack(100, true);
+        }
 
         if (mounted) {
           print("------------------->>>>>>>>>>>>>>>>>app");

@@ -225,7 +225,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
       text,
       textAlign: align ?? TextAlign.left,
       style: style == null
-          ? appTheme.black16TextStyle.copyWith(
+          ? appTheme.blue16BoldTextStyle.copyWith(
               fontSize: getFontSize(16),
             )
           : style,
@@ -263,7 +263,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Shape: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.shapes ?? ""),
             ],
@@ -275,7 +275,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Avg. Size: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.avgSize ?? ""),
             ],
@@ -287,7 +287,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Color: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.colRange ?? ""),
             ],
@@ -299,7 +299,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Clarity: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.clrRange ?? ""),
             ],
@@ -311,7 +311,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Floro: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.fluRange ?? ""),
             ],
@@ -323,7 +323,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Layout No: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.layoutNo ?? ""),
             ],
@@ -377,7 +377,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Total Weight: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.totalCrt + " Ct" ?? ""),
             ],
@@ -389,7 +389,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "No. of Pcs: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.stoneCount.toString() ?? ""),
             ],
@@ -401,7 +401,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Avg. Rapaport: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.avgRap ?? ""),
             ],
@@ -413,7 +413,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Avg Disc in %: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.avgBack ?? ""),
             ],
@@ -425,7 +425,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Avg Rate in $dollar: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.avgCtPr ?? ""),
             ],
@@ -437,7 +437,7 @@ class _DiamondSquareGridItemState extends State<DiamondSquareGridItem> {
             children: [
               Text(
                 "Total Amt in $dollar: ",
-                style: appTheme.blue16BoldTextStyle,
+                style: appTheme.black16TextStyle,
               ),
               getText16(widget.summary?.totalAmt ?? ""),
             ],

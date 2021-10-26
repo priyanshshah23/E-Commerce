@@ -1028,16 +1028,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     arrList,
                     selectedStatus: selectStatus,
                     isFromMatch: true);
-//                if (/*app.resolve<PrefUtils>().getUserDetails().type ==
-//                        UserConstant.CUSTOMER &&*/
-//                    map.length < 3) {
-//                  app.resolve<CustomDialogs>().errorDialog(
-//                        context,
-//                        "",
-//                        "Please select any 2 criteria.",
-//                        btntitle: R.string.commonString.ok,
-//                      );
-//                } else {
+
                 SyncManager.instance.callApiForMatchPair(context, map,
                     (diamondListResp) {
                   Map<String, dynamic> dict = new HashMap();
@@ -1059,9 +1050,37 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                   .getModulePermission(
                       ModulePermissionConstant.permission_layout)
                   .view) {
-                callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_LAYOUT,
-                    isLayout: true);
+                Map<String, dynamic> map = FilterRequest().createRequest(
+                    arrList,
+                    selectedStatus: selectStatus,
+                    isFromLayout: true);
+                if (map.length < 3) {
+                  app.resolve<CustomDialogs>().errorDialog(
+                        context,
+                        "",
+                        "Please select atleast one shape.",
+                        btntitle: R.string.commonString.ok,
+                      );
+                } else {
+                  SyncManager.instance.callApiForDiamondList(
+                    context,
+                    map,
+                    (diamondListResp) {
+                      Map<String, dynamic> dict = new HashMap();
+                      dict["filterId"] = diamondListResp.data.filter.id;
+                      dict[ArgumentConstant.ModuleType] =
+                          DiamondModuleConstant.MODULE_TYPE_LAYOUT;
+                      NavigationUtilities.pushRoute(DiamondListScreen.route,
+                          args: dict);
+                    },
+                    (onError) {
+                      //print("Error");
+                    },
+                  );
+                }
               }
+              // callApiForGetFilterId(DiamondModuleConstant.MODULE_TYPE_LAYOUT,
+              // isLayout: true);
             } else if (app
                 .resolve<PrefUtils>()
                 .getModulePermission(
@@ -1467,6 +1486,51 @@ class _FilterScreenState extends StatefulScreenWidgetState {
             arrList,
             moduleType: moduleType,
           );
+        } else if ((segmentedControlValue == 1 &&
+                arrTab[position].tab == "matchpair") ||
+            (segmentedControlValue == 1 && arrTab[position].tab == "layout") ||
+            (segmentedControlValue != 1)) {
+          arrList.forEach((element) {
+            if (element is SelectionModel) {
+              element.masters.forEach((element) {
+                element.isSelected = false;
+              });
+              element.isShowAllSelected = false;
+              element.caratRangeChipsToShow = [];
+            }
+            if (element is KeyToSymbolModel) {
+              element.masters.forEach((element) {
+                element.isSelected = false;
+              });
+            }
+            if (element is FromToModel) {
+              element.valueFrom = "";
+              element.valueTo = "";
+            }
+            if (element is ColorModel) {
+              element.masters.forEach((element) {
+                element.isSelected = false;
+              });
+              element.mainMasters.forEach((element) {
+                element.isSelected = false;
+              });
+              element.groupMaster.forEach((element) {
+                element.isSelected = false;
+              });
+              element.intensity.forEach((element) {
+                element.isSelected = false;
+              });
+              element.overtone.forEach((element) {
+                element.isSelected = false;
+              });
+            }
+          });
+          selectStatus.clear();
+          selectStatusModel.forEach((element) {
+            element.isSelected = false;
+          });
+          isStatusSelected = false;
+          isCompanySelected = false;
         }
         return FilterItem(
           arrList

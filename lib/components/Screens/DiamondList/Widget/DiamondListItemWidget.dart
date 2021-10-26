@@ -1603,7 +1603,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                       child: Text(
                         R.string.screenTitle.expDiscPer +
                             " : " +
-                            "${widget.item.newDiscount}%",
+                            "${PriceUtilities.getDoubleValue(widget.item.newDiscount)}%",
                         style: appTheme.black12TextStyleMedium,
                       ),
                     ),

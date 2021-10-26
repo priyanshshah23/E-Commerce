@@ -332,7 +332,6 @@ class _DiamondActionScreenState extends StatefulScreenWidgetState {
         onTap: () {
           setState(() {
             isAllSelected = !isAllSelected;
-
             diamondList.forEach((element) {
               element.isSelected = isAllSelected;
             });

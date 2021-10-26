@@ -20,6 +20,14 @@ class DiamondGridItemWidget extends StatefulWidget {
 }
 
 class _DiamondGridItemWidgetState extends State<DiamondGridItemWidget> {
+  num value;
+  num avg;
+  num stone;
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

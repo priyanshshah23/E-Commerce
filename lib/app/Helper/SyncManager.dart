@@ -348,6 +348,7 @@ class SyncManager {
       dict["filters"]["diamondSearchId"] = req;
     }
     dict["filter"] = {};
+    dict["filter"] = req;
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
     }
