@@ -769,7 +769,7 @@ class ScreenTitle {
   String stoneOfDay = "Best Buy";
   String recentSearch = "Recent Search";
   String viewAll = "View All";
-  String salesPersonDetail = "Sales Person Detail";
+  String salesPersonDetail = "Sales Detail";
   String searchTitle = "Search Title";
   String enterSearchTitle = "Enter Search Title";
   String timeSlots = "Time Slots";

@@ -38,6 +38,8 @@ class BottomCodeConstant {
   static const String TBShare = "TB_SHARE";
   static const String TBClock = "TB_CLOCK";
   static const String TBCompanySelection = "TB_COMPANY_SELECTION";
+  static const String TBCreditLimit = "TB_CREDIT_LIMIT";
+  static const String TBContactUs = "TB_CONTACT_US";
 
   static const String TBProfile = "TB_PROFILE";
   static const String TBNotification = "TB_NOTIFICATION";
@@ -133,67 +135,111 @@ class BottomTabBar {
   //
 
   static List<BottomTabModel> getFilterScreenBottomTabs(
-      {bool isForEditSavedSearch = false}) {
+      {bool isForEditSavedSearch = false, int segment = 0}) {
     List<BottomTabModel> arrBootomTab = List<BottomTabModel>();
-    arrBootomTab.add(
-      BottomTabModel(
-        title: R.string.screenTitle.upcoming,
-        image: upcoming,
-        code: BottomCodeConstant.filterSearchUpcoming,
-        sequence: 0,
-        isCenter: false,
-        color: Colors.white,
-      ),
-    );
-    arrBootomTab.add(
-      BottomTabModel(
-        title: R.string.screenTitle.newArrival,
-        image: newArrival,
-        code: BottomCodeConstant.filterSearchNewArrival,
-        sequence: 1,
-        isCenter: false,
-        color: Colors.white,
-      ),
-    );
-    // arrBootomTab.add(BottomTabModel(
-    //     title: R.string.screenTitle.savedSearch,
-    //     image: savedSearch,
-    //     code: BottomCodeConstant.filterSavedSearch,
-    //     sequence: 0,
-    //     isCenter: false));
+    if (segment == 0 || segment == 1) {
+      arrBootomTab.add(
+        BottomTabModel(
+          title: R.string.screenTitle.upcoming,
+          image: upcoming,
+          code: BottomCodeConstant.filterSearchUpcoming,
+          sequence: 0,
+          isCenter: false,
+          color: Colors.white,
+        ),
+      );
+      arrBootomTab.add(
+        BottomTabModel(
+          title: R.string.screenTitle.newArrival,
+          image: newArrival,
+          code: BottomCodeConstant.filterSearchNewArrival,
+          sequence: 1,
+          isCenter: false,
+          color: Colors.white,
+        ),
+      );
+      // arrBootomTab.add(BottomTabModel(
+      //     title: R.string.screenTitle.savedSearch,
+      //     image: savedSearch,
+      //     code: BottomCodeConstant.filterSavedSearch,
+      //     sequence: 0,
+      //     isCenter: false));
 
-    arrBootomTab.add(BottomTabModel(
-        title: "",
-        image: search,
-        code: BottomCodeConstant.filterSearch,
-        sequence: 2,
-        isCenter: true));
-    arrBootomTab.add(BottomTabModel(
-        title: isForEditSavedSearch
-            ? R.string.screenTitle.updateAndSearch
-            : R.string.screenTitle.savedAndSearch,
-        image: saveAndSearch,
-        code: BottomCodeConstant.filterSaveAndSearch,
-        sequence: 3,
-        isCenter: false));
-    arrBootomTab.add(BottomTabModel(
-        title: R.string.screenTitle.addDemand,
-        image: addDemand,
-        code: BottomCodeConstant.filterAddDemamd,
-        sequence: 1,
-        isCenter: false));
+      arrBootomTab.add(BottomTabModel(
+          title: "",
+          image: search,
+          code: BottomCodeConstant.filterSearch,
+          sequence: 2,
+          isCenter: true));
+      arrBootomTab.add(BottomTabModel(
+          title: isForEditSavedSearch
+              ? R.string.screenTitle.updateAndSearch
+              : R.string.screenTitle.savedAndSearch,
+          image: saveAndSearch,
+          code: BottomCodeConstant.filterSaveAndSearch,
+          sequence: 3,
+          isCenter: false));
+      arrBootomTab.add(BottomTabModel(
+          title: R.string.screenTitle.addDemand,
+          image: addDemand,
+          code: BottomCodeConstant.filterAddDemamd,
+          sequence: 1,
+          isCenter: false));
+    }
+    if (segment == 2) {
+      arrBootomTab.add(BottomTabModel(
+          title: isForEditSavedSearch
+              ? R.string.screenTitle.updateAndSearch
+              : R.string.screenTitle.savedAndSearch,
+          image: saveAndSearch,
+          code: BottomCodeConstant.filterSaveAndSearch,
+          sequence: 3,
+          isCenter: false));
+      arrBootomTab.add(BottomTabModel(
+          title: "",
+          image: search,
+          code: BottomCodeConstant.filterSearch,
+          sequence: 2,
+          isCenter: true));
+      arrBootomTab.add(BottomTabModel(
+          title: "Reset",
+          image: reset,
+          color: ColorConstants.white,
+          code: BottomCodeConstant.filterReset,
+          sequence: 4,
+          isCenter: false));
+    }
+    if (segment == 3) {
+      arrBootomTab.add(BottomTabModel(
+          title: isForEditSavedSearch
+              ? R.string.screenTitle.updateAndSearch
+              : R.string.screenTitle.savedAndSearch,
+          image: saveAndSearch,
+          code: BottomCodeConstant.filterSaveAndSearch,
+          sequence: 3,
+          isCenter: false));
+      arrBootomTab.add(BottomTabModel(
+          title: "",
+          image: search,
+          code: BottomCodeConstant.filterSearch,
+          sequence: 2,
+          isCenter: true));
+      arrBootomTab.add(BottomTabModel(
+          title: "Reset",
+          image: reset,
+          color: ColorConstants.white,
+          code: BottomCodeConstant.filterReset,
+          sequence: 4,
+          isCenter: false));
+    }
+
 //    arrBootomTab.add(BottomTabModel(
 //        title: R.string.screenTitle.matchPair,
 //        image: matchPair,
 //        code: BottomCodeConstant.filteMatchPair,
 //        sequence: 4,
 //        isCenter: false));
-//     arrBootomTab.add(BottomTabModel(
-//         title: "Reset",
-//         image: reset,
-//         code: BottomCodeConstant.filterReset,
-//         sequence: 4,
-//         isCenter: false));
+
     return arrBootomTab;
   }
 }

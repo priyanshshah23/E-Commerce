@@ -293,6 +293,22 @@ class DiamondConfig {
 
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_HOME:
+        if (app.resolve<PrefUtils>().isUserCustomer()) {
+          list.add(BottomTabModel(
+              title: "",
+              image: dollarWhite,
+              color: ColorConstants.white,
+              code: BottomCodeConstant.TBCreditLimit,
+              sequence: 1,
+              isCenter: true));
+          list.add(BottomTabModel(
+              title: "",
+              image: contactUsWhite,
+              code: BottomCodeConstant.TBContactUs,
+              sequence: 1,
+              isCenter: true));
+        }
+
         if (app
             .resolve<PrefUtils>()
             .getModulePermission(
@@ -368,6 +384,20 @@ class DiamondConfig {
               sequence: 0,
               isCenter: true,
             ));
+          if (app.resolve<PrefUtils>().isUserCustomer()) {
+            list.add(BottomTabModel(
+                title: "",
+                image: dollarBlack,
+                code: BottomCodeConstant.TBCreditLimit,
+                sequence: 1,
+                isCenter: true));
+            list.add(BottomTabModel(
+                title: "",
+                image: contactUs,
+                code: BottomCodeConstant.TBContactUs,
+                sequence: 1,
+                isCenter: true));
+          }
           list.add(BottomTabModel(
               title: "",
               image: selectAll,

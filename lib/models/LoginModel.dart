@@ -647,6 +647,7 @@ class Account {
   List<Kyc> kyc;
   bool isKycUploaded;
   String businessId;
+  int crdLmt;
 
   Account.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -708,6 +709,7 @@ class Account {
       natureOfOrg = json["natureOfOrg"];
     }
     designation = json['designation'];
+    crdLmt = json['crdLmt'] ?? 0;
     howKnow = json['howKnow'];
     referenceFrom = json['referenceFrom'];
     isDeleted = json['isDeleted'];
@@ -824,6 +826,9 @@ class Account {
     data['state'] = this.state;
     data['city'] = this.city;
     data["isKycUploaded"] = this.isKycUploaded;
+    if (this.crdLmt != null) {
+      data['crdLmt'] = this.crdLmt;
+    }
     return data;
   }
 }

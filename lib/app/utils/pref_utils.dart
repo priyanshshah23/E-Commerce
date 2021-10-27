@@ -271,7 +271,7 @@ class PrefUtils {
   }
 
   DashboardModel getDashboardDetails() {
-    if (_preferences.getString(keyCompany) != null) {
+    if (_preferences?.getString(keyCompany) != null) {
       var data = _preferences.getString(keyDashboard);
       if (data != null) {
         var dashboardJson = json.decode(data);
@@ -429,7 +429,11 @@ class PrefUtils {
         module == ModulePermissionConstant.permission_comment ||
         module == ModulePermissionConstant.permission_compare ||
         module == ModulePermissionConstant.permission_notification ||
-        module == ModulePermissionConstant.permission_purchase) {
+        module == ModulePermissionConstant.permission_purchase ||
+        module == ModulePermissionConstant.permission_download ||
+        module == ModulePermissionConstant.permission_hideGridColumns ||
+        module == ModulePermissionConstant.permission_searchLayout ||
+        module == ModulePermissionConstant.permission_searchMatchPair) {
       data = UserPermissionsData(module: module);
       data.view = true;
       data.insert = true;

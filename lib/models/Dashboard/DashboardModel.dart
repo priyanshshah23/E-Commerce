@@ -350,6 +350,7 @@ class Seller {
     this.email,
     this.whatsapp,
     this.mobile,
+    this.skype,
   });
 
   String id;
@@ -358,15 +359,16 @@ class Seller {
   String email;
   String whatsapp;
   String mobile;
+  String skype;
 
   factory Seller.fromJson(Map<String, dynamic> json) => Seller(
-        id: json["id"],
-        firstName: json["firstName"],
-        lastName: json["lastName"],
-        email: json["email"] ?? "-",
-        whatsapp: json["whatsapp"] ?? "-",
-        mobile: json["mobile"] ?? "-",
-      );
+      id: json["id"],
+      firstName: json["firstName"],
+      lastName: json["lastName"],
+      email: json["email"] ?? "-",
+      whatsapp: json["whatsapp"] ?? "-",
+      mobile: json["mobile"] ?? "-",
+      skype: json["skype"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -375,6 +377,7 @@ class Seller {
         "email": email,
         "whatsapp": whatsapp,
         "mobile": mobile,
+        "skype": skype,
       };
 }
 

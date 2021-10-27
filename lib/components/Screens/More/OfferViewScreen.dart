@@ -3,6 +3,7 @@ import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
+import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -47,11 +48,13 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   int selectedVirtualType = -1;
   List<SlotModel> arrSlots = [];
   List<SlotModel> disableSlots = [];
-  List<String> virtualList = [
-    VirtualTypesString.phoneCall,
-    VirtualTypesString.webConference,
-    VirtualTypesString.inPerson
-  ];
+  // List<String> virtualList = [
+  //   VirtualTypesString.phoneCall,
+  //   VirtualTypesString.webConference,
+  //   VirtualTypesString.inPerson
+  // ];
+  List<SelectionPopupModel> virtualList = List<SelectionPopupModel>();
+  var selectedVirtualListItem = -1;
   final TextEditingController _virtualTypeController = TextEditingController();
   final TextEditingController _commentTypeController = TextEditingController();
   int selectedHourStart = 3;
@@ -64,6 +67,19 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
     super.initState();
     days = setDateList();
     callApiforTimeSlots();
+    getVirtualList();
+  }
+
+  getVirtualList() {
+    virtualList.add(SelectionPopupModel(
+        VirtualTypesString.phoneCall, VirtualTypesString.phoneCall,
+        isSelected: false));
+    virtualList.add(SelectionPopupModel(
+        VirtualTypesString.webConference, VirtualTypesString.webConference,
+        isSelected: false));
+    virtualList.add(SelectionPopupModel(
+        VirtualTypesString.inPerson, VirtualTypesString.inPerson,
+        isSelected: false));
   }
 
   getDate(int day) {
@@ -603,57 +619,88 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
     );
   }
 
-  Widget setVirtualDropDown(List<String> list, Function(String) selectedValue,
-          {bool isPer = false}) =>
-      PopupMenuButton<String>(
-        shape: TooltipShapeBorder(arrowArc: 0.5),
-        onSelected: (newValue) {
-          // add this property
-          selectedValue(newValue);
-        },
-        itemBuilder: (context) => [
-          for (var item in list) getPopupItems(item),
-          PopupMenuItem(
-            height: getSize(30),
-            value: "Start",
-            child: SizedBox(),
-          ),
-        ],
-        child: getVirtualTypeDropDown(),
-        offset: Offset(25, 220),
-      );
+  openBottomSheet(
+      List array, Function(SelectionPopupModel) callBack, String title) {
+    modalBottomSheetMenu(context,
+        title: title, selectionOptions: array, callback: callBack);
+  }
 
-  getVirtualTypeDropDown() {
-    return AbsorbPointer(
-      child: CommonTextfield(
-          enable: false,
-          textOption: TextFieldOption(
-              prefixWid: getCommonIconWidget(
-                  imageName: company, imageType: IconSizeType.small),
-              hintText: R.string.commonString.selectType,
-              maxLine: 1,
-              keyboardType: TextInputType.text,
-              type: TextFieldType.DropDown,
-              inputController: _virtualTypeController,
-              isSecureTextField: false),
-          textCallback: (text) {
+  getVirtualTypeDropDown(int mode, List<SelectionPopupModel> list,
+      Function(SelectionPopupModel) callBack, String title) {
+    return InkWell(
+      onTap: () {
+        openBottomSheet(list, callBack, title);
+      },
+      child: AbsorbPointer(
+        child: CommonTextfield(
+            textOption: TextFieldOption(
+                prefixWid: getCommonIconWidget(
+                    imageName: company, imageType: IconSizeType.small),
+                hintText: R.string.commonString.selectType,
+                maxLine: 1,
+                keyboardType: TextInputType.text,
+                type: TextFieldType.DropDown,
+                inputController: _virtualTypeController,
+                isSecureTextField: false),
+            textCallback: (text) {
 //                  setState(() {
 //                    checkValidation();
 //                  });
-          },
-          validation: (text) {
-            if (text.isEmpty) {
-              return R.string.errorString.selectVirtualType;
-            } else {
-              return null;
-            }
-          },
-          inputAction: TextInputAction.next,
-          onNextPress: () {
-            FocusScope.of(context).unfocus();
-          }),
+            },
+            validation: (text) {
+              if (mode == 1) {
+                if (text.isEmpty) {
+                  return "select comapany";
+                } else {
+                  return null;
+                }
+              } else {
+                if (text.isEmpty) {
+                  return "select comapany";
+                } else {
+                  return null;
+                }
+              }
+            },
+            inputAction: TextInputAction.next,
+            onNextPress: () {
+              FocusScope.of(context).unfocus();
+            }),
+      ),
     );
   }
+
+//   getVirtualTypeDropDown() {
+//     return AbsorbPointer(
+//       child: CommonTextfield(
+//           enable: false,
+//           textOption: TextFieldOption(
+//               prefixWid: getCommonIconWidget(
+//                   imageName: company, imageType: IconSizeType.small),
+//               hintText: R.string.commonString.selectType,
+//               maxLine: 1,
+//               keyboardType: TextInputType.text,
+//               type: TextFieldType.DropDown,
+//               inputController: _virtualTypeController,
+//               isSecureTextField: false),
+//           textCallback: (text) {
+// //                  setState(() {
+// //                    checkValidation();
+// //                  });
+//           },
+//           validation: (text) {
+//             if (text.isEmpty) {
+//               return R.string.errorString.selectVirtualType;
+//             } else {
+//               return null;
+//             }
+//           },
+//           inputAction: TextInputAction.next,
+//           onNextPress: () {
+//             FocusScope.of(context).unfocus();
+//           }),
+//     );
+//   }
 
   getPopupItems(
     String per,
@@ -738,9 +785,20 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                       "Book Appointment",
                       style: appTheme.black16MediumTextStyle,
                     ),
-                    setVirtualDropDown(virtualList, (value) {
-                      _virtualTypeController.text = value;
-                    }),
+                    // setVirtualDropDown(virtualList, (value) {
+                    //   _virtualTypeController.text = value;
+                    // }),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: getSize(16),
+                        right: getSize(16),
+                      ),
+                      child: getVirtualTypeDropDown(2, virtualList, (model) {
+                        _virtualTypeController.text = model.title;
+                        selectedVirtualListItem = virtualList.indexOf(model);
+                        setState(() {});
+                      }, "Select Virtual Type"),
+                    ),
                     SizedBox(
                       height: getSize(10),
                     ),
@@ -783,6 +841,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                                   FocusScope.of(context).unfocus();
                                   if (_formKey.currentState.validate()) {
                                     callApiForRequestForOffice();
+                                    Navigator.pop(context);
                                   } else {
                                     _autoValidate = true;
                                   }

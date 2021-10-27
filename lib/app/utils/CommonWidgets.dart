@@ -487,3 +487,16 @@ openURLWithApp(String uri, BuildContext context, {bool isPop = false}) async {
         );
   }
 }
+
+void openSkype(String username, BuildContext context) async {
+  if (await canLaunch('skype:${username}')) {
+    await launch('skype:${username}');
+  } else {
+    //showToast("skype is not installed in this device", context: context);
+    app.resolve<CustomDialogs>().confirmDialog(
+          context,
+          desc: "skype is not installed in this device",
+          positiveBtnTitle: R.string.commonString.ok,
+        );
+  }
+}

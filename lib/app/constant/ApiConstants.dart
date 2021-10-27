@@ -7,7 +7,8 @@ class ApiConstants {
 //   static String PROXY_URL = "PROXY 192.168.2.153:8888"; //HIMANSHI
 // static String PROXY_URL = "PROXY 192.168.1.3:8888"; //SNEHAL
   //static String PROXY_URL = "PROXY 192.168.0.153:8888"; //KEVAL
-  static String PROXY_URL = "PROXY 192.168.3.160:8888"; //PRIYANSH
+  // static String PROXY_URL = "PROXY 192.168.3.160:8888"; //PRIYANSH
+  static String PROXY_URL = "PROXY 192.168.3.152:8888"; //YASH
 
 //    static const String PROXY_URL = "PROXY 10.0.2.2:8888";
 

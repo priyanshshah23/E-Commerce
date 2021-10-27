@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:diamnow/app/Helper/LocalNotification.dart';
 import 'package:diamnow/app/Helper/SyncManager.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
@@ -451,6 +452,8 @@ class DownloadState extends State<Download> {
       ).then((_) {
         savePathLength++;
         print(uri);
+        LocalNotificationManager.instance
+            .showExcelDownloadNotification(savePath);
         // print("download completed");
         // print("download completed" + progress.toString());
         if (progress >= 100) {

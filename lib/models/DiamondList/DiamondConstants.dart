@@ -104,6 +104,10 @@ class ModulePermissionConstant {
   static const permission_share_via_whatsapp = "SHARE_VIA_WHATSAPP";
   static const permission_share_via_skype = "SHARE_VIA_SKYPE";
   static const permission_suggested_stock = "SUGGESTED_STOCK";
+  static const permission_download = "DOWNLOAD";
+  static const permission_hideGridColumns = "HIDE_GRID_COLUMNS";
+  static const permission_searchLayout = "SEARCH_LAYOUT";
+  static const permission_searchMatchPair = "SEARCH_MATCH_PAIR";
 }
 
 class ReminderType {

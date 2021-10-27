@@ -37,6 +37,7 @@ import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rxbus/rxbus.dart';
@@ -1077,6 +1078,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   }
 
   List<Widget> getToolbarItem() {
+    final key = GlobalKey<State<Tooltip>>();
+    User userAccount = app.resolve<PrefUtils>().getUserDetails();
     List<Widget> list = [];
     for (int i = 0; i < diamondConfig.toolbarList.length - 1; i++) {
       var element = diamondConfig.toolbarList[i];
@@ -1216,15 +1219,354 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                     )
                   ],
                 )
-              : Image.asset(
-                  element.isSelected
-                      ? (element.selectedImage != null
-                          ? element.selectedImage
-                          : element.image)
-                      : element.image,
-                  height: getSize(20),
-                  width: getSize(20),
-                ),
+              : (element.code == BottomCodeConstant.TBCreditLimit)
+                  ? Tooltip(
+                      key: key,
+                      message:
+                          "Credit Limit:\$${userAccount.account.crdLmt.toString()}",
+                      child: InkWell(
+                        onTap: () {
+                          final dynamic tooltip = key.currentState;
+                          tooltip?.ensureTooltipVisible();
+                        },
+                        child: Image.asset(
+                          element.image,
+                          height: getSize(20),
+                          width: getSize(20),
+                        ),
+                      ),
+                    )
+                  : (element.code == BottomCodeConstant.TBContactUs)
+                      ? InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return SimpleDialog(
+                                    backgroundColor: Colors.white,
+                                    children: [
+                                      // Text(
+                                      //   R.string.screenTitle
+                                      //       .salesPersonDetail,
+                                      //   key: checkTourIsShown()
+                                      //       ? sellerKey
+                                      //       : null,
+                                      //   style: appTheme
+                                      //       .blackNormal18TitleColorblack
+                                      //       .copyWith(
+                                      //     fontWeight: FontWeight.w500,
+                                      //   ),
+                                      // ),
+                                      // SizedBox(
+                                      //   height: getSize(16),
+                                      // ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: getSize(0),
+                                          right: getSize(0),
+                                        ),
+                                        child: Material(
+                                          // elevation: 10,
+                                          // shadowColor: appTheme.shadowColor,
+                                          // borderRadius: BorderRadius.circular(
+                                          //     getSize(5)),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: appTheme.whiteColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      getSize(5)),
+                                              // border: Border.all(
+                                              //     width: getSize(1),
+                                              //     color:
+                                              //         appTheme.borderColor),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                left: getSize(20),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        "Hello, " +
+                                                                userAccount
+                                                                    .getFullName() ??
+                                                            "-",
+                                                        style: appTheme
+                                                            .black18TextStyle
+                                                            .copyWith(
+                                                          color: appTheme
+                                                              .colorPrimary,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      Spacer(),
+
+                                                      // Spacer(),
+                                                      // InkWell(onTap : (){
+
+                                                      // }, child : Image.asset(CrossAxisAlignment.start))
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: getSize(10),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        "Your Customer representativ is,",
+                                                        style: appTheme
+                                                            .black16TextStyle
+                                                            .copyWith(
+                                                          color: appTheme
+                                                              .colorPrimary,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                        ),
+                                                      ),
+                                                      Spacer(),
+
+                                                      // Spacer(),
+                                                      // InkWell(onTap : (){
+
+                                                      // }, child : Image.asset(CrossAxisAlignment.start))
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: getSize(10),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        app
+                                                                .resolve<
+                                                                    PrefUtils>()
+                                                                .getDashboardDetails()
+                                                                .seller
+                                                                .firstName +
+                                                            " " +
+                                                            app
+                                                                .resolve<
+                                                                    PrefUtils>()
+                                                                .getDashboardDetails()
+                                                                .seller
+                                                                .lastName,
+                                                        style: appTheme
+                                                            .black18TextStyle
+                                                            .copyWith(
+                                                          color: appTheme
+                                                              .colorPrimary,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                      Text(" | "),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          if (!isNullEmptyOrFalse(app
+                                                              .resolve<
+                                                                  PrefUtils>()
+                                                              .getDashboardDetails()
+                                                              .seller
+                                                              .mobile)) {
+                                                            openURLWithApp(
+                                                                "tel://${PrefUtils().getDashboardDetails().seller.mobile}",
+                                                                context);
+                                                          }
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            // Image.asset(
+                                                            //   phone,
+                                                            //   width: getSize(16),
+                                                            //   height: getSize(16),
+                                                            // ),
+                                                            // SizedBox(
+                                                            //   width: getSize(10),
+                                                            // ),
+                                                            Text(
+                                                              app
+                                                                      .resolve<
+                                                                          PrefUtils>()
+                                                                      .getDashboardDetails()
+                                                                      .seller
+                                                                      .mobile ??
+                                                                  "-",
+                                                              style: appTheme
+                                                                  .black16TextStyle,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Spacer(),
+                                                      // Row(
+                                                      //   mainAxisSize: MainAxisSize.min,
+                                                      //   children: [
+                                                      //     InkWell(
+                                                      //         onTap: () async {
+                                                      //           await whatsAppOpen(
+                                                      //               this.dashboardModel.seller.mobile);
+                                                      //         },
+                                                      //         child: Image.asset(
+                                                      //           whatsappIcon,
+                                                      //           height: getSize(20),
+                                                      //           width: getSize(20),
+                                                      //         )),
+                                                      //     SizedBox(width: getSize(18)),
+                                                      //     InkWell(
+                                                      //       onTap: () {
+                                                      //         //change firstname to skypeId, when available on server.
+                                                      //         openSkype(
+                                                      //             this.dashboardModel.seller.firstName);
+                                                      //       },
+                                                      //       child: Image.asset(
+                                                      //         skypeIcon,
+                                                      //         height: getSize(20),
+                                                      //         width: getSize(20),
+                                                      //       ),
+                                                      //     ),
+                                                      //   ],
+                                                      // )
+                                                      // Spacer(),
+                                                      // InkWell(onTap : (){
+
+                                                      // }, child : Image.asset(CrossAxisAlignment.start))
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: getSize(10),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      if (!isNullEmptyOrFalse(app
+                                                          .resolve<PrefUtils>()
+                                                          .getDashboardDetails()
+                                                          .seller
+                                                          .email)) {
+                                                        openURLWithApp(
+                                                            "mailto:?subject=Arjiv&body=Arjiv",
+                                                            context);
+                                                      }
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        // Image.asset(
+                                                        //   email,
+                                                        //   width: getSize(16),
+                                                        //   height: getSize(16),
+                                                        // ),
+                                                        Text(
+                                                          "Email :",
+                                                          style: appTheme
+                                                              .black16TextStyle,
+                                                        ),
+                                                        SizedBox(
+                                                          width: getSize(7),
+                                                        ),
+                                                        Text(
+                                                          app
+                                                                  .resolve<
+                                                                      PrefUtils>()
+                                                                  .getDashboardDetails()
+                                                                  .seller
+                                                                  ?.email ??
+                                                              "-",
+                                                          style: appTheme
+                                                              .black16TextStyle,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: getSize(10),
+                                                  ),
+                                                  (!isNullEmptyOrFalse(app
+                                                          .resolve<PrefUtils>()
+                                                          .getDashboardDetails()
+                                                          .seller
+                                                          .skype))
+                                                      ? InkWell(
+                                                          onTap: () async {
+                                                            if (!isNullEmptyOrFalse(app
+                                                                .resolve<
+                                                                    PrefUtils>()
+                                                                .getDashboardDetails()
+                                                                .seller
+                                                                .skype)) {
+                                                              await openSkype(
+                                                                  app
+                                                                      .resolve<
+                                                                          PrefUtils>()
+                                                                      .getDashboardDetails()
+                                                                      .seller
+                                                                      .skype,
+                                                                  context);
+                                                            }
+                                                          },
+                                                          child: Row(
+                                                            children: [
+                                                              // Image.asset(
+                                                              //   email,
+                                                              //   width: getSize(16),
+                                                              //   height: getSize(16),
+                                                              // ),
+                                                              Text(
+                                                                "Skype :",
+                                                                style: appTheme
+                                                                    .black16TextStyle,
+                                                              ),
+                                                              SizedBox(
+                                                                width:
+                                                                    getSize(7),
+                                                              ),
+                                                              Text(
+                                                                app
+                                                                        .resolve<
+                                                                            PrefUtils>()
+                                                                        .getDashboardDetails()
+                                                                        .seller
+                                                                        ?.skype ??
+                                                                    "-",
+                                                                style: appTheme
+                                                                    .black16TextStyle,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : SizedBox(),
+                                                  // SizedBox(
+                                                  //   height: getSize(10),
+                                                  // ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                });
+                          },
+                          child: Image.asset(
+                            contactUs,
+                            height: getSize(20),
+                            width: getSize(20),
+                          ),
+                        )
+                      : Image.asset(
+                          element.isSelected
+                              ? (element.selectedImage != null
+                                  ? element.selectedImage
+                                  : element.image)
+                              : element.image,
+                          height: getSize(20),
+                          width: getSize(20),
+                        ),
         ),
       ));
     }

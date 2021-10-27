@@ -504,7 +504,7 @@ class BottomMenuSetting {
         moduleType != DiamondModuleConstant.MODULE_TYPE_MY_CART) {
       addCartInBottomMenu(moreMenuList);
     }
-    if (!app.resolve<PrefUtils>().isUserCustomer()&&
+    if (!app.resolve<PrefUtils>().isUserCustomer() &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST) {
       addWatchlistInBottomMenu(moreMenuList, home_watchlist);
     }
@@ -1053,7 +1053,7 @@ class BottomMenuSetting {
         .insert) {
       moreMenuList.add(BottomTabModel(
           image: company,
-          title: R.string.screenTitle.officeView,
+          title: R.string.screenTitle.appointment,
           type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
     }
   }

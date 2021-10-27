@@ -113,6 +113,7 @@ const String aboutUs = "assets/drawer/aboutUs.png";
 const String drawerSearch = "assets/drawer/search.png";
 const String changePassword = "assets/drawer/changePassword.png";
 const String contactUs = "assets/drawer/contactUs.png";
+const String contactUsWhite = "assets/drawer/contactUsWhite.png";
 const String confirmStones = "assets/drawer/confirmStones.png";
 const String updateStones = "assets/Common/updateStone.png";
 const String diamondOnAuction = "assets/drawer/diamondOnAuction.png";
@@ -140,6 +141,8 @@ const String enquiryDrawer = "assets/drawer/enquiry.png";
 const String addToCartDrawer = "assets/drawer/addToCart.png";
 const String commentDrawer = "assets/drawer/comment.png";
 const String upcoming = "assets/drawer/upcoming.png";
+const String dollarWhite = "assets/diamnow/dollar.png";
+const String dollarBlack = "assets/diamnow/dollarBlack.png";
 
 //Home
 const String home_clock = "assets/Home/clock.png";

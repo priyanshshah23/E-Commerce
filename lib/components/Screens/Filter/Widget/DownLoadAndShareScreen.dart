@@ -152,6 +152,8 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     selectMenuString = [];
     savePath = [];
     data = [];
+    data.add("Arjiv Exports:");
+
     isPath = false;
     allPath = [];
     int p = 0;
@@ -159,6 +161,8 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     var formatter = DateFormat('dd_MM_yyyy_hh_mm_ss');
     diamondList.forEach(
       (element) async {
+        data.add("Stone ID: ${element.vStnId}");
+
         await totalList.forEach(
           (v) async {
             p++;
@@ -169,15 +173,25 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
               fileName = "Certificate_${formattedDate}.pdf";
             } else if (v.title == "Ideal Image" ||
                 v.title == "Natural Image" ||
-                v.title == "Fluorescence Image" ||
-                v.title == "Heart & Arrow Image" ||
-                v.title == "Plot Image" ||
-                v.title == "Propotion Image") {
+                v.title == "Heart & Arrow Image") {
               var temp = v.url + element.vStnId + ".jpg";
               data.add("${v.title} : $temp");
               fileName = "Image${formattedDate}.jpg";
-            } else if (v.title == "Natural Video" || v.title == "HD Video") {
+            } else if (v.title == "Fluorescence Image") {
+              var temp = v.url + element.vStnId + "/fluorescence.jpg";
+              data.add("${v.title} : $temp");
+              fileName = "Image${formattedDate}.jpg";
+            } else if (v.title == "Plot Image" ||
+                v.title == "Propotion Image") {
+              var temp = v.url + element.vStnId + ".png";
+              data.add("${v.title} : $temp");
+              fileName = "Image${formattedDate}.png";
+            } else if (v.title == "Natural Video") {
               var temp = v.url + element.vStnId + ".mp4";
+              data.add("${v.title} : $temp");
+              fileName = "Video${formattedDate}.mp4";
+            } else if (v.title == "HD Video") {
+              var temp = v.url + element.vStnId;
               data.add("${v.title} : $temp");
               fileName = "Video${formattedDate}.mp4";
             } else if (v.title == "Excel") {
@@ -1069,7 +1083,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
         "2",
         "HD Video",
         fileType: DownloadAndShareDialogueConstant.video2,
-        url: DiamondUrls.videomp4,
+        url: DiamondUrls.video + "Vision360.html" + "?d=",
       ),
     );
     firstCertificateList.add(
