@@ -119,7 +119,7 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
       (element) async {
         await totalList.forEach(
           (v) {
-            data.add(v.url + element.vStnId);
+            data.add("${v.title} : ${v.url}  ${element.vStnId}");
           },
         );
       },
@@ -164,7 +164,8 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
             p++;
             formattedDate = formatter.format(now) + "${p}";
             if (v.title == "Certificate") {
-              data.add(v.url + element.vStnId + ".pdf");
+              var temp = v.url + element.vStnId + ".pdf";
+              data.add("${v.title} : $temp");
               fileName = "Certificate_${formattedDate}.pdf";
             } else if (v.title == "Ideal Image" ||
                 v.title == "Natural Image" ||
@@ -172,10 +173,12 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
                 v.title == "Heart & Arrow Image" ||
                 v.title == "Plot Image" ||
                 v.title == "Propotion Image") {
-              data.add(v.url + element.vStnId + ".jpg");
+              var temp = v.url + element.vStnId + ".jpg";
+              data.add("${v.title} : $temp");
               fileName = "Image${formattedDate}.jpg";
             } else if (v.title == "Natural Video" || v.title == "HD Video") {
-              data.add(v.url + element.vStnId + ".mp4");
+              var temp = v.url + element.vStnId + ".mp4";
+              data.add("${v.title} : $temp");
               fileName = "Video${formattedDate}.mp4";
             } else if (v.title == "Excel") {
               excelTitle = true;
@@ -192,6 +195,9 @@ class _DownLoadAndShareScreenState extends State<DownLoadAndShareScreen> {
     if (excelTitle == true) {
       callApiForExcel(context, diamondList, callback: (url) async {
         print("..............................value.$selectMenuString");
+        selectMenuString.forEach((element) {
+          print("${element}");
+        });
         await Share.shareFiles(
           [url],
           text: selectMenuString.map((e) => e.toString()).toList().join("\n\n"),
