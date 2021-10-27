@@ -43,7 +43,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   DateTime pickedDate = DateTime.now();
   String pd = DateTime.now().toIso8601String();
   int selectedDate = -1;
-  int selectedSlot ;
+  int selectedSlot;
   int selectedVirtualType = -1;
   List<SlotModel> arrSlots = [];
   List<SlotModel> disableSlots = [];
@@ -54,13 +54,16 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   ];
   final TextEditingController _virtualTypeController = TextEditingController();
   final TextEditingController _commentTypeController = TextEditingController();
+  int selectedHourStart = 3;
+  int selectedMinuteStart = 30;
+  int selectedHourEnd = 4;
+  int selectedMinuteEnd = 00;
 
   @override
   void initState() {
     super.initState();
     days = setDateList();
     callApiforTimeSlots();
-
   }
 
   getDate(int day) {
@@ -83,18 +86,13 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
       DateTime now = DateTime.now();
 
       arrSlots.forEach((element) {
-        DateTime serverStart = DateUtilities().convertServerStringToFormatterDate(element.start);
+        DateTime serverStart =
+            DateUtilities().convertServerStringToFormatterDate(element.start);
 
-        if (now.isAfter(DateTime(
-            now.year,
-            now.month,
-            now.day,
-            serverStart.hour,
-            serverStart.minute,
-            serverStart.second,
-            serverStart.millisecond))){
+        if (now.isAfter(DateTime(now.year, now.month, now.day, serverStart.hour,
+            serverStart.minute, serverStart.second, serverStart.millisecond))) {
           element.disable = true;
-        }else{
+        } else {
           element.disable = false;
         }
       });
@@ -118,15 +116,14 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
     DateTime date = DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
             pickedDate.hour, pickedDate.minute)
         .toUtc();
-    req["date"] = DateTime.now().toUtc().toIso8601String();
+    req["date"] = date.toUtc().toIso8601String();
+
     req["type"] = 2;
     req["start"] = DateUtilities()
-        .getSpecificTimeOfDate(date, 9, 30, 00)
-        .toUtc()
+        .getSpecificTimeOfDate(date, selectedHourStart, selectedMinuteStart, 00)
         .toIso8601String();
     req["end"] = DateUtilities()
-        .getSpecificTimeOfDate(date, 5, 00, 00)
-        .toUtc()
+        .getSpecificTimeOfDate(date, selectedHourEnd, selectedMinuteEnd, 00)
         .toIso8601String();
 
     req["meetingType"] =
@@ -245,7 +242,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                               positiveBtnTitle: R.string.commonString.ok,
                             );
                         return;
-                      } else if (selectedSlot ==null) {
+                      } else if (selectedSlot == null) {
                         app.resolve<CustomDialogs>().confirmDialog(
                               context,
                               title: "",
@@ -321,6 +318,35 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                                 DateTime.parse(selectedDate).day) {
                               element.isSelected = true;
                             }
+
+                            DateTime now = DateTime.now();
+                            arrSlots.forEach((element) {
+                              element.disable = false;
+                            });
+                            if (now.day == DateTime.parse(selectedDate).day &&
+                                now.month ==
+                                    DateTime.parse(selectedDate).month &&
+                                now.year == DateTime.parse(selectedDate).year) {
+                              selectedSlot = null;
+                              arrSlots.forEach((element) {
+                                DateTime serverStart = DateUtilities()
+                                    .convertServerStringToFormatterDate(
+                                        element.start);
+
+                                if (now.isAfter(DateTime(
+                                    now.year,
+                                    now.month,
+                                    now.day,
+                                    serverStart.hour,
+                                    serverStart.minute,
+                                    serverStart.second,
+                                    serverStart.millisecond))) {
+                                  element.disable = true;
+                                } else {
+                                  element.disable = false;
+                                }
+                              });
+                            }
                           });
 
                           setState(() {});
@@ -392,10 +418,53 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                   days.forEach((element) {
                     element.isSelected = false;
                   });
+                  // arrSlots.forEach((element) {
+                  //   element.isSelected = false;
+                  // });
                   days[index].isSelected = !days[index].isSelected;
                   if (days[index].isSelected) {
                     pickedDate = days[index].date;
                     pd = pickedDate.toIso8601String();
+
+                    DateTime now = DateTime.now();
+                    if (now.day == pickedDate.day &&
+                        now.month == pickedDate.month &&
+                        now.year == pickedDate.year) {
+                      arrSlots.forEach((element) {
+                        DateTime serverStart = DateUtilities()
+                            .convertServerStringToFormatterDate(element.start);
+
+                        if (now.isAfter(DateTime(
+                            now.year,
+                            now.month,
+                            now.day,
+                            serverStart.hour,
+                            serverStart.minute,
+                            serverStart.second,
+                            serverStart.millisecond))) {
+                          element.disable = true;
+                        } else {
+                          element.disable = false;
+                        }
+                      });
+                    } else {
+                      arrSlots.forEach((element) {
+                        DateTime serverStart = DateUtilities()
+                            .convertServerStringToFormatterDate(element.start);
+
+                        if (pickedDate.isAfter(DateTime(
+                          now.year,
+                          now.month,
+                          now.day,
+                        ))) {
+                          element.disable = false;
+                        } else {
+                          element.disable = true;
+                        }
+                      });
+                    }
+
+                    setState(() {});
                   }
 //                  print()
 //                  if(pickedDate != pd){
@@ -485,12 +554,23 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                       onTap: () {
                         setState(() {
                           arrSlots.forEach((element) {
-                           // element.
+                            // element.
                           });
-                          if(arrSlots[index].disable){
-
-                          }else {
+                          if (arrSlots[index].disable) {
+                          } else {
                             selectedSlot = index;
+                            selectedHourStart = DateUtilities()
+                                .getDateFromString(arrSlots[selectedSlot].start)
+                                .hour;
+                            selectedMinuteStart = DateUtilities()
+                                .getDateFromString(arrSlots[selectedSlot].start)
+                                .minute;
+                            selectedHourEnd = DateUtilities()
+                                .getDateFromString(arrSlots[selectedSlot].end)
+                                .hour;
+                            selectedMinuteEnd = DateUtilities()
+                                .getDateFromString(arrSlots[selectedSlot].end)
+                                .minute;
                           }
                         });
                       },
@@ -501,18 +581,18 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                           borderRadius: BorderRadius.circular(getSize(5)),
                           border: Border.all(color: appTheme.borderColor),
                           color: arrSlots[index].disable
-                                  ? appTheme.colorPrimaryShadow
-                              : selectedSlot==index
-                                 ? appTheme.colorPrimary
-                                 : Colors.transparent,
+                              ? appTheme.colorPrimaryShadow
+                              : selectedSlot == index
+                                  ? appTheme.colorPrimary
+                                  : Colors.transparent,
                         ),
                         child: Center(
                           child: Text(
-                            "${arrSlots[index].startTime} - ${arrSlots[index].endTime}",
-                            style:appTheme.black16TextStyle
-                                // ? appTheme.white16TextStyle
-                                // : appTheme.black16TextStyle,
-                          ),
+                              "${arrSlots[index].startTime} - ${arrSlots[index].endTime}",
+                              style: appTheme.black16TextStyle
+                              // ? appTheme.white16TextStyle
+                              // : appTheme.black16TextStyle,
+                              ),
                         ),
                       ),
                     );
@@ -540,7 +620,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
           ),
         ],
         child: getVirtualTypeDropDown(),
-        offset: Offset(25, 110),
+        offset: Offset(25, 220),
       );
 
   getVirtualTypeDropDown() {
@@ -610,14 +690,15 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         errorBorder: InputBorder.none,
         //isSecureTextField: false
       ),
-      validation: (text) {
-        if (text.isEmpty) {
-          return R.string.errorString.enterComments;
-        } else {
-          return null;
-        }
-      },
+      // validation: (text) {
+      //   if (text.isEmpty) {
+      //     return R.string.errorString.enterComments;
+      //   } else {
+      //     return null;
+      //   }
+      // },
       textCallback: (text) {},
+
       inputAction: TextInputAction.done,
       onNextPress: () {
         FocusScope.of(context).unfocus();
@@ -719,7 +800,7 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
               ),
             ),
           );
-        });/*.then((value) => Navigator.pop(context, true))*/
+        }); /*.then((value) => Navigator.pop(context, true))*/
   }
 }
 
