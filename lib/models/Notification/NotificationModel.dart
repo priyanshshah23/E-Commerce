@@ -63,7 +63,7 @@ class NotificationModel {
   int level;
   String parentId;
   bool isVisited;
-  String user;
+  // String user;
   String megaTitle;
   String strDate;
   bool flagForPastNotificationTime = true;
@@ -82,7 +82,7 @@ class NotificationModel {
     this.level,
     this.parentId,
     this.isVisited,
-    this.user,
+    // this.user,
     this.strDate,
   });
 
@@ -100,7 +100,7 @@ class NotificationModel {
     level = json['level'];
     parentId = json['parentId'];
     isVisited = json['isVisited'];
-    user = json['user'];
+    // user = json['user'];
     strDate = DateUtilities().convertServerDateToFormatterString(createdAt,
         formatter: DateUtilities.dd_mm_yyyy_);
   }
@@ -120,7 +120,7 @@ class NotificationModel {
     data['level'] = this.level;
     data['parentId'] = this.parentId;
     data['isVisited'] = this.isVisited;
-    data['user'] = this.user;
+    // data['user'] = this.user;
     return data;
   }
 }

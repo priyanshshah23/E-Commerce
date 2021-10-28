@@ -114,7 +114,8 @@ class _NotificationsState extends StatefulScreenWidgetState {
       }
       fillArrayList();
       notificationList.state.setApiCalling(false);
-    }).catchError((onError) {
+    }).catchError((onError, stack) {
+      print(stack);
       if (isRefress) {
         arrList.clear();
         notificationList.state.listCount = arrList.length;
