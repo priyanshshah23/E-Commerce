@@ -346,109 +346,110 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                     : getBackButton(context),
                 centerTitle: false,
                 actionItems: [
-                  if (!app.resolve<PrefUtils>().isUserCustomer())
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return SelectionScreen(
-                                title: R.string.screenTitle.selectCompany,
-                                hintText: R.string.commonString.search,
-                                positiveButtonTitle:
-                                    R.string.commonString.apply,
-                                negativeButtonTitle:
-                                    R.string.commonString.cancel,
-                                isSearchEnable: true,
-                                type: CellType.Company,
-                                isMultiSelectionEnable: false,
-                                applyFilterCallBack: (
-                                    {List<SelectionPopupModel>
-                                        multiSelectedItem}) {
-                                  isCompanySelected = true;
-                                  app
-                                      .resolve<PrefUtils>()
-                                      .saveCompany(multiSelectedItem.first);
-                                  setState(() {});
-                                },
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          right: getSize(Spacing.rightPadding),
-                          left: getSize(8.0),
-                        ),
-                        child: Stack(
-                          alignment: Alignment.topCenter,
-                          children: [
-                            Center(
-                              child: Image.asset(
-                                buildingIcon,
-                                height: getSize(20),
-                                width: getSize(20),
-                              ),
-                            ),
-                            Visibility(
-                              visible: isCompanySelected,
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                  top: getSize(10),
-                                ),
-                                height: getSize(8),
-                                width: getSize(8),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: appTheme.colorPrimary,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  if (!app.resolve<PrefUtils>().isUserCustomer())
-                    InkWell(
-                      onTap: () {
-                        openDialogueForSelectStatus(context);
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          right: getSize(Spacing.rightPadding),
-                          left: getSize(8.0),
-                        ),
-                        child: Stack(
-                          alignment: Alignment.topCenter,
-                          children: [
-                            Center(
-                              child: Image.asset(
-                                descendantIcon,
-                                height: getSize(20),
-                                width: getSize(20),
-                              ),
-                            ),
-                            Visibility(
-                              visible: isStatusSelected,
-                              child: Container(
-                                margin: EdgeInsets.only(
-                                  top: getSize(10),
-                                ),
-                                height: getSize(8),
-                                width: getSize(8),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: appTheme.colorPrimary,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  (app.resolve<PrefUtils>().isUserCustomer())
+                  // if (!app.resolve<PrefUtils>().isUserCustomer())
+                  //   InkWell(
+                  //     onTap: () {
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (BuildContext context) {
+                  //             return SelectionScreen(
+                  //               title: R.string.screenTitle.selectCompany,
+                  //               hintText: R.string.commonString.search,
+                  //               positiveButtonTitle:
+                  //                   R.string.commonString.apply,
+                  //               negativeButtonTitle:
+                  //                   R.string.commonString.cancel,
+                  //               isSearchEnable: true,
+                  //               type: CellType.Company,
+                  //               isMultiSelectionEnable: false,
+                  //               applyFilterCallBack: (
+                  //                   {List<SelectionPopupModel>
+                  //                       multiSelectedItem}) {
+                  //                 isCompanySelected = true;
+                  //                 app
+                  //                     .resolve<PrefUtils>()
+                  //                     .saveCompany(multiSelectedItem.first);
+                  //                 setState(() {});
+                  //               },
+                  //             );
+                  //           },
+                  //         ),
+                  //       );
+                  //     },
+                  //     child: Padding(
+                  //       padding: EdgeInsets.only(
+                  //         right: getSize(Spacing.rightPadding),
+                  //         left: getSize(8.0),
+                  //       ),
+                  //       child: Stack(
+                  //         alignment: Alignment.topCenter,
+                  //         children: [
+                  //           Center(
+                  //             child: Image.asset(
+                  //               buildingIcon,
+                  //               height: getSize(20),
+                  //               width: getSize(20),
+                  //             ),
+                  //           ),
+                  //           Visibility(
+                  //             visible: isCompanySelected,
+                  //             child: Container(
+                  //               margin: EdgeInsets.only(
+                  //                 top: getSize(10),
+                  //               ),
+                  //               height: getSize(8),
+                  //               width: getSize(8),
+                  //               decoration: BoxDecoration(
+                  //                 shape: BoxShape.circle,
+                  //                 color: appTheme.colorPrimary,
+                  //               ),
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  // if (!app.resolve<PrefUtils>().isUserCustomer())
+                  //   InkWell(
+                  //     onTap: () {
+                  //       openDialogueForSelectStatus(context);
+                  //     },
+                  //     child: Padding(
+                  //       padding: EdgeInsets.only(
+                  //         right: getSize(Spacing.rightPadding),
+                  //         left: getSize(8.0),
+                  //       ),
+                  //       child: Stack(
+                  //         alignment: Alignment.topCenter,
+                  //         children: [
+                  //           Center(
+                  //             child: Image.asset(
+                  //               descendantIcon,
+                  //               height: getSize(20),
+                  //               width: getSize(20),
+                  //             ),
+                  //           ),
+                  //           Visibility(
+                  //             visible: isStatusSelected,
+                  //             child: Container(
+                  //               margin: EdgeInsets.only(
+                  //                 top: getSize(10),
+                  //               ),
+                  //               height: getSize(8),
+                  //               width: getSize(8),
+                  //               decoration: BoxDecoration(
+                  //                 shape: BoxShape.circle,
+                  //                 color: appTheme.colorPrimary,
+                  //               ),
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  (app.resolve<PrefUtils>().isUserCustomer() &&
+                          userAccount.account.crdLmt != 0)
                       ? Tooltip(
                           key: key,
                           message:
@@ -1317,7 +1318,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           if (app
               .resolve<PrefUtils>()
               .getModulePermission(ModulePermissionConstant.permission_myDemand)
-              .insert) {
+              .view) {
             if (!isNullEmptyOrFalse(FilterRequest().createRequest(arrList))) {
               Map<String, dynamic> map = FilterRequest()
                   .createRequest(arrList, selectedStatus: selectStatus);

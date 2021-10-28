@@ -27,19 +27,18 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               for (var i = 0; i < widget.arrBottomTab.length; i++)
-                InkWell(
-                  // onTap: widget.onClickCallback(widget.arrBottomTab[i]),
-                  onTap: () {
-                    if (widget.onClickCallback != null) {
-                      widget.onClickCallback(widget.arrBottomTab[i]);
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: getSize(10)),
-                    width: MathUtilities.screenWidth(context) /
-                        widget.arrBottomTab.length,
-                    color: widget.arrBottomTab[i].getBackgroundColor(),
-                    child: Center(
+                Container(
+                  //padding: EdgeInsets.symmetric(horizontal: getSize(10)),
+                  width: MathUtilities.screenWidth(context) /
+                      widget.arrBottomTab.length,
+                  color: widget.arrBottomTab[i].getBackgroundColor(),
+                  child: Center(
+                    child: InkWell(
+                      onTap: () {
+                        if (widget.onClickCallback != null) {
+                          widget.onClickCallback(widget.arrBottomTab[i]);
+                        }
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,19 +58,19 @@ class _BottomTabbarWidgetState extends State<BottomTabbarWidget> {
                                   height: getSize(40),
                                   child: Center(
                                     child: Image.asset(
-                                        widget.arrBottomTab[i].image,
-                                        width: getSize(20),
-                                        height: getSize(20),
+                                      widget.arrBottomTab[i].image,
+                                      width: getSize(20),
+                                      height: getSize(20),
                                     ),
                                   ))
-                              : Image.asset(widget.arrBottomTab[i].image,
-                                   color:
-                                       widget.arrBottomTab[i].color != null
-                                           ? widget.arrBottomTab[i].color
-                                           : null,
+                              : Image.asset(
+                                  widget.arrBottomTab[i].image,
+                                  color: widget.arrBottomTab[i].color != null
+                                      ? widget.arrBottomTab[i].color
+                                      : null,
                                   width: getSize(20),
                                   height: getSize(20),
-                          ),
+                                ),
                           if (widget.arrBottomTab[i].isCenter == false)
                             SizedBox(
                               height: i == 0 ? getSize(10) : getSize(8),

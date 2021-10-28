@@ -50,6 +50,7 @@ import 'package:share/share.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../main.dart';
+import '../LoginModel.dart';
 
 class DiamondCalculation {
   String totalCarat = "0";
@@ -229,7 +230,7 @@ class DiamondConfig {
             ? app
                 .resolve<ServiceModule>()
                 .networkService()
-                .salesDiamondListPaginate(dict)
+                .diamondListPaginate(dict)
             : app
                 .resolve<ServiceModule>()
                 .networkService()
@@ -290,17 +291,19 @@ class DiamondConfig {
 
   List<BottomTabModel> getToolbarItem({bool isDetail = false}) {
     List<BottomTabModel> list = [];
-
+    User userAccount = app.resolve<PrefUtils>().getUserDetails();
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_HOME:
         if (app.resolve<PrefUtils>().isUserCustomer()) {
-          list.add(BottomTabModel(
-              title: "",
-              image: dollarWhite,
-              color: ColorConstants.white,
-              code: BottomCodeConstant.TBCreditLimit,
-              sequence: 1,
-              isCenter: true));
+          if (userAccount.account.crdLmt != 0)
+            list.add(BottomTabModel(
+                title: "",
+                image: dollarWhite,
+                color: ColorConstants.white,
+                code: BottomCodeConstant.TBCreditLimit,
+                sequence: 1,
+                isCenter: true));
+
           list.add(BottomTabModel(
               title: "",
               image: contactUsWhite,
@@ -385,12 +388,14 @@ class DiamondConfig {
               isCenter: true,
             ));
           if (app.resolve<PrefUtils>().isUserCustomer()) {
-            list.add(BottomTabModel(
-                title: "",
-                image: dollarBlack,
-                code: BottomCodeConstant.TBCreditLimit,
-                sequence: 1,
-                isCenter: true));
+            if (userAccount.account.crdLmt != 0)
+              list.add(BottomTabModel(
+                  title: "",
+                  image: dollarBlack,
+                  color: ColorConstants.white,
+                  code: BottomCodeConstant.TBCreditLimit,
+                  sequence: 1,
+                  isCenter: true));
             list.add(BottomTabModel(
                 title: "",
                 image: contactUs,

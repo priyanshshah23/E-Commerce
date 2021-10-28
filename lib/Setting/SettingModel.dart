@@ -911,17 +911,17 @@ class BottomMenuSetting {
     String image,
     int type,
   }) {
-//    if (app
-//        .resolve<PrefUtils>()
-//        .getModulePermission(ModulePermissionConstant.permission_confirm_stone)
-//        .insert) {
-    moreMenuList.add(BottomTabModel(
-      title: title ?? R.string.commonString.confirmStone,
-      isCenter: false,
-      image: image ?? confirmStone,
-      type: type ?? ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
-    ));
-//    }
+    if (app
+        .resolve<PrefUtils>()
+        .getModulePermission(ModulePermissionConstant.permission_confirm_stone)
+        .view) {
+      moreMenuList.add(BottomTabModel(
+        title: title ?? R.string.commonString.confirmStone,
+        isCenter: false,
+        image: image ?? confirmStone,
+        type: type ?? ActionMenuConstant.ACTION_TYPE_PLACE_ORDER,
+      ));
+    }
   }
 
   addQuoteStone(List<BottomTabModel> moreMenuList) {

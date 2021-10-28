@@ -181,7 +181,7 @@ class SyncManager {
         () => app
             .resolve<ServiceModule>()
             .networkService()
-            .salesDiamondListPaginate(dict),
+            .diamondListPaginate(dict),
         context,
         isProgress: isProgress,
       )

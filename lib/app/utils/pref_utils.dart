@@ -405,56 +405,49 @@ class PrefUtils {
         (app.resolve<PrefUtils>().getUserDetails().account?.isApproved ??
                 KYCStatus.pending) !=
             KYCStatus.approved) {*/
-    if (module == ModulePermissionConstant.permission_searchDiamond ||
-        module == ModulePermissionConstant.permission_searchupcoming ||
-        module == ModulePermissionConstant.permission_searchnewarrival ||
-        module == ModulePermissionConstant.permission_searchResult ||
-        module == ModulePermissionConstant.permission_dashboard ||
-        module == ModulePermissionConstant.permission_matchPair ||
-        module == ModulePermissionConstant.permission_layout ||
-        module == ModulePermissionConstant.permission_quickSearch ||
-        module == ModulePermissionConstant.permission_newGoods ||
-        module == ModulePermissionConstant.permission_exclusive ||
-        module == ModulePermissionConstant.permission_auction ||
-        module == ModulePermissionConstant.permission_upcomingDiamonds ||
-        module == ModulePermissionConstant.permission_myDemand ||
-        module == ModulePermissionConstant.permission_mySavedSearch ||
-        module == ModulePermissionConstant.permission_watchlist ||
-        module == ModulePermissionConstant.permission_cart ||
-        module == ModulePermissionConstant.permission_bid ||
-        module == ModulePermissionConstant.permission_enquiry ||
-        module == ModulePermissionConstant.permission_appointment ||
-        module == ModulePermissionConstant.permission_offer ||
-        module == ModulePermissionConstant.permission_order ||
-        module == ModulePermissionConstant.permission_comment ||
-        module == ModulePermissionConstant.permission_compare ||
-        module == ModulePermissionConstant.permission_notification ||
-        module == ModulePermissionConstant.permission_purchase ||
-        module == ModulePermissionConstant.permission_download ||
-        module == ModulePermissionConstant.permission_hideGridColumns ||
-        module == ModulePermissionConstant.permission_searchLayout ||
-        module == ModulePermissionConstant.permission_searchMatchPair) {
-      data = UserPermissionsData(module: module);
-      data.view = true;
-      data.insert = true;
-      data.update = true;
-      data.delete = true;
-      data.downloadExcel = true;
-    } else {
-      data = UserPermissionsData(module: module);
-      data.view = false;
-      data.insert = false;
-      data.update = false;
-      data.delete = false;
-      data.downloadExcel = false;
-    }
-//Admin permission
-    /*   data = UserPermissionsData(module: module);
-    data.view = true;
-    data.insert = true;
-    data.update = true;
-    data.delete = true;
-    data.downloadExcel = true;*/
+    // if (module == ModulePermissionConstant.permission_searchDiamond ||
+    //     module == ModulePermissionConstant.permission_searchupcoming ||
+    //     module == ModulePermissionConstant.permission_searchnewarrival ||
+    //     module == ModulePermissionConstant.permission_searchResult ||
+    //     module == ModulePermissionConstant.permission_dashboard ||
+    //     module == ModulePermissionConstant.permission_matchPair ||
+    //     module == ModulePermissionConstant.permission_layout ||
+    //     module == ModulePermissionConstant.permission_quickSearch ||
+    //     module == ModulePermissionConstant.permission_newGoods ||
+    //     module == ModulePermissionConstant.permission_exclusive ||
+    //     module == ModulePermissionConstant.permission_auction ||
+    //     module == ModulePermissionConstant.permission_upcomingDiamonds ||
+    //     module == ModulePermissionConstant.permission_myDemand ||
+    //     module == ModulePermissionConstant.permission_mySavedSearch ||
+    //     module == ModulePermissionConstant.permission_watchlist ||
+    //     module == ModulePermissionConstant.permission_cart ||
+    //     module == ModulePermissionConstant.permission_bid ||
+    //     module == ModulePermissionConstant.permission_enquiry ||
+    //     module == ModulePermissionConstant.permission_appointment ||
+    //     module == ModulePermissionConstant.permission_offer ||
+    //     module == ModulePermissionConstant.permission_order ||
+    //     module == ModulePermissionConstant.permission_comment ||
+    //     module == ModulePermissionConstant.permission_compare ||
+    //     module == ModulePermissionConstant.permission_notification ||
+    //     module == ModulePermissionConstant.permission_purchase ||
+    //     module == ModulePermissionConstant.permission_download ||
+    //     module == ModulePermissionConstant.permission_hideGridColumns ||
+    //     module == ModulePermissionConstant.permission_searchLayout ||
+    //     module == ModulePermissionConstant.permission_searchMatchPair) {
+    //   data = UserPermissionsData(module: module);
+    //   data.view = true;
+    //   data.insert = true;
+    //   data.update = true;
+    //   data.delete = true;
+    //   data.downloadExcel = true;
+    // } else {
+    //   data = UserPermissionsData(module: module);
+    //   data.view = false;
+    //   data.insert = false;
+    //   data.update = false;
+    //   data.delete = false;
+    //   data.downloadExcel = false;
+    // }
     return data;
   }
 

@@ -1,6 +1,7 @@
 import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/theme/app_theme.dart';
+import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:flutter/material.dart';
 
 class BottomCodeConstant {
@@ -171,30 +172,45 @@ class BottomTabBar {
           code: BottomCodeConstant.filterSearch,
           sequence: 2,
           isCenter: true));
-      arrBootomTab.add(BottomTabModel(
-          title: isForEditSavedSearch
-              ? R.string.screenTitle.updateAndSearch
-              : R.string.screenTitle.savedAndSearch,
-          image: saveAndSearch,
-          code: BottomCodeConstant.filterSaveAndSearch,
-          sequence: 3,
-          isCenter: false));
-      arrBootomTab.add(BottomTabModel(
-          title: R.string.screenTitle.addDemand,
-          image: addDemand,
-          code: BottomCodeConstant.filterAddDemamd,
-          sequence: 1,
-          isCenter: false));
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(
+              ModulePermissionConstant.permission_mySavedSearch)
+          .view)
+        arrBootomTab.add(BottomTabModel(
+            title: isForEditSavedSearch
+                ? R.string.screenTitle.updateAndSearch
+                : R.string.screenTitle.savedAndSearch,
+            image: saveAndSearch,
+            code: BottomCodeConstant.filterSaveAndSearch,
+            sequence: 3,
+            isCenter: false));
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(ModulePermissionConstant.permission_myDemand)
+          .view)
+        arrBootomTab.add(BottomTabModel(
+            title: R.string.screenTitle.addDemand,
+            image: addDemand,
+            code: BottomCodeConstant.filterAddDemamd,
+            sequence: 1,
+            isCenter: false));
     }
     if (segment == 2) {
-      arrBootomTab.add(BottomTabModel(
-          title: isForEditSavedSearch
-              ? R.string.screenTitle.updateAndSearch
-              : R.string.screenTitle.savedAndSearch,
-          image: saveAndSearch,
-          code: BottomCodeConstant.filterSaveAndSearch,
-          sequence: 3,
-          isCenter: false));
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(
+              ModulePermissionConstant.permission_mySavedSearch)
+          .view)
+        arrBootomTab.add(BottomTabModel(
+            title: isForEditSavedSearch
+                ? R.string.screenTitle.updateAndSearch
+                : R.string.screenTitle.savedAndSearch,
+            image: saveAndSearch,
+            code: BottomCodeConstant.filterSaveAndSearch,
+            sequence: 3,
+            isCenter: false));
+
       arrBootomTab.add(BottomTabModel(
           title: "",
           image: search,
@@ -210,14 +226,19 @@ class BottomTabBar {
           isCenter: false));
     }
     if (segment == 3) {
-      arrBootomTab.add(BottomTabModel(
-          title: isForEditSavedSearch
-              ? R.string.screenTitle.updateAndSearch
-              : R.string.screenTitle.savedAndSearch,
-          image: saveAndSearch,
-          code: BottomCodeConstant.filterSaveAndSearch,
-          sequence: 3,
-          isCenter: false));
+      if (app
+          .resolve<PrefUtils>()
+          .getModulePermission(
+              ModulePermissionConstant.permission_mySavedSearch)
+          .view)
+        arrBootomTab.add(BottomTabModel(
+            title: isForEditSavedSearch
+                ? R.string.screenTitle.updateAndSearch
+                : R.string.screenTitle.savedAndSearch,
+            image: saveAndSearch,
+            code: BottomCodeConstant.filterSaveAndSearch,
+            sequence: 3,
+            isCenter: false));
       arrBootomTab.add(BottomTabModel(
           title: "",
           image: search,
