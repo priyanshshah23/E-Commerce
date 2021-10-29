@@ -158,7 +158,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_MY_HOLD:
         return R.string.screenTitle.myHold;
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-        return R.string.screenTitle.confirmStone;
+        return R.string.commonString.confirmStone;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
         return R.string.screenTitle.myOffice;
       case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
@@ -200,7 +200,7 @@ class DiamondConfig {
       case DiamondTrackConstant.TRACK_TYPE_BID:
         return R.string.screenTitle.bidStone;
       case DiamondTrackConstant.TRACK_TYPE_PLACE_ORDER:
-        return R.string.screenTitle.confirmStone;
+        return R.string.commonString.confirmStone;
       case DiamondTrackConstant.TRACK_TYPE_FINAL_CALCULATION:
         return R.string.screenTitle.finalCalculation;
       case DiamondTrackConstant.TRACK_TYPE_OFFICE:
@@ -217,9 +217,11 @@ class DiamondConfig {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+      case DiamondModuleConstant.MODULE_TYPE_DRAWER_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+      case DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING:
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
@@ -2498,6 +2500,8 @@ class DiamondConfig {
     } */
     else if (moduleType == DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
       DiamondModel diamondItem;
+      int v = 0;
+
       if (arraDiamond.length == 1) {
         diamondItem = arraDiamond[0];
         diamondItem.isMatchPair = true;
@@ -2508,6 +2512,7 @@ class DiamondConfig {
         for (int i = 0; i < arraDiamond.length; i++) {
           diamondItem = arraDiamond[i];
           diamondItem.isMatchPair = true;
+
           if (i == 0) {
             if (arraDiamond[i + 1].groupNo > diamondItem.groupNo) {
               diamondItem.borderType = BorderConstant.BORDER_NONE;

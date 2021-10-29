@@ -135,15 +135,14 @@ class LocalNotificationManager {
         dict[ArgumentConstant.IsFromDrawer] = true;
 
         NavigationUtilities.pushRoute(FilterScreen.route, args: dict);
-
-      }
-      else if (dict['moduleType'] ==
+      } else if (dict['moduleType'] ==
           NotificationIdentifier.offlineExcelDownloaded) {
         if (Platform.isAndroid) {
           if (dict['filePath'] != null) {
             final AndroidIntent intent = AndroidIntent(
               action: 'action_view',
-              data: Uri.encodeFull(dict['filePath']),
+              data: Uri.encodeFull(
+                  "/storage/emulated/0/Download/NaturalImage615b158d0b8cb424a0ad5ad5.jpg"),
               type: 'application/*',
             );
             intent.launch();
@@ -231,6 +230,7 @@ class LocalNotificationManager {
       app.resolve<PrefUtils>().saveFilterOffline(null);
     }
   }
+
   showExcelDownloadNotification(String filePath,
       {String title, String desc}) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
@@ -244,7 +244,7 @@ class LocalNotificationManager {
     );
 
     var iOSPlatformChannelSpecifics =
-    IOSNotificationDetails(sound: "slow_spring_board.aiff");
+        IOSNotificationDetails(sound: "slow_spring_board.aiff");
 
     var platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,

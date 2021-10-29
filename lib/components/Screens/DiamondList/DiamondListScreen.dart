@@ -131,6 +131,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   bool isTermsOpen = false;
   ScrollController _controller;
   bool sort = false;
+  bool layout = false;
 
   @override
   void initState() {
@@ -318,8 +319,22 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
         dict["filters"] = {};
+        dict["filters"]["diamondSearchId"] = this.filterId;
         dict["viewType"] = 2;
         dict["sort"] = [];
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_DRAWER_NEW_ARRIVAL:
+        dict["filters"] = [{}];
+        dict["viewType"] = 2;
+        dict["sort"] = [];
+        break;
+      case DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING:
+        dict["filters"] = [{}];
+        dict["isUpcoming"] = true;
+        Map<String, dynamic> dict1 = Map<String, dynamic>();
+        dict1["inDt"] = "ASC";
+        dict["sort"] = [dict1];
+        // dict["sort"] = [];
         break;
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         /* dict["filters"] = [
@@ -543,6 +558,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           arraDiamond.addAll(diamondListResp.data.diamonds);
           break;
       }
+
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT) {
         diamondConfig.setMatchPairItem(arraDiamond,
             isLayoutSearch: isLayoutSearch ?? false);
@@ -704,7 +720,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                         manageRowClick(index, manageClick.type);
                         setState(() {
                           if (moduleType ==
-                              DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR) {
+                                  DiamondModuleConstant
+                                      .MODULE_TYPE_MATCH_PAIR ||
+                              moduleType ==
+                                  DiamondModuleConstant
+                                      .MODULE_TYPE_INNER_LAYOUT) {
                             List<DiamondModel> filter = arraDiamond
                                 .where((element) =>
                                     element.pairStkNo ==
@@ -715,8 +735,11 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                               filter.forEach((element) {
                                 if (arraDiamond[index].isSelected) {
                                   element.isSelected = true;
-                                } else
+                                } else {
                                   element.isSelected = false;
+                                }
+                                diamondCalculation
+                                    .setAverageCalculation(arraDiamond);
                               });
                             }
                           }
@@ -822,6 +845,32 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                       }),
                       actionClick: (manageClick) {
                         manageRowClick(index, manageClick.type);
+                        setState(() {
+                          if (moduleType ==
+                                  DiamondModuleConstant
+                                      .MODULE_TYPE_MATCH_PAIR ||
+                              moduleType ==
+                                  DiamondModuleConstant
+                                      .MODULE_TYPE_INNER_LAYOUT) {
+                            List<DiamondModel> filter = arraDiamond
+                                .where((element) =>
+                                    element.pairStkNo ==
+                                    arraDiamond[index].pairStkNo)
+                                .toList();
+
+                            if (isNullEmptyOrFalse(filter) == false) {
+                              filter.forEach((element) {
+                                if (arraDiamond[index].isSelected) {
+                                  element.isSelected = true;
+                                } else {
+                                  element.isSelected = false;
+                                }
+                                diamondCalculation
+                                    .setAverageCalculation(arraDiamond);
+                              });
+                            }
+                          }
+                        });
                       });
                 }),
               )

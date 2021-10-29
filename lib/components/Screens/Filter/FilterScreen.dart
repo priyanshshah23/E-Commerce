@@ -1387,13 +1387,20 @@ class _FilterScreenState extends StatefulScreenWidgetState {
 
                 SyncManager.instance.callApiForMatchPair(context, map,
                     (diamondListResp) {
-                  Map<String, dynamic> dict = new HashMap();
-                  dict["filterId"] = diamondListResp.data.filter.id;
-                  dict["filter"] = FilterRequest().createRequest(arrList);
-                  dict[ArgumentConstant.ModuleType] =
-                      DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
-                  NavigationUtilities.pushRoute(DiamondListScreen.route,
-                      args: dict);
+                  if (diamondListResp.data.count > 250) {
+                    app.resolve<CustomDialogs>().confirmDialog(context,
+                        title: R.string.commonString.diamond250,
+                        desc: R.string.commonString.narrowSearch,
+                        positiveBtnTitle: R.string.commonString.ok);
+                  } else {
+                    Map<String, dynamic> dict = new HashMap();
+                    dict["filterId"] = diamondListResp.data.filter.id;
+                    dict["filter"] = FilterRequest().createRequest(arrList);
+                    dict[ArgumentConstant.ModuleType] =
+                        DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR;
+                    NavigationUtilities.pushRoute(DiamondListScreen.route,
+                        args: dict);
+                  }
                 }, (onError) {});
 //                }
               } else {
@@ -1844,9 +1851,18 @@ class _FilterScreenState extends StatefulScreenWidgetState {
           );
         } else if ((segmentedControlValue == 1 &&
                 arrTab[position].tab == "matchpair") ||
+            (segmentedControlValue == 0 &&
+                arrTab[position].tab == "matchpair") ||
+            (segmentedControlValue == 0 && arrTab[position].tab == "layout") ||
             (segmentedControlValue == 1 && arrTab[position].tab == "layout") ||
-            (segmentedControlValue != 1)) {
+            (segmentedControlValue == 2 &&
+                (arrTab[position].tab == "matchpair" ||
+                    arrTab[position].tab != "advance")) ||
+            (segmentedControlValue == 3 &&
+                (arrTab[position].tab != "layout" ||
+                    arrTab[position].tab != "advance"))) {
           arrList.forEach((element) {
+            print("success");
             if (element is SelectionModel) {
               element.masters.forEach((element) {
                 element.isSelected = false;

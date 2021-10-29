@@ -54,13 +54,14 @@ class DrawerSetting {
       ));
     if (app
         .resolve<PrefUtils>()
-        .getModulePermission(ModulePermissionConstant.permission_newGoods)
+        .getModulePermission(
+            ModulePermissionConstant.permission_searchnewarrival)
         .view)
       drawerList.add(DrawerModel(
         image: newArrival,
         title: R.string.screenTitle.newArrival,
         isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL,
+        type: DiamondModuleConstant.MODULE_TYPE_DRAWER_NEW_ARRIVAL,
         isShowCount: false,
         countBackgroundColor: fromHex("#2193B0"),
         count: 250,
@@ -87,7 +88,7 @@ class DrawerSetting {
         image: upcoming,
         title: R.string.screenTitle.upcoming,
         isSelected: false,
-        type: DiamondModuleConstant.MODULE_TYPE_UPCOMING,
+        type: DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING,
       ));
     if (app
         .resolve<PrefUtils>()
@@ -529,20 +530,20 @@ class BottomMenuSetting {
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY) {
       addEnquiryInBottomMenu(moreMenuList);
     }
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE &&
-        moduleType != DiamondModuleConstant.MODULE_TYPE_MY_BID &&
-        moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL &&
-        moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
-        app
-            .resolve<PrefUtils>()
-            .getModulePermission(ModulePermissionConstant.permission_office)
-            .insert) {
-      moreMenuList.add(BottomTabModel(
-          image: myOffice,
-          isCenter: false,
-          title: R.string.screenTitle.officeView,
-          type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
-    }
+    // if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE &&
+    //     moduleType != DiamondModuleConstant.MODULE_TYPE_MY_BID &&
+    //     moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL &&
+    //     moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
+    //     app
+    //         .resolve<PrefUtils>()
+    //         .getModulePermission(ModulePermissionConstant.permission_office)
+    //         .insert) {
+    //   moreMenuList.add(BottomTabModel(
+    //       image: myOffice,
+    //       isCenter: false,
+    //       title: R.string.screenTitle.officeView,
+    //       type: ActionMenuConstant.ACTION_TYPE_APPOINTMENT));
+    // }
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
@@ -570,8 +571,14 @@ class BottomMenuSetting {
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
       if (moduleType != DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION &&
           moduleType != DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK &&
+          moduleType != DiamondModuleConstant.MODULE_TYPE_MY_BID &&
+          moduleType != DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL &&
           moduleType !=
-              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH) {
+              DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH &&
+          app
+              .resolve<PrefUtils>()
+              .getModulePermission(ModulePermissionConstant.permission_office)
+              .insert) {
         addAppointmentInBottomMenu(moreMenuList);
       }
     }

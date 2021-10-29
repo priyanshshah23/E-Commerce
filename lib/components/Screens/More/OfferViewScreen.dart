@@ -650,13 +650,13 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             validation: (text) {
               if (mode == 1) {
                 if (text.isEmpty) {
-                  return "select comapany";
+                  return "Select Virtual Type";
                 } else {
                   return null;
                 }
               } else {
                 if (text.isEmpty) {
-                  return "select comapany";
+                  return "Select Virtual Type";
                 } else {
                   return null;
                 }

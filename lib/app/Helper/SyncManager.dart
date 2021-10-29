@@ -223,12 +223,17 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
+    dict["filters"] = [{}];
     if (!app.resolve<PrefUtils>().isUserCustomer()) {
-      dict["filters"] = [req];
+      dict["filters"] = [
+        {"wSts": DiamondStatus.DIAMOND_STATUS_UPCOMING}
+      ];
     } else {
-      dict["filters"] = req;
+      dict["filters"] = [
+        {"wSts": DiamondStatus.DIAMOND_STATUS_UPCOMING},
+      ];
+      dict["filters"] = [req];
     }
-    dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
     }
@@ -284,7 +289,7 @@ class SyncManager {
     if (!app.resolve<PrefUtils>().isUserCustomer()) {
       dict["filters"] = [req];
     } else {
-      dict["filters"] = req;
+      dict["filters"] = [req];
     }
     dict["viewType"] = 2;
     if (!isNullEmptyOrFalse(searchText)) {
