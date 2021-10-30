@@ -166,11 +166,8 @@ class SyncManager {
     Map<String, dynamic> dict = {};
     dict["isNotReturnTotal"] = true;
     dict["isReturnCountOnly"] = true;
-    if (!app.resolve<PrefUtils>().isUserCustomer()) {
-      dict["filters"] = [req];
-    } else {
-      dict["filters"] = req;
-    }
+
+    dict["filters"] = [req];
     if (!isNullEmptyOrFalse(searchText)) {
       dict["search"] = searchText;
     }
@@ -229,9 +226,7 @@ class SyncManager {
         {"wSts": DiamondStatus.DIAMOND_STATUS_UPCOMING}
       ];
     } else {
-      dict["filters"] = [
-        {"wSts": DiamondStatus.DIAMOND_STATUS_UPCOMING},
-      ];
+      dict["filters"] = {};
       dict["filters"] = [req];
     }
     if (!isNullEmptyOrFalse(searchText)) {

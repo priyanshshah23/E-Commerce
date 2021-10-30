@@ -290,8 +290,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             {"diamondSearchId": this.filterId}
           ];
         } else {
-          dict["filters"] = {};
-          dict["filters"]["diamondSearchId"] = this.filterId;
+          dict["filters"] = [
+            {"diamondSearchId": this.filterId}
+          ];
         }
         break;
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
@@ -318,8 +319,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["isLayout"] = true;
         break;
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
-        dict["filters"] = {};
-        dict["filters"]["diamondSearchId"] = this.filterId;
+        dict["filters"] = [
+          {"diamondSearchId": this.filterId}
+        ];
         dict["viewType"] = 2;
         dict["sort"] = [];
         break;
@@ -386,10 +388,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             {"diamondSearchId": this.filterId}
           ];
         } else {
-          dict["filters"] = {};
-          dict["filters"]["diamondSearchId"] = this.filterId;
-          dict["filters"]["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
+          dict["filters"] = [
+            {
+              "wSts": DiamondStatus.DIAMOND_STATUS_UPCOMING,
+              "diamondSearchId": this.filterId
+            }
+          ];
         }
+
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
         if (!app.resolve<PrefUtils>().isUserCustomer()) {
@@ -775,7 +781,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             : GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 1,
-                childAspectRatio: 1.25,
+                childAspectRatio: 1.15,
                 mainAxisSpacing: 5,
                 crossAxisSpacing: 8,
                 padding: EdgeInsets.only(

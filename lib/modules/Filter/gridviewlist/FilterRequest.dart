@@ -15,7 +15,8 @@ class FilterRequest {
   Map<String, dynamic> createRequest(List<FormBaseModel> list,
       {List selectedStatus,
       bool isFromLayout = false,
-      bool isFromMatch = false}) {
+      bool isFromMatch = false,
+      bool isFromUpcoming = false}) {
     Map<String, dynamic> map = {};
     map["isFcCol"] = false;
     List<String> arrWsts = [];
@@ -222,12 +223,16 @@ class FilterRequest {
       map['layoutNo'] = {
         "nin": ["", "0"]
       };
+
       // map["pairStkNo"] = {
       //   "!=": [""]
       // };
       // map["wSts"] = ["A", "M", "H", "D", "E", "B"];
       // map["isSearchVisible"] = true;
       // map["isDeleted"] = false;
+    }
+    if (isFromUpcoming) {
+      map["wSts"] = DiamondStatus.DIAMOND_STATUS_UPCOMING;
     }
     return map;
   }

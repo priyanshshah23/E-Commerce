@@ -1523,7 +1523,8 @@ class _FilterScreenState extends StatefulScreenWidgetState {
   callApiForUpcoming(int moduleType) {
     Map<String, dynamic> map = FilterRequest().createRequest(arrList,
         selectedStatus: selectStatus,
-        isFromLayout: segmentedControlValue == 3 ? true : false);
+        isFromLayout: segmentedControlValue == 3 ? true : false,
+        isFromUpcoming: true);
     SyncManager.instance.callApiForUpcomingDiamondList(
       context,
       map,
