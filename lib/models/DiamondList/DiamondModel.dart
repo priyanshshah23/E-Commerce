@@ -184,6 +184,7 @@ class DiamondModel {
   bool isNotes = false;
   bool isNoteEditable = false;
   bool isNoteUpdated = false;
+  bool isExactSearch;
 
   String strDate;
   String expiryDate;
@@ -379,7 +380,7 @@ class DiamondModel {
         : json['pairStkNo'] ?? 0;
     mfgStnId = json["mfgStnId"];
     layoutNo = json["layoutNo"];
-
+    isExactSearch = json["isExactSearch"];
 //    isSelected = json['isSelected'];
 
     //Id's
@@ -606,6 +607,8 @@ class DiamondModel {
     data['offerValidDate'] = this.offerValidDate;
     data['isNotes'] = this.isNotes;
     data['isNoteEditable'] = this.isNoteEditable;
+    data['isExactSearch'] = this.isExactSearch;
+
     if (this.bargainTrack != null) {
       data['bargainTrack'] = this.bargainTrack.map((v) => v.toJson()).toList();
     }

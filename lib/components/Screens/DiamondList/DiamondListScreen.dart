@@ -118,7 +118,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   DiamondItemWidget _itemWidget;
   _DiamondListScreenState screenState;
   BaseList diamondList;
+  BaseList diamondListExact;
   List<DiamondModel> arraDiamond = List<DiamondModel>();
+  List<DiamondModel> FinalArrDiamond = List<DiamondModel>();
+  List<DiamondModel> DiamondNotExact = List<DiamondModel>();
   List<Summary> summaryDiamond = List<Summary>();
   int page = DEFAULT_PAGE;
   DiamondCalculation diamondCalculation = DiamondCalculation();
@@ -130,8 +133,12 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   ScreenshotCallback screenshotCallback = ScreenshotCallback();
   bool isTermsOpen = false;
   ScrollController _controller;
+  ScrollController _controller2;
   bool sort = false;
   bool layout = false;
+  bool ExactSearch = false;
+  bool hasSimilar = false;
+  int similarLength = 0;
 
   @override
   void initState() {
@@ -140,6 +147,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       isCompanySelected = true;
     }
     _controller = ScrollController();
+    _controller2 = ScrollController();
     Config().getOptionsJson().then((result) {
       result.forEach((element) {
         if (element.isActive) {
@@ -183,6 +191,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     ));
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      print("From here");
       callApi(false);
 
       SyncManager.instance.callAnalytics(context,
@@ -262,7 +271,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }
 
     Map<String, dynamic> dict = {};
-    if (moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT) {
+    if (moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_INNER_LAYOUT) {
       dict["page"] = page;
       dict["limit"] = DEFAULT_LIMIT;
     }
@@ -275,14 +286,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
-        if (!app.resolve<PrefUtils>().isUserCustomer()) {
-          dict["filters"] = [
-            {"diamondSearchId": this.filterId}
-          ];
-        } else {
-          dict["filters"] = {};
-          dict["filters"]["diamondSearchId"] = this.filterId;
-        }
+        dict["filters"] = [
+          {"diamondSearchId": this.filterId}
+        ];
         break;
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
         if (!app.resolve<PrefUtils>().isUserCustomer()) {
@@ -312,6 +318,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         break;
       case DiamondModuleConstant.MODULE_TYPE_INNER_LAYOUT:
         dict['isPredefinedPair'] = true;
+        dict["page"] = page;
         dict["filter"] = {};
         dict["filter"]["layoutNo"] = {
           "in": [this.filterId]
@@ -333,6 +340,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING:
         dict["filters"] = [{}];
         dict["isUpcoming"] = true;
+        dict["page"] = page;
+        dict["limit"] = 250;
         Map<String, dynamic> dict1 = Map<String, dynamic>();
         dict1["inDt"] = "ASC";
         dict["sort"] = [dict1];
@@ -398,14 +407,9 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-        if (!app.resolve<PrefUtils>().isUserCustomer()) {
-          dict["filters"] = [
-            {"or": diamondConfig.getExclusiveDiamondReq()}
-          ];
-        } else {
-          dict["filters"] = {};
-          dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
-        }
+        dict["filters"] = [
+          {"or": diamondConfig.getExclusiveDiamondReq()}
+        ];
         break;
       case DiamondModuleConstant.MODULE_TYPE_MY_BID:
         dict["bidType"] = [BidConstant.BID_TYPE_ADD];
@@ -556,12 +560,24 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
             }
           });
           arraDiamond.addAll(list);
+          FinalArrDiamond.addAll(arraDiamond);
           break;
         case DiamondModuleConstant.MODULE_TYPE_LAYOUT:
           summaryDiamond.addAll(diamondListResp.data.summary);
           break;
         default:
-          arraDiamond.addAll(diamondListResp.data.diamonds);
+          diamondListResp.data.diamonds.forEach((element) {
+            hasSimilar = element.isExactSearch;
+            if (element.isExactSearch == true) {
+              arraDiamond.add(element);
+              ExactSearch = true;
+            } else if (ExactSearch == true) {
+              DiamondNotExact.add(element);
+            } else {
+              arraDiamond.add(element);
+            }
+            FinalArrDiamond.add(element);
+          });
           break;
       }
 
@@ -574,7 +590,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         //callBlockApi(isProgress: true);
       } else {
         diamondList.state.listCount = summaryDiamond.length;
-        diamondList.state.totalCount = diamondListResp.data.count;
+        diamondList.state.totalCount = summaryDiamond.length;
         manageDiamondSelection(layout: true);
         //callBlockApi(isProgress: true);
       }
@@ -660,124 +676,274 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     } else if ((summaryDiamond.length == 0) && (isFromLayout == true)) {
       return;
     }
+    similarLength = DiamondNotExact.length;
+
     SlidableController controller = SlidableController();
+    SlidableController controller1 = SlidableController();
     diamondList.state.listItems = viewTypeCount == 0
         ? moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT
-            ? ListView.builder(
-                itemCount: arraDiamond.length,
-                controller: _controller,
-                itemBuilder: (context, index) {
-                  return DiamondItemWidget(
-                      controller: controller,
-                      moduleType: moduleType,
-                      item: arraDiamond[index],
-                      leftSwipeList: getLeftAction((manageClick) async {
-                        if (manageClick.type ==
-                            clickConstant.CLICK_TYPE_OFFER_EDIT) {
-                          //Update offer
-                          List<DiamondModel> selectedList = [];
-                          DiamondModel model;
+            ? ListView(children: [
+                Container(
+                  child: ListView.builder(
+                    itemCount: arraDiamond.length,
+                    controller: _controller,
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return DiamondItemWidget(
+                          controller: controller,
+                          moduleType: moduleType,
+                          item: arraDiamond[index],
+                          leftSwipeList: getLeftAction((manageClick) async {
+                            if (manageClick.type ==
+                                clickConstant.CLICK_TYPE_OFFER_EDIT) {
+                              //Update offer
+                              List<DiamondModel> selectedList = [];
+                              DiamondModel model;
 
-                          model = DiamondModel.fromJson(
-                              arraDiamond[index].toJson());
-                          model.isAddToOffer = true;
-                          model.isUpdateOffer = true;
-                          model.trackItemOffer =
-                              arraDiamond[index].trackItemOffer;
-                          selectedList.add(model);
+                              model = DiamondModel.fromJson(
+                                  arraDiamond[index].toJson());
+                              model.isAddToOffer = true;
+                              model.isUpdateOffer = true;
+                              model.trackItemOffer =
+                                  arraDiamond[index].trackItemOffer;
+                              selectedList.add(model);
 
-                          var dict = Map<String, dynamic>();
-                          dict[ArgumentConstant.DiamondList] = selectedList;
-                          dict[ArgumentConstant.ModuleType] = moduleType;
-                          dict[ArgumentConstant.ActionType] =
-                              DiamondTrackConstant.TRACK_TYPE_OFFER;
-                          dict["isOfferUpdate"] = true;
+                              var dict = Map<String, dynamic>();
+                              dict[ArgumentConstant.DiamondList] = selectedList;
+                              dict[ArgumentConstant.ModuleType] = moduleType;
+                              dict[ArgumentConstant.ActionType] =
+                                  DiamondTrackConstant.TRACK_TYPE_OFFER;
+                              dict["isOfferUpdate"] = true;
 
-                          bool isBack = await NavigationUtilities.pushRoute(
-                              DiamondActionScreen.route,
-                              args: dict);
-                          if (isBack != null && isBack) {
-                            onRefreshList();
-                          }
-                        } else {
-                          //Detail
-                          var dict = Map<String, dynamic>();
-                          dict[ArgumentConstant.DiamondDetail] =
-                              arraDiamond[index];
-                          dict[ArgumentConstant.ModuleType] = moduleType;
+                              bool isBack = await NavigationUtilities.pushRoute(
+                                  DiamondActionScreen.route,
+                                  args: dict);
+                              if (isBack != null && isBack) {
+                                onRefreshList();
+                              }
+                            } else {
+                              //Detail
+                              var dict = Map<String, dynamic>();
+                              dict[ArgumentConstant.DiamondDetail] =
+                                  arraDiamond[index];
+                              dict[ArgumentConstant.ModuleType] = moduleType;
 
-                          //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
-                          bool isBack = await Navigator.of(context)
-                              .push(MaterialPageRoute(
-                            settings:
-                                RouteSettings(name: DiamondDetailScreen.route),
-                            builder: (context) =>
-                                DiamondDetailScreen(arguments: dict),
-                          ));
-                          if (isBack != null && isBack) {
-                            onRefreshList();
-                          }
-                        }
-                      }),
-                      list: getRightAction((manageClick) {
-                        manageRowClick(index, manageClick.type);
-                      }),
-                      actionClick: (manageClick) {
-                        manageRowClick(index, manageClick.type);
-                        setState(() {
-                          if (moduleType ==
-                                  DiamondModuleConstant
-                                      .MODULE_TYPE_MATCH_PAIR ||
-                              moduleType ==
-                                  DiamondModuleConstant
-                                      .MODULE_TYPE_INNER_LAYOUT) {
-                            List<DiamondModel> filter = arraDiamond
-                                .where((element) =>
-                                    element.pairStkNo ==
-                                    arraDiamond[index].pairStkNo)
-                                .toList();
-
-                            if (isNullEmptyOrFalse(filter) == false) {
-                              filter.forEach((element) {
-                                if (arraDiamond[index].isSelected) {
-                                  element.isSelected = true;
-                                } else {
-                                  element.isSelected = false;
-                                }
-                                diamondCalculation
-                                    .setAverageCalculation(arraDiamond);
-                              });
-                            }
-                          }
-                          if (moduleType ==
-                                  DiamondModuleConstant.MODULE_TYPE_MY_OFFER ||
-                              moduleType ==
-                                  DiamondModuleConstant.MODULE_TYPE_MY_OFFICE) {
-                            List<DiamondModel> filter = arraDiamond
-                                .where((element) =>
-                                    element.memoNo == arraDiamond[index].memoNo)
-                                .toList();
-                            if (isNullEmptyOrFalse(filter) == false) {
-                              List<DiamondModel> filter2 = filter
-                                  .where(
-                                      (element) => element.isSelected == true)
-                                  .toList();
-
-                              if (filter.length == filter2.length) {
-                                filter.forEach((element) {
-                                  element.isGroupSelected = true;
-                                });
-                              } else {
-                                filter.forEach((element) {
-                                  element.isGroupSelected = false;
-                                });
+                              //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+                              bool isBack = await Navigator.of(context)
+                                  .push(MaterialPageRoute(
+                                settings: RouteSettings(
+                                    name: DiamondDetailScreen.route),
+                                builder: (context) =>
+                                    DiamondDetailScreen(arguments: dict),
+                              ));
+                              if (isBack != null && isBack) {
+                                onRefreshList();
                               }
                             }
-                          }
-                        });
-                      });
-                },
-              )
+                          }),
+                          list: getRightAction((manageClick) {
+                            manageRowClick(index, manageClick.type);
+                          }),
+                          actionClick: (manageClick) {
+                            manageRowClick(index, manageClick.type);
+                            setState(() {
+                              if (moduleType ==
+                                      DiamondModuleConstant
+                                          .MODULE_TYPE_MATCH_PAIR ||
+                                  moduleType ==
+                                      DiamondModuleConstant
+                                          .MODULE_TYPE_INNER_LAYOUT) {
+                                List<DiamondModel> filter = arraDiamond
+                                    .where((element) =>
+                                        element.pairStkNo ==
+                                        arraDiamond[index].pairStkNo)
+                                    .toList();
+
+                                if (isNullEmptyOrFalse(filter) == false) {
+                                  filter.forEach((element) {
+                                    if (arraDiamond[index].isSelected) {
+                                      element.isSelected = true;
+                                    } else {
+                                      element.isSelected = false;
+                                    }
+                                    diamondCalculation
+                                        .setAverageCalculation(arraDiamond);
+                                  });
+                                }
+                              }
+                              if (moduleType ==
+                                      DiamondModuleConstant
+                                          .MODULE_TYPE_MY_OFFER ||
+                                  moduleType ==
+                                      DiamondModuleConstant
+                                          .MODULE_TYPE_MY_OFFICE) {
+                                List<DiamondModel> filter = arraDiamond
+                                    .where((element) =>
+                                        element.memoNo ==
+                                        arraDiamond[index].memoNo)
+                                    .toList();
+                                if (isNullEmptyOrFalse(filter) == false) {
+                                  List<DiamondModel> filter2 = filter
+                                      .where((element) =>
+                                          element.isSelected == true)
+                                      .toList();
+
+                                  if (filter.length == filter2.length) {
+                                    filter.forEach((element) {
+                                      element.isGroupSelected = true;
+                                    });
+                                  } else {
+                                    filter.forEach((element) {
+                                      element.isGroupSelected = false;
+                                    });
+                                  }
+                                }
+                              }
+                            });
+                          });
+                    },
+                  ),
+                ),
+                DiamondNotExact.isNotEmpty
+                    ? Container(
+                        margin: EdgeInsets.fromLTRB(13.0, 0.0, 0.0, 0.0),
+                        child: Text("Similar Stones ($similarLength)"))
+                    : SizedBox(),
+                DiamondNotExact.isNotEmpty
+                    ? Container(
+                        child: ListView.builder(
+                          itemCount: DiamondNotExact.length,
+                          controller: _controller2,
+                          physics: ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return DiamondSimilarItemWidget(
+                                controller: controller1,
+                                moduleType: moduleType,
+                                item: DiamondNotExact[index],
+                                leftSwipeList:
+                                    getLeftAction((manageClick) async {
+                                  if (manageClick.type ==
+                                      clickConstant.CLICK_TYPE_OFFER_EDIT) {
+                                    //Update offer
+                                    List<DiamondModel> selectedList = [];
+                                    DiamondModel model;
+
+                                    model = DiamondModel.fromJson(
+                                        DiamondNotExact[index].toJson());
+                                    model.isAddToOffer = true;
+                                    model.isUpdateOffer = true;
+                                    model.trackItemOffer =
+                                        DiamondNotExact[index].trackItemOffer;
+                                    selectedList.add(model);
+
+                                    var dict = Map<String, dynamic>();
+                                    dict[ArgumentConstant.DiamondList] =
+                                        selectedList;
+                                    dict[ArgumentConstant.ModuleType] =
+                                        moduleType;
+                                    dict[ArgumentConstant.ActionType] =
+                                        DiamondTrackConstant.TRACK_TYPE_OFFER;
+                                    dict["isOfferUpdate"] = true;
+
+                                    bool isBack =
+                                        await NavigationUtilities.pushRoute(
+                                            DiamondActionScreen.route,
+                                            args: dict);
+                                    if (isBack != null && isBack) {
+                                      onRefreshList();
+                                    }
+                                  } else {
+                                    //Detail
+                                    var dict = Map<String, dynamic>();
+                                    dict[ArgumentConstant.DiamondDetail] =
+                                        DiamondNotExact[index];
+                                    dict[ArgumentConstant.ModuleType] =
+                                        moduleType;
+
+                                    //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+                                    bool isBack = await Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      settings: RouteSettings(
+                                          name: DiamondDetailScreen.route),
+                                      builder: (context) =>
+                                          DiamondDetailScreen(arguments: dict),
+                                    ));
+                                    if (isBack != null && isBack) {
+                                      onRefreshList();
+                                    }
+                                  }
+                                }),
+                                list: getRightAction((manageClick) {
+                                  manageRowClick(index, manageClick.type,
+                                      similar: true);
+                                }),
+                                actionClick: (manageClick) {
+                                  manageRowClick(index, manageClick.type,
+                                      similar: true);
+                                  setState(() {
+                                    if (moduleType ==
+                                            DiamondModuleConstant
+                                                .MODULE_TYPE_MATCH_PAIR ||
+                                        moduleType ==
+                                            DiamondModuleConstant
+                                                .MODULE_TYPE_INNER_LAYOUT) {
+                                      List<DiamondModel> filter =
+                                          DiamondNotExact.where((element) =>
+                                              element.pairStkNo ==
+                                              DiamondNotExact[index]
+                                                  .pairStkNo).toList();
+
+                                      if (isNullEmptyOrFalse(filter) == false) {
+                                        filter.forEach((element) {
+                                          if (DiamondNotExact[index]
+                                              .isSelected) {
+                                            element.isSelected = true;
+                                          } else {
+                                            element.isSelected = false;
+                                          }
+                                          diamondCalculation
+                                              .setAverageCalculation(
+                                                  DiamondNotExact);
+                                        });
+                                      }
+                                    }
+                                    if (moduleType ==
+                                            DiamondModuleConstant
+                                                .MODULE_TYPE_MY_OFFER ||
+                                        moduleType ==
+                                            DiamondModuleConstant
+                                                .MODULE_TYPE_MY_OFFICE) {
+                                      List<DiamondModel> filter =
+                                          DiamondNotExact.where((element) =>
+                                                  element.memoNo ==
+                                                  DiamondNotExact[index].memoNo)
+                                              .toList();
+                                      if (isNullEmptyOrFalse(filter) == false) {
+                                        List<DiamondModel> filter2 = filter
+                                            .where((element) =>
+                                                element.isSelected == true)
+                                            .toList();
+
+                                        if (filter.length == filter2.length) {
+                                          filter.forEach((element) {
+                                            element.isGroupSelected = true;
+                                          });
+                                        } else {
+                                          filter.forEach((element) {
+                                            element.isGroupSelected = false;
+                                          });
+                                        }
+                                      }
+                                    }
+                                  });
+                                });
+                          },
+                        ),
+                      )
+                    : SizedBox()
+              ])
             : GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 1,
@@ -1638,7 +1804,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     }, moduleType: moduleType);
   }
 
-  manageRowClick(int index, int type) async {
+  manageRowClick(int index, int type, {bool similar = false}) async {
     switch (type) {
       case clickConstant.CLICK_TYPE_DELETE:
         List<DiamondModel> selectedList = [];
@@ -1646,53 +1812,99 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         callDeleteDiamond(selectedList);
         break;
       case clickConstant.CLICK_TYPE_EDIT:
-        List<DiamondModel> selectedList = [];
-        DiamondModel model;
+        if (similar == true) {
+          List<DiamondModel> selectedList = [];
+          DiamondModel model;
 
-        model = DiamondModel.fromJson(arraDiamond[index].toJson());
-        model.isAddToOffer = true;
-        model.isUpdateOffer = true;
-        model.trackItemOffer = arraDiamond[index].trackItemOffer;
-        selectedList.add(model);
+          model = DiamondModel.fromJson(DiamondNotExact[index].toJson());
+          model.isAddToOffer = true;
+          model.isUpdateOffer = true;
+          model.trackItemOffer = DiamondNotExact[index].trackItemOffer;
+          selectedList.add(model);
 
-        var dict = Map<String, dynamic>();
-        dict[ArgumentConstant.DiamondList] = selectedList;
-        dict[ArgumentConstant.ModuleType] = moduleType;
-        dict[ArgumentConstant.ActionType] =
-            DiamondTrackConstant.TRACK_TYPE_OFFER;
-        dict["isOfferUpdate"] = true;
+          var dict = Map<String, dynamic>();
+          dict[ArgumentConstant.DiamondList] = selectedList;
+          dict[ArgumentConstant.ModuleType] = moduleType;
+          dict[ArgumentConstant.ActionType] =
+              DiamondTrackConstant.TRACK_TYPE_OFFER;
+          dict["isOfferUpdate"] = true;
 
-        bool isBack = await NavigationUtilities.pushRoute(
-            DiamondActionScreen.route,
-            args: dict);
-        if (isBack != null && isBack) {
-          onRefreshList();
+          bool isBack = await NavigationUtilities.pushRoute(
+              DiamondActionScreen.route,
+              args: dict);
+          if (isBack != null && isBack) {
+            onRefreshList();
+          }
+        } else {
+          List<DiamondModel> selectedList = [];
+          DiamondModel model;
+
+          model = DiamondModel.fromJson(arraDiamond[index].toJson());
+          model.isAddToOffer = true;
+          model.isUpdateOffer = true;
+          model.trackItemOffer = arraDiamond[index].trackItemOffer;
+          selectedList.add(model);
+
+          var dict = Map<String, dynamic>();
+          dict[ArgumentConstant.DiamondList] = selectedList;
+          dict[ArgumentConstant.ModuleType] = moduleType;
+          dict[ArgumentConstant.ActionType] =
+              DiamondTrackConstant.TRACK_TYPE_OFFER;
+          dict["isOfferUpdate"] = true;
+
+          bool isBack = await NavigationUtilities.pushRoute(
+              DiamondActionScreen.route,
+              args: dict);
+          if (isBack != null && isBack) {
+            onRefreshList();
+          }
         }
         break;
       case clickConstant.CLICK_TYPE_SELECTION:
       case clickConstant.CLICK_TYPE_ROW:
         setState(() {
-          arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
-          manageDiamondSelection();
-          diamondConfig.toolbarList.forEach((element) {
-            if (element.code == BottomCodeConstant.TBSelectAll) {
-              setAllSelectImage(element);
-            }
-          });
+          if (similar == true) {
+            DiamondNotExact[index].isSelected =
+                !DiamondNotExact[index].isSelected;
+            manageDiamondSelection(similar: similar);
+          } else {
+            arraDiamond[index].isSelected = !arraDiamond[index].isSelected;
+            manageDiamondSelection();
+            diamondConfig.toolbarList.forEach((element) {
+              if (element.code == BottomCodeConstant.TBSelectAll) {
+                setAllSelectImage(element);
+              }
+            });
+          }
         });
         break;
       case clickConstant.CLICK_TYPE_DETAIL:
-        var dict = Map<String, dynamic>();
-        dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
-        dict[ArgumentConstant.ModuleType] = moduleType;
+        if (similar == true) {
+          var dict = Map<String, dynamic>();
+          dict[ArgumentConstant.DiamondDetail] = DiamondNotExact[index];
+          dict[ArgumentConstant.ModuleType] = moduleType;
 
-        //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
-        bool isBack = await Navigator.of(context).push(MaterialPageRoute(
-          settings: RouteSettings(name: DiamondDetailScreen.route),
-          builder: (context) => DiamondDetailScreen(arguments: dict),
-        ));
-        if (isBack != null && isBack) {
-          onRefreshList();
+          //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+          bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+            settings: RouteSettings(name: DiamondDetailScreen.route),
+            builder: (context) => DiamondDetailScreen(arguments: dict),
+          ));
+          if (isBack != null && isBack) {
+            onRefreshList();
+          }
+        } else {
+          var dict = Map<String, dynamic>();
+          dict[ArgumentConstant.DiamondDetail] = arraDiamond[index];
+          dict[ArgumentConstant.ModuleType] = moduleType;
+
+          //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
+          bool isBack = await Navigator.of(context).push(MaterialPageRoute(
+            settings: RouteSettings(name: DiamondDetailScreen.route),
+            builder: (context) => DiamondDetailScreen(arguments: dict),
+          ));
+          if (isBack != null && isBack) {
+            onRefreshList();
+          }
         }
         break;
       // case clickConstant.CLICK_TYPE_ROW:
@@ -1849,7 +2061,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     model.isSelected = (list != null && list.length == arraDiamond.length);
   }
 
-  manageDiamondSelection({bool layout = false}) {
+  manageDiamondSelection({bool layout = false, bool similar = false}) {
     if (sort == true) {
       fillArrayList(isFromSort: true);
     } else if (layout) {
@@ -1857,10 +2069,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     } else {
       fillArrayList();
     }
-    diamondCalculation.setAverageCalculation(arraDiamond);
+
+    diamondCalculation.setAverageCalculation(FinalArrDiamond);
     if (moduleType == DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION) {
-      diamondFinalCalculation.setAverageCalculation(arraDiamond,
-          isFinalCalculation: true);
+      if (similar == true) {
+        diamondFinalCalculation.setAverageCalculation(DiamondNotExact,
+            isFinalCalculation: true);
+      } else {
+        diamondFinalCalculation.setAverageCalculation(FinalArrDiamond,
+            isFinalCalculation: true);
+      }
     }
     diamondList.state.setApiCalling(false);
     setState(() {});
@@ -2028,15 +2246,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
               if (obj.type == ActionMenuConstant.ACTION_TYPE_MORE) {
                 List<DiamondModel> selectedList =
                     arraDiamond.where((element) => element.isSelected).toList();
+                List<DiamondModel> selectedList1 =
+                    DiamondNotExact.where((element) => element.isSelected)
+                        .toList();
+                List<DiamondModel> selectedListFinal = new List<DiamondModel>();
+                selectedListFinal.addAll(selectedList);
+                selectedListFinal.addAll(selectedList1);
+                print("ListFinal........................$selectedListFinal");
                 print("List........................$selectedList");
-                if (!isNullEmptyOrFalse(selectedList)) {
-                  // var filter = selectedList
-                  //     .where((element) =>
-                  //         element.wSts == DiamondStatus.DIAMOND_STATUS_HOLD ||
-                  //         element.wSts == DiamondStatus.DIAMOND_STATUS_ON_MINE)
-                  //     .toList();
-                  //
-                  // if (isNullEmptyOrFalse(filter)) {
+                print("List1........................$selectedList1");
+                if (!isNullEmptyOrFalse(selectedListFinal)) {
                   showBottomSheetForMenu(
                     context,
                     diamondConfig.arrMoreMenu,
@@ -2199,12 +2418,17 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   manageBottomMenuClick(BottomTabModel bottomTabModel) {
     List<DiamondModel> selectedList =
         arraDiamond.where((element) => element.isSelected).toList();
-    if (!isNullEmptyOrFalse(selectedList)) {
+    List<DiamondModel> selectedList1 =
+        DiamondNotExact.where((element) => element.isSelected).toList();
+    List<DiamondModel> selectedListFinal = List<DiamondModel>();
+    selectedListFinal.addAll(selectedList);
+    selectedListFinal.addAll(selectedList1);
+    if (!isNullEmptyOrFalse(selectedListFinal)) {
       if (bottomTabModel.type == ActionMenuConstant.ACTION_TYPE_DELETE) {
-        callDeleteDiamond(selectedList);
+        callDeleteDiamond(selectedListFinal);
       } else {
-        diamondConfig.manageDiamondAction(context, selectedList, bottomTabModel,
-            () {
+        diamondConfig.manageDiamondAction(
+            context, selectedListFinal, bottomTabModel, () {
           onRefreshList();
         });
       }

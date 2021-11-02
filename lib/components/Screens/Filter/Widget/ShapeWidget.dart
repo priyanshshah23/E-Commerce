@@ -4,6 +4,7 @@ import 'package:diamnow/app/extensions/eventbus.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Filter/Widget/SelectionWidget.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
+import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/material.dart';
 import 'package:rxbus/rxbus.dart';
@@ -391,7 +392,6 @@ class ShapeItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       width: selectionModel.orientation == DisplayTypes.horizontal
           ? getSize(80)
@@ -419,10 +419,9 @@ class ShapeItemWidget extends StatelessWidget {
               children: <Widget>[
                 obj.sId != selectionModel.allLableTitle ||
                         (obj.sId != showMoreId)
-                    ?
-                Container(
+                    ? Container(
                         width: getSize(90),
-                        child: obj.getShapeImage(context,obj.isSelected))
+                        child: obj.getShapeImage(context, obj.isSelected))
                     : SizedBox(),
                 Padding(
                   padding: EdgeInsets.only(top: getSize(12.0)),
@@ -437,8 +436,6 @@ class ShapeItemWidget extends StatelessWidget {
           : SizedBox(),
     );
   }
-
-
 
   showWebDisplay() {
     return /*selectionModel.valueKeyisCode

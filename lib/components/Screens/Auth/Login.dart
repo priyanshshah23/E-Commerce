@@ -740,6 +740,7 @@ class LoginScreenState extends StatefulScreenWidgetState {
     // save Logged In user
     if (loginResp.data != null) {
       app.resolve<PrefUtils>().saveUser(loginResp.data.user);
+      app.resolve<PrefUtils>().saveMaster(loginResp.data.masters);
       await app.resolve<PrefUtils>().saveUserToken(
             loginResp.data.token.jwt,
           );

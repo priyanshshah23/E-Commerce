@@ -177,6 +177,8 @@ class DiamondConfig {
         return R.string.screenTitle.exclusiveDiamonds;
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
         return R.string.screenTitle.upcoming;
+      case DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING:
+        return R.string.screenTitle.upcoming;
       case DiamondModuleConstant.MODULE_TYPE_PROFILE:
         return R.string.screenTitle.myProfile;
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:

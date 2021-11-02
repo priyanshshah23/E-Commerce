@@ -51,6 +51,7 @@ class PrefUtils {
   String get KeyLoc => "KeyLoc";
 
   String get keyUserPermission => "keyUserPermission";
+  String get keyMasterPermission => "keyMasterPermission";
 
   String get keyIsUserLogin => "keyIsUserLogin";
 
@@ -292,6 +293,16 @@ class PrefUtils {
   User getUserDetails() {
     var userJson = json.decode(_preferences.getString(keyUser));
     return userJson != null ? new User.fromJson(userJson) : null;
+  }
+
+  Future<void> saveMaster(MastersResp user) async {
+    await _preferences.setBool(keyIsUserLogin, true);
+    _preferences.setString(keyMasterPermission, json.encode(user));
+  }
+
+  MastersResp getMasterDetails() {
+    var userJson = json.decode(_preferences.getString(keyMasterPermission));
+    return userJson != null ? new MastersResp.fromJson(userJson) : null;
   }
 
   isUserCustomer() {

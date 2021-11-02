@@ -3,6 +3,7 @@ import 'package:diamnow/app/app.export.dart';
 import 'package:diamnow/models/Address/CityListModel.dart';
 import 'package:diamnow/models/Address/CountryListModel.dart';
 import 'package:diamnow/models/Address/StateListModel.dart';
+import 'package:diamnow/models/Master/Master.dart';
 import 'package:flutter/widgets.dart';
 
 class CreateMpinReq {
@@ -76,12 +77,16 @@ class Data {
   Token token;
   User user;
   UserPermissions userPermissions;
+  MastersResp masters;
 
   Data.fromJson(Map<String, dynamic> json) {
     token = json['token'] != null ? new Token.fromJson(json['token']) : null;
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
     userPermissions = json['userPermissions'] != null
         ? new UserPermissions.fromJson(json['userPermissions'])
+        : null;
+    masters = json['masters'] != null
+        ? new MastersResp.fromJson(json['masters'])
         : null;
   }
 
@@ -96,6 +101,7 @@ class Data {
     if (this.userPermissions != null) {
       data['userPermissions'] = this.userPermissions.toJson();
     }
+    data['masters'] = this.masters.toJson();
     return data;
   }
 }
@@ -486,6 +492,92 @@ class LoggedInSession {
     if (this.previous != null) {
       data['previous'] = this.previous.toJson();
     }
+    return data;
+  }
+}
+
+class MastersResp {
+  List<SHAPE> sHAPE;
+  MastersResp({
+    this.sHAPE,
+  });
+
+  MastersResp.fromJson(Map<String, dynamic> json) {
+    if (json['SHAPE'] != null) {
+      sHAPE = new List<SHAPE>();
+      json['SHAPE'].forEach((v) {
+        sHAPE.add(new SHAPE.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.sHAPE != null) {
+      data['SHAPE'] = this.sHAPE.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class SHAPE {
+  List<String> id;
+  String name;
+  String normalizeName;
+  String code;
+  String description;
+  String webDisplay;
+  bool isActive;
+  bool isDefault;
+  int sortingSequence;
+  String image;
+  String parentCode;
+  String parentId;
+
+  SHAPE({
+    this.id,
+    this.name,
+    this.normalizeName,
+    this.code,
+    this.description,
+    this.webDisplay,
+    this.isActive,
+    this.isDefault,
+    this.sortingSequence,
+    this.image,
+    this.parentCode,
+    this.parentId,
+  });
+
+  SHAPE.fromJson(Map<String, dynamic> json) {
+    id = json['id'].cast<String>();
+    name = json['name'];
+    normalizeName = json['normalizeName'];
+    code = json['code'];
+    description = json['description'];
+    webDisplay = json['webDisplay'] ?? "";
+    isActive = json['isActive'] ?? false;
+    isDefault = json['isDefault'] ?? false;
+    sortingSequence = json['sortingSequence'] ?? 0;
+    image = json['image'] ?? "";
+    parentCode = json['parentCode'] ?? "";
+    parentId = json['parentId'] ?? "";
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['normalizeName'] = this.normalizeName;
+    data['code'] = this.code;
+    data['description'] = this.description;
+    data['webDisplay'] = this.webDisplay;
+    data['isActive'] = this.isActive;
+    data['isDefault'] = this.isDefault;
+    data['sortingSequence'] = this.sortingSequence;
+    data['image'] = this.image;
+    data['parentCode'] = this.parentCode;
+    data['parentId'] = this.parentId;
     return data;
   }
 }
