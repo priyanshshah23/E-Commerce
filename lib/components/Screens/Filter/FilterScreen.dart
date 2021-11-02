@@ -453,7 +453,7 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                       ? Tooltip(
                           key: key,
                           message:
-                              "${userAccount.account.crdLmt.toString() ?? 0}",
+                              "Credit Limit:\$${userAccount.account.crdLmt.toString() ?? 0}",
                           child: InkWell(
                             onTap: () {
                               final dynamic tooltip = key.currentState;
