@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:diamnow/Setting/SettingModel.dart';
 import 'package:diamnow/app/Helper/LocalNotification.dart';
@@ -38,6 +39,7 @@ import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 import 'package:diamnow/models/FilterModel/FilterModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rxbus/rxbus.dart';
@@ -274,6 +276,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     Map<String, dynamic> dict = {};
     if (moduleType != DiamondModuleConstant.MODULE_TYPE_LAYOUT &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND &&
+        moduleType != DiamondModuleConstant.MODULE_TYPE_DRAWER_NEW_ARRIVAL &&
         moduleType != DiamondModuleConstant.MODULE_TYPE_INNER_LAYOUT) {
       dict["page"] = page;
       dict["limit"] = DEFAULT_LIMIT;
@@ -336,6 +340,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       case DiamondModuleConstant.MODULE_TYPE_DRAWER_NEW_ARRIVAL:
         dict["filters"] = [{}];
         dict["viewType"] = 2;
+        dict["page"] = page;
         dict["sort"] = [];
         break;
       case DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING:
@@ -408,6 +413,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
 
         break;
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        dict["page"] = page;
         dict["filters"] = [
           {"or": diamondConfig.getExclusiveDiamondReq()}
         ];
@@ -817,7 +823,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 DiamondNotExact.isNotEmpty
                     ? Container(
                         margin: EdgeInsets.fromLTRB(13.0, 0.0, 0.0, 0.0),
-                        child: Text("Similar Stones ($similarLength)"))
+                        child: Text(
+                          "Similar Stones ($similarLength)",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ))
                     : SizedBox(),
                 DiamondNotExact.isNotEmpty
                     ? Container(

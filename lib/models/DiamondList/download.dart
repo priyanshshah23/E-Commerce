@@ -54,11 +54,12 @@ class DownloadState extends State<Download> {
   double finalDownloadProgress = 0;
   dynamic isPermissionStatusGranted;
   bool cancleDownload = false;
+  int savePathLength = 0;
 
   // CancelToken cancelToken;
   Map<String, CancelToken> mapOfCancelToken = {};
   bool breakForLoop = false;
-  int savePathLength = 0;
+  bool cancel = false;
 
   DownloadState({this.diamondList, this.allDiamondPreviewThings});
 
@@ -139,12 +140,13 @@ class DownloadState extends State<Download> {
                       boxShadow: getBoxShadow(context)),
                   child: AppButton.flat(
                     onTap: () {
-                      Navigator.pop(context);
-
+                      // Navigator.pop(context);
                       mapOfCancelToken.forEach((key, value) {
                         value.cancel();
                       });
-
+                      cancel = true;
+                      Navigator.pop(context);
+                      setState(() {});
                       showToast(R.string.commonString.downloadingCanceled,
                           context: context);
                     },
@@ -451,24 +453,35 @@ class DownloadState extends State<Download> {
         cancelToken: mapOfCancelToken[key],
       ).then((_) {
         savePathLength++;
-        print(uri);
-        LocalNotificationManager.instance
-            .showExcelDownloadNotification(savePath);
-        // print("download completed");
-        // print("download completed" + progress.toString());
-        if (progress >= 100) {
-          callBack(progress, false);
-          if (Platform.isIOS) {
-            isImage(savePath)
-                ? GallerySaver.saveImage(savePath)
-                : GallerySaver.saveVideo(savePath);
+        callBack(progress, false);
+
+        if ((totalDownloadableFilesForAllDiamonds == savePathLength) &&
+            (cancel == false)) {
+          if ((progress >= 100)) {
+            Navigator.pop(context);
+            LocalNotificationManager.instance
+                .showExcelDownloadNotification(savePath);
+            if (Platform.isIOS) {
+              isImage(savePath)
+                  ? GallerySaver.saveImage(savePath)
+                  : GallerySaver.saveVideo(savePath);
+            }
           }
+        }
+        if (mounted) {
+          setState(() {});
         }
       }).catchError((error) {
         savePathLength++;
-        if (totalDownloadableFilesForAllDiamonds == savePathLength &&
-            totalDownloadedFiles == 0) {
-          Navigator.pop(context);
+        if ((totalDownloadableFilesForAllDiamonds == savePathLength) &&
+            (cancel == false) &&
+            (totalDownloadedFiles != 0)) {
+          callBack(100, true);
+          LocalNotificationManager.instance
+              .showExcelDownloadNotification(savePath);
+        } else if ((savePathLength == totalDownloadableFilesForAllDiamonds) &&
+            (totalDownloadedFiles == 0) &&
+            (cancel == false)) {
           Navigator.pop(context);
           app.resolve<CustomDialogs>().errorDialog(
                 NavigationUtilities.key.currentState.overlay.context,
@@ -476,14 +489,20 @@ class DownloadState extends State<Download> {
                 "No Files Found!",
                 btntitle: R.string.commonString.ok,
               );
+        } else if (cancel == true) {
         } else {
           callBack(100, true);
         }
-
         if (mounted) {
-          print("------------------->>>>>>>>>>>>>>>>>app");
           setState(() {});
-        }
+        } //   notified = true;
+
+        // } else if ((savePathLength == totalDownloadableFilesForAllDiamonds) &&
+        //     (cancel == false)) {
+        //   notified = true;
+        //   LocalNotificationManager.instance
+        //       .showExcelDownloadNotification(savePath);
+        // }
       });
     } else {
       // handled the scenario when user declines the permissions
