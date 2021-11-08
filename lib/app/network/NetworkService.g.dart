@@ -9,7 +9,7 @@ part of 'NetworkService.dart';
 class _NetworkService implements NetworkService {
   _NetworkService(this._dio, {this.baseUrl}) {
     ArgumentError.checkNotNull(_dio, '_dio');
-    this.baseUrl ??= 'https://betaapi.arjivexports.com/';
+    this.baseUrl ??= 'https://api.arjivexports.com/';
   }
 
   final Dio _dio;
@@ -24,7 +24,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/masterSync',
+        'https://api.arjivexports.com/device/v1/masterSync',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -44,7 +44,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/auth/login',
+        'https://api.arjivexports.com/device/v1/auth/login',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -64,7 +64,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/create-mpin',
+        'https://api.arjivexports.com/device/v1/user/create-mpin',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -84,7 +84,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/reset-mpin',
+        'https://api.arjivexports.com/device/v1/reset-mpin',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -104,7 +104,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/reset-mpin-by-otp',
+        'https://api.arjivexports.com/device/v1/reset-mpin-by-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -124,7 +124,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/guest/auth/login',
+        'https://api.arjivexports.com/device/v1/guest/auth/login',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -144,7 +144,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/city/paginate',
+        'https://api.arjivexports.com/device/v1/city/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -162,7 +162,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/country/paginate',
+        'https://api.arjivexports.com/device/v1/country/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -182,7 +182,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/state/paginate',
+        'https://api.arjivexports.com/device/v1/state/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -202,7 +202,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond/paginate',
+        'https://api.arjivexports.com/device/v1/diamond/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -222,7 +222,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-track/create',
+        'https://api.arjivexports.com/device/v1/diamond-track/create',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -242,7 +242,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-bid/create',
+        'https://api.arjivexports.com/device/v1/diamond-bid/create',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -262,7 +262,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-comment/upsert',
+        'https://api.arjivexports.com/device/v1/diamond-comment/upsert',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -282,7 +282,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/send-otp',
+        'https://api.arjivexports.com/device/v1/user/send-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -302,7 +302,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/web/v1/auth/forgot-password',
+        'https://api.arjivexports.com/web/v1/auth/forgot-password',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -322,7 +322,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/forgot-mpin',
+        'https://api.arjivexports.com/device/v1/forgot-mpin',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -342,7 +342,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/verify-otp',
+        'https://api.arjivexports.com/device/v1/user/verify-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -362,7 +362,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/verify-mpin-otp',
+        'https://api.arjivexports.com/device/v1/verify-mpin-otp',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -382,7 +382,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/verify-mpin',
+        'https://api.arjivexports.com/device/v1/verify-mpin',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -402,7 +402,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/reset-password',
+        'https://api.arjivexports.com/device/v1/user/reset-password',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -422,7 +422,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/web/v1/auth/reset-password-by-user',
+        'https://api.arjivexports.com/web/v1/auth/reset-password-by-user',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -442,7 +442,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/update',
+        'https://api.arjivexports.com/device/v1/user/update',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -460,7 +460,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/view',
+        'https://api.arjivexports.com/device/v1/user/view',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -478,7 +478,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/profile',
+        'https://api.arjivexports.com/device/v1/user/profile',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -498,7 +498,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/profile/update',
+        'https://api.arjivexports.com/device/v1/user/profile/update',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -518,7 +518,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-confirm/request',
+        'https://api.arjivexports.com/device/v1/diamond-confirm/request',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -538,7 +538,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-track/delete',
+        'https://api.arjivexports.com/device/v1/diamond-track/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -558,7 +558,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-comment/delete',
+        'https://api.arjivexports.com/device/v1/diamond-comment/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -578,7 +578,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-bid/delete',
+        'https://api.arjivexports.com/device/v1/diamond-bid/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -598,7 +598,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond/paginate',
+        'https://api.arjivexports.com/device/v1/diamond/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -618,7 +618,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/common/diamond/paginate',
+        'https://api.arjivexports.com/device/v1/common/diamond/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -658,7 +658,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/web/v1/diamond/excel',
+        'https://api.arjivexports.com/web/v1/diamond/excel',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -678,7 +678,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/web/v1/diamond/excel',
+        'https://api.arjivexports.com/web/v1/diamond/excel',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -698,7 +698,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/match-pair/diamond/filter',
+        'https://api.arjivexports.com/device/v1/match-pair/diamond/filter',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -718,7 +718,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/featuredStone/paginate',
+        'https://api.arjivexports.com/device/v1/featuredStone/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -738,7 +738,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond/search/list',
+        'https://api.arjivexports.com/device/v1/diamond/search/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -758,7 +758,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-bid/paginate',
+        'https://api.arjivexports.com/device/v1/diamond-bid/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -778,7 +778,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/cabin-schedule/list',
+        'https://api.arjivexports.com/device/v1/cabin-schedule/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -798,7 +798,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/memo/paginate',
+        'https://api.arjivexports.com/device/v1/memo/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -818,7 +818,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req?.toJson() ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-block/paginate',
+        'https://api.arjivexports.com/device/v1/diamond-block/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -838,7 +838,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-track/paginate',
+        'https://api.arjivexports.com/device/v1/diamond-track/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -858,7 +858,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond-comment/by-user',
+        'https://api.arjivexports.com/device/v1/diamond-comment/by-user',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -897,7 +897,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond/quick-search',
+        'https://api.arjivexports.com/device/v1/diamond/quick-search',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -917,7 +917,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond/search/upsert',
+        'https://api.arjivexports.com/device/v1/diamond/search/upsert',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -937,7 +937,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond/search/upsert',
+        'https://api.arjivexports.com/device/v1/diamond/search/upsert',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -957,7 +957,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/cabin-slot/paginate',
+        'https://api.arjivexports.com/device/v1/cabin-slot/paginate',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -977,7 +977,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/cabin-schedule/create',
+        'https://api.arjivexports.com/device/v1/cabin-schedule/create',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -997,7 +997,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/dashboard',
+        'https://api.arjivexports.com/device/v1/user/dashboard',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -1017,7 +1017,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/diamond/search/delete',
+        'https://api.arjivexports.com/device/v1/diamond/search/delete',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -1035,7 +1035,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/auth/logout',
+        'https://api.arjivexports.com/device/v1/auth/logout',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -1053,7 +1053,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/version',
+        'https://api.arjivexports.com/device/v1/version',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'GET',
@@ -1073,7 +1073,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/notification/list',
+        'https://api.arjivexports.com/device/v1/notification/list',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -1093,7 +1093,7 @@ class _NetworkService implements NetworkService {
     final _data = <String, dynamic>{};
     _data.addAll(req ?? <String, dynamic>{});
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/notification/markAsRead',
+        'https://api.arjivexports.com/device/v1/notification/markAsRead',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',
@@ -1111,7 +1111,7 @@ class _NetworkService implements NetworkService {
     final queryParameters = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final Response<Map<String, dynamic>> _result = await _dio.request(
-        'https://betaapi.arjivexports.com/device/v1/user/player',
+        'https://api.arjivexports.com/device/v1/user/player',
         queryParameters: queryParameters,
         options: RequestOptions(
             method: 'POST',

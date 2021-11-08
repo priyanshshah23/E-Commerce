@@ -267,6 +267,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   callApi(bool isRefress, {bool isLoading = false}) {
     if (isRefress) {
       arraDiamond.clear();
+      FinalArrDiamond.clear();
       page = DEFAULT_PAGE;
     }
 
@@ -727,7 +728,15 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                               var dict = Map<String, dynamic>();
                               dict[ArgumentConstant.DiamondDetail] =
                                   arraDiamond[index];
-                              dict[ArgumentConstant.ModuleType] = moduleType;
+                              if (moduleType ==
+                                  DiamondModuleConstant
+                                      .MODULE_TYPE_INNER_LAYOUT) {
+                                dict[ArgumentConstant.ModuleType] =
+                                    DiamondModuleConstant
+                                        .MODULE_TYPE_DETAIL_LAYOUT;
+                              } else {
+                                dict[ArgumentConstant.ModuleType] = moduleType;
+                              }
 
                               //  NavigationUtilities.pushRoute(DiamondDetailScreen.route, args: dict);
                               bool isBack = await Navigator.of(context)

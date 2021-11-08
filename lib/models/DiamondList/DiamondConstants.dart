@@ -41,6 +41,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_MY_BID_HISTORY = 37;
   static const MODULE_TYPE_DRAWER_NEW_ARRIVAL = 38;
   static const MODULE_TYPE_DRAWER_UPCOMING = 39;
+  static const MODULE_TYPE_DETAIL_LAYOUT = 40;
   static const MODULE_TYPE_OPEN_DRAWER = 1000;
   static const MODULE_TYPE_HOME = 100;
   static const MODULE_TYPE_FINAL_CALCULATION = 101;

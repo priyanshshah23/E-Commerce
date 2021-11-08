@@ -287,58 +287,58 @@ class Master {
 //    print(imageCode);
 //    _initImages(context).f
     String strCode = webDisplay.split(" ").join("");
-    MastersResp masterResp = app.resolve<PrefUtils>().getMasterDetails();
-    List<SHAPE> shapeImage = masterResp.sHAPE;
-    List<String> image = new List<String>();
-    String shImg;
-    shapeImage.forEach((element) {
-      shImg = (element.image == "") ? "TEMP" : element.image;
-      image.add(shImg);
-    });
-    int p = 0;
+    // MastersResp masterResp = app.resolve<PrefUtils>().getMasterDetails();
+    // List<SHAPE> shapeImage = masterResp.sHAPE;
+    // List<String> image = new List<String>();
+    // String shImg;
+    // shapeImage.forEach((element) {
+    //   shImg = (element.image == "") ? "TEMP" : element.image;
+    //   image.add(shImg);
+    // });
+    // int p = 0;
 
     if (isSelected) {
-      return image[p] != "TEMP"
-          ? getImageView(
-              ApiConstants.imageBaseURL + image[p++],
-              placeHolderImage: diamond,
-              width: getSize(32),
-              height: getSize(32),
-              fit: BoxFit.cover,
-            )
-          : Image.asset(
-              "assets/shape/${strCode.toLowerCase()}.png",
-              color: appTheme.whiteColor,
-              width: getSize(32),
-              height: getSize(32),
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace stackTrace) {
-                return Center(
-                    child: Text(
-                  'N/A',
-                  style: TextStyle(color: appTheme.whiteColor),
-                ));
-              },
-            );
+      // return image[p] != "TEMP"
+      //     ? getImageView(
+      //         ApiConstants.imageBaseURL + image[p++],
+      //         placeHolderImage: diamond,
+      //         width: getSize(32),
+      //         height: getSize(32),
+      //         fit: BoxFit.cover,
+      //       )
+      return Image.asset(
+        "assets/shape/${strCode.toLowerCase()}.png",
+        color: appTheme.whiteColor,
+        width: getSize(32),
+        height: getSize(32),
+        errorBuilder:
+            (BuildContext context, Object exception, StackTrace stackTrace) {
+          return Center(
+              child: Text(
+            'N/A',
+            style: TextStyle(color: appTheme.whiteColor),
+          ));
+        },
+      );
     }
-    return image[p] != "TEMP"
-        ? getImageView(
-            ApiConstants.imageBaseURL + image[p++],
-            placeHolderImage: diamond,
-            width: getSize(32),
-            height: getSize(32),
-            fit: BoxFit.cover,
-          )
-        : Image.asset(
-            "assets/shape/${strCode.toLowerCase()}.png",
-            color: Colors.black,
-            width: getSize(32),
-            height: getSize(32),
-            errorBuilder: (BuildContext context, Object exception,
-                StackTrace stackTrace) {
-              return Center(child: Text('N/A'));
-            },
-          );
+    // return image[p] != "TEMP"
+    //     ? getImageView(
+    //         ApiConstants.imageBaseURL + image[p++],
+    //         placeHolderImage: diamond,
+    //         width: getSize(32),
+    //         height: getSize(32),
+    //         fit: BoxFit.cover,
+    //       )
+    return Image.asset(
+      "assets/shape/${strCode.toLowerCase()}.png",
+      color: Colors.black,
+      width: getSize(32),
+      height: getSize(32),
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace stackTrace) {
+        return Center(child: Text('N/A'));
+      },
+    );
   }
 
   checkImageValid(BuildContext context) async {

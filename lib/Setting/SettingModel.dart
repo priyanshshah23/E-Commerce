@@ -607,6 +607,7 @@ class BottomMenuSetting {
     switch (moduleType) {
       case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
       case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+      case DiamondModuleConstant.MODULE_TYPE_DETAIL_LAYOUT:
         addShareInBottomMenu(moreMenuList, shareWhite, isCenter: false);
         addDownloadInBottomMenu(moreMenuList, downloadWhite, isCenter: false);
 
