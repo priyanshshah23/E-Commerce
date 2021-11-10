@@ -226,6 +226,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING:
       case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_COLLECTION:
       case DiamondModuleConstant.MODULE_TYPE_RECENT_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:

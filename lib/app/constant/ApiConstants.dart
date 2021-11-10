@@ -23,6 +23,7 @@ class ApiConstants {
 
   static const String apiUrl = baseURL;
   static const String commonUrl = apiUrl + "device/v1/";
+  static const String commonUrlWeb = apiUrl + "web/v1/";
   static const String authUrl = apiUrl + "web/v1/auth/";
   static const String shareAndEarn = "";
 
@@ -44,6 +45,8 @@ class ApiConstants {
   static const String stoneOfTheDay = commonUrl + "featuredStone/paginate";
 
   static const String mySaveSearch = commonUrl + "diamond/search/list";
+  static const String exclusiveSearchCollection =
+      commonUrlWeb + "diamond/exclusive-search/list";
 
   static const String diamondTrackList = commonUrl + "diamond-track/paginate";
   static const String diamondCommentList =
@@ -103,7 +106,7 @@ class ApiConstants {
 
   //Excel
   static const String baseURLForExcel2 = "http://arjivlocalapi.democ.in/data";
-  static const String baseURLForExcel = "https://api.arjivexports.com/data";
+  static const String baseURLForExcel = "https://betaapi.arjivexports.com/data";
 
   static const String baseURL2 = "https://beta.arjivexports.com/device/";
   static const String termsCondition = baseURL2 + "terms-condition";

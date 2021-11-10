@@ -511,6 +511,24 @@ class _NetworkService implements NetworkService {
   }
 
   @override
+  exclusiveCollection() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final Response<Map<String, dynamic>> _result = await _dio.request(
+        'https://api.arjivexports.com/web/v1/diamond/exclusive-search/list',
+        queryParameters: queryParameters,
+        options: RequestOptions(
+            method: 'POST',
+            headers: <String, dynamic>{},
+            extra: _extra,
+            baseUrl: baseUrl),
+        data: _data);
+    final value = ExclusiveCollection.fromJson(_result.data);
+    return Future.value(value);
+  }
+
+  @override
   placeOrder(req) async {
     ArgumentError.checkNotNull(req, 'req');
     const _extra = <String, dynamic>{};

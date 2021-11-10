@@ -147,7 +147,10 @@ class HomeDrawer extends StatelessWidget {
 
     for (int i = 0; i < drawerItems.length; i++) {
       list.add(getDrawerItem(context, drawerItems[i], () {
-        RxBus.post(DrawerEvent(drawerItems[i].type, true), tag: eventBusTag);
+        RxBus.post(
+            DrawerEvent(drawerItems[i].type, true,
+                id: drawerItems[i].id, titlePage: drawerItems[i].title),
+            tag: eventBusTag);
       }));
     }
 

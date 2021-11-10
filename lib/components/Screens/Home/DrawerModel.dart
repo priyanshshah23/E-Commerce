@@ -15,7 +15,7 @@ class DrawerModel {
   int type;
   int count;
   bool isShowUpperDivider = false;
-
+  String id;
   DrawerModel({
     this.image,
     this.title,
@@ -28,5 +28,6 @@ class DrawerModel {
     this.imageColor,
     this.count = 0,
     this.isShowUpperDivider = false,
+    this.id,
   });
 }

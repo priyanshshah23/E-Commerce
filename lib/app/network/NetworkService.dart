@@ -11,6 +11,7 @@ import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/Auth/SignInAsGuestModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondListModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondTrack.dart';
+import 'package:diamnow/models/ExclusiveModel/ExclusiveModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:diamnow/models/Master/Master.dart';
 import 'package:diamnow/models/Notification/NotificationModel.dart';
@@ -107,6 +108,10 @@ abstract class NetworkService {
   @POST(ApiConstants.companyInformation)
   Future<CompanyInformationViewResp> companyInformation(
       @Body() CompanyInformationReq req);
+
+  @POST(ApiConstants.exclusiveSearchCollection)
+  Future<ExclusiveCollection> exclusiveCollection();
+
 
   @POST(ApiConstants.placeOrder)
   Future<BaseApiResp> placeOrder(@Body() PlaceOrderReq req);

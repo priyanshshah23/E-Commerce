@@ -3,11 +3,15 @@ import 'package:diamnow/app/constant/ImageConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/components/Screens/Home/DrawerModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:diamnow/models/ExclusiveModel/ExclusiveModel.dart';
 import 'package:diamnow/models/FilterModel/BottomTabModel.dart';
 
 class DrawerSetting {
   List<DrawerModel> getDrawerItems() {
     List<DrawerModel> drawerList = [];
+    List<Collection> collectionList =
+        app.resolve<PrefUtils>().getExclusiveCollectionDetails()!=null?app.resolve<PrefUtils>().getExclusiveCollectionDetails().list:[];
+
     if (app.resolve<PrefUtils>().isUserCustomer() &&
         app
             .resolve<PrefUtils>()
@@ -90,6 +94,29 @@ class DrawerSetting {
         isSelected: false,
         type: DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING,
       ));
+    if (app.resolve<PrefUtils>().getExclusiveCollectionDetails().count != 0 &&
+        app.resolve<PrefUtils>().getExclusiveCollectionDetails().count != null)
+      for (int i = 0;
+      i <
+          app
+              .resolve<PrefUtils>()
+              .getExclusiveCollectionDetails()
+              .list
+              .length;
+      i++)
+        drawerList.add(DrawerModel(
+          image: newArrival,
+          title: collectionList[i].name,
+          isSelected: false,
+          type: DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_COLLECTION,
+          isShowCount: false,
+          imageColor: appTheme.colorPrimary,
+          countBackgroundColor: fromHex("#288F5A"),
+          id: collectionList[i].id,
+          count: 25,
+        ));
+
+
     if (app
         .resolve<PrefUtils>()
         .getModulePermission(

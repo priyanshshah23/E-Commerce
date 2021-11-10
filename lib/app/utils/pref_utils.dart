@@ -10,6 +10,7 @@ import 'package:diamnow/app/utils/NotificationRedirection.dart';
 import 'package:diamnow/components/Screens/Auth/Login.dart';
 import 'package:diamnow/models/Dashboard/DashboardModel.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
+import 'package:diamnow/models/ExclusiveModel/ExclusiveModel.dart';
 import 'package:diamnow/models/LoginModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logging/logging.dart';
@@ -46,6 +47,9 @@ class PrefUtils {
   String get keyForLocalization => "keyGetLocalization";
 
   String get keyUser => "keyUser";
+  //collection
+  String get keyExclusiveCollection => "keyExclusiveCollection";
+
 
   String get keyCompany => "keyCompany";
   String get KeyLoc => "KeyLoc";
@@ -207,6 +211,7 @@ class PrefUtils {
     _preferences.setBool(skipUpdate, val);
   }
 
+
   bool getSkipUpdate() {
     return getBool(skipUpdate);
   }
@@ -283,6 +288,26 @@ class PrefUtils {
     }
     return null;
   }
+
+  Future<void> saveExclusiveCollectionDetails(
+      ExclusiveCollectionModel exclusiveCollectionModel) async {
+    await _preferences.setString(
+        keyExclusiveCollection, json.encode(exclusiveCollectionModel.toJson()));
+  }
+
+  ExclusiveCollectionModel getExclusiveCollectionDetails() {
+    if (_preferences.getString(keyExclusiveCollection) != null) {
+      var data = _preferences.getString(keyExclusiveCollection);
+      if (data != null) {
+        var ExclusiveCollectionJson = json.decode(data);
+        return ExclusiveCollectionJson != null
+            ? new ExclusiveCollectionModel.fromJson(ExclusiveCollectionJson)
+            : null;
+      }
+    }
+    return null;
+  }
+
 
 // User Getter setter
   Future<void> saveUser(User user) async {

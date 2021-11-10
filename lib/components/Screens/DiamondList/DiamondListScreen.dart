@@ -55,6 +55,9 @@ class DiamondListScreen extends StatefulScreenWidget {
   bool isCompanySelected = false;
   bool isLayoutSearch = false;
   String downloadDate = "";
+  String idCollection="";
+  String titlePage="";
+
 
   DiamondListScreen(
     Map<String, dynamic> arguments, {
@@ -68,6 +71,13 @@ class DiamondListScreen extends StatefulScreenWidget {
       if (arguments[ArgumentConstant.IsFromDrawer] != null) {
         isFromDrawer = arguments[ArgumentConstant.IsFromDrawer];
       }
+      if (arguments["idCollection"] != null) {
+        idCollection = arguments["idCollection"];
+      }
+      if (arguments["titlePage"] != null) {
+        titlePage = arguments["titlePage"];
+      }
+
       if (arguments["filterModel"] != null) {
         filterModel = arguments["filterModel"];
       }
@@ -92,7 +102,10 @@ class DiamondListScreen extends StatefulScreenWidget {
         downloadDate: downloadDate,
         isCompanySelected: isCompanySelected,
         isLayoutSearch: isLayoutSearch,
-      );
+      idCollection: idCollection,
+      titlePage: titlePage
+
+  );
 }
 
 class _DiamondListScreenState extends StatefulScreenWidgetState {
@@ -106,6 +119,8 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
   String downloadDate = "";
   bool isCompanySelected = false;
   bool isLayoutSearch = false;
+  String idCollection ="";
+  String titlePage ="";
 
   _DiamondListScreenState(
       {this.filterId,
@@ -114,7 +129,10 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
       this.filterModel,
       this.downloadDate,
       this.isCompanySelected,
-      this.isLayoutSearch});
+      this.isLayoutSearch,
+        this.idCollection,
+        this.titlePage,
+      });
 
   DiamondConfig diamondConfig;
   DiamondItemWidget _itemWidget;
@@ -270,6 +288,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     if (isRefress) {
       arraDiamond.clear();
       FinalArrDiamond.clear();
+      DiamondNotExact.clear();
       page = DEFAULT_PAGE;
     }
 
@@ -306,6 +325,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
           ];
         }
         break;
+      case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_COLLECTION:
+
+          dict["filters"] = [{
+            "diamondSearchId":idCollection
+          }];
+          dict["isAppendMasters"] = true;
+          dict["isSkipSave"] = true;
+          //dict["filters"]["or"] = diamondConfig.getExclusiveDiamondReq();
+        break;
+
       case DiamondModuleConstant.MODULE_TYPE_MATCH_PAIR:
 //        dict["filters"] = [
 //          {"diamondSearchId": this.filterId}
@@ -822,11 +851,21 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 ),
                 DiamondNotExact.isNotEmpty
                     ? Container(
-                        margin: EdgeInsets.fromLTRB(13.0, 0.0, 0.0, 0.0),
-                        child: Text(
-                          "Similar Stones ($similarLength)",
+                        margin: EdgeInsets.fromLTRB(13.0, 0.0, 13.0, 0.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          "Similar Stones ($similarLength) ",
                           style: TextStyle(fontWeight: FontWeight.bold),
-                        ))
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: Colors.black,
+                            thickness: 4,
+                          ),
+                        )
+                      ],
+                    ))
                     : SizedBox(),
                 DiamondNotExact.isNotEmpty
                     ? Container(
@@ -1014,56 +1053,136 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         //         },
         //       )
         : viewTypeCount == 1
-            ? GridView.count(
-                shrinkWrap: true,
-                controller: _controller,
-                crossAxisCount: 2,
-                childAspectRatio: (166) / (202 + 73),
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 8,
-                padding: EdgeInsets.only(
-                  left: getSize(Spacing.leftPadding),
-                  bottom: getSize(Spacing.leftPadding),
-                  right: getSize(Spacing.rightPadding),
-                ),
-                children: List.generate(arraDiamond.length, (index) {
-                  var item = arraDiamond[index];
-                  return DiamondGridItemWidget(
-                      item: item,
-                      list: getRightAction((manageClick) {
-                        manageRowClick(index, manageClick.type);
-                      }),
-                      actionClick: (manageClick) {
-                        manageRowClick(index, manageClick.type);
-                        setState(() {
-                          if (moduleType ==
-                                  DiamondModuleConstant
-                                      .MODULE_TYPE_MATCH_PAIR ||
-                              moduleType ==
-                                  DiamondModuleConstant
-                                      .MODULE_TYPE_INNER_LAYOUT) {
-                            List<DiamondModel> filter = arraDiamond
-                                .where((element) =>
-                                    element.pairStkNo ==
-                                    arraDiamond[index].pairStkNo)
-                                .toList();
+            ? ListView(children: [
+               Container(
+                 child: GridView.count(
+                    shrinkWrap: true,
+                    controller: _controller,
+                    crossAxisCount: 2,
+                    childAspectRatio: (166) / (202 + 73),
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 8,
+                    padding: EdgeInsets.only(
+                      left: getSize(Spacing.leftPadding),
+                      bottom: getSize(Spacing.leftPadding),
+                      right: getSize(Spacing.rightPadding),
+                    ),
+                    children: List.generate(arraDiamond.length, (index) {
+                      var item = arraDiamond[index];
+                      return DiamondGridItemWidget(
+                          item: item,
+                          list: getRightAction((manageClick) {
+                            manageRowClick(index, manageClick.type);
+                          }),
+                          actionClick: (manageClick) {
+                            manageRowClick(index, manageClick.type);
+                            setState(() {
+                              if (moduleType ==
+                                      DiamondModuleConstant
+                                          .MODULE_TYPE_MATCH_PAIR ||
+                                  moduleType ==
+                                      DiamondModuleConstant
+                                          .MODULE_TYPE_INNER_LAYOUT) {
+                                List<DiamondModel> filter = arraDiamond
+                                    .where((element) =>
+                                        element.pairStkNo ==
+                                        arraDiamond[index].pairStkNo)
+                                    .toList();
 
-                            if (isNullEmptyOrFalse(filter) == false) {
-                              filter.forEach((element) {
-                                if (arraDiamond[index].isSelected) {
-                                  element.isSelected = true;
-                                } else {
-                                  element.isSelected = false;
+                                if (isNullEmptyOrFalse(filter) == false) {
+                                  filter.forEach((element) {
+                                    if (arraDiamond[index].isSelected) {
+                                      element.isSelected = true;
+                                    } else {
+                                      element.isSelected = false;
+                                    }
+                                    diamondCalculation
+                                        .setAverageCalculation(arraDiamond);
+                                  });
                                 }
-                                diamondCalculation
-                                    .setAverageCalculation(arraDiamond);
-                              });
-                            }
-                          }
-                        });
-                      });
-                }),
-              )
+                              }
+                            });
+                          });
+                    }),
+                  ),
+               ),
+
+    DiamondNotExact.isNotEmpty
+        ? Container(
+        margin: EdgeInsets.fromLTRB(13.0, 0.0, 13.0, 0.0),
+        child: Row(
+          children: [
+            Text(
+              "Similar Stones ($similarLength) ",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Expanded(
+              child: Divider(
+                color: Colors.black,
+                thickness: 4,
+              ),
+            )
+          ],
+        ))
+        : SizedBox(),
+    DiamondNotExact.isNotEmpty
+    ? Container(
+        child: GridView.count(
+      shrinkWrap: true,
+      controller: _controller,
+      crossAxisCount: 2,
+      childAspectRatio: (166) / (202 + 73),
+      mainAxisSpacing: 10,
+      crossAxisSpacing: 8,
+      padding: EdgeInsets.only(
+        left: getSize(Spacing.leftPadding),
+        bottom: getSize(Spacing.leftPadding),
+        right: getSize(Spacing.rightPadding),
+      ),
+      children: List.generate(DiamondNotExact.length, (index) {
+        var item = DiamondNotExact[index];
+        return DiamondGridItemWidget(
+            item: item,
+            list: getRightAction((manageClick) {
+              manageRowClick(index, manageClick.type,similar: true);
+            }),
+    actionClick: (manageClick) {
+    manageRowClick(index, manageClick.type,similar: true);
+    setState(() {
+    if (moduleType ==
+    DiamondModuleConstant
+        .MODULE_TYPE_MATCH_PAIR ||
+    moduleType ==
+    DiamondModuleConstant
+        .MODULE_TYPE_INNER_LAYOUT) {
+    List<DiamondModel> filter = DiamondNotExact
+        .where((element) =>
+    element.pairStkNo ==
+    DiamondNotExact[index].pairStkNo)
+        .toList();
+
+    if (isNullEmptyOrFalse(filter) == false) {
+    filter.forEach((element) {
+    if (DiamondNotExact[index].isSelected) {
+    element.isSelected = true;
+    } else {
+    element.isSelected = false;
+    }
+    diamondCalculation
+        .setAverageCalculation(DiamondNotExact);
+    });
+    }
+    }
+    });
+    });
+    }),
+    ),
+
+    )
+
+
+        : SizedBox()
+   ] )
             : GridView.count(
                 shrinkWrap: true,
                 crossAxisCount: 2,

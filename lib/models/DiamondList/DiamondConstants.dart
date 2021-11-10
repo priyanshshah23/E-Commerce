@@ -55,6 +55,7 @@ class DiamondModuleConstant {
   static const MODULE_TYPE_VOICE_SEARCH = 109;
   static const MODULE_TYPE_PRICE_CALCULATOR = 110;
   static const MODULE_TYPE_MEMO = 111;
+  static const MODULE_TYPE_EXCLUSIVE_COLLECTION = 112;
 }
 
 class ModulePermissionConstant {
