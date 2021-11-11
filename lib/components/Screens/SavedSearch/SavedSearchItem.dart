@@ -80,7 +80,7 @@ class _SavedSearchItemWidgetState extends State<SavedSearchItemWidget>
 
     Map<String, dynamic> dict = {};
     dict["page"] = page;
-    dict["limit"] = DEFAULT_LIMIT;
+    dict["limit"] = 25;
     dict["type"] = widget.searchType == SavedSearchType.savedSearch
         ? SavedSearchType.savedSearch
         : SavedSearchType.recentSearch;
