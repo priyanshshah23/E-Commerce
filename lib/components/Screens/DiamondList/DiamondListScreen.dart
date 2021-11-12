@@ -848,11 +848,13 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 ),
                 DiamondNotExact.isNotEmpty
                     ? Container(
-                        margin: EdgeInsets.fromLTRB(13.0, 0.0, 0.0, 0.0),
-                        child: Text(
+                        margin: EdgeInsets.fromLTRB(13.0, 0.0, 13.0, 0.0),
+                        child: Row(children:[Text(
                           "Similar Stones ($similarLength)",
                           style: TextStyle(fontWeight: FontWeight.bold),
-                        ))
+                        ),
+                          Expanded(child: Divider(thickness: 3,color: Colors.black,))
+                        ]))
                     : SizedBox(),
                 DiamondNotExact.isNotEmpty
                     ? Container(

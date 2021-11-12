@@ -58,7 +58,7 @@
         "id": "NoBGM",
         "code": "NoBGM",
         "webDisplay": "No BGM",
-        "isActive": true,
+        "isActive": false,
         "isDeleted": false,
         "isWebVisible": true,
         "sortingSequence": 4,
@@ -396,6 +396,17 @@
         "parentId": "159159159"
     },
     {
+        "id": "NoBGM",
+        "code": "NoBGM",
+        "webDisplay": "NO BGM",
+        "isActive": true,
+        "isDeleted": false,
+        "isWebVisible": true,
+        "parentCode": "CANADAMARKPARENT",
+        "sortingSequence": 1,
+        "parentId": "159159159"
+    },
+    {
         "id": "NOBLACK",
         "code": "NOBLACK",
         "webDisplay": "NO BLACK",
@@ -403,7 +414,7 @@
         "isDeleted": false,
         "isWebVisible": true,
         "parentCode": "CANADAMARKPARENT",
-        "sortingSequence": 1,
+        "sortingSequence": 2,
         "parentId": "159159159"
     },
     {
@@ -414,7 +425,7 @@
         "isDeleted": false,
         "isWebVisible": true,
         "parentCode": "CANADAMARKPARENT",
-        "sortingSequence": 2,
+        "sortingSequence": 3,
         "parentId": "159159159"
     },
     {
@@ -424,7 +435,7 @@
         "isActive": true,
         "isDeleted": false,
         "isWebVisible": true,
-        "sortingSequence": 3,
+        "sortingSequence": 4,
         "parentCode": "CANADAMARKPARENT",
         "parentId": "159159159"
     },

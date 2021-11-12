@@ -79,14 +79,14 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
             Padding(
               padding: EdgeInsets.only(top: getSize(30)),
               child: Text(
-                R.string.screenTitle.confirmStone,
-                style: TextStyle(decoration: TextDecoration.underline)
+                R.string.commonString.confirmStone,
+                style: TextStyle(fontSize: 18,decoration: TextDecoration.underline)
                 //style: appTheme.blackSemiBold18TitleColorblack,
 
               ),
             ),
             SizedBox(
-              height: getSize(20),
+              height: getSize(15),
             ),
             Form(
               key: _formKey,
@@ -112,14 +112,14 @@ class _PlaceOrderPopUpState extends State<PlaceOrderPopUp> {
                     height: getSize(16),
                   ),
                   //getInvoiceDateTextField(),
-                  setInvoiceDropDown(context, _dateController, invoiceList,
-                      (value) {
-                    selectedPopUpDate = value;
-                    _dateController.text = value;
-                  }),
-                  SizedBox(
-                    height: getSize(16),
-                  ),
+                  // setInvoiceDropDown(context, _dateController, invoiceList,
+                  //     (value) {
+                  //   selectedPopUpDate = value;
+                  //   _dateController.text = value;
+                  // }),
+                  // SizedBox(
+                  //   height: getSize(16),
+                  // ),
                   getCommentTextField(),
                   Padding(
                     padding: EdgeInsets.only(

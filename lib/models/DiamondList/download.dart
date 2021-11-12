@@ -327,14 +327,6 @@ class DownloadState extends State<Download> {
                   : showToast(
                       "${totalDownloadedFiles} ${R.string.commonString.filesisdownloaded} \n ${totalDownloadableFilesForAllDiamonds - totalDownloadedFiles} ${R.string.commonString.filesisnotdownloadedbcz}",
                       context: context);
-              allDiamondPreviewThings.forEach((element) {
-                if (element.fileType ==
-                        DownloadAndShareDialogueConstant.excel &&
-                    element.isSelected) {
-                  SyncManager syncManager = SyncManager();
-                  syncManager.callApiForExcel(context, diamondList);
-                }
-              });
             }
           });
         }

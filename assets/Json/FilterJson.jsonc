@@ -356,6 +356,18 @@
     "isActive": true,
     "valueKeyisCode": false,
     "masterSelection": [
+    {
+            "code": "NoBGM",
+            "masterToSelect": [
+              {
+                "code": "SHADE",
+                "subMasters": [
+                  "YEL",
+                  "WHT"
+                ]
+              }
+            ]
+          },
       {
         "code": "NOBLACK",
         "masterToSelect": [
@@ -375,7 +387,25 @@
             "subMasters": [
               "NONE"
             ]
-          }
+          },
+           {
+                      "code": "OPEN_INCLUSION_TABLE",
+                      "subMasters": [
+                        "NONE"
+                      ]
+                    },
+                     {
+                                "code": "OPEN_INCLUSION_CROWN",
+                                "subMasters": [
+                                  "NONE"
+                                ]
+                              },
+                               {
+                                          "code": "OPEN_INCLUSION_PAVILION",
+                                          "subMasters": [
+                                            "NONE"
+                                          ]
+                                        }
         ]
       }
     ]
