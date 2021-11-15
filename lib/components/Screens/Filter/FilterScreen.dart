@@ -1331,6 +1331,13 @@ class _FilterScreenState extends StatefulScreenWidgetState {
                       "Please select any 2 criteria.",
                       btntitle: R.string.commonString.ok,
                     );
+              } else if (map.length == 1) {
+                app.resolve<CustomDialogs>().errorDialog(
+                      context,
+                      "",
+                      "Please select parameter to add Order Request ",
+                      btntitle: R.string.commonString.ok,
+                    );
               } else
                 getAddDemand();
             } else {
@@ -1641,12 +1648,19 @@ class _FilterScreenState extends StatefulScreenWidgetState {
       map,
       (diamondListResp) {
         if (isSavedSearch) {
-          openBottomSheetForSavedSearch(
-              context,
-              FilterRequest()
-                  .createRequest(arrList, selectedStatus: selectStatus),
-              isSearch: isSearch,
-              savedSearchModel: this.savedSearchModel);
+          if (diamondListResp.data.count > 250) {
+            app.resolve<CustomDialogs>().confirmDialog(context,
+                title: R.string.commonString.diamond250,
+                desc: R.string.commonString.narrowSearch,
+                positiveBtnTitle: R.string.commonString.ok);
+          } else {
+            openBottomSheetForSavedSearch(
+                context,
+                FilterRequest()
+                    .createRequest(arrList, selectedStatus: selectStatus),
+                isSearch: isSearch,
+                savedSearchModel: this.savedSearchModel);
+          }
         } else {
           if (isSearch) {
             if (diamondListResp.data.count == 0) {

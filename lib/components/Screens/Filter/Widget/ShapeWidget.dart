@@ -26,8 +26,11 @@ class _ShapeWidgetState extends State<ShapeWidget> {
   @override
   void initState() {
     super.initState();
-
-    elementsToShow = widget.selectionModel.numberOfelementsToShow;
+    if (widget.selectionModel.masters.length <= 7) {
+      elementsToShow = widget.selectionModel.masters.length;
+    } else {
+      elementsToShow = widget.selectionModel.numberOfelementsToShow;
+    }
 
     if (widget.selectionModel.isShowAll == true) {
       if (widget.selectionModel.orientation == DisplayTypes.vertical) {
@@ -75,8 +78,10 @@ class _ShapeWidgetState extends State<ShapeWidget> {
     for (var masterIndex = 0; masterIndex < elementsToShow; masterIndex++) {
       listOfMasterView.add(widget.selectionModel.masters[masterIndex]);
     }
-    listOfMasterView.add(widget
-        .selectionModel.masters[widget.selectionModel.masters.length - 1]);
+    if (widget.selectionModel.masters.length >= 7) {
+      listOfMasterView.add(widget
+          .selectionModel.masters[widget.selectionModel.masters.length - 1]);
+    }
   }
 
   @override
@@ -382,6 +387,7 @@ class _ShapeWidgetState extends State<ShapeWidget> {
 // card item for each type.
 class ShapeItemWidget extends StatelessWidget {
   Master obj;
+  SHAPE objShape;
   String txt;
   SelectionModel selectionModel;
   String showMoreId;

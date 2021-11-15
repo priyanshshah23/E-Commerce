@@ -70,6 +70,7 @@ class Master {
   String image;
   String parentId;
   String group;
+  List<dynamic> fakeId;
   String sizeCategory;
   MultiLanguageData multiLanguageData;
   bool isSelected = false;
@@ -117,7 +118,8 @@ class Master {
     sizeCategory = json["sizeCategory"];
     parentCode = json["parentCode"];
     isWebVisible = json["isWebVisible"];
-    sId = json['id'];
+    fakeId = json['id'].runtimeType == String ? null : json['id'];
+    sId = json['id'].runtimeType == String ? json['id'] : fakeId[0].toString();
     name = json['name'];
     code = json['code'];
     fromCarat = json['fromCarat'];
@@ -176,25 +178,38 @@ class Master {
     List<String> mapShape = [];
     List<Master> allShapes =
         await AppDatabase.instance.masterDao.getSubMasterFromParentCode(code);
+    List<Master> allLoginShapes =
+        app.resolve<PrefUtils>().getMasterDetails().sHAPE;
+    if (code == "SHAPE") {
+      for (var item in allLoginShapes) {
+        if (!mapShape.contains(item.webDisplay ?? "")) {
+          List<Master> filter = allLoginShapes
+              .where((element) => element.webDisplay == item.webDisplay)
+              .toList();
 
-    for (var item in allShapes) {
-      if (!mapShape.contains(item.webDisplay ?? "")) {
-        List<Master> filter = allShapes
-            .where((element) => element.webDisplay == item.webDisplay)
-            .toList();
-
-        item.grouped = filter;
-        mapShape.add(item.webDisplay);
-        master.add(item);
+          item.grouped = filter;
+          mapShape.add(item.webDisplay);
+          master.add(item);
+        }
       }
-    }
-
-    if (code == MasterCode.origin) {
+    } else if (code == MasterCode.origin) {
       //If Master is Rough Origin Remove FM/CM Manually
       Master filterIndex =
           master.firstWhere((element) => element.code == "FM2/CM");
       if (isNullEmptyOrFalse(filterIndex) == false) {
         master.remove(filterIndex);
+      }
+    } else {
+      for (var item in allShapes) {
+        if (!mapShape.contains(item.webDisplay ?? "")) {
+          List<Master> filter = allShapes
+              .where((element) => element.webDisplay == item.webDisplay)
+              .toList();
+
+          item.grouped = filter;
+          mapShape.add(item.webDisplay);
+          master.add(item);
+        }
       }
     }
 

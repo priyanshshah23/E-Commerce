@@ -190,8 +190,8 @@ class _SearchScreenState extends StatefulScreenWidgetState {
               ),
               onChanged: (String text) {
                 // print(text.split('\n');
-                temp = text.split('\n')!=null?text.split('\n'):null;
-                temp.removeAt(temp.length-1);
+                temp = text.split('\n') != null ? text.split('\n') : null;
+                temp.removeAt(temp.length - 1);
                 print(text);
 
                 // arrSelected = temp;
@@ -203,22 +203,22 @@ class _SearchScreenState extends StatefulScreenWidgetState {
                 //    // openSuggestion();
                 //     print(temp[t]);
                 //   }
-            //    text= temp ;
+                //    text= temp ;
                 //print(temp);
                 if (!isFromSearch) {
                   this.searchText = text;
-                  if(text.contains('\n')){
-                    temp = text.split('\n')!=null?text.split('\n'):null;
-                    temp.removeAt(temp.length-1);
+                  if (text.contains('\n')) {
+                    temp = text.split('\n') != null ? text.split('\n') : null;
+                    temp.removeAt(temp.length - 1);
                   }
                   //
-                   openSuggestion();
+                  openSuggestion();
                   setState(() {});
                 } else {
                   if (!isFromManual) {
-                    if(text.contains('\n')){
-                      temp = text.split('\n')!=null?text.split('\n'):null;
-                      temp.removeAt(temp.length-1);
+                    if (text.contains('\n')) {
+                      temp = text.split('\n') != null ? text.split('\n') : null;
+                      temp.removeAt(temp.length - 1);
                     }
                     // List<String> temp = text.split('\n')!=null?text.split('\n'):null;
                     // arrSelected = temp;
@@ -244,7 +244,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
 
   prepareDataSource() async {
     //Shape
-    List<Master> shapes = await Master.getSubMaster(MasterCode.shape);
+    List<Master> shapes = app.resolve<PrefUtils>().getMasterDetails().sHAPE;
     if (!isNullEmptyOrFalse(shapes)) {
       appendData(getNameWithLikeKeyword(shapes, false));
     }
@@ -551,7 +551,7 @@ class _SearchScreenState extends StatefulScreenWidgetState {
   }
 
   getChips() {
-    Set<String> set= new Set<String>.from(arrSelected);
+    Set<String> set = new Set<String>.from(arrSelected);
     arrSelected = List<String>.from(set);
     if (isNullEmptyOrFalse(arrSelected)) {
       return Container();
@@ -666,17 +666,22 @@ class _SearchScreenState extends StatefulScreenWidgetState {
     print("-------------------$isFromManual");
     Map<String, dynamic> req = {};
     Map<String, dynamic> manualReq = {};
-    arrSelected = temp.isNotEmpty?temp:arrSelected;
-    if(isFromManual){
+    arrSelected = temp.isNotEmpty ? temp : arrSelected;
+    if (isFromManual) {
       manualReq = {
         "or": [
-          {"stoneId": [_searchController.text]},
-          {"rptNo": [_searchController.text]},
-          {"vStnId": [_searchController.text]}
+          {
+            "stoneId": [_searchController.text]
+          },
+          {
+            "rptNo": [_searchController.text]
+          },
+          {
+            "vStnId": [_searchController.text]
+          }
         ]
       };
-    }
-    else {
+    } else {
       req = {
         "or": [
           {"stoneId": arrSelected},
@@ -685,8 +690,6 @@ class _SearchScreenState extends StatefulScreenWidgetState {
         ]
       };
     }
-
-
 
     SyncManager.instance.callApiForDiamondList(
       context,
