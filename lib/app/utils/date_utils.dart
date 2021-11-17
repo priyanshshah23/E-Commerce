@@ -65,6 +65,13 @@ class DateUtilities {
     return DateTime(date.year, date.month, date.day, 23, 59, 59, 999);
   }
 
+  DateTime getSpecificTimeOfString(DateTime date, String sec) {
+    DateTime serverStart1 =
+        DateUtilities().convertServerStringToFormatterDate(sec);
+    return DateTime(date.year, date.month, date.day, serverStart1.hour,
+        serverStart1.minute, serverStart1.second);
+  }
+
   String getFormattedDay(DateTime date) {
     var dt = getStartOfDay(date);
     var currentDate = getStartOfDay(DateTime.now());

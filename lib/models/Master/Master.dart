@@ -301,9 +301,11 @@ class Master {
 //    await checkImageValid(context);
 //    print(imageCode);
 //    _initImages(context).f
-    String strCode = webDisplay.split(" ").join("");
+    String strCode = normalizeName.split(" ").join("");
+    String images = image.isNotEmpty ? image : null;
+
     // MastersResp masterResp = app.resolve<PrefUtils>().getMasterDetails();
-    // List<SHAPE> shapeImage = masterResp.sHAPE;
+    // List<Master> shapeImage = masterResp.sHAPE;
     // List<String> image = new List<String>();
     // String shImg;
     // shapeImage.forEach((element) {
@@ -322,7 +324,7 @@ class Master {
       //         fit: BoxFit.cover,
       //       )
       return Image.asset(
-        "assets/shape/${strCode.toLowerCase()}.png",
+        "assets/shape/${strCode}.png",
         color: appTheme.whiteColor,
         width: getSize(32),
         height: getSize(32),
@@ -331,29 +333,40 @@ class Master {
           return Center(
               child: Text(
             'N/A',
-            style: TextStyle(color: appTheme.whiteColor),
+            style: TextStyle(color: appTheme.colorPrimary),
           ));
         },
       );
+      // : getImageView(
+      //     ApiConstants.imageBaseURL + image,
+      //     placeHolderImage: diamond,
+      //     width: getSize(32),
+      //     height: getSize(32),
+      //     fit: BoxFit.cover,
+      //   );
+      //
     }
-    // return image[p] != "TEMP"
-    //     ? getImageView(
-    //         ApiConstants.imageBaseURL + image[p++],
-    //         placeHolderImage: diamond,
-    //         width: getSize(32),
-    //         height: getSize(32),
-    //         fit: BoxFit.cover,
-    //       )
     return Image.asset(
-      "assets/shape/${strCode.toLowerCase()}.png",
-      color: Colors.black,
+      "assets/shape/${strCode}.png",
+      color: appTheme.colorPrimary,
       width: getSize(32),
       height: getSize(32),
       errorBuilder:
           (BuildContext context, Object exception, StackTrace stackTrace) {
-        return Center(child: Text('N/A'));
+        return Center(
+            child: Text(
+          'N/A',
+          style: TextStyle(color: appTheme.colorPrimary),
+        ));
       },
     );
+    // : getImageView(
+    //     ApiConstants.imageBaseURL + image,
+    //     placeHolderImage: "assets/shape/${strCode.toLowerCase()}.png",
+    //     width: getSize(32),
+    //     height: getSize(32),
+    //     fit: BoxFit.cover,
+    //   );
   }
 
   checkImageValid(BuildContext context) async {
