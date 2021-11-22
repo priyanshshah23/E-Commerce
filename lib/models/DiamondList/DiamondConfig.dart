@@ -220,6 +220,7 @@ class DiamondConfig {
       case DiamondModuleConstant.MODULE_TYPE_SEARCH:
       case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
       case DiamondModuleConstant.MODULE_TYPE_DRAWER_NEW_ARRIVAL:
+      case DiamondModuleConstant.MODULE_TYPE_DRAWER_FEATURED:
       case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
       case DiamondModuleConstant.MODULE_TYPE_UPCOMING:

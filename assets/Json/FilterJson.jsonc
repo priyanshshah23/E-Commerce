@@ -362,10 +362,15 @@
               {
                 "code": "SHADE",
                 "subMasters": [
-                  "YEL",
-                  "WHT"
+                  "NONE"
                 ]
-              }
+              },
+              {
+                              "code": "MILKEY",
+                              "subMasters": [
+                                "NONE"
+                              ]
+                            }
             ]
           },
       {

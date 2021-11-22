@@ -497,16 +497,16 @@ class LoggedInSession {
 }
 
 class MastersResp {
-  List<SHAPE> sHAPE;
+  List<Master> sHAPE;
   MastersResp({
     this.sHAPE,
   });
 
   MastersResp.fromJson(Map<String, dynamic> json) {
     if (json['SHAPE'] != null) {
-      sHAPE = new List<SHAPE>();
+      sHAPE = new List<Master>();
       json['SHAPE'].forEach((v) {
-        sHAPE.add(new SHAPE.fromJson(v));
+        sHAPE.add(new Master.fromJson(v));
       });
     }
   }
@@ -533,6 +533,7 @@ class SHAPE {
   String image;
   String parentCode;
   String parentId;
+  List<Master> grouped = [];
 
   SHAPE({
     this.id,

@@ -3,7 +3,6 @@ import 'package:diamnow/app/constant/EnumConstant.dart';
 import 'package:diamnow/app/localization/app_locales.dart';
 import 'package:diamnow/app/network/NetworkCall.dart';
 import 'package:diamnow/app/network/ServiceModule.dart';
-import 'package:diamnow/app/utils/BottomSheet.dart';
 import 'package:diamnow/app/utils/CommonWidgets.dart';
 import 'package:diamnow/app/utils/CustomDialog.dart';
 import 'package:diamnow/app/utils/date_utils.dart';
@@ -11,14 +10,11 @@ import 'package:diamnow/components/Screens/DiamondList/Widget/DiamondListItemWid
 import 'package:diamnow/components/Screens/Filter/Widget/AddDemand.dart';
 import 'package:diamnow/models/DiamondList/DiamondConstants.dart';
 import 'package:diamnow/models/Slot/SlotModel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 class OfferViewScreen extends StatefulWidget {
   static const route = "OfferView";
-
   List<DiamondModel> list;
 
   OfferViewScreen(
@@ -37,49 +33,31 @@ class OfferViewScreen extends StatefulWidget {
 }
 
 class _OfferViewScreenState extends State<OfferViewScreen> {
-  final _formKey = GlobalKey<FormState>();
-  bool _autoValidate = false;
   DateTime now = DateTime.now();
+  DateTime serverStart;
   List<DateModel> days;
   DateTime pickedDate = DateTime.now();
-  String pd = DateTime.now().toIso8601String();
+  String pd;
   int selectedDate = -1;
   int selectedSlot;
   int selectedVirtualType = -1;
   List<SlotModel> arrSlots = [];
-  List<SlotModel> disableSlots = [];
-  // List<String> virtualList = [
-  //   VirtualTypesString.phoneCall,
-  //   VirtualTypesString.webConference,
-  //   VirtualTypesString.inPerson
-  // ];
-  List<SelectionPopupModel> virtualList = List<SelectionPopupModel>();
-  var selectedVirtualListItem = -1;
+  List<SlotModel> arrSlots1 = [];
+  bool selectedList = false;
+  List<String> virtualList = [
+    VirtualTypesString.phoneCall,
+    VirtualTypesString.webConference,
+    VirtualTypesString.inPerson
+  ];
   final TextEditingController _virtualTypeController = TextEditingController();
   final TextEditingController _commentTypeController = TextEditingController();
-  int selectedHourStart = 3;
-  int selectedMinuteStart = 30;
-  int selectedHourEnd = 4;
-  int selectedMinuteEnd = 00;
 
   @override
   void initState() {
     super.initState();
+    serverStart = DateTime(DateTime.now().day);
     days = setDateList();
     callApiforTimeSlots();
-    getVirtualList();
-  }
-
-  getVirtualList() {
-    virtualList.add(SelectionPopupModel(
-        VirtualTypesString.phoneCall, VirtualTypesString.phoneCall,
-        isSelected: false));
-    virtualList.add(SelectionPopupModel(
-        VirtualTypesString.webConference, VirtualTypesString.webConference,
-        isSelected: false));
-    virtualList.add(SelectionPopupModel(
-        VirtualTypesString.inPerson, VirtualTypesString.inPerson,
-        isSelected: false));
   }
 
   getDate(int day) {
@@ -97,19 +75,27 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
             context,
             isProgress: true)
         .then((resp) async {
-      arrSlots = resp.data.list;
-
+      arrSlots1 = resp.data.list;
       DateTime now = DateTime.now();
+      arrSlots1.forEach((element) {
+        if (element.isActive == true) {
+          arrSlots.add(element);
 
-      arrSlots.forEach((element) {
-        DateTime serverStart =
-            DateUtilities().convertServerStringToFormatterDate(element.start);
+          DateTime serverStart1 =
+              DateUtilities().convertServerStringToFormatterDate(element.start);
 
-        if (now.isAfter(DateTime(now.year, now.month, now.day, serverStart.hour,
-            serverStart.minute, serverStart.second, serverStart.millisecond))) {
-          element.disable = true;
-        } else {
-          element.disable = false;
+          if (now.isAfter(DateTime(
+              now.year,
+              now.month,
+              now.day,
+              serverStart1.hour,
+              serverStart1.minute,
+              serverStart1.second,
+              serverStart1.millisecond))) {
+            element.disable = true;
+          } else {
+            element.disable = false;
+          }
         }
       });
       setState(() {});
@@ -128,18 +114,22 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   callApiForRequestForOffice() {
     Map<String, dynamic> req = {};
     List<String> diamondId = [];
-    req["purpose"] = _commentTypeController.text;
+    String timeStart = arrSlots[selectedSlot].start;
+    String timeEnd = arrSlots[selectedSlot].end;
+
+    req["purpose"] = _commentTypeController.text ?? "";
     DateTime date = DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
             pickedDate.hour, pickedDate.minute)
         .toUtc();
-    req["date"] = date.toUtc().toIso8601String();
-
-    req["type"] = 2;
     req["start"] = DateUtilities()
-        .getSpecificTimeOfDate(date, selectedHourStart, selectedMinuteStart, 00)
+        .getSpecificTimeOfString(date, timeStart)
+        .toUtc()
         .toIso8601String();
+    req["date"] = date.toIso8601String();
+    req["type"] = 2;
     req["end"] = DateUtilities()
-        .getSpecificTimeOfDate(date, selectedHourEnd, selectedMinuteEnd, 00)
+        .getSpecificTimeOfString(date, timeEnd)
+        .toUtc()
         .toIso8601String();
 
     req["meetingType"] =
@@ -184,10 +174,12 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appTheme.whiteColor,
       appBar: getAppBar(
         context,
-        R.string.screenTitle.appointment,
+        R.string.screenTitle.appointment +
+            " (" +
+            app.resolve<PrefUtils>().getUserDetails().companyName +
+            ")",
         leadingButton: getBackButton(context),
         centerTitle: false,
       ),
@@ -195,23 +187,30 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: getSize(10),
+            ),
             getTopRow(),
-            getDateList(),
+            SizedBox(
+              height: getSize(10),
+            ),
+            //   getDateList(),
             getTimeSlot(),
-//            setVirtualDropDown(virtualList, (value) {
-//              _virtualTypeController.text = value;
-//            }),
-//            SizedBox(
-//              height: getSize(10),
-//            ),
-//            getCommentTextField(),
+            setVirtualDropDown(virtualList, (value) {
+              _virtualTypeController.text = value;
+            }),
+            SizedBox(
+              height: getSize(10),
+            ),
+            getCommentTextField(),
+            SizedBox(
+              height: getSize(10),
+            ),
           ],
         ),
       ),
       bottomNavigationBar: Container(
-        height: getSize(70),
         decoration: new BoxDecoration(
-          color: appTheme.colorPrimary,
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.2),
@@ -225,53 +224,79 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Center(
-              child: Container(
-                margin: EdgeInsets.all(getSize(8)),
-                width: getSize(172),
-                height: getSize(40),
-                child: AppButton.flat(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  textColor: appTheme.whiteColor,
-                  backgroundColor: appTheme.colorPrimary,
-                  text: R.string.commonString.cancel,
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: getSize(50),
+                  color: appTheme.whiteColor,
+                  padding: EdgeInsets.symmetric(
+                    vertical: getSize(15),
+                  ),
+                  child: Text(
+                    R.string.commonString.cancel,
+                    textAlign: TextAlign.center,
+                    style: appTheme.blue14TextStyle.copyWith(
+                        fontSize: getFontSize(16), fontWeight: FontWeight.w500),
+                  ),
                 ),
               ),
             ),
-            Center(
-              child: Container(
-                width: getSize(172),
-                height: getSize(50),
-                child: AppButton.flat(
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
 
-                      if (pickedDate == null) {
-                        app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "",
-                              desc: R.string.errorString.selectAppointmentDate,
-                              positiveBtnTitle: R.string.commonString.ok,
-                            );
-                        return;
-                      } else if (selectedSlot == null) {
-                        app.resolve<CustomDialogs>().confirmDialog(
-                              context,
-                              title: "",
-                              desc: R.string.errorString.selectTimeSlot,
-                              positiveBtnTitle: R.string.commonString.ok,
-                            );
-                        return;
-                      }
-                      showAppoitmentDialog(context);
-                    },
-                    textColor: appTheme.colorPrimary,
-                    backgroundColor: appTheme.whiteColor,
-                    text: R.string.screenTitle.reqOfficeView),
+                  if (serverStart == null) {
+                    app.resolve<CustomDialogs>().confirmDialog(
+                          context,
+                          title: "",
+                          desc: R.string.errorString.selectAppointmentDate,
+                          positiveBtnTitle: R.string.commonString.ok,
+                        );
+                    return;
+                  } else if (selectedSlot < 0) {
+                    app.resolve<CustomDialogs>().confirmDialog(
+                          context,
+                          title: "",
+                          desc: R.string.errorString.selectTimeSlot,
+                          positiveBtnTitle: R.string.commonString.ok,
+                        );
+                    return;
+                  } else if (isNullEmptyOrFalse(_virtualTypeController.text)) {
+                    app.resolve<CustomDialogs>().confirmDialog(
+                          context,
+                          title: "",
+                          desc: R.string.errorString.selectVirtualType,
+                          positiveBtnTitle: R.string.commonString.ok,
+                        );
+                    return;
+                  } else if (isNullEmptyOrFalse(_commentTypeController.text)) {
+                    app.resolve<CustomDialogs>().confirmDialog(
+                          context,
+                          title: "",
+                          desc: R.string.errorString.enterComments,
+                          positiveBtnTitle: R.string.commonString.ok,
+                        );
+                    return;
+                  }
+                  callApiForRequestForOffice();
+                },
+                child: Container(
+                  height: getSize(50),
+                  color: appTheme.colorPrimary,
+                  padding: EdgeInsets.symmetric(
+                    vertical: getSize(15),
+                  ),
+                  child: Text(
+                    R.string.screenTitle.reqOfficeView,
+                    textAlign: TextAlign.center,
+                    style: appTheme.white16TextStyle,
+                  ),
+                ),
               ),
             )
           ],
@@ -299,77 +324,148 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                 style: appTheme.black16TextStyle
                     .copyWith(fontWeight: FontWeight.w500),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: getSize(5)),
-                child: Text(
-                  DateUtilities().convertServerDateToFormatterString(
-                      DateTime.now().toIso8601String(),
-                      formatter: DateUtilities.mmm_yyyy),
-                  style: appTheme.black16TextStyle,
-                ),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.only(top: getSize(5)),
+              //   child: Text(
+              //     DateUtilities().convertServerDateToFormatterString(
+              //         DateTime.now().toIso8601String(),
+              //         formatter: DateUtilities.mmm_yyyy),
+              //     style: appTheme.black16TextStyle,
+              //   ),
+              // ),
             ],
           ),
           InkWell(
-            onTap: () {
-              showDialog(
+            onTap: () async {
+              DateTime pickedDates = await showDatePicker(
                 context: context,
-                barrierDismissible: true,
-                builder: (BuildContext context) {
-                  return Dialog(
-                    insetPadding: EdgeInsets.symmetric(
-                        horizontal: getSize(20), vertical: getSize(20)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(getSize(25)),
+                initialDate: DateTime(DateTime.now().year, DateTime.now().month,
+                    DateTime.now().day),
+                firstDate: DateTime(DateTime.now().year, DateTime.now().month,
+                    DateTime.now().day),
+                builder: (BuildContext context, Widget child) {
+                  return Theme(
+                    data: ThemeData(
+                      primarySwatch: Colors.grey,
+                      splashColor: Colors.black,
+                      textTheme: TextTheme(
+                        subtitle1: TextStyle(color: Colors.black),
+                        button: TextStyle(color: Colors.black),
+                      ),
+                      accentColor: Colors.black,
+                      colorScheme: ColorScheme.light(
+                          primary: ColorConstants.colorPrimary,
+                          primaryVariant: Colors.black,
+                          secondaryVariant: Colors.black,
+                          onSecondary: Colors.black,
+                          onPrimary: Colors.white,
+                          surface: Colors.black,
+                          onSurface: Colors.black,
+                          secondary: Colors.black),
+                      dialogBackgroundColor: Colors.white,
                     ),
-                    child: AddDemand(
-                        title: "OfferView",
-                        isShowTextField: false,
-                        applyCallBack: (
-                            {String selectedDate, String diamondTitle}) {
-                          pd = selectedDate;
-                          days.forEach((element) {
-                            element.isSelected = false;
-                            if (element.date.day ==
-                                DateTime.parse(selectedDate).day) {
-                              element.isSelected = true;
-                            }
-
-                            DateTime now = DateTime.now();
-                            arrSlots.forEach((element) {
-                              element.disable = false;
-                            });
-                            if (now.day == DateTime.parse(selectedDate).day &&
-                                now.month ==
-                                    DateTime.parse(selectedDate).month &&
-                                now.year == DateTime.parse(selectedDate).year) {
-                              selectedSlot = null;
-                              arrSlots.forEach((element) {
-                                DateTime serverStart = DateUtilities()
-                                    .convertServerStringToFormatterDate(
-                                        element.start);
-
-                                if (now.isAfter(DateTime(
-                                    now.year,
-                                    now.month,
-                                    now.day,
-                                    serverStart.hour,
-                                    serverStart.minute,
-                                    serverStart.second,
-                                    serverStart.millisecond))) {
-                                  element.disable = true;
-                                } else {
-                                  element.disable = false;
-                                }
-                              });
-                            }
-                          });
-
-                          setState(() {});
-                        }),
+                    child: child,
                   );
                 },
+                lastDate:
+                    DateTime(DateTime.now().year, DateTime.now().month + 1, 0),
+                selectableDayPredicate: (DateTime val) =>
+                    val.weekday == 7 ? false : true,
               );
+              if (pickedDates != null) {
+                pd = DateUtilities().convertServerDateToFormatterString(
+                    pickedDates.toUtc().toIso8601String(),
+                    formatter: DateUtilities.dd_mm_yyyy_);
+                serverStart = DateUtilities()
+                    .convertServerStringToFormatterDate(
+                        pickedDates.toUtc().toIso8601String());
+                arrSlots.forEach((element) {
+                  if (now.isAfter(DateTime(now.year, now.month, serverStart.day,
+                      now.hour, now.minute, now.second, now.millisecond))) {
+                    arrSlots.forEach((element) {
+                      DateTime serverStart1 = DateUtilities()
+                          .convertServerStringToFormatterDate(element.start);
+
+                      if (now.isAfter(DateTime(
+                          now.year,
+                          now.month,
+                          now.day,
+                          serverStart1.hour,
+                          serverStart1.minute,
+                          serverStart1.second,
+                          serverStart1.millisecond))) {
+                        element.disable = true;
+                      } else {
+                        element.disable = false;
+                      }
+                    });
+                  } else {
+                    element.disable = false;
+                  }
+                });
+                pickedDate = serverStart;
+                // pd = DateUtilities().getDateFromString(selectedDate);
+
+              }
+              setState(() {});
+              // showDialog(
+              //   context: context,
+              //   barrierDismissible: true,
+              //   builder: (BuildContext context) {
+              //     return Dialog(
+              //       insetPadding: EdgeInsets.symmetric(
+              //           horizontal: getSize(20), vertical: getSize(20)),
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.circular(getSize(25)),
+              //       ),
+              //       child: AddDemand(
+              //           title: "OfferView",
+              //           isShowTextField: false,
+              //           applyCallBack: (
+              //               {String selectedDate, String diamondTitle}) {
+              //             pd = DateUtilities()
+              //                 .convertServerDateToFormatterString(selectedDate,
+              //                     formatter: DateUtilities.dd_mm_yyyy_);
+              //             serverStart = DateUtilities()
+              //                 .convertServerStringToFormatterDate(selectedDate);
+              //             arrSlots.forEach((element) {
+              //               if (now.isAfter(DateTime(
+              //                   now.year,
+              //                   now.month,
+              //                   serverStart.day,
+              //                   now.hour,
+              //                   now.minute,
+              //                   now.second,
+              //                   now.millisecond))) {
+              //                 arrSlots.forEach((element) {
+              //                   DateTime serverStart1 = DateUtilities()
+              //                       .convertServerStringToFormatterDate(
+              //                           element.start);
+              //
+              //                   if (now.isAfter(DateTime(
+              //                       now.year,
+              //                       now.month,
+              //                       now.day,
+              //                       serverStart1.hour,
+              //                       serverStart1.minute,
+              //                       serverStart1.second,
+              //                       serverStart1.millisecond))) {
+              //                     element.disable = true;
+              //                   } else {
+              //                     element.disable = false;
+              //                   }
+              //                 });
+              //               } else {
+              //                 element.disable = false;
+              //               }
+              //             });
+              //             pickedDate = serverStart;
+              //             // pd = DateUtilities().getDateFromString(selectedDate);
+              //             setState(() {});
+              //           }),
+              //     );
+              //   },
+              // );
 
               // DateUtilities().pickDateDialog(context).then((value) {
               //   pickedDate = value;
@@ -384,26 +480,22 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
               // });
             },
             child: Container(
-//              width: getSize(175),
-              padding: EdgeInsets.only(bottom: getSize(5)),
+              width: getSize(120),
               decoration: BoxDecoration(
                   border: Border(
                       bottom: BorderSide(
                           color: appTheme.dividerColor, width: getSize(2)))),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     pd != null
-                        ? DateUtilities().convertServerDateToFormatterString(
-                            pd,
-                            formatter: DateUtilities.ddmmyyyy_,
-                          )
-                        : R.string.screenTitle.selectCustomDate,
+                        ? pd
+                        : DateUtilities().convertServerDateToFormatterString(
+                            DateTime.now().toUtc().toIso8601String(),
+                            formatter: DateUtilities.dd_mm_yyyy_),
                     style: appTheme.black16TextStyle,
-                  ),
-                  SizedBox(
-                    width: getSize(10),
+                    textAlign: TextAlign.center,
                   ),
                   Image.asset(
                     calender,
@@ -434,58 +526,30 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                   days.forEach((element) {
                     element.isSelected = false;
                   });
-                  // arrSlots.forEach((element) {
-                  //   element.isSelected = false;
-                  // });
                   days[index].isSelected = !days[index].isSelected;
                   if (days[index].isSelected) {
                     pickedDate = days[index].date;
-                    pd = pickedDate.toIso8601String();
-
-                    DateTime now = DateTime.now();
-                    if (now.day == pickedDate.day &&
-                        now.month == pickedDate.month &&
-                        now.year == pickedDate.year) {
+                    serverStart = pickedDate;
+                    pd = DateUtilities().convertServerDateToFormatterString(
+                        serverStart.toUtc().toIso8601String(),
+                        formatter: DateUtilities.dd_mm_yyyy_);
+                    if (now.isAfter(DateTime(
+                        now.year,
+                        now.month,
+                        serverStart.day,
+                        now.hour,
+                        now.minute,
+                        now.second,
+                        now.millisecond))) {
                       arrSlots.forEach((element) {
-                        DateTime serverStart = DateUtilities()
-                            .convertServerStringToFormatterDate(element.start);
-
-                        if (now.isAfter(DateTime(
-                            now.year,
-                            now.month,
-                            now.day,
-                            serverStart.hour,
-                            serverStart.minute,
-                            serverStart.second,
-                            serverStart.millisecond))) {
-                          element.disable = true;
-                        } else {
-                          element.disable = false;
-                        }
+                        element.disable = true;
                       });
                     } else {
                       arrSlots.forEach((element) {
-                        DateTime serverStart = DateUtilities()
-                            .convertServerStringToFormatterDate(element.start);
-
-                        if (pickedDate.isAfter(DateTime(
-                          now.year,
-                          now.month,
-                          now.day,
-                        ))) {
-                          element.disable = false;
-                        } else {
-                          element.disable = true;
-                        }
+                        element.disable = false;
                       });
                     }
-
-                    setState(() {});
                   }
-//                  print()
-//                  if(pickedDate != pd){
-//                    pd = null;
-//                  }
                 });
               },
               child: Container(
@@ -574,19 +638,8 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                           });
                           if (arrSlots[index].disable) {
                           } else {
+                            selectedList = true;
                             selectedSlot = index;
-                            selectedHourStart = DateUtilities()
-                                .getDateFromString(arrSlots[selectedSlot].start)
-                                .hour;
-                            selectedMinuteStart = DateUtilities()
-                                .getDateFromString(arrSlots[selectedSlot].start)
-                                .minute;
-                            selectedHourEnd = DateUtilities()
-                                .getDateFromString(arrSlots[selectedSlot].end)
-                                .hour;
-                            selectedMinuteEnd = DateUtilities()
-                                .getDateFromString(arrSlots[selectedSlot].end)
-                                .minute;
                           }
                         });
                       },
@@ -604,11 +657,11 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
                         ),
                         child: Center(
                           child: Text(
-                              "${arrSlots[index].startTime} - ${arrSlots[index].endTime}",
-                              style: appTheme.black16TextStyle
-                              // ? appTheme.white16TextStyle
-                              // : appTheme.black16TextStyle,
-                              ),
+                            "${arrSlots[index].startTime} - ${arrSlots[index].endTime}",
+                            style: selectedSlot == index
+                                ? appTheme.white16TextStyle
+                                : appTheme.black16TextStyle,
+                          ),
                         ),
                       ),
                     );
@@ -619,20 +672,35 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
     );
   }
 
-  openBottomSheet(
-      List array, Function(SelectionPopupModel) callBack, String title) {
-    modalBottomSheetMenu(context,
-        title: title, selectionOptions: array, callback: callBack);
-  }
+  Widget setVirtualDropDown(List<String> list, Function(String) selectedValue,
+          {bool isPer = false}) =>
+      PopupMenuButton<String>(
+        shape: TooltipShapeBorder(arrowArc: 0.5),
+        onSelected: (newValue) {
+          // add this property
+          selectedValue(newValue);
+        },
+        itemBuilder: (context) => [
+          for (var item in list) getPopupItems(item),
+          PopupMenuItem(
+            height: getSize(30),
+            value: "Start",
+            child: SizedBox(),
+          ),
+        ],
+        child: getVirtualTypeDropDown(),
+        offset: Offset(25, 200),
+      );
 
-  getVirtualTypeDropDown(int mode, List<SelectionPopupModel> list,
-      Function(SelectionPopupModel) callBack, String title) {
-    return InkWell(
-      onTap: () {
-        openBottomSheet(list, callBack, title);
-      },
+  getVirtualTypeDropDown() {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: getSize(Spacing.leftPadding),
+        right: getSize(Spacing.rightPadding),
+      ),
       child: AbsorbPointer(
         child: CommonTextfield(
+            enable: false,
             textOption: TextFieldOption(
                 prefixWid: getCommonIconWidget(
                     imageName: company, imageType: IconSizeType.small),
@@ -647,21 +715,6 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
 //                    checkValidation();
 //                  });
             },
-            validation: (text) {
-              if (mode == 1) {
-                if (text.isEmpty) {
-                  return "Select Virtual Type";
-                } else {
-                  return null;
-                }
-              } else {
-                if (text.isEmpty) {
-                  return "Select Virtual Type";
-                } else {
-                  return null;
-                }
-              }
-            },
             inputAction: TextInputAction.next,
             onNextPress: () {
               FocusScope.of(context).unfocus();
@@ -669,38 +722,6 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
       ),
     );
   }
-
-//   getVirtualTypeDropDown() {
-//     return AbsorbPointer(
-//       child: CommonTextfield(
-//           enable: false,
-//           textOption: TextFieldOption(
-//               prefixWid: getCommonIconWidget(
-//                   imageName: company, imageType: IconSizeType.small),
-//               hintText: R.string.commonString.selectType,
-//               maxLine: 1,
-//               keyboardType: TextInputType.text,
-//               type: TextFieldType.DropDown,
-//               inputController: _virtualTypeController,
-//               isSecureTextField: false),
-//           textCallback: (text) {
-// //                  setState(() {
-// //                    checkValidation();
-// //                  });
-//           },
-//           validation: (text) {
-//             if (text.isEmpty) {
-//               return R.string.errorString.selectVirtualType;
-//             } else {
-//               return null;
-//             }
-//           },
-//           inputAction: TextInputAction.next,
-//           onNextPress: () {
-//             FocusScope.of(context).unfocus();
-//           }),
-//     );
-//   }
 
   getPopupItems(
     String per,
@@ -725,141 +746,39 @@ class _OfferViewScreenState extends State<OfferViewScreen> {
   }
 
   getCommentTextField() {
-    return CommonTextfield(
-      textOption: TextFieldOption(
-        maxLine: 4,
-        inputController: _commentTypeController,
-        hintText: "Enter Comments",
-        formatter: [
-//          WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
-          BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
-        ],
-        errorBorder: InputBorder.none,
-        //isSecureTextField: false
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: Spacing.leftPadding),
+      child: CommonTextfield(
+        autoFocus: false,
+        textOption: TextFieldOption(
+          maxLine: 4,
+          inputController: _commentTypeController,
+          hintText: "Notes",
+          // formatter: [
+          //   WhitelistingTextInputFormatter(new RegExp(alphaRegEx)),
+          //   BlacklistingTextInputFormatter(RegExp(RegexForEmoji))
+          // ],
+          //isSecureTextField: false
+        ),
+        textCallback: (text) {},
+        inputAction: TextInputAction.done,
+        onNextPress: () {
+          FocusScope.of(context).unfocus();
+        },
       ),
-      // validation: (text) {
-      //   if (text.isEmpty) {
-      //     return R.string.errorString.enterComments;
-      //   } else {
-      //     return null;
-      //   }
-      // },
-      textCallback: (text) {},
-
-      inputAction: TextInputAction.done,
-      onNextPress: () {
-        FocusScope.of(context).unfocus();
-      },
     );
   }
 
   List<DateModel> setDateList() {
     return [
-      DateModel(0, getDate(1), false),
-      DateModel(1, getDate(2), false),
-      DateModel(2, getDate(3), false),
-      DateModel(3, getDate(4), false),
-      DateModel(4, getDate(5), false),
-      DateModel(5, getDate(6), false),
-      DateModel(6, getDate(7), false),
+      DateModel(0, now, false),
+      DateModel(1, getDate(1), false),
+      DateModel(2, getDate(2), false),
+      DateModel(3, getDate(3), false),
+      DateModel(4, getDate(4), false),
+      DateModel(5, getDate(5), false),
+      DateModel(6, getDate(6), false),
     ];
-  }
-
-  showAppoitmentDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(getSize(15))),
-            insetPadding: EdgeInsets.all(getSize(20)),
-            child: Padding(
-              padding: EdgeInsets.all(getSize(15)),
-              child: Form(
-                key: _formKey,
-                autovalidate: _autoValidate,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Book Appointment",
-                      style: appTheme.black16MediumTextStyle,
-                    ),
-                    // setVirtualDropDown(virtualList, (value) {
-                    //   _virtualTypeController.text = value;
-                    // }),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: getSize(16),
-                        right: getSize(16),
-                      ),
-                      child: getVirtualTypeDropDown(2, virtualList, (model) {
-                        _virtualTypeController.text = model.title;
-                        selectedVirtualListItem = virtualList.indexOf(model);
-                        setState(() {});
-                      }, "Select Virtual Type"),
-                    ),
-                    SizedBox(
-                      height: getSize(10),
-                    ),
-                    getCommentTextField(),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: getSize(20), bottom: getSize(20)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                // border: Border.all(
-                                //     color: appTheme.colorPrimary, width: getSize(1)),
-                                borderRadius: BorderRadius.circular(getSize(5)),
-                              ),
-                              child: AppButton.flat(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                // borderRadius: getSize(5),
-                                text: R.string.commonString.cancel,
-                                textColor: appTheme.colorPrimary,
-                                backgroundColor: appTheme.whiteColor,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: getSize(20),
-                          ),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  // color: appTheme.colorPrimary,
-                                  // borderRadius: BorderRadius.circular(getSize(5)),
-                                  boxShadow: getBoxShadow(context)),
-                              child: AppButton.flat(
-                                onTap: () {
-                                  FocusScope.of(context).unfocus();
-                                  if (_formKey.currentState.validate()) {
-                                    callApiForRequestForOffice();
-                                    Navigator.pop(context);
-                                  } else {
-                                    _autoValidate = true;
-                                  }
-                                },
-                                // borderRadius: getSize(5),
-                                text: R.string.commonString.btnSubmit,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
-        }); /*.then((value) => Navigator.pop(context, true))*/
   }
 }
 

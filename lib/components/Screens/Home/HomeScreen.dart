@@ -77,8 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       print(
-          "--------------------------kyc-----------------${user
-              .isKycUploaded}");
+          "--------------------------kyc-----------------${user.isKycUploaded}");
       /* if (app.resolve<PrefUtils>().isUserCustomer()) {
         //Kyc rejected
         if (user.account.isApproved == KYCStatus.rejected &&
@@ -139,11 +138,10 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-
   callApiForExclusiveSearch({bool isLoading = false}) {
     NetworkCall<ExclusiveCollection>()
         .makeCall(
-          () => app.resolve<ServiceModule>().networkService().exclusiveCollection(),
+      () => app.resolve<ServiceModule>().networkService().exclusiveCollection(),
       context,
       isProgress: false,
     )
@@ -152,10 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
       app.resolve<PrefUtils>().saveExclusiveCollectionDetails(resp.data).then(
             (value) => setState(
               () {
-            print("Collection are coming................");
-          },
-        ),
-      );
+                print("Collection are coming................");
+              },
+            ),
+          );
     }).catchError((onError, stack) {
       print("error in collection........");
       // if (onError is ErrorResp) {
@@ -398,7 +396,8 @@ class _HomeScreenState extends State<HomeScreen> {
     currentWidget = PriceCalculator(dict);
   }
 
-  manageDrawerClick(BuildContext context, int type, bool isPop, {String id, String titlePage}) {
+  manageDrawerClick(BuildContext context, int type, bool isPop,
+      {String id, String titlePage}) {
     if (context != null) {
       if (isPop) Navigator.pop(context);
       if (type != DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_COLLECTION) {
@@ -407,175 +406,175 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
 
-        switch (type) {
-          case DiamondModuleConstant.MODULE_TYPE_HOME:
-            openDashboard(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.HOME,
-              section: SectionAnalytics.VIEW,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_COLLECTION:
-            openDiamondListForCollection(type, id, titlePage);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.OfflineSearchHistory,
-              section: SectionAnalytics.OFFLINESEARCH,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
+      switch (type) {
+        case DiamondModuleConstant.MODULE_TYPE_HOME:
+          openDashboard(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.HOME,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_COLLECTION:
+          openDiamondListForCollection(type, id, titlePage);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OfflineSearchHistory,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
 
-          case DiamondModuleConstant.MODULE_TYPE_SEARCH:
-          case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
-            openSearch(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.OfflineSearchHistory,
-              section: SectionAnalytics.OFFLINESEARCH,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
-            openQuickSearch(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.QUICK_SERACH,
-              section: SectionAnalytics.SEARCH,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_MY_CART:
-          case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
-          case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
-          case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
-          case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
-          case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
-          case DiamondModuleConstant.MODULE_TYPE_DRAWER_NEW_ARRIVAL:
-          case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
-          case DiamondModuleConstant.MODULE_TYPE_MY_BID:
-          case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
-          case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
-          case DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING:
-          case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
-            openDiamondList(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.OfflineSearchHistory,
-              section: SectionAnalytics.OFFLINESEARCH,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
-          case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
-            openDiamondList(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.STONE_OF_THE_DAY,
-              section: SectionAnalytics.FILTER,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_PROFILE:
-            openProfile(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.PROFILE,
-              section: SectionAnalytics.VIEW,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
-          case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
-            openDiamondOrderList(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.MY_PURCHASE,
-              section: SectionAnalytics.DETAILS,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
-            openSavedSearch(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.MYSAVED_SEARCH,
-              section: SectionAnalytics.SAVED_SEARCH,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
-            openAboutUs(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.ABOUT_US,
-              section: SectionAnalytics.VIEW,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
-            openPrivacyPolicy(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.ABOUT_US,
-              section: SectionAnalytics.VIEW,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
-            openTermsAndCondition(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.ABOUT_US,
-              section: SectionAnalytics.VIEW,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_CONTACT_US:
-            openContactUS(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.CONTACT,
-              section: SectionAnalytics.VIEW,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
-            logoutFromApp(context);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.LOGOUT,
-              section: SectionAnalytics.VIEW,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
-            openMyDemand(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.MY_DEMAND,
-              section: SectionAnalytics.VIEW,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY:
-            openOfflineSearchHistory(type);
-            AnalyticsReport.shared.sendAnalyticsData(
-              buildContext: context,
-              page: PageAnalytics.OFFLINE_DOWNLOAD,
-              section: SectionAnalytics.OFFLINESEARCH,
-              action: ActionAnalytics.CLICK,
-            );
-            break;
-          case DiamondModuleConstant.MODULE_TYPE_PRICE_CALCULATOR:
-            openPriceCalculator(type);
-            break;
-        }
-        if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
-          setState(() {});
-        }
-
+        case DiamondModuleConstant.MODULE_TYPE_SEARCH:
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH:
+          openSearch(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OfflineSearchHistory,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_QUICK_SEARCH:
+          openQuickSearch(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.QUICK_SERACH,
+            section: SectionAnalytics.SEARCH,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_CART:
+        case DiamondModuleConstant.MODULE_TYPE_MY_WATCH_LIST:
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_ENQUIRY:
+        case DiamondModuleConstant.MODULE_TYPE_MY_COMMENT:
+        case DiamondModuleConstant.MODULE_TYPE_NEW_ARRIVAL:
+        case DiamondModuleConstant.MODULE_TYPE_DRAWER_NEW_ARRIVAL:
+        case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
+        case DiamondModuleConstant.MODULE_TYPE_MY_BID:
+        case DiamondModuleConstant.MODULE_TYPE_EXCLUSIVE_DIAMOND:
+        case DiamondModuleConstant.MODULE_TYPE_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_DRAWER_UPCOMING:
+        case DiamondModuleConstant.MODULE_TYPE_DRAWER_FEATURED:
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK:
+          openDiamondList(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OfflineSearchHistory,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_OFFICE:
+        case DiamondModuleConstant.MODULE_TYPE_STONE_OF_THE_DAY:
+          openDiamondList(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.STONE_OF_THE_DAY,
+            section: SectionAnalytics.FILTER,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PROFILE:
+          openProfile(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.PROFILE,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_ORDER:
+        case DiamondModuleConstant.MODULE_TYPE_MY_PURCHASE:
+          openDiamondOrderList(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MY_PURCHASE,
+            section: SectionAnalytics.DETAILS,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_SAVED_SEARCH:
+          openSavedSearch(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MYSAVED_SEARCH,
+            section: SectionAnalytics.SAVED_SEARCH,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_ABOUT_US:
+          openAboutUs(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PRIVACY_POLICY:
+          openPrivacyPolicy(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_TERM_CONDITION:
+          openTermsAndCondition(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.ABOUT_US,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_CONTACT_US:
+          openContactUS(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.CONTACT,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_LOGOUT:
+          logoutFromApp(context);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.LOGOUT,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_MY_DEMAND:
+          openMyDemand(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.MY_DEMAND,
+            section: SectionAnalytics.VIEW,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_OFFLINE_STOCK_SEARCH_HISTORY:
+          openOfflineSearchHistory(type);
+          AnalyticsReport.shared.sendAnalyticsData(
+            buildContext: context,
+            page: PageAnalytics.OFFLINE_DOWNLOAD,
+            section: SectionAnalytics.OFFLINESEARCH,
+            action: ActionAnalytics.CLICK,
+          );
+          break;
+        case DiamondModuleConstant.MODULE_TYPE_PRICE_CALCULATOR:
+          openPriceCalculator(type);
+          break;
+      }
+      if (type != DiamondModuleConstant.MODULE_TYPE_LOGOUT) {
+        setState(() {});
+      }
     }
   }
 

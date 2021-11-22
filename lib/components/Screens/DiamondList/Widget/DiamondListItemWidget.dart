@@ -2268,12 +2268,12 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
             _offeredDiscountTextFieldController.text =
                 PriceUtilities.getDoubleValue(discount);
 
-            _offeredPricePerCaratTextfieldContoller.text =
-                PriceUtilities.getDoubleValue(widget.item.rap -
-                    ((widget.item.rap *
-                            num.parse(_offeredDiscountTextFieldController.text)
-                                .abs()) /
-                        100));
+            _offeredPricePerCaratTextfieldContoller
+                .text = PriceUtilities.getDoubleValue(widget
+                    .item.rap +
+                ((widget.item.rap *
+                        num.parse(_offeredDiscountTextFieldController.text)) /
+                    100));
             widget.item.offeredDiscount = PriceUtilities.getDoubleValue(
                 num.parse(_offeredDiscountTextFieldController.text));
             widget.item.offeredAmount =
@@ -2282,6 +2282,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 num.parse(_offeredPricePerCaratTextfieldContoller.text) *
                     widget.item.crt);
           }
+          setState(() {});
         }
       },
       child: TextField(
@@ -2362,6 +2363,7 @@ class _DiamondItemWidgetState extends State<DiamondItemWidget> {
                 num.parse(_offeredPricePerCaratTextfieldContoller.text) *
                     widget.item.crt);
           }
+          setState(() {});
         }
       },
       child: TextField(

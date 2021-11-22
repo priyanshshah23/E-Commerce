@@ -218,9 +218,10 @@ class _FromToWidgetState extends State<FromToWidget> {
               setState(() {});
             }
           } else {
-            oldValueForFrom = "";
+            oldValueForFrom = _minValueController.text;
             widget.fromTomodel.valueFrom = oldValueForFrom;
           }
+          setState(() {});
         }
         // Focus.of(context).unfocus();
       },

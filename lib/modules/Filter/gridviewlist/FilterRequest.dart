@@ -34,7 +34,15 @@ class FilterRequest {
               if (item.code == MasterCode.canadamark) {
                 map["isCm"] = ["CERT", "ELIG"];
               } else if (item.code == MasterCode.typeiia) {
-                map["type2"] = {"!=": null};
+                map["and"] = [
+                  {
+                    "type2": {"!=": ""}
+                  },
+                  {
+                    "type2": {"!=": null}
+                  }
+                ];
+                //map["type2"] = {"!=": null};
               } else if (item.code == MasterCode.xray) {
                 map["isXray"] = true;
               } else if (item.code == MasterCode.newarrivals) {

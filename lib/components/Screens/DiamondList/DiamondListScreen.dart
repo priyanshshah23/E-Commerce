@@ -285,6 +285,7 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
     if (isRefress) {
       arraDiamond.clear();
       FinalArrDiamond.clear();
+      DiamondNotExact.clear();
       page = DEFAULT_PAGE;
     }
 
@@ -379,6 +380,14 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
         dict["sort"] = [dict1];
         // dict["sort"] = [];
         break;
+      case DiamondModuleConstant.MODULE_TYPE_DRAWER_FEATURED:
+        dict["filters"] = [
+          {"sectionType": 11}
+        ];
+        dict["sort"] = [];
+        // dict["sort"] = [];
+        break;
+
       case DiamondModuleConstant.MODULE_TYPE_DIAMOND_AUCTION:
         /* dict["filters"] = [
           {"wSts": DiamondStatus.DIAMOND_STATUS_BID}
@@ -849,11 +858,16 @@ class _DiamondListScreenState extends StatefulScreenWidgetState {
                 DiamondNotExact.isNotEmpty
                     ? Container(
                         margin: EdgeInsets.fromLTRB(13.0, 0.0, 13.0, 0.0),
-                        child: Row(children:[Text(
-                          "Similar Stones ($similarLength)",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                          Expanded(child: Divider(thickness: 3,color: Colors.black,))
+                        child: Row(children: [
+                          Text(
+                            "Similar Stones ($similarLength)",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Expanded(
+                              child: Divider(
+                            thickness: 3,
+                            color: Colors.black,
+                          ))
                         ]))
                     : SizedBox(),
                 DiamondNotExact.isNotEmpty
