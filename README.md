@@ -1,6 +1,6 @@
-# diamnow
+# Diamnow
 
-A new Bus booking application made using Flutter.
+A new diamond selling application made using Flutter.
 
 ## Getting Started
 
